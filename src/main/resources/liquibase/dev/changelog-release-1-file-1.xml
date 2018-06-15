@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.3.xsd">
+
+    <changeSet id="fin-eug-1" logicalFilePath="path-independent" author="eugene">
+        <comment>Creating table: fin_periods</comment>
+        <createTable tableName="fin_periods" schemaName="apps" remarks="Список финансовых периодов">
+            <column name="id" type="number" remarks="Идентификатор">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="code" type="varchar(20)" remarks="Код периода">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="name" type="varchar(100)" remarks="Наименование периода">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="start_date" type="date" remarks="Дата начала периода">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="end_date" type="date" remarks="Дата окончания периода">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="status" type="varchar(1)" remarks="Статус периода">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="closed_period_date" type="TIMESTAMP" remarks="Дата закрытия периода">
+                <constraints nullable="true"/>
+            </column>
+
+            <column name="create_date" type="TIMESTAMP" remarks="Дата создания">
+                <constraints nullable="true"/>
+            </column>
+            
+            <column name="last_update_date" type="TIMESTAMP" remarks="Дата изменения">
+                <constraints nullable="true"/>
+            </column>
+
+            <column name="create_by" type="number" remarks="Автор">
+                <constraints nullable="true"/>
+            </column>
+
+            <column name="last_update_by" type="number" remarks="Автор изменения">
+                <constraints nullable="true"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+	<changeSet id="fin-eug-2" logicalFilePath="path-independent" author="eugene">
+	    <comment>Creating primary key for table: fin_periods</comment>
+	    <addPrimaryKey 
+	            columnNames="id"
+	            constraintName="pk_fin_periods"
+	            schemaName="apps"
+	            tableName="fin_periods"/>
+	</changeSet>
+
+	<changeSet id="fin-eug-3" logicalFilePath="path-independent" author="eugene">
+	    <comment>Creating sequence for table: fin_periods</comment>
+	    <createSequence 
+	            incrementBy="1"
+	            schemaName="apps"
+	            sequenceName="fin_periods_s"
+	            startValue="1"/>
+	</changeSet>
+
+    <changeSet id="fin-eug-4" logicalFilePath="path-independent" author="eugene">
+        <comment>Creating unique key for table: fin_periods</comment>
+        <addUniqueConstraint
+                columnNames="code"
+                constraintName="pk_fin_periods"
+                schemaName="apps"
+                tableName="fin_periods"/>
+    </changeSet>
+</databaseChangeLog>
