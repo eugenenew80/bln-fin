@@ -29,7 +29,7 @@
                 <constraints nullable="false"/>
             </column>
 
-            <column name="status" type="varchar(1)" remarks="Статус периода">
+            <column name="status" type="varchar(1)" remarks="Статус периода" defaultValue="U">
                 <constraints nullable="false"/>
             </column>
 
@@ -77,8 +77,319 @@
         <comment>Creating unique key for table: fin_periods</comment>
         <addUniqueConstraint
                 columnNames="code"
-                constraintName="pk_fin_periods"
+                constraintName="un_fin_periods_!"
                 schemaName="apps"
                 tableName="fin_periods"/>
     </changeSet>
+
+
+    <changeSet id="fin-eug-5" logicalFilePath="path-independent" author="eugene">
+        <comment>Creating table: fin_checks</comment>
+        <createTable tableName="fin_checks" schemaName="apps" remarks="Список платежей">
+            <column name="id" type="number" remarks="Идентификатор">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="bp_payer_id" type="number" remarks="Идентификатор отправителя денег">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="bp_payee_id" type="number" remarks="Идентификатор получателя денег">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="contract_id" type="number" remarks="Идентификатор договора">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="num" type="varchar(20)" remarks="№ платежа">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="check_date" type="date" remarks="Дата платежа">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="currency_code" type="varchar(3)" remarks="Валюта">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="exchange_rate" type="number" remarks="Курс на дату платежа">
+                <constraints nullable="true"/>
+            </column>
+
+            <column name="exchange_date" type="date" remarks="Дата курса">
+                <constraints nullable="true"/>
+            </column>
+
+            <column name="amount" type="number" remarks="Сумма платежа в валюте документа">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="base_amount" type="number" remarks="Сумма платежа в валюте системы">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="create_date" type="TIMESTAMP" remarks="Дата создания">
+                <constraints nullable="true"/>
+            </column>
+
+            <column name="last_update_date" type="TIMESTAMP" remarks="Дата изменения">
+                <constraints nullable="true"/>
+            </column>
+
+            <column name="create_by" type="number" remarks="Автор">
+                <constraints nullable="true"/>
+            </column>
+
+            <column name="last_update_by" type="number" remarks="Автор изменения">
+                <constraints nullable="true"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="fin-eug-6" logicalFilePath="path-independent" author="eugene">
+        <comment>Creating primary key for table: fin_checks</comment>
+        <addPrimaryKey
+                columnNames="id"
+                constraintName="pk_fin_checks"
+                schemaName="apps"
+                tableName="fin_checks"/>
+    </changeSet>
+
+    <changeSet id="fin-eug-7" logicalFilePath="path-independent" author="eugene">
+        <comment>Creating sequence for table: fin_checks</comment>
+        <createSequence
+                incrementBy="1"
+                schemaName="apps"
+                sequenceName="fin_checks_s"
+                startValue="1"/>
+    </changeSet>
+
+
+    <changeSet id="fin-eug-8" logicalFilePath="path-independent" author="eugene">
+        <comment>Creating table: fin_cash_receipts</comment>
+        <createTable tableName="fin_receipts" schemaName="apps" remarks="Список поступлений">
+            <column name="id" type="number" remarks="Идентификатор">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="bp_payer_id" type="number" remarks="Идентификатор отправителя денег">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="bp_payee_id" type="number" remarks="Идентификатор получателя денег">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="contract_id" type="number" remarks="Идентификатор договора">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="num" type="varchar(20)" remarks="№ поступления">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="receipt_date" type="date" remarks="Дата поступления">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="currency_code" type="varchar(3)" remarks="Валюта">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="exchange_rate" type="number" remarks="Курс на дату поступления">
+                <constraints nullable="true"/>
+            </column>
+
+            <column name="exchange_date" type="date" remarks="Дата курса">
+                <constraints nullable="true"/>
+            </column>
+
+            <column name="amount" type="number" remarks="Сумма поступления в валюте документа">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="base_amount" type="number" remarks="Сумма поступления в валюте системы">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="create_date" type="TIMESTAMP" remarks="Дата создания">
+                <constraints nullable="true"/>
+            </column>
+
+            <column name="last_update_date" type="TIMESTAMP" remarks="Дата изменения">
+                <constraints nullable="true"/>
+            </column>
+
+            <column name="create_by" type="number" remarks="Автор">
+                <constraints nullable="true"/>
+            </column>
+
+            <column name="last_update_by" type="number" remarks="Автор изменения">
+                <constraints nullable="true"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="fin-eug-9" logicalFilePath="path-independent" author="eugene">
+        <comment>Creating primary key for table: fin_receipts</comment>
+        <addPrimaryKey
+                columnNames="id"
+                constraintName="pk_fin_receipts"
+                schemaName="apps"
+                tableName="fin_receipts"/>
+    </changeSet>
+
+    <changeSet id="fin-eug-10" logicalFilePath="path-independent" author="eugene">
+        <comment>Creating sequence for table: fin_receipts</comment>
+        <createSequence
+                incrementBy="1"
+                schemaName="apps"
+                sequenceName="fin_receipts_s"
+                startValue="1"/>
+    </changeSet>
+
+
+    <changeSet id="fin-eug-11" logicalFilePath="path-independent" author="eugene">
+        <comment>Creating table: fin_sale_invoices</comment>
+        <createTable tableName="fin_sale_invoices" schemaName="apps" remarks="Список исходящих счетов-фактур">
+            <column name="id" type="number" remarks="Идентификатор">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="source_invoice_id" type="number" remarks="Идентификатор исходной СФ">
+                <constraints nullable="true"/>
+            </column>
+
+            <column name="invoice_type_id" type="number" remarks="Идентификатор типа счёт-фактуры">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="bp_vendor_id" type="number" remarks="Идентификатор поставщика товаров, работ, услуг">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="bp_consignor_id" type="number" remarks="Идентификатор грузоотправителя">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="bp_customer_id" type="number" remarks="Идентификатор заказчика товаров, работ, услуг">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="bp_consignee_id" type="number" remarks="Идентификатор получателя">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="contract_id" type="number" remarks="Идентификатор договора">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="num" type="varchar(20)" remarks="№ счёт-фактуры">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="esf_num" type="varchar(20)" remarks="№ счёт-фактуры в системе ЭСФ">
+                <constraints nullable="true"/>
+            </column>
+
+            <column name="invoice_date" type="date" remarks="Дата счёт-фактуры">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="esf_date" type="date" remarks="Дата регистрации счёт-фактуры в системе ЭСФ">
+                <constraints nullable="true"/>
+            </column>
+
+            <column name="turnover_date" type="date" remarks="Дата совершения оборота по реализации">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="due_date" type="date" remarks="Дата оплаты согласно договора">
+                <constraints nullable="true"/>
+            </column>
+
+            <column name="description" type="varchar(300)" remarks="Описание счёт-фактуры (заголовок)">
+                <constraints nullable="true"/>
+            </column>
+
+            <column name="currency_code" type="varchar(3)" remarks="Валюта">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="exchange_rate" type="number" remarks="Курс">
+                <constraints nullable="true"/>
+            </column>
+
+            <column name="exchange_date" type="date" remarks="Дата курса">
+                <constraints nullable="true"/>
+            </column>
+
+            <column name="amount" type="number" remarks="Сумма счет-фактуры в валюте договора">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="base_amount" type="number" remarks="Сумма счет-фактуры в валюте системы">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="payment_method_id" type="number" remarks="Идентификатор метода платежа">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="create_date" type="TIMESTAMP" remarks="Дата создания">
+                <constraints nullable="true"/>
+            </column>
+
+            <column name="last_update_date" type="TIMESTAMP" remarks="Дата изменения">
+                <constraints nullable="true"/>
+            </column>
+
+            <column name="create_by" type="number" remarks="Автор">
+                <constraints nullable="true"/>
+            </column>
+
+            <column name="last_update_by" type="number" remarks="Автор изменения">
+                <constraints nullable="true"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="fin-eug-12" logicalFilePath="path-independent" author="eugene">
+        <comment>Creating primary key for table: fin_sale_invoices</comment>
+        <addPrimaryKey
+                columnNames="id"
+                constraintName="pk_fin_sale_invoices"
+                schemaName="apps"
+                tableName="fin_sale_invoices"/>
+    </changeSet>
+
+    <changeSet id="fin-eug-13" logicalFilePath="path-independent" author="eugene">
+        <comment>Creating sequence for table: fin_sale_invoices</comment>
+        <createSequence
+                incrementBy="1"
+                schemaName="apps"
+                sequenceName="fin_sale_invoices_s"
+                startValue="1"/>
+    </changeSet>
+
+
+    <changeSet id="fin-eug-14" logicalFilePath="path-independent" author="eugene">
+        <comment>Creating table: fin_invoice_types</comment>
+            <createTable tableName="fin_invoice_types" schemaName="apps" remarks="Типы счетов-фактур">
+            <column name="id" type="number" remarks="Идентификатор">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="code" type="varchar(20)" remarks="Код типа СФ">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="name" type="varchar(100)" remarks="Наименование типа СФ">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+
 </databaseChangeLog>
