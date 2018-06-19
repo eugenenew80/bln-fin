@@ -846,13 +846,182 @@
 
 
     <changeSet id="fin-eug-31" logicalFilePath="path-independent" author="eugene">
-        <comment>Creating table: fin_clearings</comment>
-        <createTable tableName="fin_clearings" schemaName="apps" remarks="Строки выравнивания">
+        <comment>Creating table: fin_receipt_applications</comment>
+        <createTable tableName="fin_receipt_applications" schemaName="apps" remarks="Учёт поступлений">
             <column name="id" type="number" remarks="Идентификатор">
                 <constraints nullable="false"/>
             </column>
 
+            <column name="receipt_id" type="number" remarks="Идентификатор поступления">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="applied_sale_invoice_id" type="number" remarks="Идентификатор выставленной СФ">
+                <constraints nullable="true"/>
+            </column>
+
+            <column name="applied_date" type="date" remarks="Дата учёта">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="applied_amount" type="number" remarks="Учтённая сумма">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="create_date" type="TIMESTAMP" remarks="Дата создания">
+                <constraints nullable="true"/>
+            </column>
+
+            <column name="last_update_date" type="TIMESTAMP" remarks="Дата изменения">
+                <constraints nullable="true"/>
+            </column>
+
+            <column name="create_by" type="number" remarks="Автор">
+                <constraints nullable="true"/>
+            </column>
+
+            <column name="last_update_by" type="number" remarks="Автор изменения">
+                <constraints nullable="true"/>
+            </column>
         </createTable>
+    </changeSet>
+
+    <changeSet id="fin-eug-32" logicalFilePath="path-independent" author="eugene">
+        <comment>Creating primary key for table: fin_receipt_applications</comment>
+        <addPrimaryKey
+                columnNames="id"
+                constraintName="pk_fin_receipt_applications"
+                schemaName="apps"
+                tableName="fin_receipt_applications"/>
+    </changeSet>
+
+    <changeSet id="fin-eug-33" logicalFilePath="path-independent" author="eugene">
+        <comment>Creating sequence for table: fin_receipt_applications</comment>
+        <createSequence
+                incrementBy="1"
+                schemaName="apps"
+                sequenceName="fin_receipt_applications_s"
+                startValue="1"/>
+    </changeSet>
+
+
+    <changeSet id="fin-eug-34" logicalFilePath="path-independent" author="eugene">
+        <comment>Creating table: fin_check_applications</comment>
+        <createTable tableName="fin_check_applications" schemaName="apps" remarks="Учёт платежей">
+            <column name="id" type="number" remarks="Идентификатор">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="check_id" type="number" remarks="Идентификатор платежа">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="applied_purchase_invoice_id" type="number" remarks="Идентификатор полученной СФ">
+                <constraints nullable="true"/>
+            </column>
+
+            <column name="applied_date" type="date" remarks="Дата учёта">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="applied_amount" type="number" remarks="Учтённая сумма">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="create_date" type="TIMESTAMP" remarks="Дата создания">
+                <constraints nullable="true"/>
+            </column>
+
+            <column name="last_update_date" type="TIMESTAMP" remarks="Дата изменения">
+                <constraints nullable="true"/>
+            </column>
+
+            <column name="create_by" type="number" remarks="Автор">
+                <constraints nullable="true"/>
+            </column>
+
+            <column name="last_update_by" type="number" remarks="Автор изменения">
+                <constraints nullable="true"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="fin-eug-35" logicalFilePath="path-independent" author="eugene">
+        <comment>Creating primary key for table: fin_check_applications</comment>
+        <addPrimaryKey
+                columnNames="id"
+                constraintName="pk_fin_check_applications"
+                schemaName="apps"
+                tableName="fin_check_applications"/>
+    </changeSet>
+
+    <changeSet id="fin-eug-36" logicalFilePath="path-independent" author="eugene">
+        <comment>Creating sequence for table: fin_check_applications</comment>
+        <createSequence
+                incrementBy="1"
+                schemaName="apps"
+                sequenceName="fin_check_applications_s"
+                startValue="1"/>
+    </changeSet>
+
+
+    <changeSet id="fin-eug-37" logicalFilePath="path-independent" author="eugene">
+        <comment>Creating table: fin_set_offs</comment>
+        <createTable tableName="fin_set_offs" schemaName="apps" remarks="Взаимозачёты">
+            <column name="id" type="number" remarks="Идентификатор">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="applied_sale_invoice_id" type="number" remarks="Идентификатор выставленной">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="applied_purchase_invoice_id" type="number" remarks="Идентификатор полученной СФ">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="applied_date" type="date" remarks="Дата учёта">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="applied_amount" type="number" remarks="Учтённая сумма">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="create_date" type="TIMESTAMP" remarks="Дата создания">
+                <constraints nullable="true"/>
+            </column>
+
+            <column name="last_update_date" type="TIMESTAMP" remarks="Дата изменения">
+                <constraints nullable="true"/>
+            </column>
+
+            <column name="create_by" type="number" remarks="Автор">
+                <constraints nullable="true"/>
+            </column>
+
+            <column name="last_update_by" type="number" remarks="Автор изменения">
+                <constraints nullable="true"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="fin-eug-38" logicalFilePath="path-independent" author="eugene">
+        <comment>Creating primary key for table: fin_set_offs</comment>
+        <addPrimaryKey
+                columnNames="id"
+                constraintName="pk_fin_set_offs"
+                schemaName="apps"
+                tableName="fin_set_offs"/>
+    </changeSet>
+
+    <changeSet id="fin-eug-39" logicalFilePath="path-independent" author="eugene">
+        <comment>Creating sequence for table: fin_set_offs</comment>
+        <createSequence
+                incrementBy="1"
+                schemaName="apps"
+                sequenceName="fin_set_offs_s"
+                startValue="1"/>
     </changeSet>
 
 </databaseChangeLog>
