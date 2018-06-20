@@ -966,8 +966,8 @@
 
 
     <changeSet id="fin-eug-37" logicalFilePath="path-independent" author="eugene">
-        <comment>Creating table: fin_set_offs</comment>
-        <createTable tableName="fin_set_offs" schemaName="apps" remarks="Взаимозачёты">
+        <comment>Creating table: fin_netting_applications</comment>
+        <createTable tableName="fin_netting_applications" schemaName="apps" remarks="Взаимозачёты">
             <column name="id" type="number" remarks="Идентификатор">
                 <constraints nullable="false"/>
             </column>
@@ -1007,20 +1007,156 @@
     </changeSet>
 
     <changeSet id="fin-eug-38" logicalFilePath="path-independent" author="eugene">
-        <comment>Creating primary key for table: fin_set_offs</comment>
+        <comment>Creating primary key for table: fin_netting_applications</comment>
         <addPrimaryKey
                 columnNames="id"
-                constraintName="pk_fin_set_offs"
+                constraintName="pk_fin_netting_applications"
                 schemaName="apps"
-                tableName="fin_set_offs"/>
+                tableName="fin_netting_applications"/>
     </changeSet>
 
     <changeSet id="fin-eug-39" logicalFilePath="path-independent" author="eugene">
-        <comment>Creating sequence for table: fin_set_offs</comment>
+        <comment>Creating sequence for table: fin_netting_applications</comment>
         <createSequence
                 incrementBy="1"
                 schemaName="apps"
-                sequenceName="fin_set_offs_s"
+                sequenceName="fin_netting_applications_s"
+                startValue="1"/>
+    </changeSet>
+
+    <changeSet id="fin-eug-40" logicalFilePath="path-independent" author="eugene">
+        <comment>Creating table: fin_total_delivery_headers</comment>
+        <createTable tableName="fin_total_delivery_headers" schemaName="apps" remarks="Объем оказанных услуг за период - заголовок">
+            <column name="id" type="number" remarks="Идентификатор">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="period_id" type="number" remarks="Идентификатор периода">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="is_final" type="number" remarks="Флаг - окончательный расчёт">
+                <constraints nullable="true"/>
+            </column>
+
+            <column name="version_id" type="number" remarks="Флаг - версия">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="create_date" type="TIMESTAMP" remarks="Дата создания">
+                <constraints nullable="true"/>
+            </column>
+
+            <column name="last_update_date" type="TIMESTAMP" remarks="Дата изменения">
+                <constraints nullable="true"/>
+            </column>
+
+            <column name="create_by" type="number" remarks="Автор">
+                <constraints nullable="true"/>
+            </column>
+
+            <column name="last_update_by" type="number" remarks="Автор изменения">
+                <constraints nullable="true"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="fin-eug-41" logicalFilePath="path-independent" author="eugene">
+        <comment>Creating primary key for table: fin_total_delivery_headers</comment>
+        <addPrimaryKey
+                columnNames="id"
+                constraintName="pk_fin_total_delivery_headers"
+                schemaName="apps"
+                tableName="fin_total_delivery_headers"/>
+    </changeSet>
+
+    <changeSet id="fin-eug-42" logicalFilePath="path-independent" author="eugene">
+        <comment>Creating sequence for table: fin_total_delivery_headers</comment>
+        <createSequence
+                incrementBy="1"
+                schemaName="apps"
+                sequenceName="fin_total_delivery_headers_s"
+                startValue="1"/>
+    </changeSet>
+
+
+
+    <changeSet id="fin-eug-43" logicalFilePath="path-independent" author="eugene">
+        <comment>Creating table: fin_total_delivery_lines</comment>
+        <createTable tableName="fin_total_delivery_lines" schemaName="apps" remarks="Объем оказанных услуг за период - строки">
+            <column name="id" type="number" remarks="Идентификатор">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="header_id" type="number" remarks="Идентификатор заголовка">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="is_invoice_created" type="number" remarks="Флаг - СФ создана">
+                <constraints nullable="true"/>
+            </column>
+
+            <column name="is_estimated_created" type="number" remarks="Флаг - оценочное начисление создано">
+                <constraints nullable="true"/>
+            </column>
+
+            <column name="bp_vendor_id" type="number" remarks="Идентификатор бизнес-партнера поставщика">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="bp_customer_id" type="number" remarks="Идентификатор договора бизнес-партнера заказчика">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="contract_id" type="number" remarks="Идентификатор договора">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="gjs_id" type="number" remarks="Идентификатор услуги">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="unit_id" type="number" remarks="Идентификатор единицы измерения">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="quantity" type="number" remarks="Количество">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="create_date" type="TIMESTAMP" remarks="Дата создания">
+                <constraints nullable="true"/>
+            </column>
+
+            <column name="last_update_date" type="TIMESTAMP" remarks="Дата изменения">
+                <constraints nullable="true"/>
+            </column>
+
+            <column name="create_by" type="number" remarks="Автор">
+                <constraints nullable="true"/>
+            </column>
+
+            <column name="last_update_by" type="number" remarks="Автор изменения">
+                <constraints nullable="true"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="fin-eug-44" logicalFilePath="path-independent" author="eugene">
+        <comment>Creating primary key for table: fin_total_delivery_lines</comment>
+        <addPrimaryKey
+                columnNames="id"
+                constraintName="pk_fin_total_delivery_lines"
+                schemaName="apps"
+                tableName="fin_total_delivery_lines"/>
+    </changeSet>
+
+    <changeSet id="fin-eug-45" logicalFilePath="path-independent" author="eugene">
+        <comment>Creating sequence for table: fin_total_delivery_lines</comment>
+        <createSequence
+                incrementBy="1"
+                schemaName="apps"
+                sequenceName="fin_total_delivery_lines_s"
                 startValue="1"/>
     </changeSet>
 
