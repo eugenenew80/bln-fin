@@ -57,9 +57,6 @@ public class PurchaseInvoice {
     @Column(name = "amount")
     private Double amount;
 
-    @Column(name = "base_amount")
-    private Double baseAmount;
-
     @Column(name = "currency_code")
     private String currencyCode;
 

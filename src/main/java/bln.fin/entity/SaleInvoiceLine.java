@@ -43,15 +43,6 @@ public class SaleInvoiceLine {
     @Column(name = "discount")
     private Double discount;
 
-    @Column(name = "base_unit_price")
-    private Double baseUnitPrice;
-
-    @Column(name = "base_amount")
-    private Double baseAmount;
-
-    @Column(name = "base_discount")
-    private Double baseDiscount;
-
     @Column(name = "tax_rate")
     private Double taxRateValue;
 

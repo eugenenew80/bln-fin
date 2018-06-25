@@ -166,10 +166,6 @@
                 <constraints nullable="false"/>
             </column>
 
-            <column name="base_amount" type="number" remarks="Сумма счет-фактуры в валюте системы">
-                <constraints nullable="false"/>
-            </column>
-
             <column name="create_date" type="TIMESTAMP" remarks="Дата создания">
                 <constraints nullable="true"/>
             </column>
@@ -351,18 +347,6 @@
                 <constraints nullable="true"/>
             </column>
 
-            <column name="base_unit_price" type="number" remarks="Цена за единицу в валюте системы">
-                <constraints nullable="false"/>
-            </column>
-
-            <column name="base_amount" type="number" remarks="Стоимость ТРУ в валюте системы">
-                <constraints nullable="false"/>
-            </column>
-
-            <column name="base_discount" type="number" remarks="Сумма скидки в валюте системы">
-                <constraints nullable="true"/>
-            </column>
-
             <column name="tax_rate" type="number" remarks="Ставка НДС">
                 <constraints nullable="true"/>
             </column>
@@ -481,7 +465,6 @@
                 tableName="fin_invoice_line_types"/>
     </changeSet>
 
-
     <changeSet id="fin-eug-20" logicalFilePath="path-independent" author="eugene">
         <comment>Creating table: fin_purchase_invoices</comment>
         <createTable tableName="fin_purchase_invoices" schemaName="apps" remarks="Список входящих счетов-фактур">
@@ -550,10 +533,6 @@
             </column>
 
             <column name="amount" type="number" remarks="Сумма счет-фактуры в валюте договора">
-                <constraints nullable="false"/>
-            </column>
-
-            <column name="base_amount" type="number" remarks="Сумма счет-фактуры в валюте системы">
                 <constraints nullable="false"/>
             </column>
 
@@ -632,14 +611,6 @@
                 <constraints nullable="false"/>
             </column>
 
-            <column name="base_unit_price" type="number" remarks="Цена за единицу в валюте системы">
-                <constraints nullable="false"/>
-            </column>
-
-            <column name="base_amount" type="number" remarks="Стоимость ТРУ в валюте системы">
-                <constraints nullable="false"/>
-            </column>
-
             <column name="tax_rate" type="number" remarks="Ставка НДС">
                 <constraints nullable="true"/>
             </column>
@@ -695,11 +666,11 @@
                 <constraints nullable="false"/>
             </column>
 
-            <column name="bp_payer_id" type="number" remarks="Идентификатор отправителя денег">
+            <column name="payer_id" type="number" remarks="Идентификатор отправителя денег">
                 <constraints nullable="false"/>
             </column>
 
-            <column name="bp_payee_id" type="number" remarks="Идентификатор получателя денег">
+            <column name="payee_id" type="number" remarks="Идентификатор получателя денег">
                 <constraints nullable="false"/>
             </column>
 
@@ -711,7 +682,7 @@
                 <constraints nullable="false"/>
             </column>
 
-            <column name="sale_invoice_id" type="number" remarks="Идентификатор выставленной СФ">
+            <column name="invoice_id" type="number" remarks="Идентификатор выставленной СФ">
                 <constraints nullable="true"/>
             </column>
 
@@ -727,7 +698,7 @@
                 <constraints nullable="false"/>
             </column>
 
-            <column name="currency_rate" type="number" remarks="Курс валюты">
+            <column name="exchange_rate" type="number" remarks="Курс валюты">
                 <constraints nullable="false"/>
             </column>
 
@@ -783,11 +754,11 @@
                 <constraints nullable="false"/>
             </column>
 
-            <column name="bp_payer_id" type="number" remarks="Идентификатор отправителя денег">
+            <column name="payer_id" type="number" remarks="Идентификатор отправителя денег">
                 <constraints nullable="false"/>
             </column>
 
-            <column name="bp_payee_id" type="number" remarks="Идентификатор получателя денег">
+            <column name="payee_id" type="number" remarks="Идентификатор получателя денег">
                 <constraints nullable="false"/>
             </column>
 
@@ -799,7 +770,7 @@
                 <constraints nullable="false"/>
             </column>
 
-            <column name="purchase_invoice_id" type="number" remarks="Идентификатор полученной СФ">
+            <column name="invoice_id" type="number" remarks="Идентификатор полученной СФ">
                 <constraints nullable="true"/>
             </column>
 
@@ -815,7 +786,7 @@
                 <constraints nullable="false"/>
             </column>
 
-            <column name="currency_rate" type="number" remarks="Курс валюты">
+            <column name="exchange_rate" type="number" remarks="Курс валюты">
                 <constraints nullable="false"/>
             </column>
 
@@ -993,7 +964,7 @@
 
     <changeSet id="fin-eug-38" logicalFilePath="path-independent" author="eugene">
         <comment>Creating table: fin_debt_types</comment>
-        <createTable tableName="fin_debt_types" schemaName="apps" remarks="Типы счетов-фактур">
+        <createTable tableName="fin_debt_types" schemaName="apps" remarks="Типы задолженностей">
 
             <column name="code" type="varchar(20)" remarks="Код типа задолженности">
                 <constraints nullable="false"/>

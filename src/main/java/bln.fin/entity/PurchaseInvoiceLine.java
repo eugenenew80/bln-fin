@@ -41,12 +41,6 @@ public class PurchaseInvoiceLine {
     @Column(name = "amount")
     private Double amount;
 
-    @Column(name = "base_unit_price")
-    private Double baseUnitPrice;
-
-    @Column(name = "base_amount")
-    private Double baseAmount;
-
     @Column(name = "tax_rate")
     private Double taxRateValue;
 
