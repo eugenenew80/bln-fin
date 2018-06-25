@@ -18,7 +18,7 @@ public class PurchaseInvoiceLine {
 
     @ManyToOne
     @JoinColumn(name = "purchase_invoice_id")
-    private PurchaseInvoiceLine purchaseInvoice;
+    private PurchaseInvoice purchaseInvoice;
 
     @Column(name="line_type_code")
     @Enumerated(EnumType.STRING)

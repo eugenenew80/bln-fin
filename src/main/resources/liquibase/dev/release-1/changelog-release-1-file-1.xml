@@ -738,7 +738,6 @@
                 startValue="1"/>
     </changeSet>
 
-
     <changeSet id="fin-eug-29" logicalFilePath="path-independent" author="eugene">
         <comment>Creating table: fin_check_applications</comment>
         <createTable tableName="fin_check_applications" schemaName="apps" remarks="Учёт платежей">
@@ -826,7 +825,6 @@
                 startValue="1"/>
     </changeSet>
 
-
     <changeSet id="fin-eug-32" logicalFilePath="path-independent" author="eugene">
         <comment>Creating table: fin_total_delivery_headers</comment>
         <createTable tableName="fin_total_delivery_headers" schemaName="apps" remarks="Объем оказанных услуг за период - заголовок">
@@ -901,11 +899,11 @@
                 <constraints nullable="true"/>
             </column>
 
-            <column name="bp_vendor_id" type="number" remarks="Идентификатор бизнес-партнера поставщика">
+            <column name="vendor_id" type="number" remarks="Идентификатор бизнес-партнера поставщика">
                 <constraints nullable="false"/>
             </column>
 
-            <column name="bp_customer_id" type="number" remarks="Идентификатор договора бизнес-партнера заказчика">
+            <column name="customer_id" type="number" remarks="Идентификатор договора бизнес-партнера заказчика">
                 <constraints nullable="false"/>
             </column>
 
@@ -960,7 +958,6 @@
                 sequenceName="fin_total_delivery_lines_s"
                 startValue="1"/>
     </changeSet>
-
 
     <changeSet id="fin-eug-38" logicalFilePath="path-independent" author="eugene">
         <comment>Creating table: fin_debt_types</comment>
