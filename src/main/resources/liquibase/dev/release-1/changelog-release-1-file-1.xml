@@ -493,14 +493,6 @@
                 <constraints nullable="true"/>
             </column>
 
-            <column name="doc_type_code" type="varchar(20)" remarks="Код типа документа">
-                <constraints nullable="false"/>
-            </column>
-
-            <column name="invoice_type_code" type="varchar(20)" remarks="Код типа счёт-фактуры">
-                <constraints nullable="false"/>
-            </column>
-
             <column name="vendor_id" type="number" remarks="Идентификатор поставщика товаров, работ, услуг">
                 <constraints nullable="false"/>
             </column>
@@ -539,10 +531,6 @@
 
             <column name="turnover_date" type="date" remarks="Дата совершения оборота по реализации">
                 <constraints nullable="false"/>
-            </column>
-
-            <column name="due_date" type="date" remarks="Дата оплаты согласно договора">
-                <constraints nullable="true"/>
             </column>
 
             <column name="description" type="varchar(300)" remarks="Описание счёт-фактуры (заголовок)">
@@ -650,10 +638,6 @@
 
             <column name="base_amount" type="number" remarks="Стоимость ТРУ в валюте системы">
                 <constraints nullable="false"/>
-            </column>
-
-            <column name="base_discount" type="number" remarks="Сумма скидки в валюте системы">
-                <constraints nullable="true"/>
             </column>
 
             <column name="tax_rate" type="number" remarks="Ставка НДС">

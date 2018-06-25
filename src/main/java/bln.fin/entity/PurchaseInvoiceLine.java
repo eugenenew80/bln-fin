@@ -3,21 +3,22 @@ package bln.fin.entity;
 import bln.fin.entity.enums.InvoiceLineTypeEnum;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+
 import javax.persistence.*;
 
 @Data
 @EqualsAndHashCode(of= {"id"})
 @Entity
-@Table(name = "fin_sale_invoice_lines")
-public class SaleInvoiceLine {
+@Table(name = "fin_purchase_invoice_lines")
+public class PurchaseInvoiceLine {
     @Id
-    @SequenceGenerator(name="fin_sale_invoice_lines_s", sequenceName = "fin_sale_invoice_lines_s", allocationSize=1)
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "fin_sale_invoice_lines_s")
+    @SequenceGenerator(name="fin_purchase_invoice_lines_s", sequenceName = "fin_purchase_invoice_lines_s", allocationSize=1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "fin_purchase_invoice_lines_s")
     private Long id;
 
     @ManyToOne
-    @JoinColumn(name = "sale_invoice_id")
-    private SaleInvoiceLine saleInvoice;
+    @JoinColumn(name = "purchase_invoice_id")
+    private PurchaseInvoiceLine purchaseInvoice;
 
     @Column(name="line_type_code")
     @Enumerated(EnumType.STRING)
@@ -40,17 +41,11 @@ public class SaleInvoiceLine {
     @Column(name = "amount")
     private Double amount;
 
-    @Column(name = "discount")
-    private Double discount;
-
     @Column(name = "base_unit_price")
     private Double baseUnitPrice;
 
     @Column(name = "base_amount")
     private Double baseAmount;
-
-    @Column(name = "base_discount")
-    private Double baseDiscount;
 
     @Column(name = "tax_rate")
     private Double taxRateValue;
