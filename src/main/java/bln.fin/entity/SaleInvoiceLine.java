@@ -1,13 +1,9 @@
 package bln.fin.entity;
 
-import bln.fin.entity.enums.DocTypeEnum;
 import bln.fin.entity.enums.InvoiceLineTypeEnum;
-import bln.fin.entity.enums.InvoiceTypeEnum;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-
 import javax.persistence.*;
-import java.time.LocalDate;
 
 @Data
 @EqualsAndHashCode(of= {"id"})

@@ -351,6 +351,18 @@
                 <constraints nullable="true"/>
             </column>
 
+            <column name="base_unit_price" type="number" remarks="Цена за единицу в валюте системы">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="base_amount" type="number" remarks="Стоимость ТРУ в валюте системы">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="base_discount" type="number" remarks="Сумма скидки в валюте системы">
+                <constraints nullable="true"/>
+            </column>
+
             <column name="tax_rate" type="number" remarks="Ставка НДС">
                 <constraints nullable="true"/>
             </column>
@@ -630,6 +642,18 @@
 
             <column name="amount" type="number" remarks="Стоимость ТРУ">
                 <constraints nullable="false"/>
+            </column>
+
+            <column name="base_unit_price" type="number" remarks="Цена за единицу в валюте системы">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="base_amount" type="number" remarks="Стоимость ТРУ в валюте системы">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="base_discount" type="number" remarks="Сумма скидки в валюте системы">
+                <constraints nullable="true"/>
             </column>
 
             <column name="tax_rate" type="number" remarks="Ставка НДС">

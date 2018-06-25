@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.List;
 
 @Data
 @EqualsAndHashCode(of= {"id"})
@@ -84,4 +85,7 @@ public class SaleInvoice {
     @ManyToOne
     @JoinColumn(name = "src_sale_invoice_id")
     private SaleInvoice srcSaleInvoice;
+
+    @OneToMany(mappedBy = "saleInvoice", fetch = FetchType.LAZY)
+    private List<SaleInvoiceLine> lines;
 }
