@@ -3,7 +3,6 @@ package bln.fin.entity;
 import bln.fin.entity.enums.DebtTypeEnum;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-
 import javax.persistence.*;
 import java.time.LocalDate;
 

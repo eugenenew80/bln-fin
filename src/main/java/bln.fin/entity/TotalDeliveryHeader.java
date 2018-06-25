@@ -11,7 +11,7 @@ import java.util.List;
 @EqualsAndHashCode(of= {"id"})
 @Entity
 @Table(name = "fin_total_delivery_headers")
-public class TotalDeliverHeader {
+public class TotalDeliveryHeader {
 
     @Id
     @SequenceGenerator(name="fin_total_delivery_headers_s", sequenceName = "fin_total_delivery_headers_s", allocationSize=1)

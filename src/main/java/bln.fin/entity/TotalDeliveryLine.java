@@ -17,7 +17,7 @@ public class TotalDeliveryLine {
 
     @ManyToOne
     @JoinColumn(name = "header_id")
-    private TotalDeliverHeader header;
+    private TotalDeliveryHeader header;
 
     @ManyToOne
     @JoinColumn(name = "vendor_id")
