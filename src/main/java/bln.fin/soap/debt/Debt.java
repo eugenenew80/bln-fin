@@ -1,4 +1,4 @@
-package bln.fin.soap;
+package bln.fin.soap.debt;
 
 import lombok.Data;
 

@@ -1,6 +1,6 @@
 package bln.fin;
 
-import bln.fin.soap.DebtServiceImpl;
+import bln.fin.soap.debt.DebtServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.apache.cxf.Bus;
 import org.apache.cxf.bus.spring.SpringBus;

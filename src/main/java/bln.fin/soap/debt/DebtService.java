@@ -1,4 +1,6 @@
-package bln.fin.soap;
+package bln.fin.soap.debt;
+
+import bln.fin.soap.Message;
 
 import javax.jws.WebMethod;
 import javax.jws.WebParam;
