@@ -1,18 +1,22 @@
-package bln.fin.soap.debt.dto;
+package bln.fin.soap;
 
 import lombok.Data;
-import java.time.LocalDate;
+
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import java.util.Date;
 
 @Data
-public class DebtDto {
+@XmlAccessorType(XmlAccessType.FIELD)
+public class Debt {
     private String businessPartnerType;
     private String debtType;
-    private LocalDate accountingDate;
+    private String accountingDate;
     private Double amount;
     private String currencyCode;
     private Double exchangeRate;
     private String docNum;
-    private LocalDate docDate;
+    private Date docDate;
     private String businessPartnerNum;
     private String contractNum;
     private String externalContractNum;

@@ -83,6 +83,6 @@ public class SaleInvoice {
     @JoinColumn(name = "src_sale_invoice_id")
     private SaleInvoice srcSaleInvoice;
 
-    @OneToMany(mappedBy = "saleInvoice", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "invoice", fetch = FetchType.LAZY)
     private List<SaleInvoiceLine> lines;
 }

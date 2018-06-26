@@ -1,26 +1,36 @@
 package bln.fin;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.SerializationFeature;
-import com.fasterxml.jackson.datatype.jdk8.Jdk8Module;
-import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
-import com.fasterxml.jackson.module.paramnames.ParameterNamesModule;
+import bln.fin.soap.DebtServiceImpl;
 import lombok.RequiredArgsConstructor;
+import org.apache.cxf.Bus;
+import org.apache.cxf.bus.spring.SpringBus;
+import org.apache.cxf.jaxws.EndpointImpl;
+import org.apache.cxf.transport.servlet.CXFServlet;
+import org.springframework.boot.web.servlet.ServletRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+
+import javax.xml.ws.Endpoint;
 
 @Configuration
 @RequiredArgsConstructor
 public class AppConfig  {
 
     @Bean
-    public ObjectMapper objectMapper() {
-        ObjectMapper mapper = new ObjectMapper();
-        mapper.registerModule(new ParameterNamesModule());
-        mapper.registerModule(new JavaTimeModule());
-        mapper.registerModule(new Jdk8Module());
-        mapper.configure(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS, false);
-        return mapper;
+    public ServletRegistrationBean dispatcherServlet() {
+        return new ServletRegistrationBean(new CXFServlet(), "/services/*");
     }
 
+    @Bean(name=Bus.DEFAULT_BUS_ID)
+    public SpringBus springBus() {
+        SpringBus springBus = new SpringBus();
+        return springBus;
+    }
+
+    @Bean
+    public Endpoint endpoint() {
+        EndpointImpl endpoint = new EndpointImpl(springBus(), new DebtServiceImpl());
+        endpoint.publish("/DebtService");
+        return endpoint;
+    }
 }
