@@ -12,5 +12,5 @@ import java.util.List;
 public interface InvoiceService {
     @WebMethod
     @WebResult(name = "result")
-    Message updateStatuses(@WebParam(name = "state") List<InvoiceStatus> list);
+    Message updateStatuses(@WebParam(name = "status") List<InvoiceStatus> list);
 }
