@@ -1132,7 +1132,7 @@
                 columnNames="id"
                 constraintName="pk_fin_payment_request_lines"
                 schemaName="apps"
-                tableName="fin_payment_requests"/>
+                tableName="fin_payment_request_lines"/>
     </changeSet>
 
     <changeSet id="fin-eug-45" logicalFilePath="path-independent" author="eugene">
@@ -1140,7 +1140,7 @@
         <createSequence
                 incrementBy="1"
                 schemaName="apps"
-                sequenceName="fin_payment_request_lines_s"
+                sequenceName="fin_payment_request_lines_ы"
                 startValue="1"/>
     </changeSet>
 </databaseChangeLog>
