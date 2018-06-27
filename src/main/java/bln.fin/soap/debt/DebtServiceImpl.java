@@ -13,6 +13,7 @@ public class DebtServiceImpl implements DebtService {
     public Message createDebts(List<Debt> list) {
         Message msg = new Message();
         msg.setStatus("success");
+        msg.setDetails(list.size() + " records created");
         return msg;
     }
 }

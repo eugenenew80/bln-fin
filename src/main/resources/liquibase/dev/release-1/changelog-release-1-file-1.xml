@@ -82,7 +82,6 @@
                 tableName="fin_periods"/>
     </changeSet>
 
-
     <changeSet id="fin-eug-5" logicalFilePath="path-independent" author="eugene">
         <comment>Creating table: fin_sale_invoices</comment>
         <createTable tableName="fin_sale_invoices" schemaName="apps" remarks="Список исходящих счетов-фактур">
@@ -996,5 +995,152 @@
                 constraintName="pk_fin_debt_types"
                 schemaName="apps"
                 tableName="fin_debt_types"/>
+    </changeSet>
+
+    <changeSet id="fin-eug-40" logicalFilePath="path-independent" author="eugene">
+        <comment>Creating table: fin_sale_invoices</comment>
+        <createTable tableName="fin_payment_requests" schemaName="apps" remarks="Список счетов на оплату">
+            <column name="id" type="number" remarks="Идентификатор">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="vendor_id" type="number" remarks="Идентификатор поставщика товаров, работ, услуг">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="customer_id" type="number" remarks="Идентификатор заказчика товаров, работ, услуг">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="contract_id" type="number" remarks="Идентификатор договора">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="num" type="varchar(20)" remarks="№ счёт на оплату">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="payment_request_date" type="date" remarks="Дата счёт на оплату">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="due_date" type="date" remarks="Оплатить до">
+                <constraints nullable="true"/>
+            </column>
+
+            <column name="description" type="varchar(300)" remarks="Описание счёта на оплату (заголовок)">
+                <constraints nullable="true"/>
+            </column>
+
+            <column name="currency_code" type="varchar(3)" remarks="Валюта">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="amount" type="number" remarks="Сумма счёта на оплату в валюте договора">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="create_date" type="TIMESTAMP" remarks="Дата создания">
+                <constraints nullable="true"/>
+            </column>
+
+            <column name="last_update_date" type="TIMESTAMP" remarks="Дата изменения">
+                <constraints nullable="true"/>
+            </column>
+
+            <column name="create_by" type="number" remarks="Автор">
+                <constraints nullable="true"/>
+            </column>
+
+            <column name="last_update_by" type="number" remarks="Автор изменения">
+                <constraints nullable="true"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="fin-eug-41" logicalFilePath="path-independent" author="eugene">
+        <comment>Creating primary key for table: fin_payment_requests</comment>
+        <addPrimaryKey
+                columnNames="id"
+                constraintName="pk_fin_payment_requests"
+                schemaName="apps"
+                tableName="fin_payment_requests"/>
+    </changeSet>
+
+    <changeSet id="fin-eug-42" logicalFilePath="path-independent" author="eugene">
+        <comment>Creating sequence for table: fin_payment_requests</comment>
+        <createSequence
+                incrementBy="1"
+                schemaName="apps"
+                sequenceName="fin_payment_requests_s"
+                startValue="1"/>
+    </changeSet>
+
+
+    <changeSet id="fin-eug-43" logicalFilePath="path-independent" author="eugene">
+        <comment>Creating table: fin_payment_request_lines</comment>
+        <createTable tableName="fin_payment_request_lines" schemaName="apps" remarks="Строки счетов на оплату">
+            <column name="id" type="number" remarks="Идентификатор">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="payment_request_id" type="number" remarks="Идентификатор счёта на оплату">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="gjs_id" type="number" remarks="Идентификатор услуги">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="unit_id" type="number" remarks="Идентификатор единицы измерения">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="quantity" type="number" remarks="Количество">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="unit_price" type="number" remarks="Цена за единицу">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="amount" type="number" remarks="Стоимость ТРУ">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="create_date" type="TIMESTAMP" remarks="Дата создания">
+                <constraints nullable="true"/>
+            </column>
+
+            <column name="last_update_date" type="TIMESTAMP" remarks="Дата изменения">
+                <constraints nullable="true"/>
+            </column>
+
+            <column name="create_by" type="number" remarks="Автор">
+                <constraints nullable="true"/>
+            </column>
+
+            <column name="last_update_by" type="number" remarks="Автор изменения">
+                <constraints nullable="true"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="fin-eug-44" logicalFilePath="path-independent" author="eugene">
+        <comment>Creating primary key for table: fin_payment_request_lines</comment>
+        <addPrimaryKey
+                columnNames="id"
+                constraintName="pk_fin_payment_request_lines"
+                schemaName="apps"
+                tableName="fin_payment_requests"/>
+    </changeSet>
+
+    <changeSet id="fin-eug-45" logicalFilePath="path-independent" author="eugene">
+        <comment>Creating sequence for table: fin_payment_request_lines</comment>
+        <createSequence
+                incrementBy="1"
+                schemaName="apps"
+                sequenceName="fin_payment_request_lines_s"
+                startValue="1"/>
     </changeSet>
 </databaseChangeLog>
