@@ -165,6 +165,10 @@
                 <constraints nullable="false"/>
             </column>
 
+            <column name="tax" type="number" remarks="Сумма налога в валюте договора">
+                <constraints nullable="false"/>
+            </column>
+
             <column name="create_date" type="TIMESTAMP" remarks="Дата создания">
                 <constraints nullable="true"/>
             </column>
@@ -532,6 +536,10 @@
             </column>
 
             <column name="amount" type="number" remarks="Сумма счет-фактуры в валюте договора">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="tax" type="number" remarks="Сумма налога в валюте договора">
                 <constraints nullable="false"/>
             </column>
 
@@ -1075,7 +1083,6 @@
                 sequenceName="fin_payment_requests_s"
                 startValue="1"/>
     </changeSet>
-
 
     <changeSet id="fin-eug-43" logicalFilePath="path-independent" author="eugene">
         <comment>Creating table: fin_payment_request_lines</comment>
