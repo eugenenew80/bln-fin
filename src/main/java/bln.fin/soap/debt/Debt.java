@@ -10,7 +10,7 @@ import java.util.Date;
 @XmlAccessorType(XmlAccessType.FIELD)
 public class Debt {
     @XmlElement(required = true)
-    private String businessPartnerType;
+    private String bpType;
 
     @XmlElement(required = true)
     private String debtType;
