@@ -11,5 +11,5 @@ import java.util.List;
 public interface ReqService {
     @WebMethod
     @WebResult(name = "result")
-    Message createReqs(@WebParam(name = "reqLine") List<ReqLine> list);
+    Message createReqs(@WebParam(name = "reqLine") List<ReqLineDto> list);
 }

@@ -4,12 +4,14 @@ import lombok.Data;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlType;
 import java.util.Date;
 import java.util.List;
 
 @Data
 @XmlAccessorType(XmlAccessType.FIELD)
-public class ReqLine {
+@XmlType(name = "ReqLine")
+public class ReqLineDto {
     @XmlElement(required = true)
     private Long reqNum;
 
@@ -44,5 +46,5 @@ public class ReqLine {
     private String unlocked;
 
     @XmlElement(required = true, name = "item")
-    private List<ReqItem> items;
+    private List<ReqItemDto> items;
 }
