@@ -1,4 +1,4 @@
-package bln.fin.soap.req;
+package bln.fin.soap.req.dto;
 
 import lombok.Data;
 import javax.xml.bind.annotation.XmlAccessType;

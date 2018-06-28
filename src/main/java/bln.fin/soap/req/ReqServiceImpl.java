@@ -4,6 +4,8 @@ import bln.fin.entity.ReqItem;
 import bln.fin.entity.ReqLine;
 import bln.fin.repo.ReqLineRepo;
 import bln.fin.soap.Message;
+import bln.fin.soap.req.dto.ReqItemDto;
+import bln.fin.soap.req.dto.ReqLineDto;
 import org.springframework.stereotype.Service;
 import javax.jws.WebParam;
 import javax.jws.WebService;
