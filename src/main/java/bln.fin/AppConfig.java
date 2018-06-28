@@ -2,7 +2,7 @@ package bln.fin;
 
 import bln.fin.soap.debt.DebtServiceImpl;
 import bln.fin.soap.invoice.InvoiceServiceImpl;
-import bln.fin.soap.purchase.RequisitionServiceImpl;
+import bln.fin.soap.req.ReqServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.apache.cxf.Bus;
 import org.apache.cxf.bus.spring.SpringBus;
@@ -45,8 +45,8 @@ public class AppConfig  {
 
     @Bean
     public Endpoint endpoint3() {
-        EndpointImpl endpoint = new EndpointImpl(springBus(), new RequisitionServiceImpl());
-        endpoint.publish("/RequisitionService");
+        EndpointImpl endpoint = new EndpointImpl(springBus(), new ReqServiceImpl());
+        endpoint.publish("/ReqService");
         return endpoint;
     }
 }
