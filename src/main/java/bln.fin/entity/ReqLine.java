@@ -53,5 +53,5 @@ public class ReqLine {
     private Boolean unlocked;
 
     @OneToMany(mappedBy = "line", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<ReqItem> lines;
+    private List<ReqItem> items;
 }
