@@ -681,23 +681,11 @@
                 <constraints nullable="false"/>
             </column>
 
-            <column name="external_doc_num" type="number" remarks="Номер документа во внешней системе">
+            <column name="doc_num" type="number" remarks="Номер документа в ERP">
                 <constraints nullable="false"/>
             </column>
 
-            <column name="external_doc_date" type="number" remarks="Дата документа во внешней системе">
-                <constraints nullable="false"/>
-            </column>
-
-            <column name="payer_id" type="number" remarks="Идентификатор отправителя денег">
-                <constraints nullable="false"/>
-            </column>
-
-            <column name="payee_id" type="number" remarks="Идентификатор получателя денег">
-                <constraints nullable="false"/>
-            </column>
-
-            <column name="contract_id" type="number" remarks="Идентификатор договора">
+            <column name="doc_date" type="date" remarks="Дата документа в ERP">
                 <constraints nullable="false"/>
             </column>
 
@@ -709,6 +697,30 @@
                 <constraints nullable="true"/>
             </column>
 
+            <column name="bp_num" type="varchar(20)" remarks="Номер бизнес-партнера в ERP">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="contract_num" type="varchar(20)" remarks="Номер договора в ERP">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="external_contract_num" type="varchar(30)" remarks="Внешний номер договора">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="payer_id" type="number" remarks="Идентификатор отправителя денег">
+                <constraints nullable="true"/>
+            </column>
+
+            <column name="payee_id" type="number" remarks="Идентификатор получателя денег">
+                <constraints nullable="true"/>
+            </column>
+
+            <column name="contract_id" type="number" remarks="Идентификатор договора">
+                <constraints nullable="true"/>
+            </column>
+
             <column name="accounting_date" type="date" remarks="Дата учёта">
                 <constraints nullable="false"/>
             </column>
@@ -717,11 +729,15 @@
                 <constraints nullable="false"/>
             </column>
 
-            <column name="currency_code" type="number" remarks="Код валюты">
+            <column name="currency_code" type="varchar(3)" remarks="Код валюты">
                 <constraints nullable="false"/>
             </column>
 
             <column name="exchange_rate" type="number" remarks="Курс валюты">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="is_current_record" type="number" remarks="Флаг - текущая запись?">
                 <constraints nullable="false"/>
             </column>
 
@@ -768,23 +784,11 @@
                 <constraints nullable="false"/>
             </column>
 
-            <column name="external_doc_num" type="number" remarks="Номер документа во внешней системе">
+            <column name="doc_num" type="number" remarks="Номер документа в ERP">
                 <constraints nullable="false"/>
             </column>
 
-            <column name="external_doc_date" type="number" remarks="Дата документа во внешней системе">
-                <constraints nullable="false"/>
-            </column>
-
-            <column name="payer_id" type="number" remarks="Идентификатор отправителя денег">
-                <constraints nullable="false"/>
-            </column>
-
-            <column name="payee_id" type="number" remarks="Идентификатор получателя денег">
-                <constraints nullable="false"/>
-            </column>
-
-            <column name="contract_id" type="number" remarks="Идентификатор договора">
+            <column name="doc_date" type="date" remarks="Дата документа в ERP">
                 <constraints nullable="false"/>
             </column>
 
@@ -796,6 +800,30 @@
                 <constraints nullable="true"/>
             </column>
 
+            <column name="bp_num" type="varchar(20)" remarks="Номер бизнес-партнера в ERP">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="contract_num" type="varchar(20)" remarks="Номер договора в ERP">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="external_contract_num" type="varchar(30)" remarks="Внешний номер договора">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="payer_id" type="number" remarks="Идентификатор отправителя денег">
+                <constraints nullable="true"/>
+            </column>
+
+            <column name="payee_id" type="number" remarks="Идентификатор получателя денег">
+                <constraints nullable="true"/>
+            </column>
+
+            <column name="contract_id" type="number" remarks="Идентификатор договора">
+                <constraints nullable="true"/>
+            </column>
+
             <column name="accounting_date_date" type="date" remarks="Дата учёта">
                 <constraints nullable="false"/>
             </column>
@@ -804,11 +832,15 @@
                 <constraints nullable="false"/>
             </column>
 
-            <column name="currency_code" type="number" remarks="Код валюты">
+            <column name="currency_code" type="varchar(3)" remarks="Код валюты">
                 <constraints nullable="false"/>
             </column>
 
             <column name="exchange_rate" type="number" remarks="Курс валюты">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="is_current_record" type="number" remarks="Флаг - текущая запись?">
                 <constraints nullable="false"/>
             </column>
 
@@ -2377,10 +2409,6 @@
             </column>
 
             <column name="quantity" type="number" remarks="Количество">
-                <constraints nullable="false"/>
-            </column>
-
-            <column name="unit_price" type="number" remarks="Цена за единицу">
                 <constraints nullable="false"/>
             </column>
 

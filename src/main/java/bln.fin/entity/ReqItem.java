@@ -18,8 +18,8 @@ public class ReqItem {
     @JoinColumn(name = "line_id")
     private ReqLine line;
 
-    @Column(name = "req_num")
-    private Long lineNum;
+    @Column(name = "row_num")
+    private Long rowNum;
 
     @Column(name = "item_num")
     private String itemNum;
@@ -33,6 +33,6 @@ public class ReqItem {
     @Column(name = "unit")
     private String unit;
 
-    @Column(name = "price")
+    @Column(name = "unit_price")
     private Double price;
 }

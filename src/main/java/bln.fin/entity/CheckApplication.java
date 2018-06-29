@@ -1,10 +1,12 @@
 package bln.fin.entity;
 
 import bln.fin.entity.enums.DebtTypeEnum;
+import bln.fin.jpa.BooleanToIntConverter;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.Date;
 
 @Data
 @EqualsAndHashCode(of= {"id"})
@@ -17,9 +19,28 @@ public class CheckApplication {
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "fin_check_applications_s")
     private Long id;
 
+    @Column(name = "doc_num")
+    private String docNum;
+
+    @Column(name = "doc_date")
+    private Date docDate;
+
+    @Column(name="debt_type_code")
+    @Enumerated(EnumType.STRING)
+    private DebtTypeEnum debtTypeCode;
+
     @ManyToOne
     @JoinColumn(name = "invoice_id")
     private PurchaseInvoice invoice;
+
+    @Column(name = "bp_num")
+    private String bpNum;
+
+    @Column(name = "contract_num")
+    private String contractNum;
+
+    @Column(name = "external_contract_num")
+    private String externalContractNum;
 
     @ManyToOne
     @JoinColumn(name = "payer_id")
@@ -33,12 +54,8 @@ public class CheckApplication {
     @JoinColumn(name = "contract_id")
     private Contract contract;
 
-    @Column(name="debt_type_code")
-    @Enumerated(EnumType.STRING)
-    private DebtTypeEnum debtTypeCode;
-
     @Column(name = "accounting_date")
-    private LocalDate accountingDate;
+    private Date accountingDate;
 
     @Column(name = "amount")
     private Double amount;
@@ -48,4 +65,8 @@ public class CheckApplication {
 
     @Column(name = "exchange_rate")
     private Double exchangeRate;
+
+    @Column(name = "is_current_record")
+    @Convert(converter = BooleanToIntConverter.class)
+    private Boolean currentRecord;
 }

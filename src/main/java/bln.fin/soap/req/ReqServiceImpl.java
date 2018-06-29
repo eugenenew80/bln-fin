@@ -4,21 +4,23 @@ import bln.fin.entity.ReqItem;
 import bln.fin.entity.ReqLine;
 import bln.fin.repo.ReqLineRepo;
 import bln.fin.soap.Message;
-import bln.fin.soap.req.dto.ReqItemDto;
-import bln.fin.soap.req.dto.ReqLineDto;
+import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import javax.jws.WebParam;
 import javax.jws.WebService;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @WebService(endpointInterface = "bln.fin.soap.req.ReqService", portName = "ReqServicePort", serviceName = "ReqService", targetNamespace = "http://bis.kegoc.kz/soap")
+@RequiredArgsConstructor
 public class ReqServiceImpl implements ReqService {
+    private final ReqLineRepo reqLineRepo;
 
     @Override
     public Message createReqs(@WebParam(name = "req") List<ReqLineDto> list) {
-
         List<ReqLine> reqLines = new ArrayList<>();
         for (ReqLineDto reqLineDto : list) {
             ReqLine reqLine = reqLineRepo.findByReqNumAndPosNum(reqLineDto.getReqNum(), reqLineDto.getPosNum());
@@ -41,22 +43,22 @@ public class ReqServiceImpl implements ReqService {
             List<ReqItem> reqItems = reqLine.getItems();
             if (reqItems == null) {
                 reqItems = new ArrayList<>();
-                reqLine.setItems(new ArrayList<>());
+                reqLine.setItems(reqItems);
             }
 
-            for (ReqItem reqItem : reqItems) {
-                ReqItemDto reqItemDto = reqLineDto.getItems().stream()
-                    .filter(t -> t.getLineNum().equals(reqItem.getLineNum()))
-                    .findFirst()
-                    .orElseGet(null);
+            for (int i = 0; i < reqItems.size(); i++) {
+                ReqItem reqItem = reqItems.get(i);
+                Optional<ReqItemDto> reqItemDto = reqLineDto.getItems().stream()
+                    .filter(t -> t.getRowNum().equals(reqItem.getRowNum()))
+                    .findFirst();
 
-                if (reqItemDto==null)
+                if (!reqItemDto.isPresent())
                     reqItems.remove(reqItem);
             }
 
             for (ReqItemDto reqItemDto : reqLineDto.getItems()) {
                 ReqItem reqItem = reqItems.stream()
-                    .filter(t -> t.getLineNum().equals(reqItemDto.getLineNum()))
+                    .filter(t -> t.getRowNum().equals(reqItemDto.getRowNum()))
                     .findFirst()
                     .orElse(new ReqItem());
 
@@ -66,7 +68,7 @@ public class ReqServiceImpl implements ReqService {
                 reqItem.setLine(reqLine);
                 reqItem.setItemNum(reqItemDto.getItemNum());
                 reqItem.setItemName(reqItemDto.getItemName());
-                reqItem.setLineNum(reqItemDto.getLineNum());
+                reqItem.setRowNum(reqItemDto.getRowNum());
                 reqItem.setPrice(reqItemDto.getPrice());
                 reqItem.setQuantity(reqItemDto.getQuantity());
                 reqItem.setPrice(reqItemDto.getPrice());
@@ -80,6 +82,4 @@ public class ReqServiceImpl implements ReqService {
         msg.setDetails(reqLines.size() + " records created");
         return msg;
     }
-
-    private ReqLineRepo reqLineRepo;
 }

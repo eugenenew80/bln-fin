@@ -1,4 +1,4 @@
-package bln.fin.soap.req.dto;
+package bln.fin.soap.req;
 
 import lombok.Data;
 import javax.xml.bind.annotation.XmlAccessType;
@@ -10,7 +10,7 @@ import java.util.List;
 
 @Data
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "ReqLine")
+@XmlType(name = "ReqLine", namespace = "http://bis.kegoc.kz/soap")
 public class ReqLineDto {
     @XmlElement(required = true)
     private Long reqNum;

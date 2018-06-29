@@ -12,5 +12,5 @@ import java.util.List;
 public interface DebtService {
     @WebMethod
     @WebResult(name = "result")
-    Message createDebts(@WebParam(name = "debt") List<Debt> list);
+    Message createDebts(@WebParam(name = "debt") List<DebtDto> list);
 }

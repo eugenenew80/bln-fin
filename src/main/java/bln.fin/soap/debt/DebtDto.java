@@ -4,11 +4,13 @@ import lombok.Data;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlType;
 import java.util.Date;
 
 @Data
 @XmlAccessorType(XmlAccessType.FIELD)
-public class Debt {
+@XmlType(name = "Debt", namespace = "http://bis.kegoc.kz/soap")
+public class DebtDto {
     @XmlElement(required = true)
     private String bpType;
 
@@ -16,7 +18,7 @@ public class Debt {
     private String debtType;
 
     @XmlElement(required = true)
-    private String accountingDate;
+    private Date accountingDate;
 
     @XmlElement(required = true)
     private Double amount;
@@ -34,13 +36,13 @@ public class Debt {
     private Date docDate;
 
     @XmlElement(required = true)
-    private String businessPartnerNum;
+    private String bpNum;
 
     @XmlElement(required = true)
     private String contractNum;
 
     @XmlElement(required = true)
-    private String externalContractNum;
+    private String extContractNum;
 
     @XmlElement(required = true)
     private String companyCode;

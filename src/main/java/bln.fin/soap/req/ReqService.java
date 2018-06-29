@@ -1,7 +1,6 @@
 package bln.fin.soap.req;
 
 import bln.fin.soap.Message;
-import bln.fin.soap.req.dto.ReqLineDto;
 
 import javax.jws.WebMethod;
 import javax.jws.WebParam;
