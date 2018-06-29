@@ -4,7 +4,9 @@ import bln.fin.entity.CheckApplication;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+import java.util.Date;
+
 @Repository
 public interface CheckApplicationRepo extends JpaRepository<CheckApplication, Long> {
-    //findBy
+    CheckApplication findByDocNumAndDocDate(String docNum, Date docDate);
 }
