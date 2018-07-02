@@ -50,7 +50,7 @@
                 columnNames="id"
                 constraintName="pk_fin_periods_tl"
                 schemaName="apps"
-                tableName="fin_periods"/>
+                tableName="fin_periods_tl"/>
     </changeSet>
 
     <changeSet id="fin-rus-3" logicalFilePath="path-independent" author="ruslan">
