@@ -506,7 +506,7 @@
         <comment>Creating foreign constraint: fin_purchase_invoices_tl to fin_purchase_invoices</comment>
         <addForeignKeyConstraint
                 baseTableSchemaName="apps"
-                baseTableName="fin_req_items_tl"
+                baseTableName="fin_purchase_invoices_tl"
                 baseColumnNames="purchase_invoices_id"
                 constraintName="fk_fin_purchase_invoices_tl_1"
                 deferrable="true"
