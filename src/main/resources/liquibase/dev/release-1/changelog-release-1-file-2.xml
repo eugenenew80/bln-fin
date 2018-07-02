@@ -808,7 +808,7 @@
                              disabled="true"
                              initiallyDeferred="true"
                              schemaName="apps"
-                             tableName="fin_periods_tl"/>
+                             tableName="fin_req_items_tl"/>
     </changeSet>
 
     <changeSet id="fin-rus-47" logicalFilePath="path-independent" author="ruslan">
