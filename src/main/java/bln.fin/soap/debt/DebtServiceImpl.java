@@ -2,10 +2,12 @@ package bln.fin.soap.debt;
 
 import bln.fin.entity.CheckApplication;
 import bln.fin.entity.ReceiptApplication;
+import bln.fin.entity.ReqItem;
 import bln.fin.entity.enums.DebtTypeEnum;
 import bln.fin.repo.CheckApplicationRepo;
 import bln.fin.repo.ReceiptApplicationRepo;
 import bln.fin.soap.Message;
+import bln.fin.soap.req.ReqItemDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import javax.jws.WebService;
@@ -13,6 +15,7 @@ import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @RequiredArgsConstructor
 @Service
@@ -23,6 +26,11 @@ public class DebtServiceImpl implements DebtService {
 
     @Override
     public Message createDebts(List<DebtDto> list) {
+
+        for (int i = 0; i < list.size(); i++) {
+            DebtDto debtDto = list.get(i);
+        }
+
         List<CheckApplication> checkList = new ArrayList<>();
         List<ReceiptApplication> receiptList = new ArrayList<>();
         for (DebtDto debtDto : list) {
@@ -62,10 +70,24 @@ public class DebtServiceImpl implements DebtService {
             }
 
             if (debtDto.getBpType().equals("K")) {
-                CheckApplication check = new CheckApplication();
+                CheckApplication check = checkApplicationRepo.findByDocNumAndDocDateAndCurrentRecordIsTrue(debtDto.getDocNum(), debtDocDate);
+                if (check!=null) {
+                    if (!debtAccountingDate.equals(check.getAccountingDate())) {
+                        if (!check.getAmount().equals(debtDto.getAmount())) {
+                            check.setCurrentRecord(false);
+                            checkList.add(check);
+                            check = new CheckApplication();
+                        }
+                        else
+                            check = null;
+                    }
+                }
+                else
+                    check = new CheckApplication();
+
                 check.setDocNum(debtDto.getDocNum());
-                check.setDocDate(debtDto.getDocDate());
-                check.setAccountingDate(debtDto.getAccountingDate());
+                check.setDocDate(debtDocDate);
+                check.setAccountingDate(debtAccountingDate);
                 check.setAmount(debtDto.getAmount());
                 check.setCurrencyCode(debtDto.getCurrencyCode());
                 check.setDebtTypeCode(DebtTypeEnum.valueOf(debtDto.getDebtType()));

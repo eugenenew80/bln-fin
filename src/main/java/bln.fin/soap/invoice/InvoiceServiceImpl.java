@@ -11,7 +11,7 @@ import java.util.List;
 public class InvoiceServiceImpl implements InvoiceService {
 
     @Override
-    public Message updateStatuses(List<InvoiceStatus> list) {
+    public Message updateStatuses(List<InvoiceStatusDto> list) {
         Message msg = new Message();
         msg.setStatus("success");
         msg.setDetails(list.size() + " records updated");

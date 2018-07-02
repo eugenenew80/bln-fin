@@ -5,7 +5,7 @@ import bln.fin.jpa.BooleanToIntConverter;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import javax.persistence.*;
-import java.util.Date;
+import java.time.LocalDate;
 
 @Data
 @EqualsAndHashCode(of= {"id"})
@@ -22,7 +22,7 @@ public class CheckApplication {
     private String docNum;
 
     @Column(name = "doc_date")
-    private Date docDate;
+    private LocalDate docDate;
 
     @Column(name="debt_type_code")
     @Enumerated(EnumType.STRING)
@@ -54,7 +54,7 @@ public class CheckApplication {
     private Contract contract;
 
     @Column(name = "accounting_date")
-    private Date accountingDate;
+    private LocalDate accountingDate;
 
     @Column(name = "amount")
     private Double amount;
