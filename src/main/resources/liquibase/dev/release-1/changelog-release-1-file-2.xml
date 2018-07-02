@@ -77,9 +77,9 @@
         <comment>Creating foreign constraint: fin_periods_tl to fin_periods</comment>
         <addForeignKeyConstraint
                 baseTableSchemaName="apps"
-                baseTableName="fin_req_items_tl"
+                baseTableName="fin_periods_tl"
                 baseColumnNames="period_id"
-                constraintName="fk_fin_req_items_tl_1"
+                constraintName="fk_fin_periods_tl_1"
                 deferrable="true"
                 initiallyDeferred="true"
                 onDelete="CASCADE"
