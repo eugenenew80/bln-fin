@@ -100,7 +100,11 @@
             <column name="sale_invoices_id" type="number" remarks="Ссылка на родительскую запись">
                 <constraints nullable="false"/>
             </column>
-            
+
+            <column name="lang" type="varchar(10)" remarks="язык">
+                <constraints nullable="false"/>
+            </column>
+
             <column name="description" type="varchar(300)" remarks="Описание счёт-фактуры (заголовок)">
                 <constraints nullable="true"/>
             </column>
@@ -143,7 +147,7 @@
 
     <changeSet id="fin-rus-9" logicalFilePath="path-independent" author="ruslan" context="dev">
         <comment>Creating unique for table: fin_sale_invoices_tl</comment>
-        <addUniqueConstraint columnNames="sale_invoices_id, lang"
+        <addUniqueConstraint columnNames="sale_invoices_id,lang"
                              constraintName="uk_fin_sale_invoices_tl"
                              deferrable="true"
                              disabled="true"
@@ -174,6 +178,10 @@
         <createTable tableName="fin_invoice_types_tl" schemaName="apps" remarks="Перевод Типы счетов-фактур">
 
             <column name="code" type="varchar(20)" remarks="Код типа СФ">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="lang" type="varchar(10)" remarks="язык">
                 <constraints nullable="false"/>
             </column>
 
@@ -232,6 +240,10 @@
                 <constraints nullable="false"/>
             </column>
             <column name="tax_rates_id" type="number" remarks="Ссылка на родительскую запись">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="lang" type="varchar(10)" remarks="язык">
                 <constraints nullable="false"/>
             </column>
 
@@ -311,6 +323,10 @@
                 <constraints nullable="false"/>
             </column>
 
+            <column name="lang" type="varchar(10)" remarks="язык">
+                <constraints nullable="false"/>
+            </column>
+
             <column name="name" type="varchar(100)" remarks="Наименование вида документа">
                 <constraints nullable="false"/>
             </column>
@@ -364,6 +380,10 @@
         <createTable tableName="fin_invoice_line_types_tl" schemaName="apps" remarks="Перевод Типы строк СФ">
 
             <column name="code" type="varchar(20)" remarks="Код типа строки">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="lang" type="varchar(10)" remarks="язык">
                 <constraints nullable="false"/>
             </column>
 
@@ -423,6 +443,10 @@
             </column>
 
             <column name="purchase_invoices_id" type="number" remarks="Ссылка на родительскую запись">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="lang" type="varchar(10)" remarks="язык">
                 <constraints nullable="false"/>
             </column>
 
@@ -503,6 +527,10 @@
                 <constraints nullable="false"/>
             </column>
 
+            <column name="lang" type="varchar(10)" remarks="язык">
+                <constraints nullable="false"/>
+            </column>
+
             <column name="name" type="varchar(100)" remarks="Наименование типа задолженности">
                 <constraints nullable="false"/>
             </column>
@@ -555,6 +583,10 @@
         <comment>Creating table: fin_payment_requests_tl</comment>
         <createTable tableName="fin_payment_requests_tl" schemaName="apps" remarks="Список счетов на оплату">
             <column name="id" type="number" remarks="Идентификатор">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="lang" type="varchar(10)" remarks="язык">
                 <constraints nullable="false"/>
             </column>
 
@@ -641,6 +673,10 @@
                 <constraints nullable="false"/>
             </column>
 
+            <column name="lang" type="varchar(10)" remarks="язык">
+                <constraints nullable="false"/>
+            </column>
+
             <column name="pos_name" type="varchar(300)" remarks="Наименование позиции">
                 <constraints nullable="false"/>
             </column>
@@ -717,6 +753,10 @@
             </column>
 
             <column name="req_items_id" type="number" remarks="Ссылка на родительскую запись">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="lang" type="varchar(10)" remarks="язык">
                 <constraints nullable="false"/>
             </column>
 
