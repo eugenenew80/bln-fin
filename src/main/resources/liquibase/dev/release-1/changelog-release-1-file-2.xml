@@ -1,0 +1,830 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.3.xsd">
+
+    <changeSet id="fin-rus-1" logicalFilePath="path-independent" author="ruslan">
+        <comment>Creating table: fin_periods_tl</comment>
+        <createTable tableName="fin_periods_tl" schemaName="apps" remarks="Перевод Список финансовых периодов">
+            <column name="id" type="number" remarks="Идентификатор">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="lang" type="varchar(10)" remarks="язык">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="period_id" type="number" remarks="Ссылка на родительскую запись">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="name" type="varchar(100)" remarks="Наименование периода">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="create_date" type="TIMESTAMP" remarks="Дата создания">
+                <constraints nullable="true"/>
+            </column>
+
+            <column name="last_update_date" type="TIMESTAMP" remarks="Дата изменения">
+                <constraints nullable="true"/>
+            </column>
+
+            <column name="create_by" type="number" remarks="Автор">
+                <constraints nullable="true"/>
+            </column>
+
+            <column name="last_update_by" type="number" remarks="Автор изменения">
+                <constraints nullable="true"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+
+    <changeSet id="fin-rus-2" logicalFilePath="path-independent" author="ruslan">
+        <comment>Creating primary key for table: fin_periods_tl</comment>
+        <addPrimaryKey
+                columnNames="id"
+                constraintName="pk_fin_periods_tl"
+                schemaName="apps"
+                tableName="fin_periods_tl"/>
+    </changeSet>
+
+    <changeSet id="fin-rus-3" logicalFilePath="path-independent" author="ruslan">
+        <comment>Creating sequence for table: fin_periods_tl</comment>
+        <createSequence
+                incrementBy="1"
+                schemaName="apps"
+                sequenceName="fin_periods_tl_s"
+                startValue="1"/>
+    </changeSet>
+    
+    <changeSet id="fin-rus-4" logicalFilePath="path-independent" author="ruslan" context="dev">
+        <comment>Creating unique for table: fin_periods_tl</comment>
+        <addUniqueConstraint columnNames="period_id, lang"
+                             constraintName="uk_fin_periods_tl"
+                             deferrable="true"
+                             disabled="true"
+                             initiallyDeferred="true"
+                             schemaName="apps"
+                             tableName="fin_periods_tl"/>
+    </changeSet>
+    
+    <changeSet id="fin-rus-5" logicalFilePath="path-independent" author="ruslan">
+        <comment>Creating foreign constraint: fin_periods_tl to fin_periods</comment>
+        <addForeignKeyConstraint
+                baseTableSchemaName="apps"
+                baseTableName="fin_periods_tl"
+                baseColumnNames="period_id"
+                constraintName="fk_fin_periods_tl_1"
+                deferrable="true"
+                initiallyDeferred="true"
+                onDelete="CASCADE"
+                onUpdate="RESTRICT"
+                referencedTableSchemaName="apps"
+                referencedTableName="fin_periods"
+                referencedColumnNames="id"
+        />
+    </changeSet>
+
+    <changeSet id="fin-rus-6" logicalFilePath="path-independent" author="ruslan">
+        <comment>Creating table: fin_sale_invoices_tl</comment>
+        <createTable tableName="fin_sale_invoices_tl" schemaName="apps" remarks="Перевод Список исходящих счетов-фактур">
+            <column name="id" type="number" remarks="Идентификатор">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="sale_invoices_id" type="number" remarks="Ссылка на родительскую запись">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="lang" type="varchar(10)" remarks="язык">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="description" type="varchar(300)" remarks="Описание счёт-фактуры (заголовок)">
+                <constraints nullable="true"/>
+            </column>
+
+            <column name="create_by" type="number" remarks="Автор">
+                <constraints nullable="true"/>
+            </column>
+
+            <column name="create_date" type="TIMESTAMP" remarks="Дата создания">
+                <constraints nullable="true"/>
+            </column>
+            
+            <column name="last_update_by" type="number" remarks="Автор изменения">
+                <constraints nullable="true"/>
+            </column>
+            
+            <column name="last_update_date" type="TIMESTAMP" remarks="Дата изменения">
+                <constraints nullable="true"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="fin-rus-7" logicalFilePath="path-independent" author="ruslan">
+        <comment>Creating primary key for table: fin_sale_invoices_tl</comment>
+        <addPrimaryKey
+                columnNames="id"
+                constraintName="pk_fin_sale_invoices_tl"
+                schemaName="apps"
+                tableName="fin_sale_invoices_tl"/>
+    </changeSet>
+
+    <changeSet id="fin-rus-8" logicalFilePath="path-independent" author="ruslan">
+        <comment>Creating sequence for table: fin_sale_invoices_tl</comment>
+        <createSequence
+                incrementBy="1"
+                schemaName="apps"
+                sequenceName="fin_sale_invoices_tl_s"
+                startValue="1"/>
+    </changeSet>
+
+    <changeSet id="fin-rus-9" logicalFilePath="path-independent" author="ruslan" context="dev">
+        <comment>Creating unique for table: fin_sale_invoices_tl</comment>
+        <addUniqueConstraint columnNames="sale_invoices_id,lang"
+                             constraintName="uk_fin_sale_invoices_tl"
+                             deferrable="true"
+                             disabled="true"
+                             initiallyDeferred="true"
+                             schemaName="apps"
+                             tableName="fin_sale_invoices_tl"/>
+    </changeSet>
+
+    <changeSet id="fin-rus-10" logicalFilePath="path-independent" author="ruslan">
+        <comment>Creating foreign constraint: fin_sale_invoices_tl to fin_sale_invoices</comment>
+        <addForeignKeyConstraint
+                baseTableSchemaName="apps"
+                baseTableName="fin_sale_invoices_tl"
+                baseColumnNames="sale_invoices_id"
+                constraintName="fk_fin_sale_invoices_tl_1"
+                deferrable="true"
+                initiallyDeferred="true"
+                onDelete="CASCADE"
+                onUpdate="RESTRICT"
+                referencedTableSchemaName="apps"
+                referencedTableName="fin_sale_invoices"
+                referencedColumnNames="id"
+        />
+    </changeSet>
+
+    <changeSet id="fin-rus-11" logicalFilePath="path-independent" author="ruslan">
+        <comment>Creating table: fin_invoice_types_tl</comment>
+        <createTable tableName="fin_invoice_types_tl" schemaName="apps" remarks="Перевод Типы счетов-фактур">
+
+            <column name="code" type="varchar(20)" remarks="Код типа СФ">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="lang" type="varchar(10)" remarks="язык">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="name" type="varchar(100)" remarks="Наименование типа СФ">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="create_date" type="TIMESTAMP" remarks="Дата создания">
+                <constraints nullable="true"/>
+            </column>
+
+            <column name="last_update_date" type="TIMESTAMP" remarks="Дата изменения">
+                <constraints nullable="true"/>
+            </column>
+
+            <column name="create_by" type="number" remarks="Автор">
+                <constraints nullable="true"/>
+            </column>
+
+            <column name="last_update_by" type="number" remarks="Автор изменения">
+                <constraints nullable="true"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="fin-rus-12" logicalFilePath="path-independent" author="ruslan">
+        <comment>Creating primary key for table: fin_invoice_types_tl</comment>
+        <addPrimaryKey
+                columnNames="code,lang"
+                constraintName="pk_fin_invoice_types_tl"
+                schemaName="apps"
+                tableName="fin_invoice_types_tl"/>
+    </changeSet>
+
+    <changeSet id="fin-rus-13" logicalFilePath="path-independent" author="ruslan">
+        <comment>Creating foreign constraint: fin_invoice_types_tl to fin_invoice_types</comment>
+        <addForeignKeyConstraint
+                baseTableSchemaName="apps"
+                baseTableName="fin_invoice_types_tl"
+                baseColumnNames="code"
+                constraintName="fk_fin_invoice_types_tl_1"
+                deferrable="true"
+                initiallyDeferred="true"
+                onDelete="CASCADE"
+                onUpdate="RESTRICT"
+                referencedTableSchemaName="apps"
+                referencedTableName="fin_invoice_types"
+                referencedColumnNames="code"
+        />
+    </changeSet>
+
+    <changeSet id="fin-rus-14" logicalFilePath="path-independent" author="ruslan">
+        <comment>Creating table: fin_tax_rates_tl</comment>
+        <createTable tableName="fin_tax_rates_tl" schemaName="apps" remarks="Перевод Ставки НДС">
+            <column name="id" type="number" remarks="Идентификатор">
+                <constraints nullable="false"/>
+            </column>
+            <column name="tax_rates_id" type="number" remarks="Ссылка на родительскую запись">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="lang" type="varchar(10)" remarks="язык">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="name" type="varchar(100)" remarks="Описание НДС">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="create_date" type="TIMESTAMP" remarks="Дата создания">
+                <constraints nullable="true"/>
+            </column>
+
+            <column name="last_update_date" type="TIMESTAMP" remarks="Дата изменения">
+                <constraints nullable="true"/>
+            </column>
+
+            <column name="create_by" type="number" remarks="Автор">
+                <constraints nullable="true"/>
+            </column>
+
+            <column name="last_update_by" type="number" remarks="Автор изменения">
+                <constraints nullable="true"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="fin-rus-15" logicalFilePath="path-independent" author="ruslan">
+        <comment>Creating primary key for table: fin_tax_rates_tl</comment>
+        <addPrimaryKey
+                columnNames="id"
+                constraintName="pk_fin_tax_rates_tl"
+                schemaName="apps"
+                tableName="fin_tax_rates_tl"/>
+    </changeSet>
+
+    <changeSet id="fin-rus-16" logicalFilePath="path-independent" author="ruslan">
+        <comment>Creating sequence for table: fin_tax_rates_tl</comment>
+        <createSequence
+                incrementBy="1"
+                schemaName="apps"
+                sequenceName="fin_tax_rates_tl_s"
+                startValue="1"/>
+    </changeSet>
+
+    <changeSet id="fin-rus-17" logicalFilePath="path-independent" author="ruslan" context="dev">
+        <comment>Creating unique for table: fin_tax_rates_tl</comment>
+        <addUniqueConstraint columnNames="tax_rates_id, lang"
+                             constraintName="uk_fin_tax_rates_tl"
+                             deferrable="true"
+                             disabled="true"
+                             initiallyDeferred="true"
+                             schemaName="apps"
+                             tableName="fin_tax_rates_tl"/>
+    </changeSet>
+
+    <changeSet id="fin-rus-18" logicalFilePath="path-independent" author="ruslan">
+        <comment>Creating foreign constraint: fin_tax_rates_tl to fin_tax_rates</comment>
+        <addForeignKeyConstraint
+                baseTableSchemaName="apps"
+                baseTableName="fin_tax_rates_tl"
+                baseColumnNames="tax_rates_id"
+                constraintName="fk_fin_tax_rates_tl_1"
+                deferrable="true"
+                initiallyDeferred="true"
+                onDelete="CASCADE"
+                onUpdate="RESTRICT"
+                referencedTableSchemaName="apps"
+                referencedTableName="fin_tax_rates"
+                referencedColumnNames="id"
+        />
+    </changeSet>
+
+    <changeSet id="fin-rus-19" logicalFilePath="path-independent" author="ruslan">
+        <comment>Creating table: fin_doc_types_tl</comment>
+        <createTable tableName="fin_doc_types_tl" schemaName="apps" remarks="Перевод Виды финансовых документов">
+
+            <column name="code" type="varchar(20)" remarks="Код вида документа">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="lang" type="varchar(10)" remarks="язык">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="name" type="varchar(100)" remarks="Наименование вида документа">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="create_date" type="TIMESTAMP" remarks="Дата создания">
+                <constraints nullable="true"/>
+            </column>
+
+            <column name="last_update_date" type="TIMESTAMP" remarks="Дата изменения">
+                <constraints nullable="true"/>
+            </column>
+
+            <column name="create_by" type="number" remarks="Автор">
+                <constraints nullable="true"/>
+            </column>
+
+            <column name="last_update_by" type="number" remarks="Автор изменения">
+                <constraints nullable="true"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="fin-rus-20" logicalFilePath="path-independent" author="ruslan">
+        <comment>Creating primary key for table: fin_doc_types_tl</comment>
+        <addPrimaryKey
+                columnNames="code,lang"
+                constraintName="pk_fin_doc_types_tl"
+                schemaName="apps"
+                tableName="fin_doc_types_tl"/>
+    </changeSet>
+    
+    <changeSet id="fin-rus-21" logicalFilePath="path-independent" author="ruslan">
+        <comment>Creating foreign constraint: fin_doc_types_tl to fin_doc_types</comment>
+        <addForeignKeyConstraint
+                baseTableSchemaName="apps"
+                baseTableName="fin_doc_types"
+                baseColumnNames="code"
+                constraintName="fk_fin_doc_types_tl_1"
+                deferrable="true"
+                initiallyDeferred="true"
+                onDelete="CASCADE"
+                onUpdate="RESTRICT"
+                referencedTableSchemaName="apps"
+                referencedTableName="fin_doc_types"
+                referencedColumnNames="code"
+        />
+    </changeSet>
+
+    <changeSet id="fin-rus-22" logicalFilePath="path-independent" author="ruslan">
+        <comment>Creating table: fin_invoice_line_types_tl</comment>
+        <createTable tableName="fin_invoice_line_types_tl" schemaName="apps" remarks="Перевод Типы строк СФ">
+
+            <column name="code" type="varchar(20)" remarks="Код типа строки">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="lang" type="varchar(10)" remarks="язык">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="name" type="varchar(100)" remarks="Наименование типа строки">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="create_date" type="TIMESTAMP" remarks="Дата создания">
+                <constraints nullable="true"/>
+            </column>
+
+            <column name="last_update_date" type="TIMESTAMP" remarks="Дата изменения">
+                <constraints nullable="true"/>
+            </column>
+
+            <column name="create_by" type="number" remarks="Автор">
+                <constraints nullable="true"/>
+            </column>
+
+            <column name="last_update_by" type="number" remarks="Автор изменения">
+                <constraints nullable="true"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="fin-rus-23" logicalFilePath="path-independent" author="ruslan">
+        <comment>Creating primary key for table: fin_invoice_line_types_tl</comment>
+        <addPrimaryKey
+                columnNames="code,lang"
+                constraintName="pk_fin_invoice_line_types_tl"
+                schemaName="apps"
+                tableName="fin_invoice_line_types_tl"/>
+    </changeSet>
+
+    <changeSet id="fin-rus-24" logicalFilePath="path-independent" author="ruslan">
+        <comment>Creating foreign constraint: fin_invoice_line_types_tl to fin_invoice_line_types</comment>
+        <addForeignKeyConstraint
+                baseTableSchemaName="apps"
+                baseTableName="fin_invoice_line_types_tl"
+                baseColumnNames="code"
+                constraintName="fk_fin_invoice_line_types_tl_1"
+                deferrable="true"
+                initiallyDeferred="true"
+                onDelete="CASCADE"
+                onUpdate="RESTRICT"
+                referencedTableSchemaName="apps"
+                referencedTableName="fin_invoice_line_types"
+                referencedColumnNames="code"
+        />
+    </changeSet>
+
+    <changeSet id="fin-rus-25" logicalFilePath="path-independent" author="ruslan">
+        <comment>Creating table: fin_purchase_invoices_tl</comment>
+        <createTable tableName="fin_purchase_invoices_tl" schemaName="apps" remarks="Перевод Список входящих счетов-фактур">
+            <column name="id" type="number" remarks="Идентификатор">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="purchase_invoices_id" type="number" remarks="Ссылка на родительскую запись">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="lang" type="varchar(10)" remarks="язык">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="description" type="varchar(300)" remarks="Описание счёт-фактуры (заголовок)">
+                <constraints nullable="true"/>
+            </column>
+
+            <column name="create_date" type="TIMESTAMP" remarks="Дата создания">
+                <constraints nullable="true"/>
+            </column>
+
+            <column name="last_update_date" type="TIMESTAMP" remarks="Дата изменения">
+                <constraints nullable="true"/>
+            </column>
+
+            <column name="create_by" type="number" remarks="Автор">
+                <constraints nullable="true"/>
+            </column>
+
+            <column name="last_update_by" type="number" remarks="Автор изменения">
+                <constraints nullable="true"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="fin-rus-26" logicalFilePath="path-independent" author="ruslan">
+        <comment>Creating primary key for table: fin_purchase_invoices_tl</comment>
+        <addPrimaryKey
+                columnNames="id"
+                constraintName="pk_fin_purchase_invoices_tl"
+                schemaName="apps"
+                tableName="fin_purchase_invoices_tl"/>
+    </changeSet>
+
+    <changeSet id="fin-rus-27" logicalFilePath="path-independent" author="ruslan">
+        <comment>Creating sequence for table: fin_purchase_invoices_tl</comment>
+        <createSequence
+                incrementBy="1"
+                schemaName="apps"
+                sequenceName="fin_purchase_invoices_tl_s"
+                startValue="1"/>
+    </changeSet>
+
+
+    <changeSet id="fin-rus-28" logicalFilePath="path-independent" author="ruslan" context="dev">
+        <comment>Creating unique for table: fin_purchase_invoices_tl</comment>
+        <addUniqueConstraint columnNames="purchase_invoices_id, lang"
+                             constraintName="uk_fin_purchase_invoices_tl"
+                             deferrable="true"
+                             disabled="true"
+                             initiallyDeferred="true"
+                             schemaName="apps"
+                             tableName="fin_purchase_invoices_tl"/>
+    </changeSet>
+
+    <changeSet id="fin-rus-29" logicalFilePath="path-independent" author="ruslan">
+        <comment>Creating foreign constraint: fin_purchase_invoices_tl to fin_purchase_invoices</comment>
+        <addForeignKeyConstraint
+                baseTableSchemaName="apps"
+                baseTableName="fin_purchase_invoices_tl"
+                baseColumnNames="purchase_invoices_id"
+                constraintName="fk_fin_purchase_invoices_tl_1"
+                deferrable="true"
+                initiallyDeferred="true"
+                onDelete="CASCADE"
+                onUpdate="RESTRICT"
+                referencedTableSchemaName="apps"
+                referencedTableName="fin_purchase_invoices"
+                referencedColumnNames="id"
+        />
+    </changeSet>
+
+    <changeSet id="fin-rus-30" logicalFilePath="path-independent" author="ruslan">
+        <comment>Creating table: fin_debt_types_tl</comment>
+        <createTable tableName="fin_debt_types_tl" schemaName="apps" remarks="Перевод Типы задолженностей">
+
+            <column name="code" type="varchar(20)" remarks="Код типа задолженности">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="lang" type="varchar(10)" remarks="язык">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="name" type="varchar(100)" remarks="Наименование типа задолженности">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="create_date" type="TIMESTAMP" remarks="Дата создания">
+                <constraints nullable="true"/>
+            </column>
+
+            <column name="last_update_date" type="TIMESTAMP" remarks="Дата изменения">
+                <constraints nullable="true"/>
+            </column>
+
+            <column name="create_by" type="number" remarks="Автор">
+                <constraints nullable="true"/>
+            </column>
+
+            <column name="last_update_by" type="number" remarks="Автор изменения">
+                <constraints nullable="true"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="fin-rus-31" logicalFilePath="path-independent" author="ruslan">
+        <comment>Creating primary key for table: fin_debt_types_tl</comment>
+        <addPrimaryKey
+                columnNames="code,lang"
+                constraintName="pk_fin_debt_types_tl"
+                schemaName="apps"
+                tableName="fin_debt_types_tl"/>
+    </changeSet>
+
+    <changeSet id="fin-rus-32" logicalFilePath="path-independent" author="ruslan">
+        <comment>Creating foreign constraint:  fin_debt_types_tl to fin_debt_types</comment>
+        <addForeignKeyConstraint
+                baseTableSchemaName="apps"
+                baseTableName="fin_debt_types_tl"
+                baseColumnNames="code"
+                constraintName="fk_fin_debt_types_tl_1"
+                deferrable="true"
+                initiallyDeferred="true"
+                onDelete="CASCADE"
+                onUpdate="RESTRICT"
+                referencedTableSchemaName="apps"
+                referencedTableName="fin_periods"
+                referencedColumnNames="code"
+        />
+    </changeSet>
+
+    <changeSet id="fin-rus-33" logicalFilePath="path-independent" author="ruslan">
+        <comment>Creating table: fin_payment_requests_tl</comment>
+        <createTable tableName="fin_payment_requests_tl" schemaName="apps" remarks="Список счетов на оплату">
+            <column name="id" type="number" remarks="Идентификатор">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="lang" type="varchar(10)" remarks="язык">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="payment_requests_id" type="number" remarks="Ссылка на родительскую запись">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="description" type="varchar(300)" remarks="Описание счёта на оплату (заголовок)">
+                <constraints nullable="true"/>
+            </column>
+
+            <column name="create_date" type="TIMESTAMP" remarks="Дата создания">
+                <constraints nullable="true"/>
+            </column>
+
+            <column name="last_update_date" type="TIMESTAMP" remarks="Дата изменения">
+                <constraints nullable="true"/>
+            </column>
+
+            <column name="create_by" type="number" remarks="Автор">
+                <constraints nullable="true"/>
+            </column>
+
+            <column name="last_update_by" type="number" remarks="Автор изменения">
+                <constraints nullable="true"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="fin-rus-34" logicalFilePath="path-independent" author="ruslan">
+        <comment>Creating primary key for table: fin_payment_requests_tl</comment>
+        <addPrimaryKey
+                columnNames="id"
+                constraintName="pk_fin_payment_requests_tl"
+                schemaName="apps"
+                tableName="fin_payment_requests_tl"/>
+    </changeSet>
+
+    <changeSet id="fin-rus-35" logicalFilePath="path-independent" author="ruslan">
+        <comment>Creating sequence for table: fin_payment_requests_tl</comment>
+        <createSequence
+                incrementBy="1"
+                schemaName="apps"
+                sequenceName="fin_payment_requests_tl_s"
+                startValue="1"/>
+    </changeSet>
+
+    <changeSet id="fin-rus-36" logicalFilePath="path-independent" author="ruslan" context="dev">
+        <comment>Creating unique for table: fin_payment_requests_tl</comment>
+        <addUniqueConstraint columnNames="payment_requests_id, lang"
+                             constraintName="uk_fin_payment_requests_tl"
+                             deferrable="true"
+                             disabled="true"
+                             initiallyDeferred="true"
+                             schemaName="apps"
+                             tableName="fin_payment_requests_tl"/>
+    </changeSet>
+
+    <changeSet id="fin-rus-37" logicalFilePath="path-independent" author="ruslan">
+        <comment>Creating foreign constraint: fin_payment_requests_tl to fin_payment_requests</comment>
+        <addForeignKeyConstraint
+                baseTableSchemaName="apps"
+                baseTableName="fin_payment_requests_tl"
+                baseColumnNames="payment_requests_id"
+                constraintName="fk_fin_payment_requests_tl_1"
+                deferrable="true"
+                initiallyDeferred="true"
+                onDelete="CASCADE"
+                onUpdate="RESTRICT"
+                referencedTableSchemaName="apps"
+                referencedTableName="fin_payment_requests"
+                referencedColumnNames="id"
+        />
+    </changeSet>
+
+    <changeSet id="fin-rus-38" logicalFilePath="path-independent" author="ruslan">
+        <comment>Creating table: fin_req_lines_tl</comment>
+        <createTable tableName="fin_req_lines_tl" schemaName="apps" remarks="Переводы Строки заявок на закупку">
+            <column name="id" type="number" remarks="Идентификатор">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="req_lines_id" type="number" remarks="Ссылка на родительскую запись">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="lang" type="varchar(10)" remarks="язык">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="pos_name" type="varchar(300)" remarks="Наименование позиции">
+                <constraints nullable="false"/>
+            </column>
+            
+            <column name="create_date" type="TIMESTAMP" remarks="Дата создания">
+                <constraints nullable="true"/>
+            </column>
+
+            <column name="last_update_date" type="TIMESTAMP" remarks="Дата изменения">
+                <constraints nullable="true"/>
+            </column>
+
+            <column name="create_by" type="number" remarks="Автор">
+                <constraints nullable="true"/>
+            </column>
+
+            <column name="last_update_by" type="number" remarks="Автор изменения">
+                <constraints nullable="true"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="fin-rus-39" logicalFilePath="path-independent" author="ruslan">
+        <comment>Creating primary key for table: fin_req_lines_tl</comment>
+        <addPrimaryKey
+                columnNames="id"
+                constraintName="pk_fin_req_lines_tl"
+                schemaName="apps"
+                tableName="fin_req_lines_tl"/>
+    </changeSet>
+
+    <changeSet id="fin-rus-40" logicalFilePath="path-independent" author="ruslan">
+        <comment>Creating sequence for table: fin_req_lines_tl</comment>
+        <createSequence
+                incrementBy="1"
+                schemaName="apps"
+                sequenceName="fin_req_lines_tl_s"
+                startValue="1"/>
+    </changeSet>
+
+    <changeSet id="fin-rus-41" logicalFilePath="path-independent" author="ruslan" context="dev">
+        <comment>Creating unique for table: fin_req_lines_tl</comment>
+        <addUniqueConstraint columnNames="req_lines_id, lang"
+                             constraintName="uk_fin_req_lines_tl"
+                             deferrable="true"
+                             disabled="true"
+                             initiallyDeferred="true"
+                             schemaName="apps"
+                             tableName="fin_req_lines_tl"/>
+    </changeSet>
+
+    <changeSet id="fin-rus-42" logicalFilePath="path-independent" author="ruslan">
+        <comment>Creating foreign constraint: fin_req_lines_tl to fin_req_lines</comment>
+        <addForeignKeyConstraint
+                baseTableSchemaName="apps"
+                baseTableName="fin_req_lines_tl"
+                baseColumnNames="req_lines_id"
+                constraintName="fk_fin_req_lines_tl_1"
+                deferrable="true"
+                initiallyDeferred="true"
+                onDelete="CASCADE"
+                onUpdate="RESTRICT"
+                referencedTableSchemaName="apps"
+                referencedTableName="fin_req_lines"
+                referencedColumnNames="id"
+        />
+    </changeSet>
+
+    <changeSet id="fin-rus-43" logicalFilePath="path-independent" author="ruslan">
+        <comment>Creating table: fin_req_items_tl</comment>
+        <createTable tableName="fin_req_items_tl" schemaName="apps" remarks="Перевод Позиции из каталога услуг">
+            <column name="id" type="number" remarks="Идентификатор">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="req_items_id" type="number" remarks="Ссылка на родительскую запись">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="lang" type="varchar(10)" remarks="язык">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="item_name" type="varchar(300)" remarks="Наименование услуги">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="create_date" type="TIMESTAMP" remarks="Дата создания">
+                <constraints nullable="true"/>
+            </column>
+
+            <column name="last_update_date" type="TIMESTAMP" remarks="Дата изменения">
+                <constraints nullable="true"/>
+            </column>
+
+            <column name="create_by" type="number" remarks="Автор">
+                <constraints nullable="true"/>
+            </column>
+
+            <column name="last_update_by" type="number" remarks="Автор изменения">
+                <constraints nullable="true"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="fin-rus-44" logicalFilePath="path-independent" author="ruslan">
+        <comment>Creating primary key for table: fin_req_items_tl</comment>
+        <addPrimaryKey
+                columnNames="id"
+                constraintName="pk_fin_req_items_tl"
+                schemaName="apps"
+                tableName="fin_req_items_tl"/>
+    </changeSet>
+
+    <changeSet id="fin-rus-45" logicalFilePath="path-independent" author="ruslan">
+        <comment>Creating sequence for table: fin_req_items_tl</comment>
+        <createSequence
+                incrementBy="1"
+                schemaName="apps"
+                sequenceName="fin_req_items_tl_s"
+                startValue="1"/>
+    </changeSet>
+
+    <changeSet id="fin-rus-46" logicalFilePath="path-independent" author="ruslan" context="dev">
+        <comment>Creating unique for table: fin_req_items_tl</comment>
+        <addUniqueConstraint columnNames="req_items_id, lang"
+                             constraintName="uk_fin_req_items_tl_tl"
+                             deferrable="true"
+                             disabled="true"
+                             initiallyDeferred="true"
+                             schemaName="apps"
+                             tableName="fin_req_items_tl"/>
+    </changeSet>
+
+    <changeSet id="fin-rus-47" logicalFilePath="path-independent" author="ruslan">
+        <comment>Creating foreign constraint: fin_req_items_tl to fin_req_items</comment>
+        <addForeignKeyConstraint
+                baseTableSchemaName="apps"
+                baseTableName="fin_req_items_tl"
+                baseColumnNames="req_items_id"
+                constraintName="fk_fin_req_items_tl_1"
+                deferrable="true"
+                initiallyDeferred="true"
+                onDelete="CASCADE"
+                onUpdate="RESTRICT"
+                referencedTableSchemaName="apps"
+                referencedTableName="fin_req_items"
+                referencedColumnNames="id"
+        />
+    </changeSet>
+</databaseChangeLog>
