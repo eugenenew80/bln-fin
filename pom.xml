@@ -73,8 +73,7 @@
 
     <profiles>
         <profile>
-
-         <id>blntest</id>
+            <id>blntest</id>
              <activation>
                 <activeByDefault>true</activeByDefault>
              </activation>
@@ -86,7 +85,9 @@
                  <scripts>dev</scripts>
                  <skipTests>true</skipTests>
              </properties>
+        </profile>
 
+        <profile>
             <id>prod</id>
             <properties>
                 <driver>oracle.jdbc.OracleDriver</driver>
