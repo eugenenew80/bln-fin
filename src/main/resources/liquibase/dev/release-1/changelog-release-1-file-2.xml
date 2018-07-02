@@ -17,7 +17,7 @@
                 <constraints nullable="false"/>
             </column>
 
-            <column name="period_id" type="varchar(100)" remarks="Ссылка на родительскую запись">
+            <column name="period_id" type="number" remarks="Ссылка на родительскую запись">
                 <constraints nullable="false"/>
             </column>
 
