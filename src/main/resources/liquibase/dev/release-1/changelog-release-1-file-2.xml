@@ -827,4 +827,151 @@
                 referencedColumnNames="id"
         />
     </changeSet>
+
+    <changeSet id="fin-rus-48" logicalFilePath="path-independent" author="ruslan">
+        <comment>Creating foreign constraint: cm_doc_keg_cte fin_req_lines</comment>
+        <addForeignKeyConstraint
+                baseTableSchemaName="apps"
+                baseTableName="cm_doc_keg_cte"
+                baseColumnNames="fin_req_line_id"
+                constraintName="fk_cm_doc_keg_cte_29"
+                deferrable="true"
+                initiallyDeferred="true"
+                onDelete="RESTRICT"
+                onUpdate="RESTRICT"
+                referencedTableSchemaName="apps"
+                referencedTableName="fin_req_lines"
+                referencedColumnNames="id"
+        />
+    </changeSet>
+
+    <changeSet id="fin-rus-49" logicalFilePath="path-independent" author="ruslan">
+        <comment>Creating foreign constraint: cm_doc_rfc fin_req_lines</comment>
+        <addForeignKeyConstraint
+                baseTableSchemaName="apps"
+                baseTableName="cm_doc_rfc"
+                baseColumnNames="fin_req_line_id"
+                constraintName="fk_cm_doc_rfc_29"
+                deferrable="true"
+                initiallyDeferred="true"
+                onDelete="RESTRICT"
+                onUpdate="RESTRICT"
+                referencedTableSchemaName="apps"
+                referencedTableName="fin_req_lines"
+                referencedColumnNames="id"
+        />
+    </changeSet>
+
+    <changeSet id="fin-rus-50" logicalFilePath="path-independent" author="ruslan">
+        <comment>Creating table: fin_esf_statuses</comment>
+        <createTable tableName="fin_esf_statuses" schemaName="apps" remarks="справочник Типы статусов для ЭЦФ">
+            <column name="code" type="varchar(20)" remarks="Код типа статуса">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="create_date" type="TIMESTAMP" remarks="Дата создания">
+                <constraints nullable="true"/>
+            </column>
+
+            <column name="last_update_date" type="TIMESTAMP" remarks="Дата изменения">
+                <constraints nullable="true"/>
+            </column>
+
+            <column name="create_by" type="number" remarks="Автор">
+                <constraints nullable="true"/>
+            </column>
+
+            <column name="last_update_by" type="number" remarks="Автор изменения">
+                <constraints nullable="true"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="fin-rus-51" logicalFilePath="path-independent" author="ruslan">
+        <comment>Creating primary key for table: fin_esf_statuses</comment>
+        <addPrimaryKey
+                columnNames="code"
+                constraintName="pk_fin_esf_statuses_tl"
+                schemaName="apps"
+                tableName="fin_esf_statuses"/>
+    </changeSet>
+
+    <changeSet id="fin-rus-53" logicalFilePath="path-independent" author="ruslan">
+        <comment>Creating table: fin_esf_statuses_tl</comment>
+        <createTable tableName="fin_esf_statuses_tl" schemaName="apps" remarks="Перевод Типы статусов для ЭЦФ">
+
+            <column name="code" type="varchar(20)" remarks="Код типа статуса">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="lang" type="varchar(10)" remarks="язык">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="name" type="varchar(100)" remarks="Наименование типа статуса">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="create_date" type="TIMESTAMP" remarks="Дата создания">
+                <constraints nullable="true"/>
+            </column>
+
+            <column name="last_update_date" type="TIMESTAMP" remarks="Дата изменения">
+                <constraints nullable="true"/>
+            </column>
+
+            <column name="create_by" type="number" remarks="Автор">
+                <constraints nullable="true"/>
+            </column>
+
+            <column name="last_update_by" type="number" remarks="Автор изменения">
+                <constraints nullable="true"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="fin-rus-54" logicalFilePath="path-independent" author="ruslan">
+        <comment>Creating primary key for table: fin_esf_statuses_tl</comment>
+        <addPrimaryKey
+                columnNames="code,lang"
+                constraintName="pk_fin_esf_statuses_tl"
+                schemaName="apps"
+                tableName="fin_debt_types_tl"/>
+    </changeSet>
+
+    <changeSet id="fin-rus-55" logicalFilePath="path-independent" author="ruslan">
+        <comment>Creating foreign constraint:fin_esf_statuses to fin_esf_statuses_tl</comment>
+        <addForeignKeyConstraint
+                baseTableSchemaName="apps"
+                baseTableName="fin_esf_statuses_tl"
+                baseColumnNames="code"
+                constraintName="fk_fin_esf_statuses_tl_1"
+                deferrable="true"
+                initiallyDeferred="true"
+                onDelete="CASCADE"
+                onUpdate="RESTRICT"
+                referencedTableSchemaName="apps"
+                referencedTableName="fin_esf_statuses"
+                referencedColumnNames="code"
+        />
+    </changeSet>
+
+
+    <changeSet id="fin-rus-56" logicalFilePath="path-independent" author="ruslan">
+        <comment>Creating foreign constraint: fin_sale_invoices to fin_esf_statuses</comment>
+        <addForeignKeyConstraint
+                baseTableSchemaName="apps"
+                baseTableName="fin_sale_invoices"
+                baseColumnNames="esf_status"
+                constraintName="fk_fin_sale_invoices_10"
+                deferrable="true"
+                initiallyDeferred="true"
+                onDelete="RESTRICT"
+                onUpdate="RESTRICT"
+                referencedTableSchemaName="apps"
+                referencedTableName="fin_esf_statuses"
+                referencedColumnNames="code"
+        />
+    </changeSet>
+
 </databaseChangeLog>
