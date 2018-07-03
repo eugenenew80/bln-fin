@@ -13,4 +13,8 @@ public interface InvoiceService {
     @WebMethod
     @WebResult(name = "result")
     Message updateStatuses(@WebParam(name = "status") List<InvoiceStatusDto> list);
+
+    @WebMethod
+    @WebResult(name = "result")
+    Message createInvoices(@WebParam(name = "invoice") List<InvoiceDto> list);
 }

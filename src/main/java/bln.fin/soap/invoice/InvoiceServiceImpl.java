@@ -17,4 +17,14 @@ public class InvoiceServiceImpl implements InvoiceService {
         msg.setDetails(list.size() + " records updated");
         return msg;
     }
+
+    @Override
+    public Message createInvoices(List<InvoiceDto> list) {
+        Message msg = new Message();
+        msg.setStatus("success");
+        msg.setDetails(list.size() + " records created");
+        return msg;
+    }
+
+
 }
