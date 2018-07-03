@@ -181,6 +181,18 @@
                 <constraints nullable="true"/>
             </column>
 
+            <column name="sap_date" type="TIMESTAMP" remarks="Дата передачи в САП">
+                <constraints nullable="true"/>
+            </column>
+
+            <column name="status" type="varchar2(10)" remarks="Статус внутрений в БИС">
+                <constraints nullable="true"/>
+            </column>
+
+            <column name="esf_status" type="varchar2(10)" remarks="Статус в ЭЦФ">
+                <constraints nullable="true"/>
+            </column>
+
             <column name="create_date" type="TIMESTAMP" remarks="Дата создания">
                 <constraints nullable="true"/>
             </column>
@@ -1195,7 +1207,7 @@
         <createSequence
                 incrementBy="1"
                 schemaName="apps"
-                sequenceName="fin_payment_request_lines_ы"
+                sequenceName="fin_payment_request_lines_s"
                 startValue="1"/>
     </changeSet>
 
