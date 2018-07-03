@@ -1,12 +1,12 @@
 package bln.fin.soap.invoice;
 
 import lombok.Data;
-
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
 import java.util.Date;
+import java.util.List;
 
 @Data
 @XmlAccessorType(XmlAccessType.FIELD)
@@ -41,4 +41,13 @@ public class InvoiceDto {
 
     @XmlElement(required = true)
     private String sysCode;
+
+    @XmlElement(required = true)
+    private Double amount;
+
+    @XmlElement(required = true)
+    private Double tax;
+
+    @XmlElement(required = true, name = "item")
+    private List<InvoiceLineDto> items;
 }
