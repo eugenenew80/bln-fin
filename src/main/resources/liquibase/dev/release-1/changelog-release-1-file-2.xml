@@ -891,7 +891,7 @@
         <comment>Creating primary key for table: fin_esf_statuses</comment>
         <addPrimaryKey
                 columnNames="code"
-                constraintName="pk_fin_esf_statuses_tl"
+                constraintName="pk_fin_esf_statuses"
                 schemaName="apps"
                 tableName="fin_esf_statuses"/>
     </changeSet>
@@ -936,7 +936,7 @@
                 columnNames="code,lang"
                 constraintName="pk_fin_esf_statuses_tl"
                 schemaName="apps"
-                tableName="fin_debt_types_tl"/>
+                tableName="fin_esf_statuses_tl"/>
     </changeSet>
 
     <changeSet id="fin-rus-55" logicalFilePath="path-independent" author="ruslan">
