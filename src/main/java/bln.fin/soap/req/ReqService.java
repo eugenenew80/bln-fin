@@ -10,7 +10,7 @@ import java.util.List;
 
 @WebService(name = "ReqService", targetNamespace = "http://bis.kegoc.kz/soap")
 public interface ReqService {
-    @WebMethod
+    @WebMethod(action = "createReqs")
     @WebResult(name = "result")
     Message createReqs(@WebParam(name = "reqLine") List<ReqLineDto> list);
 }

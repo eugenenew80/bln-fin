@@ -19,10 +19,10 @@ public class InvoiceDto {
     private String docNum;
 
     @XmlElement(required = true)
-    private String extDocNum;
+    private Date docDate;
 
     @XmlElement(required = true)
-    private Date docDate;
+    private String extDocNum;
 
     @XmlElement(required = true)
     private Date accountingDate;

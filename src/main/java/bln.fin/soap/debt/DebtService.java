@@ -10,7 +10,7 @@ import java.util.List;
 
 @WebService(name = "DebtService", targetNamespace = "http://bis.kegoc.kz/soap")
 public interface DebtService {
-    @WebMethod
+    @WebMethod(action = "createDebts")
     @WebResult(name = "result")
     Message createDebts(@WebParam(name = "debt") List<DebtDto> list);
 }

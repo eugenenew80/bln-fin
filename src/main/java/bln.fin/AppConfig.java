@@ -1,8 +1,6 @@
 package bln.fin;
 
-import bln.fin.repo.CheckApplicationRepo;
-import bln.fin.repo.ReceiptApplicationRepo;
-import bln.fin.repo.ReqLineRepo;
+import bln.fin.repo.*;
 import bln.fin.soap.debt.DebtServiceImpl;
 import bln.fin.soap.invoice.InvoiceServiceImpl;
 import bln.fin.soap.req.ReqServiceImpl;
@@ -57,7 +55,7 @@ public class AppConfig  {
 
     @Bean
     public Endpoint endpoint2() {
-        EndpointImpl endpoint = new EndpointImpl(springBus(), new InvoiceServiceImpl());
+        EndpointImpl endpoint = new EndpointImpl(springBus(), new InvoiceServiceImpl(purchaseInvoiceRepo, saleInvoiceRepo));
         endpoint.publish("/InvoiceService");
         return endpoint;
     }
@@ -77,4 +75,10 @@ public class AppConfig  {
 
     @Autowired
     private final ReceiptApplicationRepo receiptApplicationRepo;
+
+    @Autowired
+    private PurchaseInvoiceRepo purchaseInvoiceRepo;
+
+    @Autowired
+    private SaleInvoiceRepo saleInvoiceRepo;
 }
