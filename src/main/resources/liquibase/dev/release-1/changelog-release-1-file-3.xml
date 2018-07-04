@@ -1,0 +1,257 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.3.xsd">
+
+    <changeSet id="fin-eug-153" logicalFilePath="path-independent" author="eugene">
+        <comment>Creating table: wf_activities</comment>
+        <createTable tableName="wf_activities" schemaName="apps" remarks="Список действий">
+            <column name="code" type="varchar(20)" remarks="Код действия">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="name" type="varchar(100)" remarks="Наименование действия">
+                <constraints nullable="true"/>
+            </column>
+
+            <column name="create_date" type="TIMESTAMP" remarks="Дата создания">
+                <constraints nullable="true"/>
+            </column>
+
+            <column name="last_update_date" type="TIMESTAMP" remarks="Дата изменения">
+                <constraints nullable="true"/>
+            </column>
+
+            <column name="create_by" type="number" remarks="Автор">
+                <constraints nullable="true"/>
+            </column>
+
+            <column name="last_update_by" type="number" remarks="Автор изменения">
+                <constraints nullable="true"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="fin-eug-154" logicalFilePath="path-independent" author="eugene">
+        <comment>Creating primary key for table: wf_activities</comment>
+        <addPrimaryKey
+                columnNames="code"
+                constraintName="pk_wf_activities"
+                schemaName="apps"
+                tableName="wf_activities"/>
+    </changeSet>
+
+    <changeSet id="fin-eug-155" logicalFilePath="path-independent" author="eugene">
+        <comment>Creating table: wf_states</comment>
+        <createTable tableName="wf_states" schemaName="apps" remarks="Список состояний">
+            <column name="code" type="varchar(20)" remarks="Код состояний">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="name" type="varchar(100)" remarks="Наименование состояний">
+                <constraints nullable="true"/>
+            </column>
+
+            <column name="create_date" type="TIMESTAMP" remarks="Дата создания">
+                <constraints nullable="true"/>
+            </column>
+
+            <column name="last_update_date" type="TIMESTAMP" remarks="Дата изменения">
+                <constraints nullable="true"/>
+            </column>
+
+            <column name="create_by" type="number" remarks="Автор">
+                <constraints nullable="true"/>
+            </column>
+
+            <column name="last_update_by" type="number" remarks="Автор изменения">
+                <constraints nullable="true"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="fin-eug-156" logicalFilePath="path-independent" author="eugene">
+        <comment>Creating primary key for table: wf_states</comment>
+        <addPrimaryKey
+                columnNames="code"
+                constraintName="pk_wf_states"
+                schemaName="apps"
+                tableName="wf_states"/>
+    </changeSet>
+
+    <changeSet id="fin-eug-157" logicalFilePath="path-independent" author="eugene">
+        <comment>Creating table: wf_objects</comment>
+        <createTable tableName="wf_objects" schemaName="apps" remarks="Список состояний">
+            <column name="code" type="varchar(20)" remarks="Код объекта">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="name" type="varchar(100)" remarks="Наименование объекта">
+                <constraints nullable="true"/>
+            </column>
+
+            <column name="create_date" type="TIMESTAMP" remarks="Дата создания">
+                <constraints nullable="true"/>
+            </column>
+
+            <column name="last_update_date" type="TIMESTAMP" remarks="Дата изменения">
+                <constraints nullable="true"/>
+            </column>
+
+            <column name="create_by" type="number" remarks="Автор">
+                <constraints nullable="true"/>
+            </column>
+
+            <column name="last_update_by" type="number" remarks="Автор изменения">
+                <constraints nullable="true"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="fin-eug-158" logicalFilePath="path-independent" author="eugene">
+        <comment>Creating primary key for table: wf_objects</comment>
+        <addPrimaryKey
+                columnNames="code"
+                constraintName="pk_wf_objects"
+                schemaName="apps"
+                tableName="wf_objects"/>
+    </changeSet>
+
+
+    <changeSet id="fin-eug-159" logicalFilePath="path-independent" author="eugene">
+        <comment>Creating table: wf_object_states</comment>
+        <createTable tableName="wf_object_states" schemaName="apps" remarks="Список состояний объектов">
+            <column name="object_code" type="varchar(20)" remarks="Код объекта">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="state_code" type="varchar(20)" remarks="Код состояния">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="is_initial" type="number" remarks="Флаг - начальное состояние">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="is_final" type="number" remarks="Флаг - конечное состояние">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="create_date" type="TIMESTAMP" remarks="Дата создания">
+                <constraints nullable="true"/>
+            </column>
+
+            <column name="last_update_date" type="TIMESTAMP" remarks="Дата изменения">
+                <constraints nullable="true"/>
+            </column>
+
+            <column name="create_by" type="number" remarks="Автор">
+                <constraints nullable="true"/>
+            </column>
+
+            <column name="last_update_by" type="number" remarks="Автор изменения">
+                <constraints nullable="true"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="fin-eug-158" logicalFilePath="path-independent" author="eugene">
+        <comment>Creating primary key for table: wf_object_states</comment>
+        <addPrimaryKey
+                columnNames="object_code, state_code"
+                constraintName="pk_wf_object_states"
+                schemaName="apps"
+                tableName="wf_object_states"/>
+    </changeSet>
+
+
+    <changeSet id="fin-eug-160" logicalFilePath="path-independent" author="eugene">
+        <comment>Creating table: wf_object_activities</comment>
+        <createTable tableName="wf_object_activities" schemaName="apps" remarks="Список действий с объектами">
+            <column name="object_code" type="varchar(20)" remarks="Код объекта">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="activity_code" type="varchar(20)" remarks="Код действия">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="create_date" type="TIMESTAMP" remarks="Дата создания">
+                <constraints nullable="true"/>
+            </column>
+
+            <column name="last_update_date" type="TIMESTAMP" remarks="Дата изменения">
+                <constraints nullable="true"/>
+            </column>
+
+            <column name="create_by" type="number" remarks="Автор">
+                <constraints nullable="true"/>
+            </column>
+
+            <column name="last_update_by" type="number" remarks="Автор изменения">
+                <constraints nullable="true"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="fin-eug-161" logicalFilePath="path-independent" author="eugene">
+        <comment>Creating primary key for table: wf_object_activities</comment>
+        <addPrimaryKey
+                columnNames="object_code, activity_code"
+                constraintName="pk_wf_object_activities"
+                schemaName="apps"
+                tableName="wf_object_activities"/>
+    </changeSet>
+
+
+    <changeSet id="fin-eug-162" logicalFilePath="path-independent" author="eugene">
+        <comment>Creating table: wf_object_state_transitions</comment>
+        <createTable tableName="wf_object_state_transitions" schemaName="apps" remarks="Список возможных переходов между состояниями">
+            <column name="object_code" type="varchar(20)" remarks="Код объекта">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="state_code_from" type="varchar(20)" remarks="Код старого состояния">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="state_code_to" type="varchar(20)" remarks="Код нового состояния">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="activity_code" type="varchar(20)" remarks="Код действия">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="create_date" type="TIMESTAMP" remarks="Дата создания">
+                <constraints nullable="true"/>
+            </column>
+
+            <column name="last_update_date" type="TIMESTAMP" remarks="Дата изменения">
+                <constraints nullable="true"/>
+            </column>
+
+            <column name="create_by" type="number" remarks="Автор">
+                <constraints nullable="true"/>
+            </column>
+
+            <column name="last_update_by" type="number" remarks="Автор изменения">
+                <constraints nullable="true"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="fin-eug-163" logicalFilePath="path-independent" author="eugene">
+        <comment>Creating primary key for table: wf_object_state_transitions</comment>
+        <addPrimaryKey
+                columnNames="object_code, state_code_from, state_code_to"
+                constraintName="pk_wf_object_state_transitions"
+                schemaName="apps"
+                tableName="wf_object_state_transitions"/>
+    </changeSet>
+
+
+</databaseChangeLog>
