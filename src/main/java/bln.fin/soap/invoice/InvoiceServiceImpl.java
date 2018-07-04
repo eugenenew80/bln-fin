@@ -1,5 +1,6 @@
 package bln.fin.soap.invoice;
 
+import bln.fin.entity.PurchaseInvoice;
 import bln.fin.repo.PurchaseInvoiceRepo;
 import bln.fin.repo.SaleInvoiceRepo;
 import bln.fin.soap.Message;
@@ -7,6 +8,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import javax.jws.WebService;
+import java.util.ArrayList;
 import java.util.List;
 
 @RequiredArgsConstructor
@@ -18,6 +20,11 @@ public class InvoiceServiceImpl implements InvoiceService {
 
     @Override
     public Message updateStatuses(List<InvoiceStatusDto> list) {
+        List<PurchaseInvoice> invoices = new ArrayList<>();
+        for (PurchaseInvoice invoice : invoices) {
+
+        }
+
         Message msg = new Message();
         msg.setStatus("success");
         msg.setDetails(list.size() + " records updated");
