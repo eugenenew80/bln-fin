@@ -574,7 +574,7 @@
                 onDelete="CASCADE"
                 onUpdate="RESTRICT"
                 referencedTableSchemaName="apps"
-                referencedTableName="fin_periods"
+                referencedTableName="fin_debt_types"
                 referencedColumnNames="code"
         />
     </changeSet>
