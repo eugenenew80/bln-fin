@@ -45,17 +45,29 @@ public class PurchaseInvoice {
     @Column(name = "turnover_date")
     private LocalDate turnoverDate;
 
+    @Column(name = "accounting_date")
+    private LocalDate accountingDate;
+
     @Column(name = "esf_num")
     private String esfNum;
 
     @Column(name = "esf_date")
     private LocalDate esfDate;
 
+    @Column(name = "erp_num")
+    private String erpNum;
+
+    @Column(name = "erp_date")
+    private LocalDate erpDate;
+
     @Column(name = "description")
     private String description;
 
     @Column(name = "amount")
     private Double amount;
+
+    @Column(name = "tax")
+    private Double tax;
 
     @Column(name = "currency_code")
     private String currencyCode;
@@ -70,6 +82,6 @@ public class PurchaseInvoice {
     @JoinColumn(name = "src_purchase_invoice_id")
     private PurchaseInvoice srcPurchaseInvoice;
 
-    @OneToMany(mappedBy = "invoice", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "invoice", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     private List<SaleInvoiceLine> lines;
 }

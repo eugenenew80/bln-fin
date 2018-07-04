@@ -141,6 +141,10 @@
                 <constraints nullable="false"/>
             </column>
 
+            <column name="accounting_date_date" type="date" remarks="Дата проводки">
+                <constraints nullable="false"/>
+            </column>
+
             <column name="due_date" type="date" remarks="Дата оплаты согласно договора">
                 <constraints nullable="true"/>
             </column>
@@ -551,6 +555,10 @@
                 <constraints nullable="false"/>
             </column>
 
+            <column name="accounting_date" type="date" remarks="Дата проводки">
+                <constraints nullable="false"/>
+            </column>
+
             <column name="erp_num" type="varchar(30)" remarks="№ счёт-фактуры в системе ERP">
                 <constraints nullable="true"/>
             </column>
@@ -852,7 +860,7 @@
                 <constraints nullable="true"/>
             </column>
 
-            <column name="accounting_date_date" type="date" remarks="Дата учёта">
+            <column name="accounting_date" type="date" remarks="Дата учёта">
                 <constraints nullable="false"/>
             </column>
 

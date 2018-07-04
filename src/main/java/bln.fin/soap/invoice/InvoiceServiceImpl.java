@@ -8,6 +8,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import javax.jws.WebService;
+import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,11 +22,6 @@ public class InvoiceServiceImpl implements InvoiceService {
 
     @Override
     public Message updateStatuses(List<InvoiceStatusDto> list) {
-        List<PurchaseInvoice> invoices = new ArrayList<>();
-        for (PurchaseInvoice invoice : invoices) {
-
-        }
-
         Message msg = new Message();
         msg.setStatus("success");
         msg.setDetails(list.size() + " records updated");
@@ -33,6 +30,25 @@ public class InvoiceServiceImpl implements InvoiceService {
 
     @Override
     public Message createInvoices(List<InvoiceDto> list) {
+        List<PurchaseInvoice> invoices = new ArrayList<>();
+        for (InvoiceDto invoiceDto : list) {
+            LocalDate erpDate = invoiceDto.getDocDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+            LocalDate accountingDate = invoiceDto.getAccountingDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+
+            PurchaseInvoice invoice = purchaseInvoiceRepo.findByErpNumAndErpDate(invoiceDto.getDocNum(), erpDate);
+            if (invoice == null)
+                invoice = new PurchaseInvoice();
+
+            invoice.setAccountingDate(accountingDate);
+            invoice.setInvoiceDate(erpDate);
+            invoice.setTurnoverDate(erpDate);
+            invoice.setNum(invoiceDto.getExtDocNum());
+            invoice.setErpNum(invoiceDto.getDocNum());
+            invoice.setAmount(invoiceDto.getAmount());
+            invoice.setTax(invoiceDto.getTax());
+            invoice.setCurrencyCode(invoiceDto.getCurrencyCode());
+        }
+
         Message msg = new Message();
         msg.setStatus("success");
         msg.setDetails(list.size() + " records created");

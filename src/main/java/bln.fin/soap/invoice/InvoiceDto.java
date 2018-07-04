@@ -48,6 +48,9 @@ public class InvoiceDto {
     @XmlElement(required = true)
     private Double tax;
 
+    @XmlElement(required = true)
+    private String currencyCode;
+
     @XmlElement(required = true, name = "item")
     private List<InvoiceLineDto> items;
 }
