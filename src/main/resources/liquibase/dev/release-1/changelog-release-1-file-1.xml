@@ -133,16 +133,8 @@
                 <constraints nullable="false"/>
             </column>
 
-            <column name="esf_num" type="varchar(30)" remarks="№ счёт-фактуры в системе ЭСФ">
-                <constraints nullable="true"/>
-            </column>
-
             <column name="invoice_date" type="date" remarks="Дата счёт-фактуры">
                 <constraints nullable="false"/>
-            </column>
-
-            <column name="esf_date" type="date" remarks="Дата регистрации счёт-фактуры в системе ЭСФ">
-                <constraints nullable="true"/>
             </column>
 
             <column name="turnover_date" type="date" remarks="Дата совершения оборота по реализации">
@@ -150,6 +142,18 @@
             </column>
 
             <column name="due_date" type="date" remarks="Дата оплаты согласно договора">
+                <constraints nullable="true"/>
+            </column>
+
+            <column name="erp_num" type="varchar(30)" remarks="№ счёт-фактуры в системе ERP">
+                <constraints nullable="true"/>
+            </column>
+
+            <column name="esf_num" type="varchar(30)" remarks="№ счёт-фактуры в системе ЭСФ">
+                <constraints nullable="true"/>
+            </column>
+
+            <column name="esf_date" type="date" remarks="Дата регистрации счёт-фактуры в системе ЭСФ">
                 <constraints nullable="true"/>
             </column>
 
@@ -181,15 +185,15 @@
                 <constraints nullable="true"/>
             </column>
 
-            <column name="sap_date" type="TIMESTAMP" remarks="Дата передачи в САП">
+            <column name="transfer_to_erp_date" type="TIMESTAMP" remarks="Дата передачи в систему ERP">
                 <constraints nullable="true"/>
             </column>
 
-            <column name="status" type="varchar2(10)" remarks="Статус внутрений в БИС">
+            <column name="status" type="varchar2(10)" remarks="Статус СФ в БИС">
                 <constraints nullable="true"/>
             </column>
 
-            <column name="esf_status" type="varchar2(10)" remarks="Статус в ЭЦФ">
+            <column name="esf_status" type="varchar2(10)" remarks="Статус СФ в системе ЭСФ">
                 <constraints nullable="true"/>
             </column>
 
