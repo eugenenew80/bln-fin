@@ -6,7 +6,7 @@
         xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
          http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.3.xsd">
 
-    <changeSet id="fin-eug-153" logicalFilePath="path-independent" author="eugene">
+    <changeSet id="wf-eug-1" logicalFilePath="path-independent" author="eugene">
         <comment>Creating table: wf_activities</comment>
         <createTable tableName="wf_activities" schemaName="apps" remarks="Список действий">
             <column name="code" type="varchar(20)" remarks="Код действия">
@@ -35,7 +35,7 @@
         </createTable>
     </changeSet>
 
-    <changeSet id="fin-eug-154" logicalFilePath="path-independent" author="eugene">
+    <changeSet id="wf-eug-2" logicalFilePath="path-independent" author="eugene">
         <comment>Creating primary key for table: wf_activities</comment>
         <addPrimaryKey
                 columnNames="code"
@@ -44,7 +44,7 @@
                 tableName="wf_activities"/>
     </changeSet>
 
-    <changeSet id="fin-eug-155" logicalFilePath="path-independent" author="eugene">
+    <changeSet id="wf-eug-3" logicalFilePath="path-independent" author="eugene">
         <comment>Creating table: wf_states</comment>
         <createTable tableName="wf_states" schemaName="apps" remarks="Список состояний">
             <column name="code" type="varchar(20)" remarks="Код состояний">
@@ -73,7 +73,7 @@
         </createTable>
     </changeSet>
 
-    <changeSet id="fin-eug-156" logicalFilePath="path-independent" author="eugene">
+    <changeSet id="wf-eug-4" logicalFilePath="path-independent" author="eugene">
         <comment>Creating primary key for table: wf_states</comment>
         <addPrimaryKey
                 columnNames="code"
@@ -82,7 +82,7 @@
                 tableName="wf_states"/>
     </changeSet>
 
-    <changeSet id="fin-eug-157" logicalFilePath="path-independent" author="eugene">
+    <changeSet id="wf-eug-5" logicalFilePath="path-independent" author="eugene">
         <comment>Creating table: wf_objects</comment>
         <createTable tableName="wf_objects" schemaName="apps" remarks="Список состояний">
             <column name="code" type="varchar(20)" remarks="Код объекта">
@@ -111,7 +111,7 @@
         </createTable>
     </changeSet>
 
-    <changeSet id="fin-eug-158" logicalFilePath="path-independent" author="eugene">
+    <changeSet id="wf-eug-6" logicalFilePath="path-independent" author="eugene">
         <comment>Creating primary key for table: wf_objects</comment>
         <addPrimaryKey
                 columnNames="code"
@@ -121,7 +121,7 @@
     </changeSet>
 
 
-    <changeSet id="fin-eug-159" logicalFilePath="path-independent" author="eugene">
+    <changeSet id="wf-eug-7" logicalFilePath="path-independent" author="eugene">
         <comment>Creating table: wf_object_states</comment>
         <createTable tableName="wf_object_states" schemaName="apps" remarks="Список состояний объектов">
             <column name="object_code" type="varchar(20)" remarks="Код объекта">
@@ -158,7 +158,7 @@
         </createTable>
     </changeSet>
 
-    <changeSet id="fin-eug-158" logicalFilePath="path-independent" author="eugene">
+    <changeSet id="wf-eug-8" logicalFilePath="path-independent" author="eugene">
         <comment>Creating primary key for table: wf_object_states</comment>
         <addPrimaryKey
                 columnNames="object_code, state_code"
@@ -168,7 +168,7 @@
     </changeSet>
 
 
-    <changeSet id="fin-eug-160" logicalFilePath="path-independent" author="eugene">
+    <changeSet id="wf-eug-9" logicalFilePath="path-independent" author="eugene">
         <comment>Creating table: wf_object_activities</comment>
         <createTable tableName="wf_object_activities" schemaName="apps" remarks="Список действий с объектами">
             <column name="object_code" type="varchar(20)" remarks="Код объекта">
@@ -197,7 +197,7 @@
         </createTable>
     </changeSet>
 
-    <changeSet id="fin-eug-161" logicalFilePath="path-independent" author="eugene">
+    <changeSet id="wf-eug-10" logicalFilePath="path-independent" author="eugene">
         <comment>Creating primary key for table: wf_object_activities</comment>
         <addPrimaryKey
                 columnNames="object_code, activity_code"
@@ -207,7 +207,7 @@
     </changeSet>
 
 
-    <changeSet id="fin-eug-162" logicalFilePath="path-independent" author="eugene">
+    <changeSet id="wf-eug-11" logicalFilePath="path-independent" author="eugene">
         <comment>Creating table: wf_object_state_transitions</comment>
         <createTable tableName="wf_object_state_transitions" schemaName="apps" remarks="Список возможных переходов между состояниями">
             <column name="object_code" type="varchar(20)" remarks="Код объекта">
@@ -244,7 +244,7 @@
         </createTable>
     </changeSet>
 
-    <changeSet id="fin-eug-163" logicalFilePath="path-independent" author="eugene">
+    <changeSet id="wf-eug-12" logicalFilePath="path-independent" author="eugene">
         <comment>Creating primary key for table: wf_object_state_transitions</comment>
         <addPrimaryKey
                 columnNames="object_code, state_code_from, state_code_to"
@@ -253,5 +253,214 @@
                 tableName="wf_object_state_transitions"/>
     </changeSet>
 
+
+    <changeSet id="wf-eug-13" logicalFilePath="path-independent" author="eugene">
+        <comment>Creating table: fin_periods</comment>
+        <createTable tableName="wf_object_workflows" schemaName="apps" remarks="Список рабочих потоков">
+            <column name="id" type="number" remarks="Идентификатор">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="name" type="varchar(100)" remarks="Описание рабочего потока">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="object_code" type="varchar(20)" remarks="Код типа объекта">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="object_id" type="number" remarks="Идентификатор объекта">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="current_state_code" type="varchar(20)" remarks="Код текущего состояния потока">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="last_activity_code" type="varchar(20)" remarks="Код последнего действия над потоком">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="is_final" type="number" remarks="Флаг - поток завершён">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="start_date" type="date" remarks="Дата работы потока">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="end_date" type="date" remarks="Дата завершения работы потока">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="create_date" type="TIMESTAMP" remarks="Дата создания">
+                <constraints nullable="true"/>
+            </column>
+
+            <column name="last_update_date" type="TIMESTAMP" remarks="Дата изменения">
+                <constraints nullable="true"/>
+            </column>
+
+            <column name="create_by" type="number" remarks="Автор">
+                <constraints nullable="true"/>
+            </column>
+
+            <column name="last_update_by" type="number" remarks="Автор изменения">
+                <constraints nullable="true"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="wf-eug-14" logicalFilePath="path-independent" author="eugene">
+        <comment>Creating primary key for table: wf_object_workflows</comment>
+        <addPrimaryKey
+                columnNames="id"
+                constraintName="pk_wf_object_workflows"
+                schemaName="apps"
+                tableName="wf_object_workflows"/>
+    </changeSet>
+
+    <changeSet id="wf-eug-15" logicalFilePath="path-independent" author="eugene">
+        <comment>Creating sequence for table: wf_object_workflows</comment>
+        <createSequence
+                incrementBy="1"
+                schemaName="apps"
+                sequenceName="wf_object_workflows_s"
+                startValue="1"/>
+    </changeSet>
+
+    <changeSet id="wf-eug-16" logicalFilePath="path-independent" author="eugene">
+        <comment>Creating table: fin_periods</comment>
+        <createTable tableName="wf_object_workflow_details" schemaName="apps" remarks="Детализация выполнения рабочего потока">
+            <column name="id" type="number" remarks="Идентификатор">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="object_workflow_id" type="number" remarks="Идентификатор рабочего потока">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="state_code" type="varchar(20)" remarks="Код состояния рабочего потока">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="activity_code" type="varchar(20)" remarks="Код действия над потоком">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="changed_date" type="TIMESTAMP" remarks="Дата действия">
+                <constraints nullable="true"/>
+            </column>
+
+            <column name="create_date" type="TIMESTAMP" remarks="Дата создания">
+                <constraints nullable="true"/>
+            </column>
+
+            <column name="last_update_date" type="TIMESTAMP" remarks="Дата изменения">
+                <constraints nullable="true"/>
+            </column>
+
+            <column name="create_by" type="number" remarks="Автор">
+                <constraints nullable="true"/>
+            </column>
+
+            <column name="last_update_by" type="number" remarks="Автор изменения">
+                <constraints nullable="true"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="wf-eug-17" logicalFilePath="path-independent" author="eugene">
+        <comment>Creating primary key for table: wf_object_workflows</comment>
+        <addPrimaryKey
+                columnNames="id"
+                constraintName="pk_wf_object_workflows"
+                schemaName="apps"
+                tableName="wf_object_workflows"/>
+    </changeSet>
+
+    <changeSet id="wf-eug-18" logicalFilePath="path-independent" author="eugene">
+        <comment>Creating sequence for table: wf_object_workflows</comment>
+        <createSequence
+                incrementBy="1"
+                schemaName="apps"
+                sequenceName="wf_object_workflows_s"
+                startValue="1"/>
+    </changeSet>
+
+    <changeSet id="wf-eug-19" logicalFilePath="path-independent" author="eugene">
+        <comment>Creating table: fin_periods</comment>
+        <createTable tableName="wf_object_workflow_participants" schemaName="apps" remarks="Участники выполнения рабочего потока">
+            <column name="id" type="number" remarks="Идентификатор">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="object_workflow_id" type="number" remarks="Идентификатор рабочего потока">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="step" type="number" remarks="Номер шага">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="user_id" type="number" remarks="Идентификатор пользователя">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="start_state_code" type="varchar(20)" remarks="Код начального состояния рабочего потока">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="end_state_code" type="varchar(20)" remarks="Код конечного состояния рабочего потока">
+                <constraints nullable="true"/>
+            </column>
+
+            <column name="activity_code" type="varchar(20)" remarks="Код действия выполненного пользователем">
+                <constraints nullable="true"/>
+            </column>
+
+            <column name="start_date" type="TIMESTAMP" remarks="Дата начала шага">
+                <constraints nullable="true"/>
+            </column>
+
+            <column name="end_date" type="TIMESTAMP" remarks="Дата завершения шага">
+                <constraints nullable="true"/>
+            </column>
+
+            <column name="create_date" type="TIMESTAMP" remarks="Дата создания">
+                <constraints nullable="true"/>
+            </column>
+
+            <column name="last_update_date" type="TIMESTAMP" remarks="Дата изменения">
+                <constraints nullable="true"/>
+            </column>
+
+            <column name="create_by" type="number" remarks="Автор">
+                <constraints nullable="true"/>
+            </column>
+
+            <column name="last_update_by" type="number" remarks="Автор изменения">
+                <constraints nullable="true"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="wf-eug-20" logicalFilePath="path-independent" author="eugene">
+        <comment>Creating primary key for table: wf_object_workflow_participants</comment>
+        <addPrimaryKey
+                columnNames="id"
+                constraintName="pk_wf_object_workflow_participants"
+                schemaName="apps"
+                tableName="wf_object_workflow_participants"/>
+    </changeSet>
+
+    <changeSet id="wf-eug-21" logicalFilePath="path-independent" author="eugene">
+        <comment>Creating sequence for table: wf_object_workflow_participants</comment>
+        <createSequence
+                incrementBy="1"
+                schemaName="apps"
+                sequenceName="wf_object_workflow_participants_s"
+                startValue="1"/>
+    </changeSet>
 
 </databaseChangeLog>
