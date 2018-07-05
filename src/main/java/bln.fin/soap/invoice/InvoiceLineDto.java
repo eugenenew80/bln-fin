@@ -17,13 +17,16 @@ public class InvoiceLineDto {
     private String posName;
 
     @XmlElement(required = true)
+    private String itemNum;
+
+    @XmlElement(required = true)
     private String unit;
 
     @XmlElement(required = true)
     private Double quantity;
 
     @XmlElement(required = true)
-    private Double unitPrice;
+    private Double price;
 
     @XmlElement(required = true)
     private Double amount;

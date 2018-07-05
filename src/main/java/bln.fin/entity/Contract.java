@@ -23,9 +23,9 @@ public class Contract {
 
     @ManyToOne
     @JoinColumn(name = "bp1_id")
-    private BusinessPartner businessPartner1;
+    private BusinessPartner bp1;
 
     @ManyToOne
     @JoinColumn(name = "bp2_id")
-    private BusinessPartner businessPartner2;
+    private BusinessPartner bp2;
 }

@@ -1,12 +1,11 @@
 package bln.fin.soap.invoice;
 
-import bln.fin.entity.PurchaseInvoice;
-import bln.fin.repo.PurchaseInvoiceRepo;
-import bln.fin.repo.SaleInvoiceRepo;
+import bln.fin.entity.*;
+import bln.fin.entity.enums.InvoiceLineTypeEnum;
+import bln.fin.repo.*;
 import bln.fin.soap.Message;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-
 import javax.jws.WebService;
 import java.time.LocalDate;
 import java.time.ZoneId;
@@ -19,6 +18,10 @@ import java.util.List;
 public class InvoiceServiceImpl implements InvoiceService {
     private final PurchaseInvoiceRepo purchaseInvoiceRepo;
     private final SaleInvoiceRepo saleInvoiceRepo;
+    private final BusinessPartnerRepo businessPartnerRepo;
+    private final ContractRepo contractRepo;
+    private final UnitRepo unitRepo;
+    private final ItemRepo itemRepo;
 
     @Override
     public Message updateStatuses(List<InvoiceStatusDto> list) {
@@ -35,6 +38,10 @@ public class InvoiceServiceImpl implements InvoiceService {
             LocalDate erpDate = invoiceDto.getDocDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
             LocalDate accountingDate = invoiceDto.getAccountingDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
 
+            BusinessPartner vendor = businessPartnerRepo.findByErpCompanyCode(invoiceDto.getCompanyCode());
+            BusinessPartner customer = businessPartnerRepo.findByErpBpNum(invoiceDto.getBpNum());
+            Contract contract = contractRepo.findByContractNum(invoiceDto.getExtContractNum());
+
             PurchaseInvoice invoice = purchaseInvoiceRepo.findByErpNumAndErpDate(invoiceDto.getDocNum(), erpDate);
             if (invoice == null)
                 invoice = new PurchaseInvoice();
@@ -47,11 +54,47 @@ public class InvoiceServiceImpl implements InvoiceService {
             invoice.setAmount(invoiceDto.getAmount());
             invoice.setTax(invoiceDto.getTax());
             invoice.setCurrencyCode(invoiceDto.getCurrencyCode());
+            invoice.setCustomer(customer);
+            invoice.setConsignee(customer);
+            invoice.setVendor(vendor);
+            invoice.setConsignor(vendor);
+            invoice.setContract(contract);
+
+            List<PurchaseInvoiceLine> lines = invoice.getLines();
+            if (lines == null) {
+                lines = new ArrayList<>();
+                invoice.setLines(lines);
+            }
+
+            for (InvoiceLineDto lineDto : invoiceDto.getItems()) {
+                Unit unit = unitRepo.findByCode(lineDto.getUnit());
+                Item item = itemRepo.findByCode(lineDto.getItemNum());
+
+                PurchaseInvoiceLine invoiceLine = lines.stream()
+                    .filter(t -> t.getLineNum().equals(lineDto.getPosNum()))
+                    .findFirst()
+                    .orElse(new PurchaseInvoiceLine());
+
+                if (invoiceLine.getId() == null)
+                    lines.add(invoiceLine);
+
+                invoiceLine.setInvoice(invoice);
+                invoiceLine.setLineNum(lineDto.getPosNum());
+                invoiceLine.setAmount(lineDto.getAmount());
+                invoiceLine.setQuantity(lineDto.getQuantity());
+                invoiceLine.setUnitPrice(lineDto.getPrice());
+                invoiceLine.setLineTypeCode(InvoiceLineTypeEnum.LINE);
+                invoiceLine.setUnit(unit);
+                invoiceLine.setItem(item);
+            }
+
+            invoices.add(invoice);
         }
+        purchaseInvoiceRepo.save(invoices);
 
         Message msg = new Message();
         msg.setStatus("success");
-        msg.setDetails(list.size() + " records created");
+        msg.setDetails(invoices.size() + " records created");
         return msg;
     }
 }
