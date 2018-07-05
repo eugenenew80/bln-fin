@@ -11,6 +11,7 @@ import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @RequiredArgsConstructor
 @Service
@@ -67,9 +68,19 @@ public class InvoiceServiceImpl implements InvoiceService {
                 invoice.setLines(lines);
             }
 
+            for (int i = 0; i < lines.size(); i++) {
+                PurchaseInvoiceLine line = lines.get(i);
+                Optional<InvoiceLineDto> lineDto = invoiceDto.getLines().stream()
+                    .filter(t -> t.getPosNum().equals(line.getPosNum()))
+                    .findFirst();
+
+                if (!lineDto.isPresent())
+                    lines.remove(line);
+            }
+
             for (InvoiceLineDto lineDto : invoiceDto.getLines()) {
                 Unit unit = unitRepo.findByCode(lineDto.getUnit());
-                Item item = itemRepo.findByCode(lineDto.getItemNum());
+                Item item = itemRepo.findByErpCode(lineDto.getItemNum());
 
                 PurchaseInvoiceLine invoiceLine = lines.stream()
                     .filter(t -> t.getPosNum().equals(lineDto.getPosNum()))

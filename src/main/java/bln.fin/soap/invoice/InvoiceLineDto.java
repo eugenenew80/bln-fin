@@ -8,7 +8,7 @@ import javax.xml.bind.annotation.XmlType;
 
 @Data
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "Item", namespace = "http://bis.kegoc.kz/soap")
+@XmlType(name = "Line", namespace = "http://bis.kegoc.kz/soap")
 public class InvoiceLineDto {
     @XmlElement(required = true)
     private Long posNum;
