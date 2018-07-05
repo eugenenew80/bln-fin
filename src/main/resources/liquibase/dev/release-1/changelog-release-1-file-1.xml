@@ -354,16 +354,28 @@
                 <constraints nullable="false"/>
             </column>
 
+            <column name="pos_num" type="number" remarks="Номер позиции">
+                <constraints nullable="false"/>
+            </column>
+
             <column name="line_type_code" type="varchar(20)" remarks="Код типа строки">
                 <constraints nullable="false"/>
             </column>
 
             <column name="gjs_id" type="number" remarks="Идентификатор услуги">
-                <constraints nullable="false"/>
+                <constraints nullable="true"/>
+            </column>
+
+            <column name="description" type="varchar(100)" remarks="Описание">
+                <constraints nullable="true"/>
             </column>
 
             <column name="unit_id" type="number" remarks="Идентификатор единицы измерения">
-                <constraints nullable="false"/>
+                <constraints nullable="true"/>
+            </column>
+
+            <column name="unit_name" type="varchar(100)" remarks="Ед. измерения">
+                <constraints nullable="true"/>
             </column>
 
             <column name="tax_rate_id" type="number" remarks="Идентификатор ставки НДС">
@@ -646,16 +658,28 @@
                 <constraints nullable="false"/>
             </column>
 
+            <column name="pos_num" type="number" remarks="Номер позиции">
+                <constraints nullable="false"/>
+            </column>
+
             <column name="line_type_code" type="varchar(20)" remarks="Код типа строки">
                 <constraints nullable="false"/>
             </column>
 
             <column name="gjs_id" type="number" remarks="Идентификатор услуги">
-                <constraints nullable="false"/>
+                <constraints nullable="true"/>
+            </column>
+
+            <column name="description" type="varchar(100)" remarks="Описание">
+                <constraints nullable="true"/>
             </column>
 
             <column name="unit_id" type="number" remarks="Идентификатор единицы измерения">
-                <constraints nullable="false"/>
+                <constraints nullable="true"/>
+            </column>
+
+            <column name="unit_name" type="varchar(100)" remarks="Ед. измерения">
+                <constraints nullable="true"/>
             </column>
 
             <column name="tax_rate_id" type="number" remarks="Идентификатор ставки НДС">

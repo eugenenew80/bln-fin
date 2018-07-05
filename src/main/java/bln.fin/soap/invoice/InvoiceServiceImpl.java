@@ -38,8 +38,8 @@ public class InvoiceServiceImpl implements InvoiceService {
             LocalDate erpDate = invoiceDto.getDocDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
             LocalDate accountingDate = invoiceDto.getAccountingDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
 
-            BusinessPartner vendor = businessPartnerRepo.findByErpCompanyCode(invoiceDto.getCompanyCode());
-            BusinessPartner customer = businessPartnerRepo.findByErpBpNum(invoiceDto.getBpNum());
+            BusinessPartner vendor = businessPartnerRepo.findByErpBpNum(invoiceDto.getBpNum());
+            BusinessPartner customer = businessPartnerRepo.findByErpCompanyCode(invoiceDto.getCompanyCode());
             Contract contract = contractRepo.findByContractNum(invoiceDto.getExtContractNum());
 
             PurchaseInvoice invoice = purchaseInvoiceRepo.findByErpNumAndErpDate(invoiceDto.getDocNum(), erpDate);
@@ -49,6 +49,7 @@ public class InvoiceServiceImpl implements InvoiceService {
             invoice.setAccountingDate(accountingDate);
             invoice.setInvoiceDate(erpDate);
             invoice.setTurnoverDate(erpDate);
+            invoice.setErpDate(erpDate);
             invoice.setNum(invoiceDto.getExtDocNum());
             invoice.setErpNum(invoiceDto.getDocNum());
             invoice.setAmount(invoiceDto.getAmount());
@@ -66,12 +67,12 @@ public class InvoiceServiceImpl implements InvoiceService {
                 invoice.setLines(lines);
             }
 
-            for (InvoiceLineDto lineDto : invoiceDto.getItems()) {
+            for (InvoiceLineDto lineDto : invoiceDto.getLines()) {
                 Unit unit = unitRepo.findByCode(lineDto.getUnit());
                 Item item = itemRepo.findByCode(lineDto.getItemNum());
 
                 PurchaseInvoiceLine invoiceLine = lines.stream()
-                    .filter(t -> t.getLineNum().equals(lineDto.getPosNum()))
+                    .filter(t -> t.getPosNum().equals(lineDto.getPosNum()))
                     .findFirst()
                     .orElse(new PurchaseInvoiceLine());
 
@@ -79,13 +80,15 @@ public class InvoiceServiceImpl implements InvoiceService {
                     lines.add(invoiceLine);
 
                 invoiceLine.setInvoice(invoice);
-                invoiceLine.setLineNum(lineDto.getPosNum());
+                invoiceLine.setPosNum(lineDto.getPosNum());
                 invoiceLine.setAmount(lineDto.getAmount());
                 invoiceLine.setQuantity(lineDto.getQuantity());
                 invoiceLine.setUnitPrice(lineDto.getPrice());
                 invoiceLine.setLineTypeCode(InvoiceLineTypeEnum.LINE);
                 invoiceLine.setUnit(unit);
+                invoiceLine.setUnitName(lineDto.getUnit());
                 invoiceLine.setItem(item);
+                invoiceLine.setDescription(lineDto.getPosName());
             }
 
             invoices.add(invoice);

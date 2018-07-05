@@ -17,23 +17,29 @@ public class PurchaseInvoiceLine {
     private Long id;
 
     @ManyToOne
-    @JoinColumn(name = "purchase_invoice_id")
+    @JoinColumn(name = "invoice_id")
     private PurchaseInvoice invoice;
 
     @Column(name="line_type_code")
     @Enumerated(EnumType.STRING)
     private InvoiceLineTypeEnum lineTypeCode;
 
-    @Column(name="line_num")
-    private Long lineNum;
+    @Column(name="pos_num")
+    private Long posNum;
 
     @ManyToOne
     @JoinColumn(name = "gjs_id")
     private Item item;
 
+    @Column(name = "description")
+    private String description;
+
     @ManyToOne
     @JoinColumn(name = "unit_id")
     private Unit unit;
+
+    @Column(name = "unit_name")
+    private String unitName;
 
     @Column(name = "quantity")
     private Double quantity;
@@ -43,9 +49,6 @@ public class PurchaseInvoiceLine {
 
     @Column(name = "amount")
     private Double amount;
-
-    @Column(name = "tax_rate")
-    private Double taxRateValue;
 
     @ManyToOne
     @JoinColumn(name = "tax_rate_id")

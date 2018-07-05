@@ -92,8 +92,8 @@ public class SaleInvoice {
     private LocalDate exchangeDate;
 
     @ManyToOne
-    @JoinColumn(name = "src_sale_invoice_id")
-    private SaleInvoice srcSaleInvoice;
+    @JoinColumn(name = "src_invoice_id")
+    private SaleInvoice saleInvoice;
 
     @OneToMany(mappedBy = "invoice", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     private List<SaleInvoiceLine> lines;
