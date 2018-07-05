@@ -83,5 +83,5 @@ public class PurchaseInvoice {
     private PurchaseInvoice srcPurchaseInvoice;
 
     @OneToMany(mappedBy = "invoice", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<SaleInvoiceLine> lines;
+    private List<PurchaseInvoiceLine> lines;
 }

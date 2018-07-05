@@ -7,5 +7,5 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface BusinessPartnerRepo extends JpaRepository<BusinessPartner, Long> {
     BusinessPartner findByErpBpNum(String erpBpNum);
-    BusinessPartner findByErpCompanyCode(String erpСьзфтнСщву);
+    BusinessPartner findByErpCompanyCode(String erpCompanyCode);
 }

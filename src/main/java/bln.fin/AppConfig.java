@@ -55,7 +55,7 @@ public class AppConfig  {
 
     @Bean
     public Endpoint endpoint2() {
-        EndpointImpl endpoint = new EndpointImpl(springBus(), new InvoiceServiceImpl(purchaseInvoiceRepo, saleInvoiceRepo));
+        EndpointImpl endpoint = new EndpointImpl(springBus(), new InvoiceServiceImpl(purchaseInvoiceRepo, saleInvoiceRepo, businessPartnerRepo, contractRepo, unitRepo, itemRepo));
         endpoint.publish("/InvoiceService");
         return endpoint;
     }
@@ -81,4 +81,16 @@ public class AppConfig  {
 
     @Autowired
     private SaleInvoiceRepo saleInvoiceRepo;
+
+    @Autowired
+    private BusinessPartnerRepo businessPartnerRepo;
+
+    @Autowired
+    private ContractRepo contractRepo;
+
+    @Autowired
+    private UnitRepo unitRepo;
+
+    @Autowired
+    private ItemRepo itemRepo;
 }

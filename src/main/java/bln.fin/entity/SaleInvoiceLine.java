@@ -23,6 +23,9 @@ public class SaleInvoiceLine {
     @Enumerated(EnumType.STRING)
     private InvoiceLineTypeEnum lineTypeCode;
 
+    @Column(name="line_num")
+    private Long lineNum;
+
     @ManyToOne
     @JoinColumn(name = "gjs_id")
     private Item item;

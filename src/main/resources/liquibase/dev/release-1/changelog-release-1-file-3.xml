@@ -371,20 +371,20 @@
     </changeSet>
 
     <changeSet id="wf-eug-17" logicalFilePath="path-independent" author="eugene">
-        <comment>Creating primary key for table: wf_object_workflows</comment>
+        <comment>Creating primary key for table: wf_object_workflow_details</comment>
         <addPrimaryKey
                 columnNames="id"
-                constraintName="pk_wf_object_workflows"
+                constraintName="pk_wf_object_workflow_details"
                 schemaName="apps"
-                tableName="wf_object_workflows"/>
+                tableName="wf_object_workflow_details"/>
     </changeSet>
 
     <changeSet id="wf-eug-18" logicalFilePath="path-independent" author="eugene">
-        <comment>Creating sequence for table: wf_object_workflows</comment>
+        <comment>Creating sequence for table: wf_object_workflow_details</comment>
         <createSequence
                 incrementBy="1"
                 schemaName="apps"
-                sequenceName="wf_object_workflows_s"
+                sequenceName="wf_object_workflow_details_s"
                 startValue="1"/>
     </changeSet>
 
