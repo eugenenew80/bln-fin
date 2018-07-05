@@ -1022,8 +1022,8 @@
         <comment>insert into fin_esf_transfer_statuses</comment>
         <insert schemaName="apps" tableName="fin_esf_transfer_statuses_tl">
             <column name="code" type="varchar2" value="N"/>
-            <column name="code" type="varchar2" value="RU"/>
-            <column name="code" type="varchar2" value="не передан"/>
+            <column name="lang" type="varchar2" value="RU"/>
+            <column name="name" type="varchar2" value="не передан"/>
         </insert>
         <rollback/>
     </changeSet>
@@ -1032,8 +1032,8 @@
         <comment>insert into fin_esf_transfer_statuses</comment>
         <insert schemaName="apps" tableName="fin_esf_transfer_statuses_tl">
             <column name="code" type="varchar2" value="N"/>
-            <column name="code" type="varchar2" value="KZ"/>
-            <column name="code" type="varchar2" value="не передан"/>
+            <column name="lang" type="varchar2" value="KZ"/>
+            <column name="name" type="varchar2" value="не передан"/>
         </insert>
         <rollback/>
     </changeSet>
