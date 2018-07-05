@@ -1052,7 +1052,7 @@
         <comment>insert into fin_esf_transfer_statuses</comment>
         <insert schemaName="apps" tableName="fin_esf_transfer_statuses_tl">
             <column name="code" type="varchar2" value="M"/>
-            <column name="lang" type="varchar2" value="RU"/>
+            <column name="lang" type="varchar2" value="KZ"/>
             <column name="name" type="varchar2" value="ошибка передачи"/>
         </insert>
         <rollback/>
