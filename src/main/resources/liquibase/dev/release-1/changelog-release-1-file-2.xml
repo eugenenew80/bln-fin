@@ -863,8 +863,8 @@
     </changeSet>
 
     <changeSet id="fin-rus-50" logicalFilePath="path-independent" author="ruslan">
-        <comment>Creating table: fin_esf_statuses</comment>
-        <createTable tableName="fin_esf_statuses" schemaName="apps" remarks="справочник Типы статусов для ЭЦФ">
+        <comment>Creating table: fin_esf_transfer_statuses</comment>
+        <createTable tableName="fin_esf_transfer_statuses" schemaName="apps" remarks="справочник Типы статусов передачи для ЭЦФ">
             <column name="code" type="varchar(20)" remarks="Код типа статуса">
                 <constraints nullable="false"/>
             </column>
@@ -888,17 +888,17 @@
     </changeSet>
 
     <changeSet id="fin-rus-51" logicalFilePath="path-independent" author="ruslan">
-        <comment>Creating primary key for table: fin_esf_statuses</comment>
+        <comment>Creating primary key for table: fin_esf_transfer_statuses</comment>
         <addPrimaryKey
                 columnNames="code"
-                constraintName="pk_fin_esf_statuses"
+                constraintName="pk_fin_esf_transfer_statuses"
                 schemaName="apps"
-                tableName="fin_esf_statuses"/>
+                tableName="fin_esf_transfer_statuses"/>
     </changeSet>
 
     <changeSet id="fin-rus-53" logicalFilePath="path-independent" author="ruslan">
-        <comment>Creating table: fin_esf_statuses_tl</comment>
-        <createTable tableName="fin_esf_statuses_tl" schemaName="apps" remarks="Перевод Типы статусов для ЭЦФ">
+        <comment>Creating table: fin_esf_transfer_statuses_tl</comment>
+        <createTable tableName="fin_esf_transfer_statuses_tl" schemaName="apps" remarks="Перевод Типы статусов передачи для ЭЦФ">
 
             <column name="code" type="varchar(20)" remarks="Код типа статуса">
                 <constraints nullable="false"/>
@@ -931,34 +931,34 @@
     </changeSet>
 
     <changeSet id="fin-rus-54" logicalFilePath="path-independent" author="ruslan">
-        <comment>Creating primary key for table: fin_esf_statuses_tl</comment>
+        <comment>Creating primary key for table: fin_esf_transfer_statuses_tl</comment>
         <addPrimaryKey
                 columnNames="code,lang"
-                constraintName="pk_fin_esf_statuses_tl"
+                constraintName="pk_fin_esf_transfer_statuses_tl"
                 schemaName="apps"
-                tableName="fin_esf_statuses_tl"/>
+                tableName="fin_esf_transfer_statuses_tl"/>
     </changeSet>
 
     <changeSet id="fin-rus-55" logicalFilePath="path-independent" author="ruslan">
-        <comment>Creating foreign constraint:fin_esf_statuses to fin_esf_statuses_tl</comment>
+        <comment>Creating foreign constraint:fin_esf_transfer_statuses to fin_esf_transfer_statuses_tl</comment>
         <addForeignKeyConstraint
                 baseTableSchemaName="apps"
-                baseTableName="fin_esf_statuses_tl"
+                baseTableName="fin_esf_transfer_statuses_tl"
                 baseColumnNames="code"
-                constraintName="fk_fin_esf_statuses_tl_1"
+                constraintName="fk_fin_esf_transfer_statuses_tl_1"
                 deferrable="true"
                 initiallyDeferred="true"
                 onDelete="CASCADE"
                 onUpdate="RESTRICT"
                 referencedTableSchemaName="apps"
-                referencedTableName="fin_esf_statuses"
+                referencedTableName="fin_esf_transfer_statuses"
                 referencedColumnNames="code"
         />
     </changeSet>
 
 
     <changeSet id="fin-rus-56" logicalFilePath="path-independent" author="ruslan">
-        <comment>Creating foreign constraint: fin_sale_invoices to fin_esf_statuses</comment>
+        <comment>Creating foreign constraint: fin_sale_invoices to fin_esf_transfer_statuses</comment>
         <addForeignKeyConstraint
                 baseTableSchemaName="apps"
                 baseTableName="fin_sale_invoices"
@@ -969,38 +969,38 @@
                 onDelete="RESTRICT"
                 onUpdate="RESTRICT"
                 referencedTableSchemaName="apps"
-                referencedTableName="fin_esf_statuses"
+                referencedTableName="fin_esf_transfer_statuses"
                 referencedColumnNames="code"
         />
     </changeSet>
 
     <changeSet id="fin-rus-57" logicalFilePath="path-independent" author="ruslan" context="dev">
-        <comment>insert into fin_sale_invoices_send_status</comment>
-        <insert schemaName="apps" tableName="fin_sale_invoices_send_status">
+        <comment>insert into fin_esf_transfer_statuses</comment>
+        <insert schemaName="apps" tableName="fin_esf_transfer_statuses">
             <column name="code" type="varchar2" value="S"/>
         </insert>
         <rollback/>
     </changeSet>
 
     <changeSet id="fin-rus-58" logicalFilePath="path-independent" author="ruslan" context="dev">
-        <comment>insert into fin_sale_invoices_send_status</comment>
-        <insert schemaName="apps" tableName="fin_sale_invoices_send_status">
+        <comment>insert into fin_esf_transfer_statuses</comment>
+        <insert schemaName="apps" tableName="fin_esf_transfer_statuses">
             <column name="code" type="varchar2" value="N"/>
         </insert>
         <rollback/>
     </changeSet>
 
     <changeSet id="fin-rus-59" logicalFilePath="path-independent" author="ruslan" context="dev">
-        <comment>insert into fin_sale_invoices_send_status</comment>
-        <insert schemaName="apps" tableName="fin_sale_invoices_send_status">
+        <comment>insert into fin_esf_transfer_statuses</comment>
+        <insert schemaName="apps" tableName="fin_esf_transfer_statuses">
             <column name="code" type="varchar2" value="M"/>
         </insert>
         <rollback/>
     </changeSet>
 
     <changeSet id="fin-rus-60" logicalFilePath="path-independent" author="ruslan" context="dev">
-        <comment>insert into fin_sale_invoices_send_status_tl</comment>
-        <insert schemaName="apps" tableName="fin_sale_invoices_send_status_tl">
+        <comment>insert into fin_esf_transfer_statuses</comment>
+        <insert schemaName="apps" tableName="fin_esf_transfer_statuses_tl">
             <column name="code" type="varchar2" value="S"/>
             <column name="lang" type="varchar2" value="RU"/>
             <column name="name" type="varchar2" value="передан"/>
@@ -1010,7 +1010,7 @@
 
     <changeSet id="fin-rus-61" logicalFilePath="path-independent" author="ruslan" context="dev">
         <comment>insert into fin_sale_invoices_send_status</comment>
-        <insert schemaName="apps" tableName="fin_sale_invoices_send_status_tl">
+        <insert schemaName="apps" tableName="fin_esf_transfer_statuses_tl">
             <column name="code" type="varchar2" value="S"/>
             <column name="lang" type="varchar2" value="KZ"/>
             <column name="name" type="varchar2" value="передан"/>
@@ -1019,8 +1019,8 @@
     </changeSet>
 
     <changeSet id="fin-rus-62" logicalFilePath="path-independent" author="ruslan" context="dev">
-        <comment>insert into fin_sale_invoices_send_status_tl</comment>
-        <insert schemaName="apps" tableName="fin_sale_invoices_send_status_tl">
+        <comment>insert into fin_esf_transfer_statuses</comment>
+        <insert schemaName="apps" tableName="fin_esf_transfer_statuses_tl">
             <column name="code" type="varchar2" value="N"/>
             <column name="code" type="varchar2" value="RU"/>
             <column name="code" type="varchar2" value="не передан"/>
@@ -1029,8 +1029,8 @@
     </changeSet>
 
     <changeSet id="fin-rus-63" logicalFilePath="path-independent" author="ruslan" context="dev">
-        <comment>insert into fin_sale_invoices_send_status_tl</comment>
-        <insert schemaName="apps" tableName="fin_sale_invoices_send_status_tl">
+        <comment>insert into fin_esf_transfer_statuses</comment>
+        <insert schemaName="apps" tableName="fin_esf_transfer_statuses_tl">
             <column name="code" type="varchar2" value="N"/>
             <column name="code" type="varchar2" value="KZ"/>
             <column name="code" type="varchar2" value="не передан"/>
@@ -1039,8 +1039,8 @@
     </changeSet>
 
     <changeSet id="fin-rus-64" logicalFilePath="path-independent" author="ruslan" context="dev">
-        <comment>insert into fin_sale_invoices_send_status_tl</comment>
-        <insert schemaName="apps" tableName="fin_sale_invoices_send_status_tl">
+        <comment>insert into fin_esf_transfer_statuses</comment>
+        <insert schemaName="apps" tableName="fin_esf_transfer_statuses_tl">
             <column name="code" type="varchar2" value="M"/>
             <column name="lang" type="varchar2" value="RU"/>
             <column name="name" type="varchar2" value="ошибка передачи"/>
@@ -1049,8 +1049,8 @@
     </changeSet>
 
     <changeSet id="fin-rus-65" logicalFilePath="path-independent" author="ruslan" context="dev">
-        <comment>insert into fin_sale_invoices_send_status_tl</comment>
-        <insert schemaName="apps" tableName="fin_sale_invoices_send_status_tl">
+        <comment>insert into fin_esf_transfer_statuses</comment>
+        <insert schemaName="apps" tableName="fin_esf_transfer_statuses_tl">
             <column name="code" type="varchar2" value="M"/>
             <column name="lang" type="varchar2" value="RU"/>
             <column name="name" type="varchar2" value="ошибка передачи"/>
@@ -1059,7 +1059,7 @@
     </changeSet>
 
     <changeSet id="fin-rus-66" logicalFilePath="path-independent" author="ruslan">
-        <comment>Creating foreign constraint: cm_doc_keg_cte to fin_esf_statuses</comment>
+        <comment>Creating foreign constraint: cm_doc_keg_cte to fin_esf_transfer_statuses</comment>
         <addForeignKeyConstraint
                 baseTableSchemaName="apps"
                 baseTableName="cm_doc_keg_cte"
@@ -1070,13 +1070,13 @@
                 onDelete="RESTRICT"
                 onUpdate="RESTRICT"
                 referencedTableSchemaName="apps"
-                referencedTableName="fin_esf_statuses"
+                referencedTableName="fin_esf_transfer_statuses"
                 referencedColumnNames="code"
         />
     </changeSet>
 
     <changeSet id="fin-rus-67" logicalFilePath="path-independent" author="ruslan">
-        <comment>Creating foreign constraint: cm_doc_rfc to fin_esf_statuses</comment>
+        <comment>Creating foreign constraint: cm_doc_rfc to fin_esf_transfer_statuses</comment>
         <addForeignKeyConstraint
                 baseTableSchemaName="apps"
                 baseTableName="cm_doc_rfc"
@@ -1087,7 +1087,7 @@
                 onDelete="RESTRICT"
                 onUpdate="RESTRICT"
                 referencedTableSchemaName="apps"
-                referencedTableName="fin_esf_statuses"
+                referencedTableName="fin_esf_transfer_statuses"
                 referencedColumnNames="code"
         />
     </changeSet>
