@@ -25,4 +25,10 @@ public class BusinessPartner {
 
     @Column(name = "bin")
     private String bin;
+
+    @Column(name = "erp_bp_num")
+    private String erpBpNum;
+
+    @Column(name = "erp_company_code")
+    private String erpCompanyCode;
 }
