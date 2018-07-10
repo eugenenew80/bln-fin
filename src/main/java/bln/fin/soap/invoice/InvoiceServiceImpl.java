@@ -37,7 +37,7 @@ public class InvoiceServiceImpl implements InvoiceService {
                 PurchaseInvoice invoice = purchaseInvoiceRepo.findByErpDocNumAndErpDocDate(statusDto.getDocNum(), erpDocDate);
                 if (invoice!=null) {
                     invoice.setEsfDocNum(statusDto.getEsfDocNum());
-                    invoice.setErpDocDate(esfDocDate);
+                    invoice.setEsfDocDate(esfDocDate);
                     invoice.setEsfStatus(statusDto.getEsfStatus());
                     purchInvoices.add(invoice);
                 }
@@ -47,7 +47,7 @@ public class InvoiceServiceImpl implements InvoiceService {
                 SaleInvoice invoice = saleInvoiceRepo.findByErpDocNumAndErpDocDate(statusDto.getDocNum(), erpDocDate);
                 if (invoice!=null) {
                     invoice.setEsfDocNum(statusDto.getEsfDocNum());
-                    invoice.setErpDocDate(esfDocDate);
+                    invoice.setEsfDocDate(esfDocDate);
                     invoice.setEsfStatus(statusDto.getEsfStatus());
                     saleInvoices.add(invoice);
                 }
