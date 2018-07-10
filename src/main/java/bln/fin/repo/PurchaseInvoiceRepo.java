@@ -7,5 +7,5 @@ import java.time.LocalDate;
 
 @Repository
 public interface PurchaseInvoiceRepo extends JpaRepository<PurchaseInvoice, Long> {
-    PurchaseInvoice findByErpNumAndErpDate(String erpNum, LocalDate erpDate);
+    PurchaseInvoice findByErpDocNumAndErpDocDate(String erpDocNum, LocalDate erpDocDate);
 }

@@ -306,7 +306,7 @@
             </column>
 
             <column name="end_date" type="date" remarks="Дата завершения работы потока">
-                <constraints nullable="false"/>
+                <constraints nullable="true"/>
             </column>
 
             <column name="create_date" type="TIMESTAMP" remarks="Дата создания">
@@ -441,7 +441,7 @@
             </column>
 
             <column name="activity_code" type="varchar(20)" remarks="Код действия выбранного при завершении задачи">
-                <constraints nullable="false"/>
+                <constraints nullable="true"/>
             </column>
 
             <column name="user_text" type="varchar(300)" remarks="Текст пользователя при завершении задачи">

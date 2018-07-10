@@ -43,16 +43,16 @@ public class InvoiceServiceImpl implements InvoiceService {
             BusinessPartner customer = businessPartnerRepo.findByErpCompanyCode(invoiceDto.getCompanyCode());
             Contract contract = contractRepo.findByContractNum(invoiceDto.getExtContractNum());
 
-            PurchaseInvoice invoice = purchaseInvoiceRepo.findByErpNumAndErpDate(invoiceDto.getDocNum(), erpDate);
+            PurchaseInvoice invoice = purchaseInvoiceRepo.findByErpDocNumAndErpDocDate(invoiceDto.getDocNum(), erpDate);
             if (invoice == null)
                 invoice = new PurchaseInvoice();
 
             invoice.setAccountingDate(accountingDate);
             invoice.setInvoiceDate(erpDate);
             invoice.setTurnoverDate(erpDate);
-            invoice.setErpDate(erpDate);
-            invoice.setNum(invoiceDto.getExtDocNum());
-            invoice.setErpNum(invoiceDto.getDocNum());
+            invoice.setErpDocDate(erpDate);
+            invoice.setDocNum(invoiceDto.getExtDocNum());
+            invoice.setErpDocNum(invoiceDto.getDocNum());
             invoice.setAmount(invoiceDto.getAmount());
             invoice.setTax(invoiceDto.getTax());
             invoice.setCurrencyCode(invoiceDto.getCurrencyCode());

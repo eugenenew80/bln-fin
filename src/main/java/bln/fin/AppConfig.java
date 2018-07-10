@@ -48,7 +48,7 @@ public class AppConfig  {
 
     @Bean
     public Endpoint endpoint1() {
-        EndpointImpl endpoint = new EndpointImpl(springBus(), new DebtServiceImpl(checkApplicationRepo, receiptApplicationRepo));
+        EndpointImpl endpoint = new EndpointImpl(springBus(), new DebtServiceImpl(checkApplicationRepo, receiptApplicationRepo, businessPartnerRepo, contractRepo, purchaseInvoiceRepo));
         endpoint.publish("/DebtService");
         return endpoint;
     }

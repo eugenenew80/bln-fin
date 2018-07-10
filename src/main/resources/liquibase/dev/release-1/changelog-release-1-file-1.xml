@@ -129,7 +129,7 @@
                 <constraints nullable="true"/>
             </column>
 
-            <column name="num" type="varchar(20)" remarks="№ счёт-фактуры">
+            <column name="doc_num" type="varchar(20)" remarks="№ счёт-фактуры">
                 <constraints nullable="false"/>
             </column>
 
@@ -149,19 +149,19 @@
                 <constraints nullable="true"/>
             </column>
 
-            <column name="erp_num" type="varchar(30)" remarks="№ счёт-фактуры в системе ERP">
+            <column name="erp_doc_num" type="varchar(30)" remarks="№ счёт-фактуры в системе ERP">
                 <constraints nullable="true"/>
             </column>
 
-            <column name="erp_date" type="date" remarks="Дата регистрации счёт-фактуры в системе ЭСФ">
+            <column name="erp_doc_date" type="date" remarks="Дата регистрации счёт-фактуры в системе ERP">
                 <constraints nullable="true"/>
             </column>
 
-            <column name="esf_num" type="varchar(30)" remarks="№ счёт-фактуры в системе ЭСФ">
+            <column name="esf_doc_num" type="varchar(30)" remarks="№ счёт-фактуры в системе ЭСФ">
                 <constraints nullable="true"/>
             </column>
 
-            <column name="esf_date" type="date" remarks="Дата регистрации счёт-фактуры в системе ЭСФ">
+            <column name="esf_doc_date" type="date" remarks="Дата регистрации счёт-фактуры в системе ЭСФ">
                 <constraints nullable="true"/>
             </column>
 
@@ -555,7 +555,7 @@
                 <constraints nullable="true"/>
             </column>
 
-            <column name="num" type="varchar(20)" remarks="№ счёт-фактуры">
+            <column name="doc_num" type="varchar(20)" remarks="№ счёт-фактуры">
                 <constraints nullable="false"/>
             </column>
 
@@ -571,19 +571,19 @@
                 <constraints nullable="false"/>
             </column>
 
-            <column name="erp_num" type="varchar(30)" remarks="№ счёт-фактуры в системе ERP">
+            <column name="erp_doc_num" type="varchar(30)" remarks="№ счёт-фактуры в системе ERP">
                 <constraints nullable="true"/>
             </column>
 
-            <column name="erp_date" type="date" remarks="Дата регистрации счёт-фактуры в системе ЭСФ">
+            <column name="erp_doc_date" type="date" remarks="Дата регистрации счёт-фактуры в системе ERP">
                 <constraints nullable="true"/>
             </column>
 
-            <column name="esf_num" type="varchar(30)" remarks="№ счёт-фактуры в системе ЭСФ">
+            <column name="esf_doc_num" type="varchar(30)" remarks="№ счёт-фактуры в системе ЭСФ">
                 <constraints nullable="true"/>
             </column>
 
-            <column name="esf_date" type="date" remarks="Дата регистрации счёт-фактуры в системе ЭСФ">
+            <column name="esf_doc_date" type="date" remarks="Дата регистрации счёт-фактуры в системе ЭСФ">
                 <constraints nullable="true"/>
             </column>
 
@@ -741,11 +741,11 @@
                 <constraints nullable="false"/>
             </column>
 
-            <column name="doc_num" type="number" remarks="Номер документа в ERP">
+            <column name="erp_doc_num" type="number" remarks="Номер документа в ERP">
                 <constraints nullable="false"/>
             </column>
 
-            <column name="doc_date" type="date" remarks="Дата документа в ERP">
+            <column name="erp_doc_date" type="date" remarks="Дата документа в ERP">
                 <constraints nullable="false"/>
             </column>
 
@@ -844,11 +844,11 @@
                 <constraints nullable="false"/>
             </column>
 
-            <column name="doc_num" type="number" remarks="Номер документа в ERP">
+            <column name="erp_doc_num" type="number" remarks="Номер документа в ERP">
                 <constraints nullable="false"/>
             </column>
 
-            <column name="doc_date" type="date" remarks="Дата документа в ERP">
+            <column name="erp_doc_date" type="date" remarks="Дата документа в ERP">
                 <constraints nullable="false"/>
             </column>
 

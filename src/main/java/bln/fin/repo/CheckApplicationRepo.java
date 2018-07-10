@@ -7,5 +7,5 @@ import java.time.LocalDate;
 
 @Repository
 public interface CheckApplicationRepo extends JpaRepository<CheckApplication, Long> {
-    CheckApplication findByDocNumAndDocDateAndCurrentRecordIsTrue(String docNum, LocalDate docDate);
+    CheckApplication findByErpDocNumAndErpDocDateAndCurrentRecordIsTrue(String docNum, LocalDate docDate);
 }

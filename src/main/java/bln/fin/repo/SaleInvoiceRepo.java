@@ -8,5 +8,5 @@ import java.time.LocalDate;
 
 @Repository
 public interface SaleInvoiceRepo extends JpaRepository<SaleInvoice, Long> {
-    SaleInvoice findByEsfNumAndEsfDate(String esfNum, LocalDate esfDate);
+    SaleInvoice findByErpDocNumAndErpDocDate(String erpDocNum, LocalDate erpDocDate);
 }

@@ -7,5 +7,5 @@ import java.time.LocalDate;
 
 @Repository
 public interface ReceiptApplicationRepo extends JpaRepository<ReceiptApplication, Long> {
-    ReceiptApplication findByDocNumAndDocDateAndCurrentRecordIsTrue(String docNum, LocalDate docDate);
+    ReceiptApplication findByErpDocNumAndErpDocDateAndCurrentRecordIsTrue(String erpDocNum, LocalDate erpDocDate);
 }

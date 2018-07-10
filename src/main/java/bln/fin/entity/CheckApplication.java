@@ -18,11 +18,11 @@ public class CheckApplication {
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "fin_check_applications_s")
     private Long id;
 
-    @Column(name = "doc_num")
-    private String docNum;
+    @Column(name = "erp_doc_num")
+    private String erpDocNum;
 
-    @Column(name = "doc_date")
-    private LocalDate docDate;
+    @Column(name = "erp_doc_date")
+    private LocalDate erpDocDate;
 
     @Column(name="debt_type_code")
     @Enumerated(EnumType.STRING)

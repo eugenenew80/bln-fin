@@ -36,8 +36,8 @@ public class PurchaseInvoice {
     @JoinColumn(name = "contract_id")
     private Contract contract;
 
-    @Column(name = "num")
-    private String num;
+    @Column(name = "doc_num")
+    private String docNum;
 
     @Column(name = "invoice_date")
     private LocalDate invoiceDate;
@@ -48,17 +48,17 @@ public class PurchaseInvoice {
     @Column(name = "accounting_date")
     private LocalDate accountingDate;
 
-    @Column(name = "esf_num")
-    private String esfNum;
+    @Column(name = "esf_doc_num")
+    private String esfDocNum;
 
-    @Column(name = "esf_date")
-    private LocalDate esfDate;
+    @Column(name = "esf_doc_date")
+    private LocalDate esfDocDate;
 
-    @Column(name = "erp_num")
-    private String erpNum;
+    @Column(name = "erp_doc_num")
+    private String erpDocNum;
 
-    @Column(name = "erp_date")
-    private LocalDate erpDate;
+    @Column(name = "erp_doc_date")
+    private LocalDate erpDocDate;
 
     @Column(name = "description")
     private String description;
