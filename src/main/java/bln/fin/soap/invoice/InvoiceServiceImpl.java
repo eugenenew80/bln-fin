@@ -26,6 +26,38 @@ public class InvoiceServiceImpl implements InvoiceService {
 
     @Override
     public Message updateStatuses(List<InvoiceStatusDto> list) {
+
+        List<PurchaseInvoice> purchInvoices = new ArrayList<>();
+        List<SaleInvoice> saleInvoices = new ArrayList<>();
+        for (InvoiceStatusDto statusDto : list) {
+            LocalDate erpDocDate = statusDto.getDocDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+            LocalDate esfDocDate = statusDto.getEsfDocDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+
+            if (statusDto.getBpType().equals("K")) {
+                PurchaseInvoice invoice = purchaseInvoiceRepo.findByErpDocNumAndErpDocDate(statusDto.getDocNum(), erpDocDate);
+                if (invoice!=null) {
+                    invoice.setEsfDocNum(statusDto.getEsfDocNum());
+                    invoice.setErpDocDate(esfDocDate);
+                    purchInvoices.add(invoice);
+                }
+            }
+
+            if (statusDto.getBpType().equals("D")) {
+                SaleInvoice invoice = saleInvoiceRepo.findByErpDocNumAndErpDocDate(statusDto.getDocNum(), erpDocDate);
+                if (invoice!=null) {
+                    invoice.setEsfDocNum(statusDto.getEsfDocNum());
+                    invoice.setErpDocDate(esfDocDate);
+                    saleInvoices.add(invoice);
+                }
+            }
+        }
+
+        if (!purchInvoices.isEmpty())
+            purchaseInvoiceRepo.save(purchInvoices);
+
+        if (!saleInvoices.isEmpty())
+            saleInvoiceRepo.save(saleInvoices);
+
         Message msg = new Message();
         msg.setStatus("success");
         msg.setDetails(list.size() + " records updated");

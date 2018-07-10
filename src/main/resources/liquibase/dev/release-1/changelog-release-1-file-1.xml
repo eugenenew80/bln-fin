@@ -201,7 +201,7 @@
                 <constraints nullable="true"/>
             </column>
 
-            <column name="esf_status" type="varchar2(10)" remarks="Статус передачи СФ в систему ЭСФ">
+            <column name="esf_status" type="varchar2(10)" remarks="Статус СФ в системе ЭСФ">
                 <constraints nullable="true"/>
             </column>
 
@@ -584,6 +584,10 @@
             </column>
 
             <column name="esf_doc_date" type="date" remarks="Дата регистрации счёт-фактуры в системе ЭСФ">
+                <constraints nullable="true"/>
+            </column>
+
+            <column name="esf_status" type="varchar2(10)" remarks="Статус СФ в системе ЭСФ">
                 <constraints nullable="true"/>
             </column>
 
