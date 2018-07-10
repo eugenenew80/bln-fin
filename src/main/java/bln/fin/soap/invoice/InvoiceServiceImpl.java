@@ -38,6 +38,7 @@ public class InvoiceServiceImpl implements InvoiceService {
                 if (invoice!=null) {
                     invoice.setEsfDocNum(statusDto.getEsfDocNum());
                     invoice.setErpDocDate(esfDocDate);
+                    invoice.setEsfStatus(statusDto.getEsfStatus());
                     purchInvoices.add(invoice);
                 }
             }
@@ -47,6 +48,7 @@ public class InvoiceServiceImpl implements InvoiceService {
                 if (invoice!=null) {
                     invoice.setEsfDocNum(statusDto.getEsfDocNum());
                     invoice.setErpDocDate(esfDocDate);
+                    invoice.setEsfStatus(statusDto.getEsfStatus());
                     saleInvoices.add(invoice);
                 }
             }

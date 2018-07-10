@@ -58,6 +58,9 @@ public class SaleInvoice {
     @Column(name = "accounting_date")
     private LocalDate accountingDate;
 
+    @Column(name = "status")
+    private String status;
+
     @Column(name = "due_date")
     private LocalDate dueDate;
 
@@ -66,6 +69,9 @@ public class SaleInvoice {
 
     @Column(name = "esf_doc_date")
     private LocalDate esfDocDate;
+
+    @Column(name = "esf_status")
+    private String esfStatus;
 
     @Column(name = "erp_doc_num")
     private String erpDocNum;

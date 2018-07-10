@@ -958,7 +958,7 @@
 
 
     <changeSet id="fin-rus-56" logicalFilePath="path-independent" author="ruslan">
-        <comment>Creating foreign constraint: fin_sale_invoices to fin_esf_transfer_statuses</comment>
+        <comment>Creating foreign constraint: fin_sale_invoices to fin_esf_statuses</comment>
         <addForeignKeyConstraint
                 baseTableSchemaName="apps"
                 baseTableName="fin_sale_invoices"
@@ -969,7 +969,7 @@
                 onDelete="RESTRICT"
                 onUpdate="RESTRICT"
                 referencedTableSchemaName="apps"
-                referencedTableName="fin_esf_transfer_statuses"
+                referencedTableName="fin_esf_statuses"
                 referencedColumnNames="code"
         />
     </changeSet>
@@ -1088,6 +1088,24 @@
                 onUpdate="RESTRICT"
                 referencedTableSchemaName="apps"
                 referencedTableName="fin_esf_transfer_statuses"
+                referencedColumnNames="code"
+        />
+    </changeSet>
+
+
+    <changeSet id="fin-rus-68" logicalFilePath="path-independent" author="ruslan">
+        <comment>Creating foreign constraint: fin_purchase_invoices to fin_esf_statuses</comment>
+        <addForeignKeyConstraint
+                baseTableSchemaName="apps"
+                baseTableName="fin_purchase_invoices"
+                baseColumnNames="esf_status"
+                constraintName="fk_fin_purchase_invoices_9"
+                deferrable="true"
+                initiallyDeferred="true"
+                onDelete="RESTRICT"
+                onUpdate="RESTRICT"
+                referencedTableSchemaName="apps"
+                referencedTableName="fin_esf_statuses"
                 referencedColumnNames="code"
         />
     </changeSet>

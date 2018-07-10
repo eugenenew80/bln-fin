@@ -54,6 +54,9 @@ public class PurchaseInvoice {
     @Column(name = "esf_doc_date")
     private LocalDate esfDocDate;
 
+    @Column(name = "esf_status")
+    private String esfStatus;
+
     @Column(name = "erp_doc_num")
     private String erpDocNum;
 
