@@ -358,11 +358,11 @@
                 <constraints nullable="false"/>
             </column>
 
-            <column name="pos_num" type="number" remarks="Номер позиции">
+            <column name="line_type_code" type="varchar(20)" remarks="Код типа строки">
                 <constraints nullable="false"/>
             </column>
 
-            <column name="line_type_code" type="varchar(20)" remarks="Код типа строки">
+            <column name="pos_num" type="number" remarks="Номер позиции">
                 <constraints nullable="false"/>
             </column>
 
@@ -666,11 +666,15 @@
                 <constraints nullable="false"/>
             </column>
 
+            <column name="line_type_code" type="varchar(20)" remarks="Код типа строки">
+                <constraints nullable="false"/>
+            </column>
+
             <column name="pos_num" type="number" remarks="Номер позиции">
                 <constraints nullable="false"/>
             </column>
 
-            <column name="line_type_code" type="varchar(20)" remarks="Код типа строки">
+            <column name="item_num" type="varchar(100)" remarks="Номер услуги">
                 <constraints nullable="false"/>
             </column>
 
