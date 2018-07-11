@@ -2,7 +2,9 @@ package bln.fin;
 
 import bln.fin.repo.*;
 import bln.fin.soap.debt.DebtServiceImpl;
+import bln.fin.soap.invoice.InvoiceBusinessService;
 import bln.fin.soap.invoice.InvoiceServiceImpl;
+import bln.fin.soap.req.ReqBusinessService;
 import bln.fin.soap.req.ReqServiceImpl;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
@@ -55,14 +57,14 @@ public class AppConfig  {
 
     @Bean
     public Endpoint endpoint2() {
-        EndpointImpl endpoint = new EndpointImpl(springBus(), new InvoiceServiceImpl(purchaseInvoiceRepo, saleInvoiceRepo, businessPartnerRepo, contractRepo, unitRepo, itemRepo));
+        EndpointImpl endpoint = new EndpointImpl(springBus(), new InvoiceServiceImpl(invoiceBusinessService, purchaseInvoiceRepo, saleInvoiceRepo));
         endpoint.publish("/InvoiceService");
         return endpoint;
     }
 
     @Bean
     public Endpoint endpoint3() {
-        EndpointImpl endpoint = new EndpointImpl(springBus(), new ReqServiceImpl(reqLineRepo));
+        EndpointImpl endpoint = new EndpointImpl(springBus(), new ReqServiceImpl(reqBusinessService, reqLineRepo));
         endpoint.publish("/ReqService");
         return endpoint;
     }
@@ -89,8 +91,8 @@ public class AppConfig  {
     private ContractRepo contractRepo;
 
     @Autowired
-    private UnitRepo unitRepo;
+    private InvoiceBusinessService invoiceBusinessService;
 
     @Autowired
-    private ItemRepo itemRepo;
+    private ReqBusinessService reqBusinessService;
 }
