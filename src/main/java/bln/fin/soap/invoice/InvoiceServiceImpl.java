@@ -173,6 +173,7 @@ public class InvoiceServiceImpl implements InvoiceService {
         invoiceLine.setUnitName(lineDto.getUnit());
         invoiceLine.setItem(item);
         invoiceLine.setDescription(lineDto.getPosName());
+        invoiceLine.setItemNum(lineDto.getItemNum());
 
         return invoiceLine;
     }
