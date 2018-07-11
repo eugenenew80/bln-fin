@@ -1,6 +1,7 @@
 package bln.fin;
 
 import bln.fin.repo.*;
+import bln.fin.soap.debt.DebtBusinessService;
 import bln.fin.soap.debt.DebtServiceImpl;
 import bln.fin.soap.invoice.InvoiceBusinessService;
 import bln.fin.soap.invoice.InvoiceServiceImpl;
@@ -20,7 +21,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.web.servlet.ServletRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-
 import javax.xml.ws.Endpoint;
 
 @Configuration
@@ -50,7 +50,7 @@ public class AppConfig  {
 
     @Bean
     public Endpoint endpoint1() {
-        EndpointImpl endpoint = new EndpointImpl(springBus(), new DebtServiceImpl(checkApplicationRepo, receiptApplicationRepo, businessPartnerRepo, contractRepo, purchaseInvoiceRepo));
+        EndpointImpl endpoint = new EndpointImpl(springBus(), new DebtServiceImpl(debtBusinessService, checkApplicationRepo, receiptApplicationRepo));
         endpoint.publish("/DebtService");
         return endpoint;
     }
@@ -85,14 +85,11 @@ public class AppConfig  {
     private SaleInvoiceRepo saleInvoiceRepo;
 
     @Autowired
-    private BusinessPartnerRepo businessPartnerRepo;
-
-    @Autowired
-    private ContractRepo contractRepo;
-
-    @Autowired
     private InvoiceBusinessService invoiceBusinessService;
 
     @Autowired
     private ReqBusinessService reqBusinessService;
+
+    @Autowired
+    private DebtBusinessService debtBusinessService;
 }
