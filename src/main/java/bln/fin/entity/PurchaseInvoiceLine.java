@@ -27,6 +27,9 @@ public class PurchaseInvoiceLine {
     @Column(name="pos_num")
     private Long posNum;
 
+    @Column(name="item_num")
+    private String itemNum;
+
     @ManyToOne
     @JoinColumn(name = "gjs_id")
     private Item item;
