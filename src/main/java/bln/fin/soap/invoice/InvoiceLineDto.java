@@ -16,7 +16,7 @@ public class InvoiceLineDto {
     @XmlElement(required = true)
     private String posName;
 
-    @XmlElement(required = true)
+    @XmlElement
     private String itemNum;
 
     @XmlElement(required = true)
@@ -31,6 +31,6 @@ public class InvoiceLineDto {
     @XmlElement(required = true)
     private Double amount;
 
-    @XmlElement(required = true)
+    @XmlElement
     private Double taxRate;
 }
