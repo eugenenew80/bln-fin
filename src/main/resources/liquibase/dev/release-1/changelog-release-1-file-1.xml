@@ -370,6 +370,10 @@
                 <constraints nullable="true"/>
             </column>
 
+            <column name="item_num" type="varchar(100)" remarks="Номер услуги">
+                <constraints nullable="true"/>
+            </column>
+
             <column name="description" type="varchar(100)" remarks="Описание">
                 <constraints nullable="true"/>
             </column>
@@ -383,6 +387,10 @@
             </column>
 
             <column name="tax_rate_id" type="number" remarks="Идентификатор ставки НДС">
+                <constraints nullable="true"/>
+            </column>
+
+            <column name="tax_rate" type="number" remarks="Ставка НДС">
                 <constraints nullable="true"/>
             </column>
 
@@ -675,7 +683,7 @@
             </column>
 
             <column name="item_num" type="varchar(100)" remarks="Номер услуги">
-                <constraints nullable="false"/>
+                <constraints nullable="true"/>
             </column>
 
             <column name="gjs_id" type="number" remarks="Идентификатор услуги">
@@ -695,6 +703,10 @@
             </column>
 
             <column name="tax_rate_id" type="number" remarks="Идентификатор ставки НДС">
+                <constraints nullable="true"/>
+            </column>
+
+            <column name="tax_rate" type="number" remarks="Ставка НДС">
                 <constraints nullable="true"/>
             </column>
 

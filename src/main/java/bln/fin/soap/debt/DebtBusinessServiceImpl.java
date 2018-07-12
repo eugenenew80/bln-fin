@@ -4,11 +4,14 @@ import bln.fin.entity.*;
 import bln.fin.entity.enums.DebtTypeEnum;
 import bln.fin.repo.*;
 import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
+
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import static bln.fin.common.Util.toLocalDate;
 
+@Service
 @RequiredArgsConstructor
 public class DebtBusinessServiceImpl implements DebtBusinessService {
     private final BusinessPartnerRepo businessPartnerRepo;
