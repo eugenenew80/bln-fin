@@ -4,10 +4,13 @@ import bln.fin.entity.ReqItem;
 import bln.fin.entity.ReqLine;
 import bln.fin.repo.ReqLineRepo;
 import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+@Service
 @RequiredArgsConstructor
 public class ReqBusinessServiceImpl implements ReqBusinessService {
     private final ReqLineRepo reqLineRepo;

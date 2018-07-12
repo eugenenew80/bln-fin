@@ -51,7 +51,7 @@ public class InvoiceDto {
     @XmlElement(required = true)
     private String currencyCode;
 
-    @XmlElement(defaultValue = "0")
+    @XmlElement
     private Double exchangeRate;
 
     @XmlElement(required = true, name = "line")

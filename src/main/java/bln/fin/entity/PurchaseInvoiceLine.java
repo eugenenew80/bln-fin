@@ -56,4 +56,7 @@ public class PurchaseInvoiceLine {
     @ManyToOne
     @JoinColumn(name = "tax_rate_id")
     private TaxRate taxRate;
+
+    @Column(name = "tax_rate")
+    private Double taxRateValue;
 }

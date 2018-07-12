@@ -4,6 +4,7 @@ import bln.fin.entity.*;
 import bln.fin.entity.enums.InvoiceLineTypeEnum;
 import bln.fin.repo.*;
 import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -11,6 +12,7 @@ import java.util.List;
 import java.util.Optional;
 import static bln.fin.common.Util.toLocalDate;
 
+@Service
 @RequiredArgsConstructor
 public class InvoiceBusinessServiceImpl implements InvoiceBusinessService{
     private final PurchaseInvoiceRepo purchaseInvoiceRepo;
@@ -72,11 +74,13 @@ public class InvoiceBusinessServiceImpl implements InvoiceBusinessService{
         inv.setAmount(invoiceDto.getAmount());
         inv.setTax(invoiceDto.getTax());
         inv.setCurrencyCode(invoiceDto.getCurrencyCode());
+        inv.setExchangeRate(invoiceDto.getExchangeRate());
         inv.setCustomer(customer);
         inv.setConsignee(customer);
         inv.setVendor(vendor);
         inv.setConsignor(vendor);
         inv.setContract(contract);
+
 
         List<PurchaseInvoiceLine> lines = inv.getLines();
         if (inv.getLines() == null) {
@@ -94,6 +98,7 @@ public class InvoiceBusinessServiceImpl implements InvoiceBusinessService{
                 inv.getLines().remove(line);
         }
 
+
         for (InvoiceLineDto lineDto : invoiceDto.getLines()) {
             PurchaseInvoiceLine invoiceLine = createPurchaseInvoiceLine(inv, lineDto);
             if (invoiceLine.getId() == null)
@@ -109,8 +114,8 @@ public class InvoiceBusinessServiceImpl implements InvoiceBusinessService{
             .findFirst()
             .orElse(new PurchaseInvoiceLine());
 
-        Unit unit = unitRepo.findByCode(lineDto.getUnit());
-        Item item = itemRepo.findByErpCode(lineDto.getItemNum());
+        Unit unit = unitRepo.findByCode(lineDto.getUnit())!=null ? unitRepo.findByCode(lineDto.getUnit()) : null;
+        Item item = lineDto.getItemNum()!=null ? itemRepo.findByErpCode(lineDto.getItemNum()) : null;
 
         invoiceLine.setInvoice(invoice);
         invoiceLine.setPosNum(lineDto.getPosNum());
@@ -123,6 +128,7 @@ public class InvoiceBusinessServiceImpl implements InvoiceBusinessService{
         invoiceLine.setItem(item);
         invoiceLine.setDescription(lineDto.getPosName());
         invoiceLine.setItemNum(lineDto.getItemNum());
+        invoiceLine.setTaxRateValue(lineDto.getTaxRate());
 
         return invoiceLine;
     }
