@@ -2,10 +2,11 @@ package bln.fin.soap.req;
 
 import bln.fin.entity.ReqLine;
 import bln.fin.repo.ReqLineRepo;
-import bln.fin.soap.Message;
+import bln.fin.soap.MessageDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import javax.jws.WebService;
+import java.util.ArrayList;
 import java.util.List;
 import static java.util.stream.Collectors.toList;
 
@@ -17,7 +18,7 @@ public class ReqServiceImpl implements ReqService {
     private final ReqLineRepo reqLineRepo;
 
     @Override
-    public Message createReqLines(List<ReqLineDto> list) {
+    public List<MessageDto> createReqLines(List<ReqLineDto> list) {
         List<ReqLine> reqLines = list.stream()
             .map(reqBusinessService::createReqLine)
             .filter(t -> t!=null)
@@ -25,9 +26,17 @@ public class ReqServiceImpl implements ReqService {
 
         reqLineRepo.save(reqLines);
 
-        Message msg = new Message();
-        msg.setStatus("success");
-        msg.setDetails(reqLines.size() + " records created");
-        return msg;
+        List<MessageDto> msgs = new ArrayList<>();
+        for (ReqLine reqLine : reqLines) {
+            MessageDto msg = new MessageDto();
+            msg.setStatus("S");
+            msg.setId(reqLine.getId());
+            msg.setSapId(reqLine.getReqNum().toString());
+            msg.setMsgNum("0");
+            msg.setText("OK");
+            msgs.add(msg);
+        }
+
+        return msgs;
     }
 }

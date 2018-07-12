@@ -1,7 +1,6 @@
 package bln.fin.soap.bp;
 
-import bln.fin.soap.Message;
-import bln.fin.soap.debt.DebtDto;
+import bln.fin.soap.MessageDto;
 
 import javax.jws.WebMethod;
 import javax.jws.WebParam;
@@ -13,5 +12,5 @@ import java.util.List;
 public interface BusinessPartnerService {
     @WebMethod(action = "createBusinessPartners")
     @WebResult(name = "result")
-    Message createBusinessPartners(@WebParam(name = "bp") List<BusinessPartnerDto> list);
+    List<MessageDto> createBusinessPartners(@WebParam(name = "bp") List<BusinessPartnerDto> list);
 }

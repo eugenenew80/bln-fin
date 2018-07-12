@@ -2,10 +2,11 @@ package bln.fin.soap.invoice;
 
 import bln.fin.entity.*;
 import bln.fin.repo.*;
-import bln.fin.soap.Message;
+import bln.fin.soap.MessageDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import javax.jws.WebService;
+import java.util.ArrayList;
 import java.util.List;
 import static java.util.stream.Collectors.toList;
 
@@ -18,7 +19,7 @@ public class InvoiceServiceImpl implements InvoiceService {
     private final SaleInvoiceRepo saleInvoiceRepo;
 
     @Override
-    public Message updateStatuses(List<InvoiceStatusDto> list) {
+    public List<MessageDto> updateStatuses(List<InvoiceStatusDto> list) {
         List<PurchaseInvoice> purchaseInvoices = list.stream()
             .filter(t -> t.getBpType().equals("K"))
             .map(invoiceBusinessService::toPurchaseInvoice)
@@ -34,14 +35,22 @@ public class InvoiceServiceImpl implements InvoiceService {
         purchaseInvoiceRepo.save(purchaseInvoices);
         saleInvoiceRepo.save(saleInvoices);
 
-        Message msg = new Message();
-        msg.setStatus("success");
-        msg.setDetails(purchaseInvoices.size() + saleInvoices.size() + " records updated");
-        return msg;
+        List<MessageDto> msgs = new ArrayList<>();
+        for (PurchaseInvoice invoice : purchaseInvoices) {
+            MessageDto msg = new MessageDto();
+            msg.setStatus("S");
+            msg.setId(invoice.getId());
+            msg.setSapId(invoice.getErpDocNum());
+            msg.setMsgNum("0");
+            msg.setText("OK");
+            msgs.add(msg);
+        }
+
+        return msgs;
     }
 
     @Override
-    public Message createInvoices(List<InvoiceDto> list) {
+    public List<MessageDto> createInvoices(List<InvoiceDto> list) {
         List<PurchaseInvoice> invoices = list.stream()
             .filter(t -> t.getBpType().equals("K"))
             .map(invoiceBusinessService::createPurchaseInvoice)
@@ -50,9 +59,17 @@ public class InvoiceServiceImpl implements InvoiceService {
 
         purchaseInvoiceRepo.save(invoices);
 
-        Message msg = new Message();
-        msg.setStatus("success");
-        msg.setDetails(invoices.size() + " records created");
-        return msg;
+        List<MessageDto> msgs = new ArrayList<>();
+        for (PurchaseInvoice invoice : invoices) {
+            MessageDto msg = new MessageDto();
+            msg.setStatus("S");
+            msg.setId(invoice.getId());
+            msg.setSapId(invoice.getErpDocNum());
+            msg.setMsgNum("0");
+            msg.setText("OK");
+            msgs.add(msg);
+        }
+
+        return msgs;
     }
 }

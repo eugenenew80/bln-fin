@@ -1,6 +1,7 @@
 package bln.fin.soap.invoice;
 
-import bln.fin.soap.Message;
+import bln.fin.soap.MessageDto;
+
 import javax.jws.WebMethod;
 import javax.jws.WebParam;
 import javax.jws.WebResult;
@@ -11,9 +12,9 @@ import java.util.List;
 public interface InvoiceService {
     @WebMethod(action = "updateStatuses")
     @WebResult(name = "result")
-    Message updateStatuses(@WebParam(name = "status") List<InvoiceStatusDto> list);
+    List<MessageDto> updateStatuses(@WebParam(name = "status") List<InvoiceStatusDto> list);
 
     @WebMethod(action = "createInvoices")
     @WebResult(name = "result")
-    Message createInvoices(@WebParam(name = "invoice") List<InvoiceDto> list);
+    List<MessageDto> createInvoices(@WebParam(name = "invoice") List<InvoiceDto> list);
 }

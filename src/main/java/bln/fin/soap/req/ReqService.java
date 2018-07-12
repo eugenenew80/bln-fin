@@ -1,6 +1,6 @@
 package bln.fin.soap.req;
 
-import bln.fin.soap.Message;
+import bln.fin.soap.MessageDto;
 
 import javax.jws.WebMethod;
 import javax.jws.WebParam;
@@ -12,5 +12,5 @@ import java.util.List;
 public interface ReqService {
     @WebMethod(action = "createReqLines")
     @WebResult(name = "result")
-    Message createReqLines(@WebParam(name = "reqLine") List<ReqLineDto> list);
+    List<MessageDto> createReqLines(@WebParam(name = "reqLine") List<ReqLineDto> list);
 }

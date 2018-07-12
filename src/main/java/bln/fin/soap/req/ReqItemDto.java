@@ -1,30 +1,35 @@
 package bln.fin.soap.req;
 
 import lombok.Data;
-import javax.xml.bind.annotation.XmlAccessType;
-import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlType;
+import javax.xml.bind.annotation.*;
 
 @Data
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "ReqItem", namespace = "http://bis.kegoc.kz/soap")
+@Documentation("Позиция из каталога услуг")
 public class ReqItemDto {
+
     @XmlElement(required = true)
+    @Documentation("Номер строки")
     private Long rowNum;
 
     @XmlElement(required = true)
+    @Documentation("Номер услуги из каталога услуг")
     private String itemNum;
 
     @XmlElement(required = true)
+    @Documentation("Наименование услуги")
     private String itemName;
 
     @XmlElement(required = true)
+    @Documentation("Количество")
     private Double quantity;
 
     @XmlElement(required = true)
+    @Documentation("Единица измерения")
     private String unit;
 
     @XmlElement(required = true)
+    @Documentation("Цена за единицу")
     private Double price;
 }

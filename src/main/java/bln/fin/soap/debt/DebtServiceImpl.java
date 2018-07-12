@@ -2,10 +2,11 @@ package bln.fin.soap.debt;
 
 import bln.fin.entity.*;
 import bln.fin.repo.*;
-import bln.fin.soap.Message;
+import bln.fin.soap.MessageDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import javax.jws.WebService;
+import java.util.ArrayList;
 import java.util.List;
 import static java.util.stream.Collectors.toList;
 
@@ -18,7 +19,7 @@ public class DebtServiceImpl implements DebtService {
     private final ReceiptApplicationRepo receiptApplicationRepo;
 
     @Override
-    public Message createDebts(List<DebtDto> list) {
+    public List<MessageDto> createDebts(List<DebtDto> list) {
         List<ReceiptApplication> receiptList = list.stream()
             .filter(t -> t.getBpType().equals("D"))
             .map(debtBusinessService::createReceiptApplication)
@@ -34,9 +35,17 @@ public class DebtServiceImpl implements DebtService {
         checkApplicationRepo.save(checkList);
         receiptApplicationRepo.save(receiptList);
 
-        Message msg = new Message();
-        msg.setStatus("success");
-        msg.setDetails(list.size() + " records created");
-        return msg;
+        List<MessageDto> msgs = new ArrayList<>();
+        for (CheckApplication check : checkList) {
+            MessageDto msg = new MessageDto();
+            msg.setStatus("S");
+            msg.setId(check.getId());
+            msg.setSapId(check.getErpDocNum());
+            msg.setMsgNum("0");
+            msg.setText("OK");
+            msgs.add(msg);
+        }
+
+        return msgs;
     }
 }

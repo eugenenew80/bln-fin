@@ -1,6 +1,6 @@
 package bln.fin.soap.debt;
 
-import bln.fin.soap.Message;
+import bln.fin.soap.MessageDto;
 
 import javax.jws.WebMethod;
 import javax.jws.WebParam;
@@ -12,5 +12,5 @@ import java.util.List;
 public interface DebtService {
     @WebMethod(action = "createDebts")
     @WebResult(name = "result")
-    Message createDebts(@WebParam(name = "debt") List<DebtDto> list);
+    List<MessageDto> createDebts(@WebParam(name = "debt") List<DebtDto> list);
 }
