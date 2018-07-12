@@ -16,6 +16,11 @@ public class BusinessPartnerServiceImpl implements BusinessPartnerService {
     @Override
     public Message createBusinessPartners(List<BusinessPartnerDto> list) {
 
+        for (BusinessPartnerDto bpDto : list) {
+            System.out.println(bpDto);
+        }
+
+
         Message msg = new Message();
         msg.setStatus("success");
         msg.setDetails(list.size() + " records created");
