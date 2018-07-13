@@ -60,7 +60,7 @@ public class BusinessPartnerDto {
     @Documentation("Юридический адрес")
     private AddressDto legalAddress;
 
-    @XmlElement(required = true)
+    @XmlElement
     @Documentation("Фактический адрес")
     private AddressDto actualAddress;
 

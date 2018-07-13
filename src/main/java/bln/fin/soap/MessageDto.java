@@ -12,17 +12,20 @@ import javax.xml.bind.annotation.XmlType;
 @XmlType(name = "Msg", namespace = "http://bis.kegoc.kz/soap")
 public class MessageDto {
     @XmlElement(required = true)
+    private String sysCode;
+
+    @XmlElement(required = true)
     private String msgNum;
 
     @XmlElement(required = true)
-    private String status;
+    private String msgType;
 
-    @XmlElement(required = true)
-    private String text;
+    @XmlElement
+    private String msg;
 
-    @XmlElement(required = true)
-    private Long id;
+    @XmlElement
+    private String id;
 
-    @XmlElement(required = true)
-    private String sapId;
+    @XmlElement
+    private String idErp;
 }

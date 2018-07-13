@@ -11,6 +11,6 @@ import java.util.List;
 @WebService(name = "DebtService", targetNamespace = "http://bis.kegoc.kz/soap")
 public interface DebtService {
     @WebMethod(action = "createDebts")
-    @WebResult(name = "result")
+    @WebResult(name = "msg")
     List<MessageDto> createDebts(@WebParam(name = "debt") List<DebtDto> list);
 }

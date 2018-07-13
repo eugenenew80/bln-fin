@@ -23,17 +23,13 @@ public class BusinessPartnerServiceImpl implements BusinessPartnerService {
             System.out.println(bpDto);
         }
 
-        List<MessageDto> msgs = new ArrayList<>();
-        for (BusinessPartner businessPartner : businessPartnerList) {
-            MessageDto msg = new MessageDto();
-            msg.setStatus("S");
-            msg.setId(businessPartner.getId());
-            msg.setSapId(businessPartner.getErpBpNum());
-            msg.setMsgNum("0");
-            msg.setText("OK");
-            msgs.add(msg);
-        }
+        List<MessageDto> messages = new ArrayList<>();
+        MessageDto msg = new MessageDto();
+        msg.setSysCode("BIS");
+        msg.setMsgType("S");
+        msg.setMsgNum("0");
+        messages.add(msg);
 
-        return msgs;
+        return messages;
     }
 }

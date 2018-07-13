@@ -35,17 +35,13 @@ public class DebtServiceImpl implements DebtService {
         checkApplicationRepo.save(checkList);
         receiptApplicationRepo.save(receiptList);
 
-        List<MessageDto> msgs = new ArrayList<>();
-        for (CheckApplication check : checkList) {
-            MessageDto msg = new MessageDto();
-            msg.setStatus("S");
-            msg.setId(check.getId());
-            msg.setSapId(check.getErpDocNum());
-            msg.setMsgNum("0");
-            msg.setText("OK");
-            msgs.add(msg);
-        }
+        List<MessageDto> messages = new ArrayList<>();
+        MessageDto msg = new MessageDto();
+        msg.setSysCode("BIS");
+        msg.setMsgType("S");
+        msg.setMsgNum("0");
+        messages.add(msg);
 
-        return msgs;
+        return messages;
     }
 }

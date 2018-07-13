@@ -11,6 +11,6 @@ import java.util.List;
 @WebService(name = "ReqService", targetNamespace = "http://bis.kegoc.kz/soap")
 public interface ReqService {
     @WebMethod(action = "createReqLines")
-    @WebResult(name = "result")
+    @WebResult(name = "msg")
     List<MessageDto> createReqLines(@WebParam(name = "reqLine") List<ReqLineDto> list);
 }

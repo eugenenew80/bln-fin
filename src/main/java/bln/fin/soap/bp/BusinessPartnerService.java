@@ -11,6 +11,6 @@ import java.util.List;
 @WebService(name = "BusinessPartnerService", targetNamespace = "http://bis.kegoc.kz/soap")
 public interface BusinessPartnerService {
     @WebMethod(action = "createBusinessPartners")
-    @WebResult(name = "result")
+    @WebResult(name = "msg")
     List<MessageDto> createBusinessPartners(@WebParam(name = "bp") List<BusinessPartnerDto> list);
 }

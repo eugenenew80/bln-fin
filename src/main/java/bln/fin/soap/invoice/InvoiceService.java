@@ -11,10 +11,10 @@ import java.util.List;
 @WebService(name = "InvoiceService", targetNamespace = "http://bis.kegoc.kz/soap")
 public interface InvoiceService {
     @WebMethod(action = "updateStatuses")
-    @WebResult(name = "result")
+    @WebResult(name = "msg")
     List<MessageDto> updateStatuses(@WebParam(name = "status") List<InvoiceStatusDto> list);
 
     @WebMethod(action = "createInvoices")
-    @WebResult(name = "result")
+    @WebResult(name = "msg")
     List<MessageDto> createInvoices(@WebParam(name = "invoice") List<InvoiceDto> list);
 }

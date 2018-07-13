@@ -35,18 +35,14 @@ public class InvoiceServiceImpl implements InvoiceService {
         purchaseInvoiceRepo.save(purchaseInvoices);
         saleInvoiceRepo.save(saleInvoices);
 
-        List<MessageDto> msgs = new ArrayList<>();
-        for (PurchaseInvoice invoice : purchaseInvoices) {
-            MessageDto msg = new MessageDto();
-            msg.setStatus("S");
-            msg.setId(invoice.getId());
-            msg.setSapId(invoice.getErpDocNum());
-            msg.setMsgNum("0");
-            msg.setText("OK");
-            msgs.add(msg);
-        }
+        List<MessageDto> messages = new ArrayList<>();
+        MessageDto msg = new MessageDto();
+        msg.setSysCode("BIS");
+        msg.setMsgType("S");
+        msg.setMsgNum("0");
+        messages.add(msg);
 
-        return msgs;
+        return messages;
     }
 
     @Override
@@ -59,17 +55,13 @@ public class InvoiceServiceImpl implements InvoiceService {
 
         purchaseInvoiceRepo.save(invoices);
 
-        List<MessageDto> msgs = new ArrayList<>();
-        for (PurchaseInvoice invoice : invoices) {
-            MessageDto msg = new MessageDto();
-            msg.setStatus("S");
-            msg.setId(invoice.getId());
-            msg.setSapId(invoice.getErpDocNum());
-            msg.setMsgNum("0");
-            msg.setText("OK");
-            msgs.add(msg);
-        }
+        List<MessageDto> messages = new ArrayList<>();
+        MessageDto msg = new MessageDto();
+        msg.setSysCode("BIS");
+        msg.setMsgType("S");
+        msg.setMsgNum("0");
+        messages.add(msg);
 
-        return msgs;
+        return messages;
     }
 }
