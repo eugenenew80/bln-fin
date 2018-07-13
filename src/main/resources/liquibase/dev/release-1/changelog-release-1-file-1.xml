@@ -205,10 +205,6 @@
                 <constraints nullable="true"/>
             </column>
 
-            <column name="transferred_to_erp" type="TIMESTAMP" remarks="Дата передачи СФ в систему ERP">
-                <constraints nullable="true"/>
-            </column>
-
             <column name="create_date" type="TIMESTAMP" remarks="Дата создания">
                 <constraints nullable="true"/>
             </column>
