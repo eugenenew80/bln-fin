@@ -18,16 +18,32 @@ import org.apache.cxf.Bus;
 import org.apache.cxf.bus.spring.SpringBus;
 import org.apache.cxf.jaxws.EndpointImpl;
 import org.apache.cxf.transport.servlet.CXFServlet;
+import org.apache.http.HttpException;
+import org.apache.http.HttpRequest;
+import org.apache.http.HttpRequestInterceptor;
+import org.apache.http.auth.AuthScope;
+import org.apache.http.auth.UsernamePasswordCredentials;
+import org.apache.http.client.CredentialsProvider;
+import org.apache.http.client.config.RequestConfig;
+import org.apache.http.impl.client.BasicCredentialsProvider;
+import org.apache.http.impl.client.CloseableHttpClient;
+import org.apache.http.impl.client.HttpClients;
+import org.apache.http.protocol.HTTP;
+import org.apache.http.protocol.HttpContext;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.web.servlet.ServletRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.oxm.jaxb.Jaxb2Marshaller;
+import org.springframework.ws.client.core.WebServiceTemplate;
+import org.springframework.ws.transport.http.HttpComponentsMessageSender;
+
 import javax.xml.ws.Endpoint;
+import java.io.IOException;
 
 @Configuration
 @RequiredArgsConstructor
 public class AppConfig  {
-
 
     @Bean
     public ObjectMapper objectMapper() {
@@ -38,6 +54,44 @@ public class AppConfig  {
         mapper.configure(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS, false);
         return mapper;
     }
+
+    @Bean
+    public HttpComponentsMessageSender messageSender() {
+        String username = "PIAPPLBIS_D";
+        String password = "Qwer!11111";
+
+        HttpRequestInterceptor httpRequestInterceptor = (httpRequest, httpContext) -> httpRequest.removeHeaders(HTTP.CONTENT_LEN);
+        CredentialsProvider credentialsProvider = new BasicCredentialsProvider();
+        credentialsProvider.setCredentials(AuthScope.ANY, new UsernamePasswordCredentials(username, password));
+
+        RequestConfig requestConfig = RequestConfig.custom()
+            .setAuthenticationEnabled(true)
+            .build();
+
+        CloseableHttpClient httpClient = HttpClients.custom()
+            .addInterceptorFirst(httpRequestInterceptor)
+            .setDefaultRequestConfig(requestConfig)
+            .setDefaultCredentialsProvider(credentialsProvider)
+            .build();
+
+        HttpComponentsMessageSender messageSender = new HttpComponentsMessageSender(httpClient);
+        return messageSender;
+    }
+
+    @Bean
+    public WebServiceTemplate salePlanServiceTemplate(HttpComponentsMessageSender messageSender) {
+        Jaxb2Marshaller jaxb2Marshaller = new Jaxb2Marshaller();
+        jaxb2Marshaller.setContextPath("sap.erp.plan");
+
+        WebServiceTemplate webServiceTemplate = new WebServiceTemplate();
+        webServiceTemplate.setMarshaller(jaxb2Marshaller);
+        webServiceTemplate.setUnmarshaller(jaxb2Marshaller);
+        webServiceTemplate.setMessageSender(messageSender);
+        webServiceTemplate.setDefaultUri("http://kegoci10.corp.kegoc.kz:50000/XISOAPAdapter/MessageServlet?senderParty=&senderService=BIS_D&receiverParty=&receiverService=&interface=SalesPlan&interfaceNamespace=urn:kegoc.kz:BIS:LO_0002_3_SalesPlan");
+
+        return webServiceTemplate;
+    }
+
 
     @Bean
     public ServletRegistrationBean dispatcherServlet() {
