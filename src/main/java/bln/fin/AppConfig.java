@@ -1,13 +1,13 @@
 package bln.fin;
 
 import bln.fin.repo.*;
-import bln.fin.soap.bp.BusinessPartnerServiceImpl;
-import bln.fin.soap.debt.DebtBusinessService;
-import bln.fin.soap.debt.DebtServiceImpl;
-import bln.fin.soap.invoice.InvoiceBusinessService;
-import bln.fin.soap.invoice.InvoiceServiceImpl;
-import bln.fin.soap.req.ReqBusinessService;
-import bln.fin.soap.req.ReqServiceImpl;
+import bln.fin.ws.server.bp.BusinessPartnerServiceImpl;
+import bln.fin.ws.server.debt.DebtBusinessService;
+import bln.fin.ws.server.debt.DebtServiceImpl;
+import bln.fin.ws.server.invoice.InvoiceBusinessService;
+import bln.fin.ws.server.invoice.InvoiceServiceImpl;
+import bln.fin.ws.server.req.ReqBusinessService;
+import bln.fin.ws.server.req.ReqServiceImpl;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.datatype.jdk8.Jdk8Module;
@@ -18,8 +18,6 @@ import org.apache.cxf.Bus;
 import org.apache.cxf.bus.spring.SpringBus;
 import org.apache.cxf.jaxws.EndpointImpl;
 import org.apache.cxf.transport.servlet.CXFServlet;
-import org.apache.http.HttpException;
-import org.apache.http.HttpRequest;
 import org.apache.http.HttpRequestInterceptor;
 import org.apache.http.auth.AuthScope;
 import org.apache.http.auth.UsernamePasswordCredentials;
@@ -29,7 +27,6 @@ import org.apache.http.impl.client.BasicCredentialsProvider;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.protocol.HTTP;
-import org.apache.http.protocol.HttpContext;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.web.servlet.ServletRegistrationBean;
 import org.springframework.context.annotation.Bean;
@@ -39,7 +36,6 @@ import org.springframework.ws.client.core.WebServiceTemplate;
 import org.springframework.ws.transport.http.HttpComponentsMessageSender;
 
 import javax.xml.ws.Endpoint;
-import java.io.IOException;
 
 @Configuration
 @RequiredArgsConstructor
