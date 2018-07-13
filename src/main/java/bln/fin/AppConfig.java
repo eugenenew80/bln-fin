@@ -28,6 +28,7 @@ import javax.xml.ws.Endpoint;
 @RequiredArgsConstructor
 public class AppConfig  {
 
+
     @Bean
     public ObjectMapper objectMapper() {
         ObjectMapper mapper = new ObjectMapper();
@@ -87,22 +88,20 @@ public class AppConfig  {
     private final ReceiptApplicationRepo receiptApplicationRepo;
 
     @Autowired
-    private PurchaseInvoiceRepo purchaseInvoiceRepo;
+    private final PurchaseInvoiceRepo purchaseInvoiceRepo;
 
     @Autowired
-    private SaleInvoiceRepo saleInvoiceRepo;
+    private final SaleInvoiceRepo saleInvoiceRepo;
 
     @Autowired
-    private BusinessPartnerRepo businessPartnerRepo;
-
-
+    private final BusinessPartnerRepo businessPartnerRepo;
 
     @Autowired
-    private InvoiceBusinessService invoiceBusinessService;
+    private final InvoiceBusinessService invoiceBusinessService;
 
     @Autowired
-    private ReqBusinessService reqBusinessService;
+    private final ReqBusinessService reqBusinessService;
 
     @Autowired
-    private DebtBusinessService debtBusinessService;
+    private final DebtBusinessService debtBusinessService;
 }
