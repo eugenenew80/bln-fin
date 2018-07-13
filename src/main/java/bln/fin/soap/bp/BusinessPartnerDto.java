@@ -12,6 +12,10 @@ import java.util.List;
 @Documentation("Деловой партнер")
 public class BusinessPartnerDto {
 
+    @XmlAttribute(required = true)
+    @Documentation("Код языка")
+    private String lang;
+
     @XmlElement(required = true)
     @Documentation("№ делового партнера")
     private String bpNum;
