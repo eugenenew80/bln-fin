@@ -16,7 +16,7 @@ import static java.util.stream.Collectors.toList;
 
 @Service
 @RequiredArgsConstructor
-public class SoapPlanServiceImpl implements SalePlanService {
+public class SalePlanServiceImpl implements SalePlanService {
     private final SalePlanHeaderRepo salePlanHeaderRepo;
     private final WebServiceTemplate salePlanServiceTemplate;
 
