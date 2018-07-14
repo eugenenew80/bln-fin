@@ -9,6 +9,7 @@ import org.springframework.ws.client.core.WebServiceTemplate;
 import sap.erp.plan.ObjectFactory;
 import sap.erp.plan.SalesPlan;
 import java.math.BigInteger;
+import java.util.Arrays;
 import java.util.List;
 
 import static bln.fin.common.Util.toXMLGregorianCalendar;
@@ -26,17 +27,37 @@ public class SalePlanServiceImpl implements SalePlanService {
         if (header.getTransferredToErpDate()!=null)
             return;
 
-        List<SalesPlan.Item> items = header.getLines().stream()
-            .map(t -> createItem(header, t))
-            .filter(t -> t != null)
-            .collect(toList());
+        List<SalesPlan.Item> items = createItems(Arrays.asList(header));
+        if (items.isEmpty())
+            return;
 
         SalesPlan salesPlanReq = new ObjectFactory().createSalesPlan();
         salesPlanReq.getItem().addAll(items);
         salePlanServiceTemplate.marshalSendAndReceive(salesPlanReq);
     }
 
-    private SalesPlan.Item createItem(SalePlanHeader header, SalePlanLine line) {
+    @Override
+    public void sendAll() {
+        List<SalesPlan.Item> items = createItems(salePlanHeaderRepo.findAll());
+        if (items.isEmpty())
+            return;
+
+        SalesPlan salesPlanReq = new ObjectFactory().createSalesPlan();
+        salesPlanReq.getItem().addAll(items);
+        salePlanServiceTemplate.marshalSendAndReceive(salesPlanReq);
+    }
+
+    private List<SalesPlan.Item> createItems(List<SalePlanHeader> headers) {
+        return headers
+            .stream()
+            .flatMap(t -> t.getLines().stream())
+            .map(t -> createItem(t))
+            .filter(t -> t != null)
+            .collect(toList());
+    }
+
+    private SalesPlan.Item createItem(SalePlanLine line) {
+        SalePlanHeader header = line.getHeader();
         SalesPlan.Item item = new SalesPlan.Item();
         item.setCurrency(header.getCurrencyCode());
         item.setVersion(new BigInteger(header.getVersion().toString()));
