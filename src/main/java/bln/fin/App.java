@@ -13,7 +13,6 @@ import javax.xml.datatype.DatatypeConfigurationException;
 @EnableScheduling
 @SpringBootApplication
 public class App  {
-
     public static void main(String[] args) throws DatatypeConfigurationException {
         SpringApplication.run(App.class, args);
     }

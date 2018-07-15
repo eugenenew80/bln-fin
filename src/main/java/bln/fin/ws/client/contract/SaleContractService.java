@@ -1,12 +1,10 @@
-package bln.fin.ws.client.invoice;
+package bln.fin.ws.client.contract;
 
 import org.springframework.stereotype.Service;
 
 @Service
-public interface InvoiceService {
+public interface SaleContractService {
     void sendByCustomer(Long vendorId, Long customerId);
     void sendByContract(Long contractId);
-    void sendOne(Long invoiceId);
     void sendAll();
-    void sendCancelledInvoices();
 }
