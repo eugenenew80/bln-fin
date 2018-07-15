@@ -16,8 +16,4 @@ public class PurchaseContractServiceImpl implements PurchaseContractService {
     @Override
     public void sendByContract(Long contractId) {
     }
-
-    @Override
-    public void sendAll() {
-    }
 }

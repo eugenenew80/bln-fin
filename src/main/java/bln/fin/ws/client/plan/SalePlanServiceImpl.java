@@ -9,6 +9,7 @@ import org.springframework.ws.client.core.WebServiceTemplate;
 import sap.erp.plan.ObjectFactory;
 import sap.erp.plan.SalesPlan;
 import java.math.BigInteger;
+import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.List;
 
@@ -23,33 +24,45 @@ public class SalePlanServiceImpl implements SalePlanService {
 
     @Override
     public void send(Long headerId) {
-        SalePlanHeader header = salePlanHeaderRepo.findOne(headerId);
-        if (header.getTransferredToErpDate()!=null)
-            return;
+        List<SalePlanHeader> headers = Arrays.asList(salePlanHeaderRepo.findOne(headerId));
 
-        List<SalesPlan.Item> items = createItems(Arrays.asList(header));
+        List<SalesPlan.Item> items = createItems(headers);
         if (items.isEmpty())
             return;
 
         SalesPlan salesPlanReq = new ObjectFactory().createSalesPlan();
         salesPlanReq.getItem().addAll(items);
-        salePlanServiceTemplate.marshalSendAndReceive(salesPlanReq);
+
+        Object response = null;
+        try {
+            response = salePlanServiceTemplate.marshalSendAndReceive(salesPlanReq);
+            System.out.println(response);
+            updateHeaders(headers);
+        }
+        catch (Exception e) {
+            System.out.println(response);
+        }
     }
 
     @Override
     public void sendAll() {
-        List<SalesPlan.Item> items = createItems(salePlanHeaderRepo.findAll());
+        List<SalePlanHeader> headers = salePlanHeaderRepo.findAll();
+
+        List<SalesPlan.Item> items = createItems(headers);
         if (items.isEmpty())
             return;
 
         SalesPlan salesPlanReq = new ObjectFactory().createSalesPlan();
         salesPlanReq.getItem().addAll(items);
         salePlanServiceTemplate.marshalSendAndReceive(salesPlanReq);
+
+        updateHeaders(headers);
     }
 
     private List<SalesPlan.Item> createItems(List<SalePlanHeader> headers) {
         return headers
             .stream()
+            .filter(t -> t.getTransferredToErpDate()==null)
             .flatMap(t -> t.getLines().stream())
             .map(t -> createItem(t))
             .filter(t -> t != null)
@@ -67,5 +80,12 @@ public class SalePlanServiceImpl implements SalePlanService {
         item.setStartDate(toXMLGregorianCalendar(header.getStartDate()));
         item.setEndDate(toXMLGregorianCalendar(header.getEndDate()));
         return item;
+    }
+
+    private void updateHeaders(List<SalePlanHeader> headers) {
+        for (SalePlanHeader header: headers) {
+            header.setTransferredToErpDate(LocalDateTime.now());
+        }
+        salePlanHeaderRepo.save(headers);
     }
 }

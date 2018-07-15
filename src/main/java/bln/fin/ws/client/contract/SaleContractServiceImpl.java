@@ -16,8 +16,4 @@ public class SaleContractServiceImpl implements SaleContractService {
     @Override
     public void sendByContract(Long contractId) {
     }
-
-    @Override
-    public void sendAll() {
-    }
 }
