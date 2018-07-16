@@ -15,7 +15,7 @@ import java.util.List;
 
 @RequiredArgsConstructor
 @Service
-@WebService(endpointInterface = "bln.fin.ws.server.bp.BusinessPartnerService", portName = "BusinessPartnerPort", serviceName = "BusinessPartnerService", targetNamespace = "http://bis.kegoc.kz/server")
+@WebService(endpointInterface = "bln.fin.ws.server.bp.BusinessPartnerService", portName = "BusinessPartnerPort", serviceName = "BusinessPartnerService", targetNamespace = "http://bis.kegoc.kz/soap")
 public class BusinessPartnerServiceImpl implements BusinessPartnerService {
     private final BusinessPartnerRepo businessPartnerRepo;
     private final SessionService sessionService;

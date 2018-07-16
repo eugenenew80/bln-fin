@@ -8,7 +8,7 @@ import java.util.List;
 
 @Data
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "BusinessPartner", namespace = "http://bis.kegoc.kz/server")
+@XmlType(name = "BusinessPartner", namespace = "http://bis.kegoc.kz/soap")
 @Documentation("Деловой партнер")
 public class BusinessPartnerDto {
 

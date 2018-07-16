@@ -6,7 +6,7 @@ import javax.xml.bind.annotation.*;
 
 @Data
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "Line", namespace = "http://bis.kegoc.kz/server")
+@XmlType(name = "Line", namespace = "http://bis.kegoc.kz/soap")
 @Documentation("Позиция СФ")
 public class InvoiceLineDto {
 

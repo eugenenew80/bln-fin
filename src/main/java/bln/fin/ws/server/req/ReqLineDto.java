@@ -8,7 +8,7 @@ import java.util.List;
 
 @Data
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "ReqLine", namespace = "http://bis.kegoc.kz/server")
+@XmlType(name = "ReqLine", namespace = "http://bis.kegoc.kz/soap")
 @Documentation("Строка заявки")
 public class ReqLineDto {
 

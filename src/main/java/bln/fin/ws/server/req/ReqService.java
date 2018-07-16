@@ -4,7 +4,7 @@ import bln.fin.ws.server.MessageDto;
 import javax.jws.*;
 import java.util.List;
 
-@WebService(name = "ReqService", targetNamespace = "http://bis.kegoc.kz/server")
+@WebService(name = "ReqService", targetNamespace = "http://bis.kegoc.kz/soap")
 public interface ReqService {
     @WebMethod(action = "createReqLines")
     @WebResult(name = "item")

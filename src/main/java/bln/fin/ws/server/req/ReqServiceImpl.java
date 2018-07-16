@@ -15,7 +15,7 @@ import java.util.List;
 import static java.util.stream.Collectors.toList;
 
 @Service
-@WebService(endpointInterface = "bln.fin.ws.server.req.ReqService", portName = "ReqServicePort", serviceName = "ReqService", targetNamespace = "http://bis.kegoc.kz/server")
+@WebService(endpointInterface = "bln.fin.ws.server.req.ReqService", portName = "ReqServicePort", serviceName = "ReqService", targetNamespace = "http://bis.kegoc.kz/soap")
 @RequiredArgsConstructor
 public class ReqServiceImpl implements ReqService {
     private final ReqBusinessService reqBusinessService;

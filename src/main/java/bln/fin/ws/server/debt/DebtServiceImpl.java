@@ -15,7 +15,7 @@ import static java.util.stream.Collectors.toList;
 
 @RequiredArgsConstructor
 @Service
-@WebService(endpointInterface = "bln.fin.ws.server.debt.DebtService", portName = "DebtServicePort", serviceName = "DebtService", targetNamespace = "http://bis.kegoc.kz/server")
+@WebService(endpointInterface = "bln.fin.ws.server.debt.DebtService", portName = "DebtServicePort", serviceName = "DebtService", targetNamespace = "http://bis.kegoc.kz/soap")
 public class DebtServiceImpl implements DebtService {
     private final DebtBusinessService debtBusinessService;
     private final CheckApplicationRepo checkApplicationRepo;

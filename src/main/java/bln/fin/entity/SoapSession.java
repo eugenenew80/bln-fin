@@ -20,7 +20,6 @@ public class SoapSession {
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "ws_sessions_s")
     private Long id;
 
-    @ManyToOne
     @Column(name="object_code")
     private String objectCode;
 

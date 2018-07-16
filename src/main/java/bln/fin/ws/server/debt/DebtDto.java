@@ -7,7 +7,7 @@ import java.util.Date;
 
 @Data
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "Debt", namespace = "http://bis.kegoc.kz/server")
+@XmlType(name = "Debt", namespace = "http://bis.kegoc.kz/soap")
 @Documentation("Дебиторская и кредиторская задолженность")
 public class DebtDto {
 

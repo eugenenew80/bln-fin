@@ -26,8 +26,8 @@ public class SessionServiceImpl implements SessionService {
     @Override
     public SoapSession createSession(String objectCode, DirectionEnum direction) {
         SoapSession session = new SoapSession();
-        session.setObjectCode("REQ");
-        session.setDirection(DirectionEnum.IMPORT);
+        session.setObjectCode(objectCode);
+        session.setDirection(direction);
         session.setStartDate(LocalDateTime.now());
         return createSession(session);
     }

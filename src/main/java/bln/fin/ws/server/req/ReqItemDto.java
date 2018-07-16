@@ -5,7 +5,7 @@ import javax.xml.bind.annotation.*;
 
 @Data
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "ReqItem", namespace = "http://bis.kegoc.kz/server")
+@XmlType(name = "ReqItem", namespace = "http://bis.kegoc.kz/soap")
 @Documentation("Позиция из каталога услуг")
 public class ReqItemDto {
 

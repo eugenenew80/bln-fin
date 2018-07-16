@@ -1,6 +1,7 @@
 package bln.fin;
 
 import bln.fin.repo.*;
+import bln.fin.ws.SessionService;
 import bln.fin.ws.server.bp.BusinessPartnerServiceImpl;
 import bln.fin.ws.server.debt.DebtBusinessService;
 import bln.fin.ws.server.debt.DebtServiceImpl;
@@ -102,28 +103,28 @@ public class AppConfig  {
 
     @Bean
     public Endpoint endpoint1() {
-        EndpointImpl endpoint = new EndpointImpl(springBus(), new DebtServiceImpl(debtBusinessService, checkApplicationRepo, receiptApplicationRepo));
+        EndpointImpl endpoint = new EndpointImpl(springBus(), new DebtServiceImpl(debtBusinessService, checkApplicationRepo, receiptApplicationRepo, sessionService));
         endpoint.publish("/DebtService");
         return endpoint;
     }
 
     @Bean
     public Endpoint endpoint2() {
-        EndpointImpl endpoint = new EndpointImpl(springBus(), new InvoiceServiceImpl(invoiceBusinessService, purchaseInvoiceRepo, saleInvoiceRepo));
+        EndpointImpl endpoint = new EndpointImpl(springBus(), new InvoiceServiceImpl(invoiceBusinessService, purchaseInvoiceRepo, saleInvoiceRepo, sessionService));
         endpoint.publish("/InvoiceService");
         return endpoint;
     }
 
     @Bean
     public Endpoint endpoint3() {
-        EndpointImpl endpoint = new EndpointImpl(springBus(), new ReqServiceImpl(reqBusinessService, reqLineRepo));
+        EndpointImpl endpoint = new EndpointImpl(springBus(), new ReqServiceImpl(reqBusinessService, reqLineRepo, sessionService));
         endpoint.publish("/ReqService");
         return endpoint;
     }
 
     @Bean
     public Endpoint endpoint4() {
-        EndpointImpl endpoint = new EndpointImpl(springBus(), new BusinessPartnerServiceImpl(businessPartnerRepo));
+        EndpointImpl endpoint = new EndpointImpl(springBus(), new BusinessPartnerServiceImpl(businessPartnerRepo, sessionService));
         endpoint.publish("/BusinessPartnerService");
         return endpoint;
     }
@@ -154,4 +155,7 @@ public class AppConfig  {
 
     @Autowired
     private final DebtBusinessService debtBusinessService;
+
+    @Autowired
+    private final SessionService sessionService;
 }

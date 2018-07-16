@@ -8,7 +8,7 @@ import java.util.List;
 
 @Data
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "Invoice", namespace = "http://bis.kegoc.kz/server")
+@XmlType(name = "Invoice", namespace = "http://bis.kegoc.kz/soap")
 @Documentation("Счета-фактуры")
 public class InvoiceDto {
 

@@ -8,7 +8,7 @@ import javax.jws.WebResult;
 import javax.jws.WebService;
 import java.util.List;
 
-@WebService(name = "BusinessPartnerService", targetNamespace = "http://bis.kegoc.kz/server")
+@WebService(name = "BusinessPartnerService", targetNamespace = "http://bis.kegoc.kz/soap")
 public interface BusinessPartnerService {
     @WebMethod(action = "createBusinessPartners")
     @WebResult(name = "msg")

@@ -9,7 +9,7 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
-public class InvoiceServiceImpl implements InvoiceService {
+public class InvoiceClientServiceImpl implements InvoiceClientService {
     private final SaleInvoiceRepo saleInvoiceRepo;
 
     @Override

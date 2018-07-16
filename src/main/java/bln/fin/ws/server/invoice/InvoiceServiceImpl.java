@@ -15,7 +15,7 @@ import static java.util.stream.Collectors.toList;
 
 @RequiredArgsConstructor
 @Service
-@WebService(endpointInterface = "bln.fin.ws.server.invoice.InvoiceService", portName = "InvoiceServicePort", serviceName = "InvoiceService", targetNamespace = "http://bis.kegoc.kz/server")
+@WebService(endpointInterface = "bln.fin.ws.server.invoice.InvoiceService", portName = "InvoiceServicePort", serviceName = "InvoiceService", targetNamespace = "http://bis.kegoc.kz/soap")
 public class InvoiceServiceImpl implements InvoiceService {
     private final InvoiceBusinessService invoiceBusinessService;
     private final PurchaseInvoiceRepo purchaseInvoiceRepo;
@@ -24,7 +24,7 @@ public class InvoiceServiceImpl implements InvoiceService {
 
     @Override
     public List<MessageDto> updateStatuses(List<InvoiceStatusDto> list) {
-        SoapSession session = sessionService.createSession("INVOICE_STATU", DirectionEnum.IMPORT);
+        SoapSession session = sessionService.createSession("INVOICE_STATUS", DirectionEnum.IMPORT);
 
         List<PurchaseInvoice> purchaseInvoices = list.stream()
             .filter(t -> t.getBpType().equals("K"))

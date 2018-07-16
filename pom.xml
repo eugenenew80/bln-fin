@@ -75,7 +75,7 @@
                             <generatePackage>sap.erp.plan</generatePackage>
                             <generateDirectory>${project.basedir}/src/main/java</generateDirectory>
                             <schemaDirectory>${project.basedir}/src/main/resources/wsdl</schemaDirectory>
-                            <schemaIncludes><include>sales_plan.wsdl</include></schemaIncludes>
+                            <schemaIncludes><include>BIS_SalesPlan.wsdl</include></schemaIncludes>
                         </configuration>
                     </execution>
                 </executions>

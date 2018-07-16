@@ -6,7 +6,7 @@ import javax.xml.bind.annotation.*;
 
 @Data
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "BankAccount", namespace = "http://bis.kegoc.kz/server")
+@XmlType(name = "BankAccount", namespace = "http://bis.kegoc.kz/soap")
 @Documentation("Банковский счёт")
 public class BankAccountDto {
 

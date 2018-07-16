@@ -6,7 +6,7 @@ import javax.xml.bind.annotation.*;
 
 @Data
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "Relation", namespace = "http://bis.kegoc.kz/server")
+@XmlType(name = "Relation", namespace = "http://bis.kegoc.kz/soap")
 @Documentation("Отношение")
 public class RelationDto {
 

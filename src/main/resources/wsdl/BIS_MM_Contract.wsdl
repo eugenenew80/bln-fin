@@ -1,13 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<wsdl:definitions name="SalesPlan" targetNamespace="urn:kegoc.kz:BIS:LO_0002_3_SalesPlan" xmlns:p4="urn:kegoc.kz:BIS:CommonObjects" xmlns:p3="http://sap.com/xi/XI/System/Patterns" xmlns:p2="urn:kegoc.kz:LO_0002_3_SalesPlan" xmlns:p1="urn:kegoc.kz:BIS:LO_0002_3_SalesPlan" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+<wsdl:definitions name="BIS_MM_Contract" targetNamespace="urn:kegoc.kz:BIS:ZMM_0042_Contract" xmlns:p3="urn:kegoc.kz:BIS:CommonObjects" xmlns:p2="http://sap.com/xi/XI/System/Patterns" xmlns:p1="urn:kegoc.kz:BIS:ZMM_0042_Contract" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
     <wsdl:documentation/>
     <wsp:UsingPolicy wsdl:required="true"/>
-    <wsp:Policy wsu:Id="OP_SalesPlan"/>
+    <wsp:Policy wsu:Id="OP_BIS_MM_Contract"/>
     <wsdl:types>
-        <xsd:schema targetNamespace="urn:kegoc.kz:LO_0002_3_SalesPlan" xmlns="urn:kegoc.kz:LO_0002_3_SalesPlan" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:p1="urn:kegoc.kz:BIS:LO_0002_3_SalesPlan">
-            <xsd:import namespace="urn:kegoc.kz:BIS:LO_0002_3_SalesPlan"/>
-            <xsd:element name="SalesPlan" type="p1:SalesPlan"/>
-        </xsd:schema>
         <xsd:schema targetNamespace="urn:kegoc.kz:BIS:CommonObjects" xmlns="urn:kegoc.kz:BIS:CommonObjects" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
             <xsd:complexType name="ExchangeLogData">
                 <xsd:annotation>
@@ -22,7 +18,7 @@
             </xsd:complexType>
             <xsd:complexType name="Response">
                 <xsd:annotation>
-                    <xsd:appinfo source="http://sap.com/xi/VersionID">93426a5f85c911e8a41e0000005576b6</xsd:appinfo>
+                    <xsd:appinfo source="http://sap.com/xi/VersionID">f8167aa1869c11e8b2dc0000005576b6</xsd:appinfo>
                 </xsd:annotation>
                 <xsd:sequence>
                     <xsd:element name="item" minOccurs="0" maxOccurs="unbounded">
@@ -31,10 +27,10 @@
                         </xsd:annotation>
                         <xsd:complexType>
                             <xsd:sequence>
-                                <xsd:element name="ID_ERP" type="xsd:string" minOccurs="0">
+                                <xsd:element name="ID_SAP" type="xsd:string" minOccurs="0">
                                     <xsd:annotation>
                                         <xsd:appinfo source="http://sap.com/xi/TextID">63b7d346835811e8825500ff40a6f108</xsd:appinfo>
-                                        <xsd:documentation>ID объекта в SAP ERP</xsd:documentation>
+                                        <xsd:documentation>ID объекта в SAP</xsd:documentation>
                                     </xsd:annotation>
                                 </xsd:element>
                                 <xsd:element name="ID" type="xsd:string" minOccurs="0">
@@ -87,87 +83,98 @@
                 </xsd:sequence>
             </xsd:complexType>
         </xsd:schema>
-        <xsd:schema targetNamespace="urn:kegoc.kz:BIS:LO_0002_3_SalesPlan" xmlns:p1="urn:kegoc.kz:BIS:CommonObjects" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="urn:kegoc.kz:BIS:LO_0002_3_SalesPlan">
+        <xsd:schema targetNamespace="urn:kegoc.kz:BIS:ZMM_0042_Contract" xmlns:p1="urn:kegoc.kz:BIS:CommonObjects" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="urn:kegoc.kz:BIS:ZMM_0042_Contract">
             <xsd:import namespace="urn:kegoc.kz:BIS:CommonObjects"/>
-            <xsd:element name="SalesPlan_Resp" type="p1:Response"/>
-            <xsd:complexType name="SalesPlan">
+            <xsd:element name="Contract" type="Contract"/>
+            <xsd:element name="Contract_Resp" type="p1:Response"/>
+            <xsd:complexType name="Contract">
                 <xsd:annotation>
-                    <xsd:appinfo source="http://sap.com/xi/VersionID">dfa2c51e85ca11e88d0a0000005576b6</xsd:appinfo>
+                    <xsd:appinfo source="http://sap.com/xi/VersionID">210ea61285ca11e8a9a20000005576b6</xsd:appinfo>
                 </xsd:annotation>
                 <xsd:sequence>
                     <xsd:element name="item" minOccurs="0" maxOccurs="unbounded">
                         <xsd:annotation>
-                            <xsd:appinfo source="http://sap.com/xi/TextID">7ed343eb85ab11e8b37600ffe0396e09</xsd:appinfo>
+                            <xsd:appinfo source="http://sap.com/xi/TextID">7df53b6b835311e8c36900ff40a6f108</xsd:appinfo>
                         </xsd:annotation>
                         <xsd:complexType>
                             <xsd:sequence>
-                                <xsd:element name="itemNum">
+                                <xsd:element name="ContractID" type="xsd:string" minOccurs="0">
                                     <xsd:annotation>
-                                        <xsd:appinfo source="http://sap.com/xi/TextID">e9dc894f84f111e8c0f500ff40a6f108</xsd:appinfo>
-                                        <xsd:documentation>Основная запись материала</xsd:documentation>
-                                    </xsd:annotation>
-                                    <xsd:simpleType>
-                                        <xsd:restriction base="xsd:string">
-                                            <xsd:maxLength value="30"/>
-                                        </xsd:restriction>
-                                    </xsd:simpleType>
-                                </xsd:element>
-                                <xsd:element name="version">
-                                    <xsd:annotation>
-                                        <xsd:appinfo source="http://sap.com/xi/TextID">e9dc895084f111e8b4e600ff40a6f108</xsd:appinfo>
-                                        <xsd:documentation>Код версии планирования</xsd:documentation>
-                                    </xsd:annotation>
-                                    <xsd:simpleType>
-                                        <xsd:restriction base="xsd:integer">
-                                            <xsd:totalDigits value="3"/>
-                                        </xsd:restriction>
-                                    </xsd:simpleType>
-                                </xsd:element>
-                                <xsd:element name="forecastType">
-                                    <xsd:annotation>
-                                        <xsd:appinfo source="http://sap.com/xi/TextID">e9dc93ad84f111e8c02400ff40a6f108</xsd:appinfo>
-                                        <xsd:documentation>Тип прогноза</xsd:documentation>
-                                    </xsd:annotation>
-                                    <xsd:simpleType>
-                                        <xsd:restriction base="xsd:string">
-                                            <xsd:maxLength value="30"/>
-                                        </xsd:restriction>
-                                    </xsd:simpleType>
-                                </xsd:element>
-                                <xsd:element name="startDate" type="xsd:date">
-                                    <xsd:annotation>
-                                        <xsd:appinfo source="http://sap.com/xi/TextID">e9dc93ae84f111e8c2c200ff40a6f108</xsd:appinfo>
-                                        <xsd:documentation>Период прогнозирования - дата с</xsd:documentation>
+                                        <xsd:appinfo source="http://sap.com/xi/TextID">3ff13e45834d11e8c00400ff40a6f108</xsd:appinfo>
+                                        <xsd:documentation>ID договора</xsd:documentation>
                                     </xsd:annotation>
                                 </xsd:element>
-                                <xsd:element name="endDate" type="xsd:date">
+                                <xsd:element name="SuperiorContract" type="xsd:string" minOccurs="0">
                                     <xsd:annotation>
-                                        <xsd:appinfo source="http://sap.com/xi/TextID">7ed31adb85ab11e8a9de00ffe0396e09</xsd:appinfo>
-                                        <xsd:documentation>Период прогнозирования - дата по</xsd:documentation>
+                                        <xsd:appinfo source="http://sap.com/xi/TextID">3ff16490834d11e88f4300ff40a6f108</xsd:appinfo>
+                                        <xsd:documentation>Вышестоящий договор (заполняется в случае доп. соглашения к договору)</xsd:documentation>
                                     </xsd:annotation>
                                 </xsd:element>
-                                <xsd:element name="quantity" type="xsd:double">
+                                <xsd:element name="Supplier" type="xsd:string" minOccurs="0">
                                     <xsd:annotation>
-                                        <xsd:appinfo source="http://sap.com/xi/TextID">e9dc93af84f111e8ac6200ff40a6f108</xsd:appinfo>
-                                        <xsd:documentation>Плановый объем</xsd:documentation>
+                                        <xsd:appinfo source="http://sap.com/xi/TextID">3ff16491834d11e8bb9b00ff40a6f108</xsd:appinfo>
+                                        <xsd:documentation>Поставщик</xsd:documentation>
                                     </xsd:annotation>
                                 </xsd:element>
-                                <xsd:element name="amount" type="xsd:double">
+                                <xsd:element name="ContractType" type="xsd:string" minOccurs="0">
                                     <xsd:annotation>
-                                        <xsd:appinfo source="http://sap.com/xi/TextID">e9dc93b084f111e89aab00ff40a6f108</xsd:appinfo>
-                                        <xsd:documentation>Плановая сумма</xsd:documentation>
+                                        <xsd:appinfo source="http://sap.com/xi/TextID">3ff16492834d11e8b92900ff40a6f108</xsd:appinfo>
+                                        <xsd:documentation>Вид договора (Основной/Доп. соглашение)</xsd:documentation>
                                     </xsd:annotation>
                                 </xsd:element>
-                                <xsd:element name="currency">
+                                <xsd:element name="LegalContractNum" type="xsd:string" minOccurs="0">
                                     <xsd:annotation>
-                                        <xsd:appinfo source="http://sap.com/xi/TextID">e9dc93b184f111e8941600ff40a6f108</xsd:appinfo>
-                                        <xsd:documentation>Валюта планирования</xsd:documentation>
+                                        <xsd:appinfo source="http://sap.com/xi/TextID">3ff16493834d11e8cfec00ff40a6f108</xsd:appinfo>
+                                        <xsd:documentation>Юридический номер договора</xsd:documentation>
                                     </xsd:annotation>
-                                    <xsd:simpleType>
-                                        <xsd:restriction base="xsd:string">
-                                            <xsd:maxLength value="3"/>
-                                        </xsd:restriction>
-                                    </xsd:simpleType>
+                                </xsd:element>
+                                <xsd:element name="ContractDate" type="xsd:string" minOccurs="0">
+                                    <xsd:annotation>
+                                        <xsd:appinfo source="http://sap.com/xi/TextID">3ff16494834d11e8800b00ff40a6f108</xsd:appinfo>
+                                        <xsd:documentation>Дата договора</xsd:documentation>
+                                    </xsd:annotation>
+                                </xsd:element>
+                                <xsd:element name="PReqNum" type="xsd:string" minOccurs="0">
+                                    <xsd:annotation>
+                                        <xsd:appinfo source="http://sap.com/xi/TextID">3ff16495834d11e893a100ff40a6f108</xsd:appinfo>
+                                        <xsd:documentation>Номер заявки (необходимо для копирования позиций контракта)</xsd:documentation>
+                                    </xsd:annotation>
+                                </xsd:element>
+                                <xsd:element name="PeriodBeginDate" type="xsd:string" minOccurs="0">
+                                    <xsd:annotation>
+                                        <xsd:appinfo source="http://sap.com/xi/TextID">3ff16496834d11e89b0800ff40a6f108</xsd:appinfo>
+                                        <xsd:documentation>Начало срока действия</xsd:documentation>
+                                    </xsd:annotation>
+                                </xsd:element>
+                                <xsd:element name="PeriodEndDate" type="xsd:string" minOccurs="0">
+                                    <xsd:annotation>
+                                        <xsd:appinfo source="http://sap.com/xi/TextID">3ff16497834d11e8b92400ff40a6f108</xsd:appinfo>
+                                        <xsd:documentation>Дата окончания договора</xsd:documentation>
+                                    </xsd:annotation>
+                                </xsd:element>
+                                <xsd:element name="PaymentTerms" type="xsd:string" minOccurs="0">
+                                    <xsd:annotation>
+                                        <xsd:appinfo source="http://sap.com/xi/TextID">3ff188bd834d11e89f7b00ff40a6f108</xsd:appinfo>
+                                        <xsd:documentation>Условие платежа</xsd:documentation>
+                                    </xsd:annotation>
+                                </xsd:element>
+                                <xsd:element name="PurchasingOrg" type="xsd:string" minOccurs="0">
+                                    <xsd:annotation>
+                                        <xsd:appinfo source="http://sap.com/xi/TextID">3ff188be834d11e8860400ff40a6f108</xsd:appinfo>
+                                        <xsd:documentation>Закупочная организация</xsd:documentation>
+                                    </xsd:annotation>
+                                </xsd:element>
+                                <xsd:element name="PurchasingGroup" type="xsd:string" minOccurs="0">
+                                    <xsd:annotation>
+                                        <xsd:appinfo source="http://sap.com/xi/TextID">3ff188bf834d11e88c1600ff40a6f108</xsd:appinfo>
+                                        <xsd:documentation>Группа закупок</xsd:documentation>
+                                    </xsd:annotation>
+                                </xsd:element>
+                                <xsd:element name="TaxCode" type="xsd:string" minOccurs="0">
+                                    <xsd:annotation>
+                                        <xsd:appinfo source="http://sap.com/xi/TextID">3ff188c0834d11e8ca0400ff40a6f108</xsd:appinfo>
+                                        <xsd:documentation>Код налога</xsd:documentation>
+                                    </xsd:annotation>
                                 </xsd:element>
                             </xsd:sequence>
                         </xsd:complexType>
@@ -186,33 +193,33 @@
             </xsd:element>
         </xsd:schema>
     </wsdl:types>
-    <wsdl:message name="SalesPlan">
+    <wsdl:message name="Contract">
         <wsdl:documentation/>
-        <wsdl:part name="SalesPlan" element="p2:SalesPlan"/>
+        <wsdl:part name="Contract" element="p1:Contract"/>
     </wsdl:message>
-    <wsdl:message name="SalesPlan_Resp">
+    <wsdl:message name="Contract_Resp">
         <wsdl:documentation/>
-        <wsdl:part name="SalesPlan_Resp" element="p1:SalesPlan_Resp"/>
+        <wsdl:part name="Contract_Resp" element="p1:Contract_Resp"/>
     </wsdl:message>
-    <wsdl:message name="p4.FaultMessage">
+    <wsdl:message name="p3.FaultMessage">
         <wsdl:documentation/>
-        <wsdl:part name="FaultMessage" element="p3:FaultMessage"/>
+        <wsdl:part name="FaultMessage" element="p2:FaultMessage"/>
     </wsdl:message>
-    <wsdl:portType name="SalesPlan">
+    <wsdl:portType name="BIS_MM_Contract">
         <wsdl:documentation/>
-        <wsdl:operation name="SalesPlan">
+        <wsdl:operation name="BIS_MM_Contract">
             <wsdl:documentation/>
             <wsp:Policy>
-                <wsp:PolicyReference URI="#OP_SalesPlan"/>
+                <wsp:PolicyReference URI="#OP_BIS_MM_Contract"/>
             </wsp:Policy>
-            <wsdl:input message="p1:SalesPlan"/>
-            <wsdl:output message="p1:SalesPlan_Resp"/>
-            <wsdl:fault name="p4.FaultMessage" message="p1:p4.FaultMessage"/>
+            <wsdl:input message="p1:Contract"/>
+            <wsdl:output message="p1:Contract_Resp"/>
+            <wsdl:fault name="p3.FaultMessage" message="p1:p3.FaultMessage"/>
         </wsdl:operation>
     </wsdl:portType>
-    <wsdl:binding name="SalesPlanBinding" type="p1:SalesPlan">
+    <wsdl:binding name="BIS_MM_ContractBinding" type="p1:BIS_MM_Contract">
         <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"/>
-        <wsdl:operation name="SalesPlan">
+        <wsdl:operation name="BIS_MM_Contract">
             <soap:operation soapAction="http://sap.com/xi/WebService/soap1.1" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"/>
             <wsdl:input>
                 <soap:body use="literal" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"/>
@@ -220,17 +227,17 @@
             <wsdl:output>
                 <soap:body use="literal" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"/>
             </wsdl:output>
-            <wsdl:fault name="p4.FaultMessage">
-                <soap:fault use="literal" name="p4.FaultMessage" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"/>
+            <wsdl:fault name="p3.FaultMessage">
+                <soap:fault use="literal" name="p3.FaultMessage" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"/>
             </wsdl:fault>
         </wsdl:operation>
     </wsdl:binding>
-    <wsdl:service name="SalesPlanService">
-        <wsdl:port name="HTTP_Port" binding="p1:SalesPlanBinding">
-            <soap:address location="http://kegoci10.corp.kegoc.kz:50000/XISOAPAdapter/MessageServlet?senderParty=&amp;senderService=BIS_D&amp;receiverParty=&amp;receiverService=&amp;interface=SalesPlan&amp;interfaceNamespace=urn%3Akegoc.kz%3ABIS%3ALO_0002_3_SalesPlan" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"/>
+    <wsdl:service name="BIS_MM_ContractService">
+        <wsdl:port name="HTTP_Port" binding="p1:BIS_MM_ContractBinding">
+            <soap:address location="http://kegoci10.corp.kegoc.kz:50000/XISOAPAdapter/MessageServlet?senderParty=&amp;senderService=BIS_D&amp;receiverParty=&amp;receiverService=&amp;interface=BIS_MM_Contract&amp;interfaceNamespace=urn%3Akegoc.kz%3ABIS%3AZMM_0042_Contract" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"/>
         </wsdl:port>
-        <wsdl:port name="HTTPS_Port" binding="p1:SalesPlanBinding">
-            <soap:address location="https://kegoci10.corp.kegoc.kz:50001/XISOAPAdapter/MessageServlet?senderParty=&amp;senderService=BIS_D&amp;receiverParty=&amp;receiverService=&amp;interface=SalesPlan&amp;interfaceNamespace=urn%3Akegoc.kz%3ABIS%3ALO_0002_3_SalesPlan" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"/>
+        <wsdl:port name="HTTPS_Port" binding="p1:BIS_MM_ContractBinding">
+            <soap:address location="https://kegoci10.corp.kegoc.kz:50001/XISOAPAdapter/MessageServlet?senderParty=&amp;senderService=BIS_D&amp;receiverParty=&amp;receiverService=&amp;interface=BIS_MM_Contract&amp;interfaceNamespace=urn%3Akegoc.kz%3ABIS%3AZMM_0042_Contract" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"/>
         </wsdl:port>
     </wsdl:service>
 </wsdl:definitions>

@@ -8,7 +8,7 @@ import javax.jws.WebResult;
 import javax.jws.WebService;
 import java.util.List;
 
-@WebService(name = "DebtService", targetNamespace = "http://bis.kegoc.kz/server")
+@WebService(name = "DebtService", targetNamespace = "http://bis.kegoc.kz/soap")
 public interface DebtService {
     @WebMethod(action = "createDebts")
     @WebResult(name = "msg")
