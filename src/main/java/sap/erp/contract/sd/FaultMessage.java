@@ -6,7 +6,7 @@
 //
 
 
-package sap.erp.plan;
+package sap.erp.contract.sd;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;

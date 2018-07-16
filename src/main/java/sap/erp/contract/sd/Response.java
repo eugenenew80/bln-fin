@@ -6,7 +6,7 @@
 //
 
 
-package sap.erp.plan;
+package sap.erp.contract.sd;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -68,6 +68,7 @@
                 <version>0.12.3</version>
                 <executions>
                     <execution>
+                        <id>1</id>
                         <goals>
                             <goal>generate</goal>
                         </goals>
@@ -76,6 +77,32 @@
                             <generateDirectory>${project.basedir}/src/main/java</generateDirectory>
                             <schemaDirectory>${project.basedir}/src/main/resources/wsdl</schemaDirectory>
                             <schemaIncludes><include>BIS_SalesPlan.wsdl</include></schemaIncludes>
+                        </configuration>
+                    </execution>
+
+                    <execution>
+                        <id>2</id>
+                        <goals>
+                            <goal>generate</goal>
+                        </goals>
+                        <configuration>
+                            <generatePackage>sap.erp.contract.sd</generatePackage>
+                            <generateDirectory>${project.basedir}/src/main/java</generateDirectory>
+                            <schemaDirectory>${project.basedir}/src/main/resources/wsdl</schemaDirectory>
+                            <schemaIncludes><include>BIS_LO_Contract.wsdl</include></schemaIncludes>
+                        </configuration>
+                    </execution>
+
+                    <execution>
+                        <id>3</id>
+                        <goals>
+                            <goal>generate</goal>
+                        </goals>
+                        <configuration>
+                            <generatePackage>sap.erp.contract.mm</generatePackage>
+                            <generateDirectory>${project.basedir}/src/main/java</generateDirectory>
+                            <schemaDirectory>${project.basedir}/src/main/resources/wsdl</schemaDirectory>
+                            <schemaIncludes><include>BIS_MM_Contract.wsdl</include></schemaIncludes>
                         </configuration>
                     </execution>
                 </executions>

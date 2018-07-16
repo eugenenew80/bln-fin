@@ -6,4 +6,4 @@
 //
 
 @javax.xml.bind.annotation.XmlSchema(namespace = "urn:kegoc.kz:BIS:CommonObjects")
-package sap.erp.plan;
+package sap.erp.contract.sd;
