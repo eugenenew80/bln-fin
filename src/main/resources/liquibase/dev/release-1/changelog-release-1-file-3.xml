@@ -13,10 +13,6 @@
                 <constraints nullable="false"/>
             </column>
 
-            <column name="name" type="varchar(100)" remarks="Наименование действия">
-                <constraints nullable="true"/>
-            </column>
-
             <column name="create_date" type="TIMESTAMP" remarks="Дата создания">
                 <constraints nullable="true"/>
             </column>
@@ -51,10 +47,6 @@
                 <constraints nullable="false"/>
             </column>
 
-            <column name="name" type="varchar(100)" remarks="Наименование состояний">
-                <constraints nullable="true"/>
-            </column>
-
             <column name="create_date" type="TIMESTAMP" remarks="Дата создания">
                 <constraints nullable="true"/>
             </column>
@@ -87,10 +79,6 @@
         <createTable tableName="wf_objects" schemaName="apps" remarks="Список состояний">
             <column name="code" type="varchar(20)" remarks="Код объекта">
                 <constraints nullable="false"/>
-            </column>
-
-            <column name="name" type="varchar(100)" remarks="Наименование объекта">
-                <constraints nullable="true"/>
             </column>
 
             <column name="create_date" type="TIMESTAMP" remarks="Дата создания">
@@ -274,10 +262,6 @@
         <comment>Creating table: wf_object_workflows</comment>
         <createTable tableName="wf_object_workflows" schemaName="apps" remarks="Список рабочих потоков">
             <column name="id" type="number" remarks="Идентификатор">
-                <constraints nullable="false"/>
-            </column>
-
-            <column name="name" type="varchar(100)" remarks="Описание рабочего потока">
                 <constraints nullable="false"/>
             </column>
 
@@ -551,4 +535,685 @@
                 referencedColumnNames="code"
         />
     </changeSet>
+
+    <changeSet id="wf-rus-1" logicalFilePath="path-independent" author="ruslan">
+        <comment>Creating table: wf_states_tl</comment>
+        <createTable tableName="wf_states_tl" schemaName="apps" remarks="Перевод Список состояний">
+            <column name="code" type="varchar2(20)" remarks="Код состояния">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="lang" type="varchar(10)" remarks="язык">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="name" type="varchar(100)" remarks="Наименование состояний">
+                <constraints nullable="true"/>
+            </column>
+
+            <column name="create_date" type="TIMESTAMP" remarks="Дата создания">
+                <constraints nullable="true"/>
+            </column>
+
+            <column name="last_update_date" type="TIMESTAMP" remarks="Дата изменения">
+                <constraints nullable="true"/>
+            </column>
+
+            <column name="create_by" type="number" remarks="Автор">
+                <constraints nullable="true"/>
+            </column>
+
+            <column name="last_update_by" type="number" remarks="Автор изменения">
+                <constraints nullable="true"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="wf-rus-2" logicalFilePath="path-independent" author="ruslan">
+        <comment>Creating primary key for table: wf_states_tl</comment>
+        <addPrimaryKey
+                columnNames="code,lang"
+                constraintName="pk_wf_states_tl"
+                schemaName="apps"
+                tableName="wf_states_tl"/>
+    </changeSet>
+
+    <changeSet id="wf-rus-3" logicalFilePath="path-independent" author="ruslan">
+        <comment>Creating foreign constraint: wf_states to wf_states_tl</comment>
+        <addForeignKeyConstraint
+                baseTableSchemaName="apps"
+                baseTableName="fin_wf_states"
+                baseColumnNames="code"
+                constraintName="fk_wf_states_1"
+                deferrable="true"
+                initiallyDeferred="true"
+                onDelete="CASCADE"
+                onUpdate="RESTRICT"
+                referencedTableSchemaName="apps"
+                referencedTableName="wf_states_tl"
+                referencedColumnNames="code"
+        />
+    </changeSet>
+
+    <changeSet id="wf-rus-4" logicalFilePath="path-independent" author="ruslan">
+        <comment>Creating table: wf_activities_tl</comment>
+        <createTable tableName="wf_activities_tl" schemaName="apps" remarks="Перевод Список действий">
+            <column name="code" type="varchar2(20)" remarks="Код действия">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="lang" type="varchar(10)" remarks="язык">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="name" type="varchar(100)" remarks="Наименование действия">
+                <constraints nullable="true"/>
+            </column>
+
+            <column name="create_date" type="TIMESTAMP" remarks="Дата создания">
+                <constraints nullable="true"/>
+            </column>
+
+            <column name="last_update_date" type="TIMESTAMP" remarks="Дата изменения">
+                <constraints nullable="true"/>
+            </column>
+
+            <column name="create_by" type="number" remarks="Автор">
+                <constraints nullable="true"/>
+            </column>
+
+            <column name="last_update_by" type="number" remarks="Автор изменения">
+                <constraints nullable="true"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="wf-rus-5" logicalFilePath="path-independent" author="ruslan">
+        <comment>Creating primary key for table: wf_activities_tl</comment>
+        <addPrimaryKey
+                columnNames="code,lang"
+                constraintName="pk_wf_activities_tl"
+                schemaName="apps"
+                tableName="wf_activities_tl"/>
+    </changeSet>
+
+    <changeSet id="wf-rus-6" logicalFilePath="path-independent" author="ruslan">
+        <comment>Creating foreign constraint: wf_activities to wf_activities_tl</comment>
+        <addForeignKeyConstraint
+                baseTableSchemaName="apps"
+                baseTableName="wf_activities"
+                baseColumnNames="code"
+                constraintName="fk_wf_activities_1"
+                deferrable="true"
+                initiallyDeferred="true"
+                onDelete="CASCADE"
+                onUpdate="RESTRICT"
+                referencedTableSchemaName="apps"
+                referencedTableName="wf_states_tl"
+                referencedColumnNames="code"
+        />
+    </changeSet>
+
+   <changeSet id="wf-rus-7" logicalFilePath="path-independent" author="ruslan">
+        <comment>Creating table: wf_objects_tl</comment>
+        <createTable tableName="wf_objects_tl" schemaName="apps" remarks="Перевод Список состояний">
+            <column name="code" type="varchar2(20)" remarks="Код действия">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="lang" type="varchar(10)" remarks="язык">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="name" type="varchar(100)" remarks="Наименование действия">
+                <constraints nullable="true"/>
+            </column>
+
+            <column name="create_date" type="TIMESTAMP" remarks="Дата создания">
+                <constraints nullable="true"/>
+            </column>
+
+            <column name="last_update_date" type="TIMESTAMP" remarks="Дата изменения">
+                <constraints nullable="true"/>
+            </column>
+
+            <column name="create_by" type="number" remarks="Автор">
+                <constraints nullable="true"/>
+            </column>
+
+            <column name="last_update_by" type="number" remarks="Автор изменения">
+                <constraints nullable="true"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="wf-rus-8" logicalFilePath="path-independent" author="ruslan">
+        <comment>Creating primary key for table: wf_objects_tl</comment>
+        <addPrimaryKey
+                columnNames="code,lang"
+                constraintName="pk_wf_objects_tl"
+                schemaName="apps"
+                tableName="wf_objects_tl"/>
+    </changeSet>
+
+    <changeSet id="wf-rus-9" logicalFilePath="path-independent" author="ruslan">
+        <comment>Creating foreign constraint: wf_objects to wf_objects_tl</comment>
+        <addForeignKeyConstraint
+                baseTableSchemaName="apps"
+                baseTableName="wf_objects"
+                baseColumnNames="code"
+                constraintName="fk_wf_objects_1"
+                deferrable="true"
+                initiallyDeferred="true"
+                onDelete="CASCADE"
+                onUpdate="RESTRICT"
+                referencedTableSchemaName="apps"
+                referencedTableName="wf_objects_tl"
+                referencedColumnNames="code"
+        />
+    </changeSet>
+
+   <changeSet id="wf-rus-10" logicalFilePath="path-independent" author="ruslan">
+        <comment>Creating table: wf_object_workflows_tl</comment>
+        <createTable tableName="wf_object_workflows_tl" schemaName="apps" remarks="Перевод Список состояний">
+            <column name="id" type="varchar2(20)" remarks="Код действия">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="object_workflow_id" type="varchar2(20)" remarks="Ссылка на родительскую запись">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="lang" type="varchar(10)" remarks="язык">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="name" type="varchar(100)" remarks="Описание рабочего потока">
+                <constraints nullable="true"/>
+            </column>
+
+            <column name="create_date" type="TIMESTAMP" remarks="Дата создания">
+                <constraints nullable="true"/>
+            </column>
+
+            <column name="last_update_date" type="TIMESTAMP" remarks="Дата изменения">
+                <constraints nullable="true"/>
+            </column>
+
+            <column name="create_by" type="number" remarks="Автор">
+                <constraints nullable="true"/>
+            </column>
+
+            <column name="last_update_by" type="number" remarks="Автор изменения">
+                <constraints nullable="true"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="wf-rus-11" logicalFilePath="path-independent" author="ruslan">
+        <comment>Creating primary key for table: wf_object_workflows_tl</comment>
+        <addPrimaryKey
+                columnNames="id"
+                constraintName="pk_wf_object_workflows_tl"
+                schemaName="apps"
+                tableName="wf_object_workflows_tl"/>
+    </changeSet>
+
+    <changeSet id="wf-rus-12" logicalFilePath="path-independent" author="ruslan">
+        <comment>Creating sequence for table: wf_object_workflows_tl</comment>
+        <createSequence
+                incrementBy="1"
+                schemaName="apps"
+                sequenceName="wf_object_workflows_tl_s"
+                startValue="1"/>
+    </changeSet>
+
+    <changeSet id="fin-rus-13" logicalFilePath="path-independent" author="ruslan" context="dev">
+        <comment>Creating unique for table: wf_object_workflows_tl</comment>
+        <addUniqueConstraint columnNames="object_workflow_id, lang"
+                             constraintName="uk_wf_object_workflows_tl"
+                             deferrable="true"
+                             disabled="true"
+                             initiallyDeferred="true"
+                             schemaName="apps"
+                             tableName="wf_object_workflows_tl"/>
+    </changeSet>
+
+
+    <changeSet id="wf-rus-14" logicalFilePath="path-independent" author="ruslan">
+        <comment>Creating foreign constraint: wf_objects to wf_objects_tl</comment>
+        <addForeignKeyConstraint
+                baseTableSchemaName="apps"
+                baseTableName="wf_object_workflows"
+                baseColumnNames="object_workflow_id"
+                constraintName="fk_wf_object_workflows"
+                deferrable="true"
+                initiallyDeferred="true"
+                onDelete="CASCADE"
+                onUpdate="RESTRICT"
+                referencedTableSchemaName="apps"
+                referencedTableName="wf_object_workflows_tl"
+                referencedColumnNames="code"
+        />
+    </changeSet>
+
+  <!--  <changeSet id="wf-rus-15" logicalFilePath="path-independent" author="ruslan" context="dev">
+        <comment>insert into wf_states</comment>
+        <insert schemaName="apps" tableName="wf_states">
+            <column name="code" type="varchar2" value="NOT_COMPLETE"/>
+        </insert>
+        <rollback/>
+    </changeSet>
+
+    <changeSet id="wf-rus-16" logicalFilePath="path-independent" author="ruslan" context="dev">
+        <comment>insert into wf_states_tl</comment>
+        <insert schemaName="apps" tableName="wf_states_tl">
+            <column name="code" type="varchar2" value="NOT_COMPLETE"/>
+            <column name="lang" type="varchar2" value="RU"/>
+            <column name="name" type="varchar2" value="Не готов"/>
+        </insert>
+        <rollback/>
+    </changeSet>
+
+    <changeSet id="wf-rus-17" logicalFilePath="path-independent" author="ruslan" context="dev">
+        <comment>insert into wf_states_tl</comment>
+        <insert schemaName="apps" tableName="wf_states_tl">
+            <column name="code" type="varchar2" value="NOT_COMPLETE"/>
+            <column name="lang" type="varchar2" value="KZ"/>
+            <column name="name" type="varchar2" value="Не готов"/>
+        </insert>
+        <rollback/>
+    </changeSet>
+
+    <changeSet id="wf-rus-18" logicalFilePath="path-independent" author="ruslan" context="dev">
+        <comment>insert into wf_states</comment>
+        <insert schemaName="apps" tableName="wf_states">
+            <column name="code" type="varchar2" value="COMPLETE"/>
+        </insert>
+        <rollback/>
+    </changeSet>
+
+    <changeSet id="wf-rus-19" logicalFilePath="path-independent" author="ruslan" context="dev">
+        <comment>insert into wf_states_tl</comment>
+        <insert schemaName="apps" tableName="wf_states_tl">
+            <column name="code" type="varchar2" value="COMPLETE"/>
+            <column name="lang" type="varchar2" value="RU"/>
+            <column name="name" type="varchar2" value="Готов"/>
+        </insert>
+        <rollback/>
+    </changeSet>
+
+    <changeSet id="wf-rus-20" logicalFilePath="path-independent" author="ruslan" context="dev">
+        <comment>insert into wf_states_tl</comment>
+        <insert schemaName="apps" tableName="wf_states_tl">
+            <column name="code" type="varchar2" value="COMPLETE"/>
+            <column name="lang" type="varchar2" value="KZ"/>
+            <column name="name" type="varchar2" value="Готов"/>
+        </insert>
+        <rollback/>
+    </changeSet>
+
+    <changeSet id="wf-rus-21" logicalFilePath="path-independent" author="ruslan" context="dev">
+        <comment>insert into wf_states</comment>
+        <insert schemaName="apps" tableName="wf_states">
+            <column name="code" type="varchar2" value="PROJECT"/>
+        </insert>
+        <rollback/>
+    </changeSet>
+
+    <changeSet id="wf-rus-22" logicalFilePath="path-independent" author="ruslan" context="dev">
+        <comment>insert into wf_states_tl</comment>
+        <insert schemaName="apps" tableName="wf_states_tl">
+            <column name="code" type="varchar2" value="PROJECT"/>
+            <column name="lang" type="varchar2" value="RU"/>
+            <column name="name" type="varchar2" value="Проект"/>
+        </insert>
+        <rollback/>
+    </changeSet>
+
+    <changeSet id="wf-rus-23" logicalFilePath="path-independent" author="ruslan" context="dev">
+        <comment>insert into wf_states_tl</comment>
+        <insert schemaName="apps" tableName="wf_states_tl">
+            <column name="code" type="varchar2" value="PROJECT"/>
+            <column name="lang" type="varchar2" value="KZ"/>
+            <column name="name" type="varchar2" value="Проект"/>
+        </insert>
+        <rollback/>
+    </changeSet>
+
+    <changeSet id="wf-rus-24" logicalFilePath="path-independent" author="ruslan" context="dev">
+        <comment>insert into wf_states</comment>
+        <insert schemaName="apps" tableName="wf_states">
+            <column name="code" type="varchar2" value="ON_AGREEMENT"/>
+        </insert>
+        <rollback/>
+    </changeSet>
+
+    <changeSet id="wf-rus-25" logicalFilePath="path-independent" author="ruslan" context="dev">
+        <comment>insert into wf_states_tl</comment>
+        <insert schemaName="apps" tableName="wf_states_tl">
+            <column name="code" type="varchar2" value="ON_AGREEMENT"/>
+            <column name="lang" type="varchar2" value="RU"/>
+            <column name="name" type="varchar2" value="На согласовании"/>
+        </insert>
+        <rollback/>
+    </changeSet>
+
+    <changeSet id="wf-rus-26" logicalFilePath="path-independent" author="ruslan" context="dev">
+        <comment>insert into wf_states_tl</comment>
+        <insert schemaName="apps" tableName="wf_states_tl">
+            <column name="code" type="varchar2" value="ON_AGREEMENT"/>
+            <column name="lang" type="varchar2" value="KZ"/>
+            <column name="name" type="varchar2" value="На согласовании"/>
+        </insert>
+        <rollback/>
+    </changeSet>
+
+    <changeSet id="wf-rus-27" logicalFilePath="path-independent" author="ruslan" context="dev">
+        <comment>insert into wf_states</comment>
+        <insert schemaName="apps" tableName="wf_states">
+            <column name="code" type="varchar2" value="ON_SIGNING_BP1"/>
+        </insert>
+        <rollback/>
+    </changeSet>
+
+    <changeSet id="wf-rus-28" logicalFilePath="path-independent" author="ruslan" context="dev">
+        <comment>insert into wf_states_tl</comment>
+        <insert schemaName="apps" tableName="wf_states_tl">
+            <column name="code" type="varchar2" value="ON_SIGNING_BP1"/>
+            <column name="lang" type="varchar2" value="RU"/>
+            <column name="name" type="varchar2" value="На подписании у поставщика"/>
+        </insert>
+        <rollback/>
+    </changeSet>
+
+    <changeSet id="wf-rus-29" logicalFilePath="path-independent" author="ruslan" context="dev">
+        <comment>insert into wf_states_tl</comment>
+        <insert schemaName="apps" tableName="wf_states_tl">
+            <column name="code" type="varchar2" value="ON_SIGNING_BP1"/>
+            <column name="lang" type="varchar2" value="KZ"/>
+            <column name="name" type="varchar2" value="На подписании у поставщика"/>
+        </insert>
+        <rollback/>
+    </changeSet>
+
+    <changeSet id="wf-rus-30" logicalFilePath="path-independent" author="ruslan" context="dev">
+        <comment>insert into wf_states</comment>
+        <insert schemaName="apps" tableName="wf_states">
+            <column name="code" type="varchar2" value="ON_SIGNING_BP2"/>
+        </insert>
+        <rollback/>
+    </changeSet>
+
+    <changeSet id="wf-rus-31" logicalFilePath="path-independent" author="ruslan" context="dev">
+        <comment>insert into wf_states_tl</comment>
+        <insert schemaName="apps" tableName="wf_states_tl">
+            <column name="code" type="varchar2" value="ON_SIGNING_BP2"/>
+            <column name="lang" type="varchar2" value="RU"/>
+            <column name="name" type="varchar2" value="На подписании у потребителя"/>
+        </insert>
+        <rollback/>
+    </changeSet>
+
+    <changeSet id="wf-rus-32" logicalFilePath="path-independent" author="ruslan" context="dev">
+        <comment>insert into wf_states_tl</comment>
+        <insert schemaName="apps" tableName="wf_states_tl">
+            <column name="code" type="varchar2" value="ON_SIGNING_BP2"/>
+            <column name="lang" type="varchar2" value="KZ"/>
+            <column name="name" type="varchar2" value="На подписании у потребителя"/>
+        </insert>
+        <rollback/>
+    </changeSet>
+
+    <changeSet id="wf-rus-33" logicalFilePath="path-independent" author="ruslan" context="dev">
+        <comment>insert into wf_states</comment>
+        <insert schemaName="apps" tableName="wf_states">
+            <column name="code" type="varchar2" value="APPROVED"/>
+        </insert>
+        <rollback/>
+    </changeSet>
+
+    <changeSet id="wf-rus-34" logicalFilePath="path-independent" author="ruslan" context="dev">
+        <comment>insert into wf_states_tl</comment>
+        <insert schemaName="apps" tableName="wf_states_tl">
+            <column name="code" type="varchar2" value="APPROVED"/>
+            <column name="lang" type="varchar2" value="RU"/>
+            <column name="name" type="varchar2" value="Утвержден"/>
+        </insert>
+        <rollback/>
+    </changeSet>
+
+    <changeSet id="wf-rus-35" logicalFilePath="path-independent" author="ruslan" context="dev">
+        <comment>insert into wf_states_tl</comment>
+        <insert schemaName="apps" tableName="wf_states_tl">
+            <column name="code" type="varchar2" value="APPROVED"/>
+            <column name="lang" type="varchar2" value="KZ"/>
+            <column name="name" type="varchar2" value="Утвержден"/>
+        </insert>
+        <rollback/>
+    </changeSet>
+
+    <changeSet id="wf-rus-33" logicalFilePath="path-independent" author="ruslan" context="dev">
+        <comment>insert into wf_states</comment>
+        <insert schemaName="apps" tableName="wf_states">
+            <column name="code" type="varchar2" value="SIGNED"/>
+        </insert>
+        <rollback/>
+    </changeSet>
+
+    <changeSet id="wf-rus-34" logicalFilePath="path-independent" author="ruslan" context="dev">
+        <comment>insert into wf_states_tl</comment>
+        <insert schemaName="apps" tableName="wf_states_tl">
+            <column name="code" type="varchar2" value="SIGNED"/>
+            <column name="lang" type="varchar2" value="RU"/>
+            <column name="name" type="varchar2" value="Подписан"/>
+        </insert>
+        <rollback/>
+    </changeSet>
+
+    <changeSet id="wf-rus-35" logicalFilePath="path-independent" author="ruslan" context="dev">
+        <comment>insert into wf_states_tl</comment>
+        <insert schemaName="apps" tableName="wf_states_tl">
+            <column name="code" type="varchar2" value="SIGNED"/>
+            <column name="lang" type="varchar2" value="KZ"/>
+            <column name="name" type="varchar2" value="Подписан"/>
+        </insert>
+        <rollback/>
+    </changeSet>
+
+    <changeSet id="wf-rus-36" logicalFilePath="path-independent" author="ruslan" context="dev">
+        <comment>insert into wf_states</comment>
+        <insert schemaName="apps" tableName="wf_states">
+            <column name="code" type="varchar2" value="ADJUSTMENT_BP1"/>
+        </insert>
+        <rollback/>
+    </changeSet>
+
+    <changeSet id="wf-rus-37" logicalFilePath="path-independent" author="ruslan" context="dev">
+        <comment>insert into wf_states_tl</comment>
+        <insert schemaName="apps" tableName="wf_states_tl">
+            <column name="code" type="varchar2" value="ADJUSTMENT_BP1"/>
+            <column name="lang" type="varchar2" value="RU"/>
+            <column name="name" type="varchar2" value="На корректировке (БП1)"/>
+        </insert>
+        <rollback/>
+    </changeSet>
+
+    <changeSet id="wf-rus-38" logicalFilePath="path-independent" author="ruslan" context="dev">
+        <comment>insert into wf_states_tl</comment>
+        <insert schemaName="apps" tableName="wf_states_tl">
+            <column name="code" type="varchar2" value="ADJUSTMENT_BP1"/>
+            <column name="lang" type="varchar2" value="KZ"/>
+            <column name="name" type="varchar2" value="На корректировке (БП1)"/>
+        </insert>
+        <rollback/>
+    </changeSet>
+
+    <changeSet id="wf-rus-39" logicalFilePath="path-independent" author="ruslan" context="dev">
+        <comment>insert into wf_states</comment>
+        <insert schemaName="apps" tableName="wf_states">
+            <column name="code" type="varchar2" value="ADJUSTMENT_BP2"/>
+        </insert>
+        <rollback/>
+    </changeSet>
+
+    <changeSet id="wf-rus-40" logicalFilePath="path-independent" author="ruslan" context="dev">
+        <comment>insert into wf_states_tl</comment>
+        <insert schemaName="apps" tableName="wf_states_tl">
+            <column name="code" type="varchar2" value="ADJUSTMENT_BP2"/>
+            <column name="lang" type="varchar2" value="RU"/>
+            <column name="name" type="varchar2" value="На корректировке (БП2)"/>
+        </insert>
+        <rollback/>
+    </changeSet>
+
+    <changeSet id="wf-rus-41" logicalFilePath="path-independent" author="ruslan" context="dev">
+        <comment>insert into wf_states_tl</comment>
+        <insert schemaName="apps" tableName="wf_states_tl">
+            <column name="code" type="varchar2" value="ADJUSTMENT_BP2"/>
+            <column name="lang" type="varchar2" value="KZ"/>
+            <column name="name" type="varchar2" value="На корректировке (БП2)"/>
+        </insert>
+        <rollback/>
+    </changeSet>
+
+    <changeSet id="wf-rus-39" logicalFilePath="path-independent" author="ruslan" context="dev">
+        <comment>insert into wf_states</comment>
+        <insert schemaName="apps" tableName="wf_states">
+            <column name="code" type="varchar2" value="CLOSE"/>
+        </insert>
+        <rollback/>
+    </changeSet>
+
+    <changeSet id="wf-rus-40" logicalFilePath="path-independent" author="ruslan" context="dev">
+        <comment>insert into wf_states_tl</comment>
+        <insert schemaName="apps" tableName="wf_states_tl">
+            <column name="code" type="varchar2" value="CLOSE"/>
+            <column name="lang" type="varchar2" value="RU"/>
+            <column name="name" type="varchar2" value="Завершен"/>
+        </insert>
+        <rollback/>
+    </changeSet>
+
+    <changeSet id="wf-rus-41" logicalFilePath="path-independent" author="ruslan" context="dev">
+        <comment>insert into wf_states_tl</comment>
+        <insert schemaName="apps" tableName="wf_states_tl">
+            <column name="code" type="varchar2" value="CLOSE"/>
+            <column name="lang" type="varchar2" value="KZ"/>
+            <column name="name" type="varchar2" value="Завершен"/>
+        </insert>
+        <rollback/>
+    </changeSet>
+
+    <changeSet id="wf-rus-42" logicalFilePath="path-independent" author="ruslan" context="dev">
+        <comment>insert into wf_objects</comment>
+        <insert schemaName="apps" tableName="wf_objects">
+            <column name="code" type="varchar2" value="CONTRACT"/>
+        </insert>
+        <rollback/>
+    </changeSet>
+
+    <changeSet id="wf-rus-43" logicalFilePath="path-independent" author="ruslan" context="dev">
+        <comment>insert into wf_objects_tl</comment>
+        <insert schemaName="apps" tableName="wf_objects_tl">
+            <column name="code" type="varchar2" value="CONTRACT"/>
+            <column name="lang" type="varchar2" value="RU"/>
+            <column name="name" type="varchar2" value="Договор"/>
+        </insert>
+        <rollback/>
+    </changeSet>
+
+    <changeSet id="wf-rus-44" logicalFilePath="path-independent" author="ruslan" context="dev">
+        <comment>insert into wf_states_tl</comment>
+        <insert schemaName="apps" tableName="wf_objects_tl">
+            <column name="code" type="varchar2" value="CONTRACT"/>
+            <column name="lang" type="varchar2" value="KZ"/>
+            <column name="name" type="varchar2" value="Договор"/>
+        </insert>
+        <rollback/>
+    </changeSet>
+
+    <changeSet id="wf-rus-45" logicalFilePath="path-independent" author="ruslan" context="dev">
+        <comment>insert into wf_objects</comment>
+        <insert schemaName="apps" tableName="wf_objects">
+            <column name="code" type="varchar2" value="PERFORMANCE_ACT"/>
+        </insert>
+        <rollback/>
+    </changeSet>
+
+    <changeSet id="wf-rus-46" logicalFilePath="path-independent" author="ruslan" context="dev">
+        <comment>insert into wf_objects_tl</comment>
+        <insert schemaName="apps" tableName="wf_objects_tl">
+            <column name="code" type="varchar2" value="PERFORMANCE_ACT"/>
+            <column name="lang" type="varchar2" value="RU"/>
+            <column name="name" type="varchar2" value="Акт выполненных работ"/>
+        </insert>
+        <rollback/>
+    </changeSet>
+
+    <changeSet id="wf-rus-47" logicalFilePath="path-independent" author="ruslan" context="dev">
+        <comment>insert into wf_states_tl</comment>
+        <insert schemaName="apps" tableName="wf_objects_tl">
+            <column name="code" type="varchar2" value="PERFORMANCE_ACT"/>
+            <column name="lang" type="varchar2" value="KZ"/>
+            <column name="name" type="varchar2" value="Акт выполненных работ"/>
+        </insert>
+        <rollback/>
+    </changeSet>
+
+    <changeSet id="wf-rus-48" logicalFilePath="path-independent" author="ruslan" context="dev">
+        <comment>insert into wf_objects</comment>
+        <insert schemaName="apps" tableName="wf_objects">
+            <column name="code" type="varchar2" value="INVOICE"/>
+        </insert>
+        <rollback/>
+    </changeSet>
+
+    <changeSet id="wf-rus-49" logicalFilePath="path-independent" author="ruslan" context="dev">
+        <comment>insert into wf_objects_tl</comment>
+        <insert schemaName="apps" tableName="wf_objects_tl">
+            <column name="code" type="varchar2" value="INVOICE"/>
+            <column name="lang" type="varchar2" value="RU"/>
+            <column name="name" type="varchar2" value="Счет-фактура"/>
+        </insert>
+        <rollback/>
+    </changeSet>
+
+    <changeSet id="wf-rus-50" logicalFilePath="path-independent" author="ruslan" context="dev">
+        <comment>insert into wf_states_tl</comment>
+        <insert schemaName="apps" tableName="wf_objects_tl">
+            <column name="code" type="varchar2" value="INVOICE"/>
+            <column name="lang" type="varchar2" value="KZ"/>
+            <column name="name" type="varchar2" value="Счет-фактура"/>
+        </insert>
+        <rollback/>
+    </changeSet>
+
+    <changeSet id="wf-rus-51" logicalFilePath="path-independent" author="ruslan" context="dev">
+        <comment>insert into wf_objects</comment>
+        <insert schemaName="apps" tableName="wf_objects">
+            <column name="code" type="varchar2" value="FIN_PAYMENT_REQUESTS"/>
+        </insert>
+        <rollback/>
+    </changeSet>
+
+    <changeSet id="wf-rus-52" logicalFilePath="path-independent" author="ruslan" context="dev">
+        <comment>insert into wf_objects_tl</comment>
+        <insert schemaName="apps" tableName="wf_objects_tl">
+            <column name="code" type="varchar2" value="FIN_PAYMENT_REQUESTS"/>
+            <column name="lang" type="varchar2" value="RU"/>
+            <column name="name" type="varchar2" value="Счет на оплату"/>
+        </insert>
+        <rollback/>
+    </changeSet>
+
+    <changeSet id="wf-rus-53" logicalFilePath="path-independent" author="ruslan" context="dev">
+        <comment>insert into wf_states_tl</comment>
+        <insert schemaName="apps" tableName="wf_objects_tl">
+            <column name="code" type="varchar2" value="FIN_PAYMENT_REQUESTS"/>
+            <column name="lang" type="varchar2" value="KZ"/>
+            <column name="name" type="varchar2" value="Счет на оплату"/>
+        </insert>
+        <rollback/>
+    </changeSet>-->
 </databaseChangeLog>
