@@ -1,13 +1,14 @@
 package bln.fin;
 
 import bln.fin.repo.*;
-import bln.fin.soap.bp.BusinessPartnerServiceImpl;
-import bln.fin.soap.debt.DebtBusinessService;
-import bln.fin.soap.debt.DebtServiceImpl;
-import bln.fin.soap.invoice.InvoiceBusinessService;
-import bln.fin.soap.invoice.InvoiceServiceImpl;
-import bln.fin.soap.req.ReqBusinessService;
-import bln.fin.soap.req.ReqServiceImpl;
+import bln.fin.ws.SessionService;
+import bln.fin.ws.server.bp.BusinessPartnerServiceImpl;
+import bln.fin.ws.server.debt.DebtBusinessService;
+import bln.fin.ws.server.debt.DebtServiceImpl;
+import bln.fin.ws.server.invoice.InvoiceBusinessService;
+import bln.fin.ws.server.invoice.InvoiceServiceImpl;
+import bln.fin.ws.server.req.ReqBusinessService;
+import bln.fin.ws.server.req.ReqServiceImpl;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.datatype.jdk8.Jdk8Module;
@@ -18,10 +19,23 @@ import org.apache.cxf.Bus;
 import org.apache.cxf.bus.spring.SpringBus;
 import org.apache.cxf.jaxws.EndpointImpl;
 import org.apache.cxf.transport.servlet.CXFServlet;
+import org.apache.http.HttpRequestInterceptor;
+import org.apache.http.auth.AuthScope;
+import org.apache.http.auth.UsernamePasswordCredentials;
+import org.apache.http.client.CredentialsProvider;
+import org.apache.http.client.config.RequestConfig;
+import org.apache.http.impl.client.BasicCredentialsProvider;
+import org.apache.http.impl.client.CloseableHttpClient;
+import org.apache.http.impl.client.HttpClients;
+import org.apache.http.protocol.HTTP;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.web.servlet.ServletRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.oxm.jaxb.Jaxb2Marshaller;
+import org.springframework.ws.client.core.WebServiceTemplate;
+import org.springframework.ws.transport.http.HttpComponentsMessageSender;
+
 import javax.xml.ws.Endpoint;
 
 @Configuration
@@ -39,6 +53,44 @@ public class AppConfig  {
     }
 
     @Bean
+    public HttpComponentsMessageSender messageSender() {
+        String username = "PIAPPLBIS_D";
+        String password = "Qwer!11111";
+
+        HttpRequestInterceptor httpRequestInterceptor = (httpRequest, httpContext) -> httpRequest.removeHeaders(HTTP.CONTENT_LEN);
+        CredentialsProvider credentialsProvider = new BasicCredentialsProvider();
+        credentialsProvider.setCredentials(AuthScope.ANY, new UsernamePasswordCredentials(username, password));
+
+        RequestConfig requestConfig = RequestConfig.custom()
+            .setAuthenticationEnabled(true)
+            .build();
+
+        CloseableHttpClient httpClient = HttpClients.custom()
+            .addInterceptorFirst(httpRequestInterceptor)
+            .setDefaultRequestConfig(requestConfig)
+            .setDefaultCredentialsProvider(credentialsProvider)
+            .build();
+
+        HttpComponentsMessageSender messageSender = new HttpComponentsMessageSender(httpClient);
+        return messageSender;
+    }
+
+    @Bean
+    public WebServiceTemplate salePlanServiceTemplate(HttpComponentsMessageSender messageSender) {
+        Jaxb2Marshaller jaxb2Marshaller = new Jaxb2Marshaller();
+        jaxb2Marshaller.setContextPath("sap.erp.plan");
+
+        WebServiceTemplate webServiceTemplate = new WebServiceTemplate();
+        webServiceTemplate.setMarshaller(jaxb2Marshaller);
+        webServiceTemplate.setUnmarshaller(jaxb2Marshaller);
+        webServiceTemplate.setMessageSender(messageSender);
+        webServiceTemplate.setDefaultUri("http://kegoci10.corp.kegoc.kz:50000/XISOAPAdapter/MessageServlet?senderParty=&senderService=BIS_D&receiverParty=&receiverService=&interface=SalesPlan&interfaceNamespace=urn:kegoc.kz:BIS:LO_0002_3_SalesPlan");
+
+        return webServiceTemplate;
+    }
+
+
+    @Bean
     public ServletRegistrationBean dispatcherServlet() {
         return new ServletRegistrationBean(new CXFServlet(), "/services/*");
     }
@@ -51,28 +103,28 @@ public class AppConfig  {
 
     @Bean
     public Endpoint endpoint1() {
-        EndpointImpl endpoint = new EndpointImpl(springBus(), new DebtServiceImpl(debtBusinessService, checkApplicationRepo, receiptApplicationRepo));
+        EndpointImpl endpoint = new EndpointImpl(springBus(), new DebtServiceImpl(debtBusinessService, checkApplicationRepo, receiptApplicationRepo, sessionService));
         endpoint.publish("/DebtService");
         return endpoint;
     }
 
     @Bean
     public Endpoint endpoint2() {
-        EndpointImpl endpoint = new EndpointImpl(springBus(), new InvoiceServiceImpl(invoiceBusinessService, purchaseInvoiceRepo, saleInvoiceRepo));
+        EndpointImpl endpoint = new EndpointImpl(springBus(), new InvoiceServiceImpl(invoiceBusinessService, purchaseInvoiceRepo, saleInvoiceRepo, sessionService));
         endpoint.publish("/InvoiceService");
         return endpoint;
     }
 
     @Bean
     public Endpoint endpoint3() {
-        EndpointImpl endpoint = new EndpointImpl(springBus(), new ReqServiceImpl(reqBusinessService, reqLineRepo));
+        EndpointImpl endpoint = new EndpointImpl(springBus(), new ReqServiceImpl(reqBusinessService, reqLineRepo, sessionService));
         endpoint.publish("/ReqService");
         return endpoint;
     }
 
     @Bean
     public Endpoint endpoint4() {
-        EndpointImpl endpoint = new EndpointImpl(springBus(), new BusinessPartnerServiceImpl(businessPartnerRepo));
+        EndpointImpl endpoint = new EndpointImpl(springBus(), new BusinessPartnerServiceImpl(businessPartnerRepo, sessionService));
         endpoint.publish("/BusinessPartnerService");
         return endpoint;
     }
@@ -87,22 +139,23 @@ public class AppConfig  {
     private final ReceiptApplicationRepo receiptApplicationRepo;
 
     @Autowired
-    private PurchaseInvoiceRepo purchaseInvoiceRepo;
+    private final PurchaseInvoiceRepo purchaseInvoiceRepo;
 
     @Autowired
-    private SaleInvoiceRepo saleInvoiceRepo;
+    private final SaleInvoiceRepo saleInvoiceRepo;
 
     @Autowired
-    private BusinessPartnerRepo businessPartnerRepo;
-
-
+    private final BusinessPartnerRepo businessPartnerRepo;
 
     @Autowired
-    private InvoiceBusinessService invoiceBusinessService;
+    private final InvoiceBusinessService invoiceBusinessService;
 
     @Autowired
-    private ReqBusinessService reqBusinessService;
+    private final ReqBusinessService reqBusinessService;
 
     @Autowired
-    private DebtBusinessService debtBusinessService;
+    private final DebtBusinessService debtBusinessService;
+
+    @Autowired
+    private final SessionService sessionService;
 }

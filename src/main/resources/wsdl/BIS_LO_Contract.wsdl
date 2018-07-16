@@ -1,0 +1,312 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions name="BIS_LO_Contract" targetNamespace="urn:kegoc.kz:BIS:LO_0001_Contract" xmlns:p3="urn:kegoc.kz:BIS:CommonObjects" xmlns:p2="http://sap.com/xi/XI/System/Patterns" xmlns:p1="urn:kegoc.kz:BIS:LO_0001_Contract" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+    <wsdl:documentation/>
+    <wsp:UsingPolicy wsdl:required="true"/>
+    <wsp:Policy wsu:Id="OP_BIS_LO_Contract"/>
+    <wsdl:types>
+        <xsd:schema targetNamespace="urn:kegoc.kz:BIS:LO_0001_Contract" xmlns="urn:kegoc.kz:BIS:LO_0001_Contract" xmlns:p1="urn:kegoc.kz:BIS:CommonObjects" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+            <xsd:import namespace="urn:kegoc.kz:BIS:CommonObjects"/>
+            <xsd:element name="Contract" type="Contract"/>
+            <xsd:element name="Contract_Resp" type="p1:Response"/>
+            <xsd:complexType name="Contract">
+                <xsd:annotation>
+                    <xsd:appinfo source="http://sap.com/xi/VersionID">a0da187685c911e8930d0000005576b6</xsd:appinfo>
+                </xsd:annotation>
+                <xsd:sequence>
+                    <xsd:element name="item" minOccurs="0" maxOccurs="unbounded">
+                        <xsd:complexType>
+                            <xsd:sequence>
+                                <xsd:element name="ContractID" type="xsd:string" minOccurs="0">
+                                    <xsd:annotation>
+                                        <xsd:appinfo source="http://sap.com/xi/TextID">93d73dcc850411e8967700ff40a6f108</xsd:appinfo>
+                                        <xsd:documentation>номер договора в системе БИС</xsd:documentation>
+                                    </xsd:annotation>
+                                </xsd:element>
+                                <xsd:element name="SAPContractID" type="xsd:string" minOccurs="0">
+                                    <xsd:annotation>
+                                        <xsd:appinfo source="http://sap.com/xi/TextID">93d73dcd850411e8ab3d00ff40a6f108</xsd:appinfo>
+                                        <xsd:documentation>номер договора в системе SAP ERP</xsd:documentation>
+                                    </xsd:annotation>
+                                </xsd:element>
+                                <xsd:element name="ContractDate" type="xsd:string" minOccurs="0">
+                                    <xsd:annotation>
+                                        <xsd:appinfo source="http://sap.com/xi/TextID">93d73dce850411e89dde00ff40a6f108</xsd:appinfo>
+                                        <xsd:documentation>дата договора</xsd:documentation>
+                                    </xsd:annotation>
+                                </xsd:element>
+                                <xsd:element name="ActivityKind" type="xsd:string" minOccurs="0">
+                                    <xsd:annotation>
+                                        <xsd:appinfo source="http://sap.com/xi/TextID">93d73dcf850411e8839200ff40a6f108</xsd:appinfo>
+                                        <xsd:documentation>вид деятельности</xsd:documentation>
+                                    </xsd:annotation>
+                                </xsd:element>
+                                <xsd:element name="CounterpartyName" type="xsd:string" minOccurs="0">
+                                    <xsd:annotation>
+                                        <xsd:appinfo source="http://sap.com/xi/TextID">93d73dd0850411e8a17700ff40a6f108</xsd:appinfo>
+                                        <xsd:documentation>имя контрагента</xsd:documentation>
+                                    </xsd:annotation>
+                                </xsd:element>
+                                <xsd:element name="ConsigneeName" type="xsd:string" minOccurs="0">
+                                    <xsd:annotation>
+                                        <xsd:appinfo source="http://sap.com/xi/TextID">93d73dd1850411e8b24a00ff40a6f108</xsd:appinfo>
+                                        <xsd:documentation>наименование грузополучателя (бизнес-партнёра, получающего услуги)</xsd:documentation>
+                                    </xsd:annotation>
+                                </xsd:element>
+                                <xsd:element name="ProductName" type="xsd:string" minOccurs="0">
+                                    <xsd:annotation>
+                                        <xsd:appinfo source="http://sap.com/xi/TextID">93d73dd2850411e8b53a00ff40a6f108</xsd:appinfo>
+                                        <xsd:documentation>наименование продукта деятельности (предмет договора)</xsd:documentation>
+                                    </xsd:annotation>
+                                </xsd:element>
+                                <xsd:element name="Price" type="xsd:string" minOccurs="0">
+                                    <xsd:annotation>
+                                        <xsd:appinfo source="http://sap.com/xi/TextID">93d73dd3850411e891b700ff40a6f108</xsd:appinfo>
+                                        <xsd:documentation>сумма договора</xsd:documentation>
+                                    </xsd:annotation>
+                                </xsd:element>
+                                <xsd:element name="Amount" type="xsd:string" minOccurs="0">
+                                    <xsd:annotation>
+                                        <xsd:appinfo source="http://sap.com/xi/TextID">93d73dd4850411e88fc600ff40a6f108</xsd:appinfo>
+                                        <xsd:documentation>объем договора (количественное значение, планируемое в реализации)</xsd:documentation>
+                                    </xsd:annotation>
+                                </xsd:element>
+                                <xsd:element name="RateName" type="xsd:string" minOccurs="0">
+                                    <xsd:annotation>
+                                        <xsd:appinfo source="http://sap.com/xi/TextID">93d73dd5850411e89a7500ff40a6f108</xsd:appinfo>
+                                        <xsd:documentation>наименование тарифа</xsd:documentation>
+                                    </xsd:annotation>
+                                </xsd:element>
+                                <xsd:element name="Currency" type="xsd:string" minOccurs="0">
+                                    <xsd:annotation>
+                                        <xsd:appinfo source="http://sap.com/xi/TextID">93d73dd6850411e8998900ff40a6f108</xsd:appinfo>
+                                        <xsd:documentation>наименование валюты</xsd:documentation>
+                                    </xsd:annotation>
+                                </xsd:element>
+                                <xsd:element name="PaymentTerms" type="xsd:string" minOccurs="0">
+                                    <xsd:annotation>
+                                        <xsd:appinfo source="http://sap.com/xi/TextID">93d73dd7850411e8832a00ff40a6f108</xsd:appinfo>
+                                        <xsd:documentation>условия платежа согласно контракта</xsd:documentation>
+                                    </xsd:annotation>
+                                </xsd:element>
+                                <xsd:element name="NDS_percent" type="xsd:string" minOccurs="0">
+                                    <xsd:annotation>
+                                        <xsd:appinfo source="http://sap.com/xi/TextID">93d73dd8850411e8b23200ff40a6f108</xsd:appinfo>
+                                        <xsd:documentation>ставка НДС в процентах</xsd:documentation>
+                                    </xsd:annotation>
+                                </xsd:element>
+                                <xsd:element name="NDS" type="xsd:string" minOccurs="0">
+                                    <xsd:annotation>
+                                        <xsd:appinfo source="http://sap.com/xi/TextID">93d73dd9850411e8870c00ff40a6f108</xsd:appinfo>
+                                        <xsd:documentation>сумма НДС</xsd:documentation>
+                                    </xsd:annotation>
+                                </xsd:element>
+                                <xsd:element name="PeriodBeginDate" type="xsd:string" minOccurs="0">
+                                    <xsd:annotation>
+                                        <xsd:appinfo source="http://sap.com/xi/TextID">93d73dda850411e8c11000ff40a6f108</xsd:appinfo>
+                                        <xsd:documentation>дата начала действия договора</xsd:documentation>
+                                    </xsd:annotation>
+                                </xsd:element>
+                                <xsd:element name="PeriodEndDate" type="xsd:string" minOccurs="0">
+                                    <xsd:annotation>
+                                        <xsd:appinfo source="http://sap.com/xi/TextID">93d73ddb850411e8a04c00ff40a6f108</xsd:appinfo>
+                                        <xsd:documentation>дата окончания действия договора</xsd:documentation>
+                                    </xsd:annotation>
+                                </xsd:element>
+                                <xsd:element name="EstimatedChargesFlg" type="xsd:string" minOccurs="0">
+                                    <xsd:annotation>
+                                        <xsd:appinfo source="http://sap.com/xi/TextID">93d73ddc850411e8c69600ff40a6f108</xsd:appinfo>
+                                        <xsd:documentation>признак необходимости проводить по договору оценочные начисления</xsd:documentation>
+                                    </xsd:annotation>
+                                </xsd:element>
+                                <xsd:element name="KEGOCBranchName" type="xsd:string" minOccurs="0">
+                                    <xsd:annotation>
+                                        <xsd:appinfo source="http://sap.com/xi/TextID">93d73ddd850411e884e900ff40a6f108</xsd:appinfo>
+                                        <xsd:documentation>наименование филиала АО «KEGOC»</xsd:documentation>
+                                    </xsd:annotation>
+                                </xsd:element>
+                                <xsd:element name="KEGOCBranchLocationArea" type="xsd:string" minOccurs="0">
+                                    <xsd:annotation>
+                                        <xsd:appinfo source="http://sap.com/xi/TextID">93d73dde850411e8965f00ff40a6f108</xsd:appinfo>
+                                        <xsd:documentation>наименование области местонахождения филиала АО «KEGOC»</xsd:documentation>
+                                    </xsd:annotation>
+                                </xsd:element>
+                                <xsd:element name="UserName" type="xsd:string" minOccurs="0">
+                                    <xsd:annotation>
+                                        <xsd:appinfo source="http://sap.com/xi/TextID">93d73ddf850411e89c0a00ff40a6f108</xsd:appinfo>
+                                        <xsd:documentation>ФИО пользователя</xsd:documentation>
+                                    </xsd:annotation>
+                                </xsd:element>
+                                <xsd:element name="SupperiorBISContrac" type="xsd:string" minOccurs="0">
+                                    <xsd:annotation>
+                                        <xsd:appinfo source="http://sap.com/xi/TextID">93d73de0850411e8ab5900ff40a6f108</xsd:appinfo>
+                                        <xsd:documentation>номер вышестоящего договора в системе БИС</xsd:documentation>
+                                    </xsd:annotation>
+                                </xsd:element>
+                                <xsd:element name="Discount" type="xsd:string" minOccurs="0">
+                                    <xsd:annotation>
+                                        <xsd:appinfo source="http://sap.com/xi/TextID">93d73de1850411e8b49100ff40a6f108</xsd:appinfo>
+                                        <xsd:documentation>размер скидки</xsd:documentation>
+                                    </xsd:annotation>
+                                </xsd:element>
+                                <xsd:element name="DiscountStartDate" type="xsd:string" minOccurs="0">
+                                    <xsd:annotation>
+                                        <xsd:appinfo source="http://sap.com/xi/TextID">93d73de2850411e8992700ff40a6f108</xsd:appinfo>
+                                        <xsd:documentation>дата начала действия скидки</xsd:documentation>
+                                    </xsd:annotation>
+                                </xsd:element>
+                                <xsd:element name="DiscountEndDate" type="xsd:string" minOccurs="0">
+                                    <xsd:annotation>
+                                        <xsd:appinfo source="http://sap.com/xi/TextID">93d73de3850411e8a0f900ff40a6f108</xsd:appinfo>
+                                        <xsd:documentation>дата окончания действия скидки</xsd:documentation>
+                                    </xsd:annotation>
+                                </xsd:element>
+                                <xsd:element name="FactEndDate" type="xsd:string" minOccurs="0">
+                                    <xsd:annotation>
+                                        <xsd:appinfo source="http://sap.com/xi/TextID">93d73de4850411e8c12600ff40a6f108</xsd:appinfo>
+                                        <xsd:documentation>дата фактического закрытия договора</xsd:documentation>
+                                    </xsd:annotation>
+                                </xsd:element>
+                            </xsd:sequence>
+                        </xsd:complexType>
+                    </xsd:element>
+                </xsd:sequence>
+            </xsd:complexType>
+        </xsd:schema>
+        <xsd:schema targetNamespace="urn:kegoc.kz:BIS:CommonObjects" xmlns="urn:kegoc.kz:BIS:CommonObjects" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+            <xsd:complexType name="ExchangeLogData">
+                <xsd:annotation>
+                    <xsd:appinfo source="http://sap.com/xi/VersionID">8c65f97d85c911e8ba440000005576b6</xsd:appinfo>
+                </xsd:annotation>
+                <xsd:sequence>
+                    <xsd:element name="severity" type="xsd:string" minOccurs="0"/>
+                    <xsd:element name="text" type="xsd:string"/>
+                    <xsd:element name="url" type="xsd:string" minOccurs="0"/>
+                    <xsd:element name="id" type="xsd:string" minOccurs="0"/>
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:complexType name="Response">
+                <xsd:annotation>
+                    <xsd:appinfo source="http://sap.com/xi/VersionID">f8167aa1869c11e8b2dc0000005576b6</xsd:appinfo>
+                </xsd:annotation>
+                <xsd:sequence>
+                    <xsd:element name="item" minOccurs="0" maxOccurs="unbounded">
+                        <xsd:annotation>
+                            <xsd:appinfo source="http://sap.com/xi/TextID">63b7d34b835811e88b8a00ff40a6f108</xsd:appinfo>
+                        </xsd:annotation>
+                        <xsd:complexType>
+                            <xsd:sequence>
+                                <xsd:element name="ID_SAP" type="xsd:string" minOccurs="0">
+                                    <xsd:annotation>
+                                        <xsd:appinfo source="http://sap.com/xi/TextID">63b7d346835811e8825500ff40a6f108</xsd:appinfo>
+                                        <xsd:documentation>ID объекта в SAP</xsd:documentation>
+                                    </xsd:annotation>
+                                </xsd:element>
+                                <xsd:element name="ID" type="xsd:string" minOccurs="0">
+                                    <xsd:annotation>
+                                        <xsd:appinfo source="http://sap.com/xi/TextID">63b7d347835811e899c300ff40a6f108</xsd:appinfo>
+                                        <xsd:documentation>ID объекта</xsd:documentation>
+                                    </xsd:annotation>
+                                </xsd:element>
+                                <xsd:element name="Msg_Num" minOccurs="0">
+                                    <xsd:annotation>
+                                        <xsd:appinfo source="http://sap.com/xi/TextID">63b7d348835811e8ca9b00ff40a6f108</xsd:appinfo>
+                                        <xsd:documentation>Результат обработки данных в системе-приемнике, код</xsd:documentation>
+                                    </xsd:annotation>
+                                    <xsd:simpleType>
+                                        <xsd:restriction base="xsd:string">
+                                            <xsd:maxLength value="3"/>
+                                        </xsd:restriction>
+                                    </xsd:simpleType>
+                                </xsd:element>
+                                <xsd:element name="Msg_Type" minOccurs="0">
+                                    <xsd:annotation>
+                                        <xsd:appinfo source="http://sap.com/xi/TextID">63b7d349835811e8ae6e00ff40a6f108</xsd:appinfo>
+                                        <xsd:documentation>Результат обработки данных в системе-приемнике, тип (S=success, E=error, W=warning)</xsd:documentation>
+                                    </xsd:annotation>
+                                    <xsd:simpleType>
+                                        <xsd:restriction base="xsd:string">
+                                            <xsd:maxLength value="1"/>
+                                        </xsd:restriction>
+                                    </xsd:simpleType>
+                                </xsd:element>
+                                <xsd:element name="Msg" type="xsd:string" minOccurs="0">
+                                    <xsd:annotation>
+                                        <xsd:appinfo source="http://sap.com/xi/TextID">63b7d34a835811e8bc4900ff40a6f108</xsd:appinfo>
+                                        <xsd:documentation>Результат обработки данных в системе-приемнике (текст)</xsd:documentation>
+                                    </xsd:annotation>
+                                </xsd:element>
+                            </xsd:sequence>
+                        </xsd:complexType>
+                    </xsd:element>
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:complexType name="ExchangeFaultData">
+                <xsd:annotation>
+                    <xsd:appinfo source="http://sap.com/xi/VersionID">8c5a31f985c911e885410000005576b6</xsd:appinfo>
+                </xsd:annotation>
+                <xsd:sequence>
+                    <xsd:element name="faultText" type="xsd:string"/>
+                    <xsd:element name="faultUrl" type="xsd:string" minOccurs="0"/>
+                    <xsd:element name="faultDetail" type="ExchangeLogData" minOccurs="0" maxOccurs="unbounded"/>
+                </xsd:sequence>
+            </xsd:complexType>
+        </xsd:schema>
+        <xsd:schema targetNamespace="http://sap.com/xi/XI/System/Patterns" xmlns:p1="urn:kegoc.kz:BIS:CommonObjects" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="http://sap.com/xi/XI/System/Patterns">
+            <xsd:import namespace="urn:kegoc.kz:BIS:CommonObjects"/>
+            <xsd:element name="FaultMessage">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="standard" type="p1:ExchangeFaultData"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+        </xsd:schema>
+    </wsdl:types>
+    <wsdl:message name="Contract">
+        <wsdl:documentation/>
+        <wsdl:part name="Contract" element="p1:Contract"/>
+    </wsdl:message>
+    <wsdl:message name="Contract_Resp">
+        <wsdl:documentation/>
+        <wsdl:part name="Contract_Resp" element="p1:Contract_Resp"/>
+    </wsdl:message>
+    <wsdl:message name="p3.FaultMessage">
+        <wsdl:documentation/>
+        <wsdl:part name="FaultMessage" element="p2:FaultMessage"/>
+    </wsdl:message>
+    <wsdl:portType name="BIS_LO_Contract">
+        <wsdl:documentation/>
+        <wsdl:operation name="BIS_LO_Contract">
+            <wsdl:documentation/>
+            <wsp:Policy>
+                <wsp:PolicyReference URI="#OP_BIS_LO_Contract"/>
+            </wsp:Policy>
+            <wsdl:input message="p1:Contract"/>
+            <wsdl:output message="p1:Contract_Resp"/>
+            <wsdl:fault name="p3.FaultMessage" message="p1:p3.FaultMessage"/>
+        </wsdl:operation>
+    </wsdl:portType>
+    <wsdl:binding name="BIS_LO_ContractBinding" type="p1:BIS_LO_Contract">
+        <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"/>
+        <wsdl:operation name="BIS_LO_Contract">
+            <soap:operation soapAction="http://sap.com/xi/WebService/soap1.1" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"/>
+            <wsdl:input>
+                <soap:body use="literal" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"/>
+            </wsdl:output>
+            <wsdl:fault name="p3.FaultMessage">
+                <soap:fault use="literal" name="p3.FaultMessage" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"/>
+            </wsdl:fault>
+        </wsdl:operation>
+    </wsdl:binding>
+    <wsdl:service name="BIS_LO_ContractService">
+        <wsdl:port name="HTTP_Port" binding="p1:BIS_LO_ContractBinding">
+            <soap:address location="http://kegoci10.corp.kegoc.kz:50000/XISOAPAdapter/MessageServlet?senderParty=&amp;senderService=BIS_D&amp;receiverParty=&amp;receiverService=&amp;interface=BIS_LO_Contract&amp;interfaceNamespace=urn%3Akegoc.kz%3ABIS%3ALO_0001_Contract" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"/>
+        </wsdl:port>
+        <wsdl:port name="HTTPS_Port" binding="p1:BIS_LO_ContractBinding">
+            <soap:address location="https://kegoci10.corp.kegoc.kz:50001/XISOAPAdapter/MessageServlet?senderParty=&amp;senderService=BIS_D&amp;receiverParty=&amp;receiverService=&amp;interface=BIS_LO_Contract&amp;interfaceNamespace=urn%3Akegoc.kz%3ABIS%3ALO_0001_Contract" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"/>
+        </wsdl:port>
+    </wsdl:service>
+</wsdl:definitions>
