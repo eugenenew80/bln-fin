@@ -29,7 +29,7 @@ public class TotalDeliveryLine {
 
     @ManyToOne
     @JoinColumn(name = "contract_id")
-    private Contract contract;
+    private ContractKeg contract;
 
     @ManyToOne
     @JoinColumn(name = "gjs_id")

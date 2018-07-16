@@ -89,6 +89,34 @@ public class AppConfig  {
         return webServiceTemplate;
     }
 
+    @Bean
+    public WebServiceTemplate saleContractServiceTemplate(HttpComponentsMessageSender messageSender) {
+        Jaxb2Marshaller jaxb2Marshaller = new Jaxb2Marshaller();
+        jaxb2Marshaller.setContextPath("sap.erp.contract.sd");
+
+        WebServiceTemplate webServiceTemplate = new WebServiceTemplate();
+        webServiceTemplate.setMarshaller(jaxb2Marshaller);
+        webServiceTemplate.setUnmarshaller(jaxb2Marshaller);
+        webServiceTemplate.setMessageSender(messageSender);
+        webServiceTemplate.setDefaultUri("http://kegoci10.corp.kegoc.kz:50000/XISOAPAdapter/MessageServlet?senderParty=&senderService=BIS_D&receiverParty=&receiverService=&interface=BIS_LO_Contract&interfaceNamespace=urn:kegoc.kz:BIS:LO_0001_Contract");
+
+        return webServiceTemplate;
+    }
+
+    @Bean
+    public WebServiceTemplate purchaceContractServiceTemplate(HttpComponentsMessageSender messageSender) {
+        Jaxb2Marshaller jaxb2Marshaller = new Jaxb2Marshaller();
+        jaxb2Marshaller.setContextPath("sap.erp.contract.mm");
+
+        WebServiceTemplate webServiceTemplate = new WebServiceTemplate();
+        webServiceTemplate.setMarshaller(jaxb2Marshaller);
+        webServiceTemplate.setUnmarshaller(jaxb2Marshaller);
+        webServiceTemplate.setMessageSender(messageSender);
+        webServiceTemplate.setDefaultUri("http://kegoci10.corp.kegoc.kz:50000/XISOAPAdapter/MessageServlet?senderParty=&senderService=BIS_D&receiverParty=&receiverService=&interface=BIS_MM_Contract&interfaceNamespace=urn:kegoc.kz:BIS:ZMM_0042_Contract");
+
+        return webServiceTemplate;
+    }
+
 
     @Bean
     public ServletRegistrationBean dispatcherServlet() {

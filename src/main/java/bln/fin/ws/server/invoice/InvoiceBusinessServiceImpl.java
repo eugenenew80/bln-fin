@@ -18,7 +18,7 @@ public class InvoiceBusinessServiceImpl implements InvoiceBusinessService{
     private final PurchaseInvoiceRepo purchaseInvoiceRepo;
     private final SaleInvoiceRepo saleInvoiceRepo;
     private final BusinessPartnerRepo businessPartnerRepo;
-    private final ContractRepo contractRepo;
+    private final ContractKegRepo contractKegRepo;
     private final UnitRepo unitRepo;
     private final ItemRepo itemRepo;
 
@@ -63,7 +63,7 @@ public class InvoiceBusinessServiceImpl implements InvoiceBusinessService{
 
         BusinessPartner vendor = businessPartnerRepo.findByErpBpNum(invoiceDto.getBpNum());
         BusinessPartner customer = businessPartnerRepo.findByErpCompanyCode(invoiceDto.getCompanyCode());
-        Contract contract = contractRepo.findByContractNum(invoiceDto.getExtContractNum());
+        ContractKeg contract = contractKegRepo.findByContractNum(invoiceDto.getExtContractNum());
 
         inv.setAccountingDate(accountingDate);
         inv.setInvoiceDate(erpDocDate);

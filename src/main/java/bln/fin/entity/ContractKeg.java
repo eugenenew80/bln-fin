@@ -10,7 +10,7 @@ import java.time.LocalDate;
 @EqualsAndHashCode(of= {"id"})
 @Entity
 @Table(name = "cm_doc_keg_cte")
-public class Contract {
+public class ContractKeg {
 
     @Id
     private Long id;

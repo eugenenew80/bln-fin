@@ -51,7 +51,7 @@ public class CheckApplication {
 
     @ManyToOne
     @JoinColumn(name = "contract_id")
-    private Contract contract;
+    private ContractKeg contract;
 
     @Column(name = "accounting_date")
     private LocalDate accountingDate;

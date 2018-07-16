@@ -15,7 +15,7 @@ import static bln.fin.common.Util.toLocalDate;
 @RequiredArgsConstructor
 public class DebtBusinessServiceImpl implements DebtBusinessService {
     private final BusinessPartnerRepo businessPartnerRepo;
-    private final ContractRepo contractRepo;
+    private final ContractKegRepo contractRepo;
     private final PurchaseInvoiceRepo purchaseInvoiceRepo;
     private final SaleInvoiceRepo saleInvoiceRepo;
     private final CheckApplicationRepo checkApplicationRepo;
@@ -42,7 +42,7 @@ public class DebtBusinessServiceImpl implements DebtBusinessService {
         BusinessPartner vendor = businessPartnerRepo.findByErpBpNum(debtDto.getBpNum());
         BusinessPartner customer = businessPartnerRepo.findByErpCompanyCode(debtDto.getCompanyCode());
         PurchaseInvoice invoice = purchaseInvoiceRepo.findByErpDocNumAndErpDocDate(debtDto.getDocNum(), erpDocDate);
-        Contract contract = contractRepo.findByContractNum(debtDto.getExtContractNum());
+        ContractKeg contract = contractRepo.findByContractNum(debtDto.getExtContractNum());
 
         check.setInvoice(invoice);
         check.setPayer(customer);
@@ -84,7 +84,7 @@ public class DebtBusinessServiceImpl implements DebtBusinessService {
         BusinessPartner vendor = businessPartnerRepo.findByErpCompanyCode(debtDto.getCompanyCode());
         BusinessPartner customer = businessPartnerRepo.findByErpBpNum(debtDto.getBpNum());
         SaleInvoice invoice = saleInvoiceRepo.findByErpDocNumAndErpDocDate(debtDto.getDocNum(), erpDocDate);
-        Contract contract = contractRepo.findByContractNum(debtDto.getExtContractNum());
+        ContractKeg contract = contractRepo.findByContractNum(debtDto.getExtContractNum());
 
         receipt.setInvoice(invoice);
         receipt.setPayer(customer);

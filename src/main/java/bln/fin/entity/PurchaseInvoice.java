@@ -34,7 +34,7 @@ public class PurchaseInvoice {
 
     @ManyToOne
     @JoinColumn(name = "contract_id")
-    private Contract contract;
+    private ContractKeg contract;
 
     @Column(name = "doc_num")
     private String docNum;
