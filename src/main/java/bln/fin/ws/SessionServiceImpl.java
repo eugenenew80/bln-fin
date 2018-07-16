@@ -29,6 +29,7 @@ public class SessionServiceImpl implements SessionService {
         session.setObjectCode(objectCode);
         session.setDirection(direction);
         session.setStartDate(LocalDateTime.now());
+        session.setStatus(SessionStatusEnum.P);
         return createSession(session);
     }
 
@@ -47,7 +48,7 @@ public class SessionServiceImpl implements SessionService {
     public SoapSession errorSession(SoapSession session, Exception e) {
         session.setEndDate(LocalDateTime.now());
         session.setStatus(SessionStatusEnum.E);
-        session.setErrMsg(e.getMessage());
+        session.setErrMsg(e.getMessage().substring(0, 300));
         session = sessionRepo.save(session);
         return session;
     }

@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.3.xsd">
+
+
+    <changeSet id="ws-eug-1" logicalFilePath="path-independent" author="eugene">
+        <comment>Creating table: ws_sessions</comment>
+        <createTable tableName="ws_sessions" schemaName="apps" remarks="Лог журнал вызовов soap-сервисов">
+            <column name="id" type="number" remarks="Иденетификатор">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="object_code" type="varchar(20)" remarks="Код объекта интеграции">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="direction" type="varchar(20)" remarks="Код направления обмена данными">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="start_date" type="TIMESTAMP" remarks="Дата и время начала">
+                <constraints nullable="true"/>
+            </column>
+
+            <column name="end_date" type="TIMESTAMP" remarks="Дата и время окончания">
+                <constraints nullable="true"/>
+            </column>
+
+            <column name="rec_count" type="number" remarks="Кол-во принятых/переданных строк">
+                <constraints nullable="true"/>
+            </column>
+
+            <column name="status" type="varchar(20)" remarks="Статус выполнения">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="err_msg" type="varchar(300)" remarks="Комментарий к статусу выполнения">
+                <constraints nullable="true"/>
+            </column>
+
+            <column name="create_date" type="TIMESTAMP" remarks="Дата и время создания записи">
+                <constraints nullable="true"/>
+            </column>
+
+            <column name="last_update_date" type="TIMESTAMP" remarks="Дата и время изменения записи">
+                <constraints nullable="true"/>
+            </column>
+
+            <column name="create_by" type="number" remarks="Автор">
+                <constraints nullable="true"/>
+            </column>
+
+            <column name="last_update_by" type="number" remarks="Автор изменения">
+                <constraints nullable="true"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="ws-eug-32" logicalFilePath="path-independent" author="eugene">
+        <comment>Creating primary key for table: ws_sessions</comment>
+        <addPrimaryKey
+                columnNames="id"
+                constraintName="pk_ws_sessions"
+                schemaName="apps"
+                tableName="ws_sessions"/>
+    </changeSet>
+
+    <changeSet id="ws-eug-3" logicalFilePath="path-independent" author="eugene">
+        <comment>Creating sequence for table: ws_sessions</comment>
+        <createSequence
+                incrementBy="1"
+                schemaName="apps"
+                sequenceName="ws_sessions_s"
+                startValue="1"/>
+    </changeSet>
+
+</databaseChangeLog>
