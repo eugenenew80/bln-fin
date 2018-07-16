@@ -4,6 +4,6 @@ import org.springframework.stereotype.Service;
 
 @Service
 public interface PurchaseContractService {
-    void sendByVendor(Long vendorId, Long customerId);
-    void sendByContract(Long contractId);
+    void sendByBusinessPartner(Long bp1Id, Long bp2Id);
+    void sendOne(Long contractId);
 }

@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Data
@@ -100,6 +101,9 @@ public class SaleInvoice {
     @ManyToOne
     @JoinColumn(name = "src_invoice_id")
     private SaleInvoice saleInvoice;
+
+    @Column(name = "transferred_to_erp_date")
+    private LocalDateTime transferredToErpDate;
 
     @OneToMany(mappedBy = "invoice", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     private List<SaleInvoiceLine> lines;

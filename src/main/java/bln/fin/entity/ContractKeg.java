@@ -5,6 +5,7 @@ import lombok.EqualsAndHashCode;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Data
 @EqualsAndHashCode(of= {"id"})
@@ -28,4 +29,7 @@ public class ContractKeg {
     @ManyToOne
     @JoinColumn(name = "bp2_id")
     private BusinessPartner bp2;
+
+    @Column(name = "transferred_to_erp_date")
+    private LocalDateTime transferredToErpDate;
 }

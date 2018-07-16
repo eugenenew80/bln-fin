@@ -31,7 +31,22 @@ public class SalePlanServiceImpl implements SalePlanService {
 
         SalesPlan salesPlanReq = new ObjectFactory().createSalesPlan();
         salesPlanReq.getItem().addAll(items);
+        request(headers, salesPlanReq);
+    }
 
+    @Override
+    public void sendAll() {
+        List<SalePlanHeader> headers = salePlanHeaderRepo.findAll();
+        List<SalesPlan.Item> items = createItems(headers);
+        if (items.isEmpty())
+            return;
+
+        SalesPlan salesPlanReq = new ObjectFactory().createSalesPlan();
+        salesPlanReq.getItem().addAll(items);
+        request(headers, salesPlanReq);
+    }
+
+    private void request(List<SalePlanHeader> headers, SalesPlan salesPlanReq) {
         try {
             Object response = salePlanServiceTemplate.marshalSendAndReceive(salesPlanReq);
             updateHeaders(headers);
@@ -45,21 +60,6 @@ public class SalePlanServiceImpl implements SalePlanService {
         catch (Exception e) {
             e.printStackTrace();
         }
-    }
-
-    @Override
-    public void sendAll() {
-        List<SalePlanHeader> headers = salePlanHeaderRepo.findAll();
-
-        List<SalesPlan.Item> items = createItems(headers);
-        if (items.isEmpty())
-            return;
-
-        SalesPlan salesPlanReq = new ObjectFactory().createSalesPlan();
-        salesPlanReq.getItem().addAll(items);
-        salePlanServiceTemplate.marshalSendAndReceive(salesPlanReq);
-
-        updateHeaders(headers);
     }
 
     private List<SalesPlan.Item> createItems(List<SalePlanHeader> headers) {
@@ -86,9 +86,8 @@ public class SalePlanServiceImpl implements SalePlanService {
     }
 
     private void updateHeaders(List<SalePlanHeader> headers) {
-        for (SalePlanHeader header: headers) {
+        for (SalePlanHeader header: headers)
             header.setTransferredToErpDate(LocalDateTime.now());
-        }
         salePlanHeaderRepo.save(headers);
     }
 }
