@@ -6,13 +6,13 @@ import bln.fin.repo.SalePlanHeaderRepo;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.ws.client.core.WebServiceTemplate;
+import org.springframework.ws.soap.client.SoapFaultClientException;
 import sap.erp.plan.ObjectFactory;
 import sap.erp.plan.SalesPlan;
 import java.math.BigInteger;
 import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.List;
-
 import static bln.fin.common.Util.toXMLGregorianCalendar;
 import static java.util.stream.Collectors.toList;
 
@@ -25,7 +25,6 @@ public class SalePlanServiceImpl implements SalePlanService {
     @Override
     public void send(Long headerId) {
         List<SalePlanHeader> headers = Arrays.asList(salePlanHeaderRepo.findOne(headerId));
-
         List<SalesPlan.Item> items = createItems(headers);
         if (items.isEmpty())
             return;
@@ -33,14 +32,18 @@ public class SalePlanServiceImpl implements SalePlanService {
         SalesPlan salesPlanReq = new ObjectFactory().createSalesPlan();
         salesPlanReq.getItem().addAll(items);
 
-        Object response = null;
         try {
-            response = salePlanServiceTemplate.marshalSendAndReceive(salesPlanReq);
-            System.out.println(response);
+            Object response = salePlanServiceTemplate.marshalSendAndReceive(salesPlanReq);
             updateHeaders(headers);
         }
+        catch (SoapFaultClientException e) {
+            System.out.println("Fault Code: " + e.getFaultCode());
+            System.out.println("Fault Reason: " + e.getFaultStringOrReason());
+            System.out.println("Message: " + e.getLocalizedMessage());
+        }
+
         catch (Exception e) {
-            System.out.println(response);
+            e.printStackTrace();
         }
     }
 
