@@ -21,7 +21,7 @@ public class SaleContractServiceImpl implements SaleContractService {
     private final ContractKegRepo contractRepo;
 
     @Override
-    public void sendByBusinessPartner(Long bp1Id, Long bp2Id) {
+    public void sendByBp(Long bp1Id, Long bp2Id) {
         List<ContractKeg> contracts = contractRepo.findAllByBp1IdAndBp2Id(bp1Id, bp2Id);
         List<Contract.Item> items = createItems(contracts);
         if (items.isEmpty())
