@@ -1684,7 +1684,7 @@
 
     <changeSet id="wf-rus-108" logicalFilePath="path-independent" author="ruslan" context="dev">
         <comment>insert into wf_object_activities</comment>
-        <insert schemaName="apps" tableName="wf_activities">
+        <insert schemaName="apps" tableName="wf_object_activities">
             <column name="object_code" type="varchar2" value="CONTRACT"/>
             <column name="ACTIVITY_CODE" type="varchar2" value="COMPLETE"/>
         </insert>
@@ -1693,7 +1693,7 @@
 
     <changeSet id="wf-rus-109" logicalFilePath="path-independent" author="ruslan" context="dev">
         <comment>insert into wf_object_activities</comment>
-        <insert schemaName="apps" tableName="wf_activities">
+        <insert schemaName="apps" tableName="wf_object_activities">
             <column name="object_code" type="varchar2" value="CONTRACT"/>
             <column name="ACTIVITY_CODE" type="varchar2" value="MAKE_PROJECT"/>
         </insert>
@@ -1702,7 +1702,7 @@
 
     <changeSet id="wf-rus-110" logicalFilePath="path-independent" author="ruslan" context="dev">
         <comment>insert into wf_object_activities</comment>
-        <insert schemaName="apps" tableName="wf_activities">
+        <insert schemaName="apps" tableName="wf_object_activities">
             <column name="object_code" type="varchar2" value="CONTRACT"/>
             <column name="ACTIVITY_CODE" type="varchar2" value="SEND_ON_AGREEMENT"/>
         </insert>
@@ -1711,7 +1711,7 @@
 
     <changeSet id="wf-rus-111" logicalFilePath="path-independent" author="ruslan" context="dev">
         <comment>insert into wf_object_activities</comment>
-        <insert schemaName="apps" tableName="wf_activities">
+        <insert schemaName="apps" tableName="wf_object_activities">
             <column name="object_code" type="varchar2" value="CONTRACT"/>
             <column name="ACTIVITY_CODE" type="varchar2" value="SEND_ON_SIGNING_BP1"/>
         </insert>
@@ -1720,7 +1720,7 @@
 
     <changeSet id="wf-rus-112" logicalFilePath="path-independent" author="ruslan" context="dev">
         <comment>insert into wf_object_activities</comment>
-        <insert schemaName="apps" tableName="wf_activities">
+        <insert schemaName="apps" tableName="wf_object_activities">
             <column name="object_code" type="varchar2" value="CONTRACT"/>
             <column name="ACTIVITY_CODE" type="varchar2" value="SEND_ON_SIGNING_BP2"/>
         </insert>
@@ -1729,7 +1729,7 @@
 
     <changeSet id="wf-rus-113" logicalFilePath="path-independent" author="ruslan" context="dev">
         <comment>insert into wf_object_activities</comment>
-        <insert schemaName="apps" tableName="wf_activities">
+        <insert schemaName="apps" tableName="wf_object_activities">
             <column name="object_code" type="varchar2" value="CONTRACT"/>
             <column name="ACTIVITY_CODE" type="varchar2" value="CLOSE"/>
         </insert>
@@ -1738,7 +1738,7 @@
 
     <changeSet id="wf-rus-114" logicalFilePath="path-independent" author="ruslan" context="dev">
         <comment>insert into wf_object_activities</comment>
-        <insert schemaName="apps" tableName="wf_activities">
+        <insert schemaName="apps" tableName="wf_object_activities">
             <column name="object_code" type="varchar2" value="CONTRACT"/>
             <column name="ACTIVITY_CODE" type="varchar2" value="NOT_VALIDATE"/>
         </insert>
@@ -1756,7 +1756,7 @@
 
     <changeSet id="wf-rus-116" logicalFilePath="path-independent" author="ruslan" context="dev">
         <comment>insert into wf_object_activities</comment>
-        <insert schemaName="apps" tableName="wf_activities">
+        <insert schemaName="apps" tableName="wf_object_activities">
             <column name="object_code" type="varchar2" value="CONTRACT"/>
             <column name="ACTIVITY_CODE" type="varchar2" value="VALIDATE"/>
         </insert>
@@ -1765,7 +1765,7 @@
 
     <changeSet id="wf-rus-117" logicalFilePath="path-independent" author="ruslan" context="dev">
         <comment>insert into wf_object_activities</comment>
-        <insert schemaName="apps" tableName="wf_activities">
+        <insert schemaName="apps" tableName="wf_object_activities">
             <column name="object_code" type="varchar2" value="CONTRACT"/>
             <column name="ACTIVITY_CODE" type="varchar2" value="SIGN"/>
         </insert>
@@ -1774,7 +1774,7 @@
 
     <changeSet id="wf-rus-118" logicalFilePath="path-independent" author="ruslan" context="dev">
         <comment>insert into wf_object_activities</comment>
-        <insert schemaName="apps" tableName="wf_activities">
+        <insert schemaName="apps" tableName="wf_object_activities">
             <column name="object_code" type="varchar2" value="PERFORMANCE_ACT"/>
             <column name="ACTIVITY_CODE" type="varchar2" value="SEND_ON_AGREEMENT"/>
         </insert>
@@ -1783,7 +1783,7 @@
 
     <changeSet id="wf-rus-119" logicalFilePath="path-independent" author="ruslan" context="dev">
         <comment>insert into wf_object_activities</comment>
-        <insert schemaName="apps" tableName="wf_activities">
+        <insert schemaName="apps" tableName="wf_object_activities">
             <column name="object_code" type="varchar2" value="PERFORMANCE_ACT"/>
             <column name="ACTIVITY_CODE" type="varchar2" value="NOT_VALIDATE"/>
         </insert>
@@ -1792,7 +1792,7 @@
 
     <changeSet id="wf-rus-120" logicalFilePath="path-independent" author="ruslan" context="dev">
         <comment>insert into wf_object_activities</comment>
-        <insert schemaName="apps" tableName="wf_activities">
+        <insert schemaName="apps" tableName="wf_object_activities">
             <column name="object_code" type="varchar2" value="PERFORMANCE_ACT"/>
             <column name="ACTIVITY_CODE" type="varchar2" value="VALIDATE"/>
         </insert>
@@ -1801,7 +1801,7 @@
 
     <changeSet id="wf-rus-121" logicalFilePath="path-independent" author="ruslan" context="dev">
         <comment>insert into wf_object_activities</comment>
-        <insert schemaName="apps" tableName="wf_activities">
+        <insert schemaName="apps" tableName="wf_object_activities">
             <column name="object_code" type="varchar2" value="PERFORMANCE_ACT"/>
             <column name="ACTIVITY_CODE" type="varchar2" value="SEND_ON_SIGNING_BP1"/>
         </insert>
@@ -1810,7 +1810,7 @@
 
     <changeSet id="wf-rus-122" logicalFilePath="path-independent" author="ruslan" context="dev">
         <comment>insert into wf_object_activities</comment>
-        <insert schemaName="apps" tableName="wf_activities">
+        <insert schemaName="apps" tableName="wf_object_activities">
             <column name="object_code" type="varchar2" value="PERFORMANCE_ACT"/>
             <column name="ACTIVITY_CODE" type="varchar2" value="SEND_ON_SIGNING_BP2"/>
         </insert>
@@ -1819,7 +1819,7 @@
 
     <changeSet id="wf-rus-123" logicalFilePath="path-independent" author="ruslan" context="dev">
         <comment>insert into wf_object_activities</comment>
-        <insert schemaName="apps" tableName="wf_activities">
+        <insert schemaName="apps" tableName="wf_object_activities">
             <column name="object_code" type="varchar2" value="PERFORMANCE_ACT"/>
             <column name="ACTIVITY_CODE" type="varchar2" value="SIGN"/>
         </insert>
@@ -1828,7 +1828,7 @@
 
     <changeSet id="wf-rus-124" logicalFilePath="path-independent" author="ruslan" context="dev">
         <comment>insert into wf_object_activities</comment>
-        <insert schemaName="apps" tableName="wf_activities">
+        <insert schemaName="apps" tableName="wf_object_activities">
             <column name="object_code" type="varchar2" value="PERFORMANCE_ACT"/>
             <column name="ACTIVITY_CODE" type="varchar2" value="NOT_SIGN"/>
         </insert>
