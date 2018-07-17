@@ -1517,7 +1517,7 @@
     <changeSet id="wf-rus-90" logicalFilePath="path-independent" author="ruslan" context="dev">
         <comment>insert into wf_activities</comment>
         <insert schemaName="apps" tableName="wf_states">
-            <column name="code" type="varchar2" value="SEND_ON_ADJUSTMENT_BP1"/>
+            <column name="code" type="varchar2" value="SEND_ADJUSTMENT_BP1"/>
         </insert>
         <rollback/>
     </changeSet>
@@ -1525,7 +1525,7 @@
     <changeSet id="wf-rus-91" logicalFilePath="path-independent" author="ruslan" context="dev">
         <comment>insert into wf_activities_tl</comment>
         <insert schemaName="apps" tableName="wf_states_tl">
-            <column name="code" type="varchar2" value="SEND_ON_ADJUSTMENT_BP1"/>
+            <column name="code" type="varchar2" value="SEND_ADJUSTMENT_BP1"/>
             <column name="lang" type="varchar2" value="RU"/>
             <column name="name" type="varchar2" value="Отправить на корректировку (БП1)"/>
         </insert>
@@ -1535,7 +1535,7 @@
     <changeSet id="wf-rus-92" logicalFilePath="path-independent" author="ruslan" context="dev">
         <comment>insert into wf_activities_tl</comment>
         <insert schemaName="apps" tableName="wf_states_tl">
-            <column name="code" type="varchar2" value="SEND_ON_ADJUSTMENT_BP1"/>
+            <column name="code" type="varchar2" value="SEND_ADJUSTMENT_BP1"/>
             <column name="lang" type="varchar2" value="KZ"/>
             <column name="name" type="varchar2" value="Отправить на корректировку (БП1)"/>
         </insert>
@@ -1545,7 +1545,7 @@
     <changeSet id="wf-rus-93" logicalFilePath="path-independent" author="ruslan" context="dev">
         <comment>insert into wf_activities</comment>
         <insert schemaName="apps" tableName="wf_states">
-            <column name="code" type="varchar2" value="SEND_ON_ADJUSTMENT_BP2"/>
+            <column name="code" type="varchar2" value="SEND_ADJUSTMENT_BP2"/>
         </insert>
         <rollback/>
     </changeSet>
@@ -1553,7 +1553,7 @@
     <changeSet id="wf-rus-94" logicalFilePath="path-independent" author="ruslan" context="dev">
         <comment>insert into wf_activities_tl</comment>
         <insert schemaName="apps" tableName="wf_states_tl">
-            <column name="code" type="varchar2" value="SEND_ON_ADJUSTMENT_BP2"/>
+            <column name="code" type="varchar2" value="SEND_ADJUSTMENT_BP2"/>
             <column name="lang" type="varchar2" value="RU"/>
             <column name="name" type="varchar2" value="Отправить на корректировку (БП2)"/>
         </insert>
@@ -1563,7 +1563,7 @@
     <changeSet id="wf-rus-95" logicalFilePath="path-independent" author="ruslan" context="dev">
         <comment>insert into wf_activities_tl</comment>
         <insert schemaName="apps" tableName="wf_states_tl">
-            <column name="code" type="varchar2" value="SEND_ON_ADJUSTMENT_BP2"/>
+            <column name="code" type="varchar2" value="SEND_ADJUSTMENT_BP2"/>
             <column name="lang" type="varchar2" value="KZ"/>
             <column name="name" type="varchar2" value="Отправить на корректировку (БП2)"/>
         </insert>
