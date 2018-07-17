@@ -1888,4 +1888,88 @@
         </insert>
         <rollback/>
     </changeSet>
+
+    <changeSet id="wf-rus-131" logicalFilePath="path-independent" author="ruslan" context="dev">
+        <comment>insert into wf_object_states</comment>
+        <insert schemaName="apps" tableName="wf_object_states">
+            <column name="object_code" type="varchar2" value="CONTRACT"/>
+            <column name="STATE_CODE" type="varchar2" value="NOT_COMPLETE"/>
+            <column name="IS_INITIAL" type="number" value="1"/>
+            <column name="IS_FINAL" type="number" value="0"/>
+            <column name="IS_USERS_REQUIRED" type="number" value="0"/>
+            <column name="MIN_USERS" type="number" value="0"/>
+            <column name="MAX_USERS" type="number" value="0"/>
+        </insert>
+        <rollback/>
+    </changeSet>
+
+    <changeSet id="wf-rus-132" logicalFilePath="path-independent" author="ruslan" context="dev">
+        <comment>insert into wf_object_states</comment>
+        <insert schemaName="apps" tableName="wf_object_states">
+            <column name="object_code" type="varchar2" value="CONTRACT"/>
+            <column name="STATE_CODE" type="varchar2" value="COMPLETE"/>
+            <column name="IS_INITIAL" type="number" value="0"/>
+            <column name="IS_FINAL" type="number" value="0"/>
+            <column name="IS_USERS_REQUIRED" type="number" value="0"/>
+            <column name="MIN_USERS" type="number" value="0"/>
+            <column name="MAX_USERS" type="number" value="0"/>
+        </insert>
+        <rollback/>
+    </changeSet>
+
+    <changeSet id="wf-rus-133" logicalFilePath="path-independent" author="ruslan" context="dev">
+        <comment>insert into wf_object_states</comment>
+        <insert schemaName="apps" tableName="wf_object_states">
+            <column name="object_code" type="varchar2" value="CONTRACT"/>
+            <column name="STATE_CODE" type="varchar2" value="PROJECT"/>
+            <column name="IS_INITIAL" type="number" value="0"/>
+            <column name="IS_FINAL" type="number" value="0"/>
+            <column name="IS_USERS_REQUIRED" type="number" value="0"/>
+            <column name="MIN_USERS" type="number" value="0"/>
+            <column name="MAX_USERS" type="number" value="0"/>
+        </insert>
+        <rollback/>
+    </changeSet>
+
+    <changeSet id="wf-rus-134" logicalFilePath="path-independent" author="ruslan" context="dev">
+        <comment>insert into wf_object_states</comment>
+        <insert schemaName="apps" tableName="wf_object_states">
+            <column name="object_code" type="varchar2" value="CONTRACT"/>
+            <column name="STATE_CODE" type="varchar2" value="ON_AGREEMENT"/>
+            <column name="IS_INITIAL" type="number" value="0"/>
+            <column name="IS_FINAL" type="number" value="0"/>
+            <column name="IS_USERS_REQUIRED" type="number" value="1"/>
+            <column name="MIN_USERS" type="number" value="1"/>
+            <column name="MAX_USERS" type="number" value="10"/>
+        </insert>
+        <rollback/>
+    </changeSet>
+
+    <changeSet id="wf-rus-135" logicalFilePath="path-independent" author="ruslan" context="dev">
+        <comment>insert into wf_object_states</comment>
+        <insert schemaName="apps" tableName="wf_object_states">
+            <column name="object_code" type="varchar2" value="CONTRACT"/>
+            <column name="STATE_CODE" type="varchar2" value="VALIDATED"/>
+            <column name="IS_INITIAL" type="number" value="0"/>
+            <column name="IS_FINAL" type="number" value="0"/>
+            <column name="IS_USERS_REQUIRED" type="number" value="0"/>
+            <column name="MIN_USERS" type="number" value="0"/>
+            <column name="MAX_USERS" type="number" value="0"/>
+        </insert>
+        <rollback/>
+    </changeSet>
+
+    <changeSet id="wf-rus-136" logicalFilePath="path-independent" author="ruslan" context="dev">
+        <comment>insert into wf_object_states</comment>
+        <insert schemaName="apps" tableName="wf_object_states">
+            <column name="object_code" type="varchar2" value="CONTRACT"/>
+            <column name="STATE_CODE" type="varchar2" value="NOT_VALIDATED"/>
+            <column name="IS_INITIAL" type="number" value="0"/>
+            <column name="IS_FINAL" type="number" value="1"/>
+            <column name="IS_USERS_REQUIRED" type="number" value="0"/>
+            <column name="MIN_USERS" type="number" value="0"/>
+            <column name="MAX_USERS" type="number" value="0"/>
+        </insert>
+        <rollback/>
+    </changeSet>
 </databaseChangeLog>
