@@ -582,7 +582,7 @@
         <comment>Creating foreign constraint: wf_states to wf_states_tl</comment>
         <addForeignKeyConstraint
                 baseTableSchemaName="apps"
-                baseTableName="fin_wf_states"
+                baseTableName="wf_states"
                 baseColumnNames="code"
                 constraintName="fk_wf_states_1"
                 deferrable="true"
