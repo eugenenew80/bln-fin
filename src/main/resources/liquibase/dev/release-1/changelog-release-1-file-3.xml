@@ -720,7 +720,7 @@
                 <constraints nullable="false"/>
             </column>
 
-            <column name="object_workflow_id" type="varchar2(20)" remarks="Ссылка на родительскую запись">
+            <column name="object_workflow_id" type="number" remarks="Ссылка на родительскую запись">
                 <constraints nullable="false"/>
             </column>
 
