@@ -1377,7 +1377,7 @@
     <changeSet id="wf-rus-75" logicalFilePath="path-independent" author="ruslan" context="dev">
         <comment>insert into wf_activities</comment>
         <insert schemaName="apps" tableName="wf_states">
-            <column name="code" type="varchar2" value="SEND_ON_ON_SIGNING_BP1"/>
+            <column name="code" type="varchar2" value="SEND_ON_SIGNING_BP1"/>
         </insert>
         <rollback/>
     </changeSet>
@@ -1385,7 +1385,7 @@
     <changeSet id="wf-rus-76" logicalFilePath="path-independent" author="ruslan" context="dev">
         <comment>insert into wf_activities_tl</comment>
         <insert schemaName="apps" tableName="wf_states_tl">
-            <column name="code" type="varchar2" value="SEND_ON_ON_SIGNING_BP1"/>
+            <column name="code" type="varchar2" value="SEND_ON_SIGNING_BP1"/>
             <column name="lang" type="varchar2" value="RU"/>
             <column name="name" type="varchar2" value="Отправить на подписании к поставщику"/>
         </insert>
@@ -1395,7 +1395,7 @@
     <changeSet id="wf-rus-77" logicalFilePath="path-independent" author="ruslan" context="dev">
         <comment>insert into wf_activities_tl</comment>
         <insert schemaName="apps" tableName="wf_states_tl">
-            <column name="code" type="varchar2" value="SEND_ON_ON_SIGNING_BP1"/>
+            <column name="code" type="varchar2" value="SEND_ON_SIGNING_BP1"/>
             <column name="lang" type="varchar2" value="KZ"/>
             <column name="name" type="varchar2" value="Отправить на подписании к поставщику"/>
         </insert>
@@ -1405,7 +1405,7 @@
     <changeSet id="wf-rus-78" logicalFilePath="path-independent" author="ruslan" context="dev">
         <comment>insert into wf_activities</comment>
         <insert schemaName="apps" tableName="wf_states">
-            <column name="code" type="varchar2" value="SEND_ON_ON_SIGNING_BP2"/>
+            <column name="code" type="varchar2" value="SEND_ON_SIGNING_BP2"/>
         </insert>
         <rollback/>
     </changeSet>
@@ -1413,7 +1413,7 @@
     <changeSet id="wf-rus-79" logicalFilePath="path-independent" author="ruslan" context="dev">
         <comment>insert into wf_activities_tl</comment>
         <insert schemaName="apps" tableName="wf_states_tl">
-            <column name="code" type="varchar2" value="SEND_ON_ON_SIGNING_BP2"/>
+            <column name="code" type="varchar2" value="SEND_ON_SIGNING_BP2"/>
             <column name="lang" type="varchar2" value="RU"/>
             <column name="name" type="varchar2" value="Отправить на подписании к потребителю"/>
         </insert>
@@ -1423,7 +1423,7 @@
     <changeSet id="wf-rus-80" logicalFilePath="path-independent" author="ruslan" context="dev">
         <comment>insert into wf_activities_tl</comment>
         <insert schemaName="apps" tableName="wf_states_tl">
-            <column name="code" type="varchar2" value="SEND_ON_ON_SIGNING_BP2"/>
+            <column name="code" type="varchar2" value="SEND_ON_SIGNING_BP2"/>
             <column name="lang" type="varchar2" value="KZ"/>
             <column name="name" type="varchar2" value="Отправить на подписании к потребителю"/>
         </insert>
