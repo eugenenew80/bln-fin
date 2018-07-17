@@ -1637,7 +1637,7 @@
     <changeSet id="wf-rus-103" logicalFilePath="path-independent" author="ruslan" context="dev">
         <comment>insert into wf_activities_tl</comment>
         <insert schemaName="apps" tableName="wf_activities_tl">
-            <column name="code" type="varchar2" value="NOT_SIGNED"/>
+            <column name="code" type="varchar2" value="NOT_SIGN"/>
             <column name="lang" type="varchar2" value="RU"/>
             <column name="name" type="varchar2" value="Не подписать"/>
         </insert>
@@ -1647,7 +1647,7 @@
     <changeSet id="wf-rus-104" logicalFilePath="path-independent" author="ruslan" context="dev">
         <comment>insert into wf_activities_tl</comment>
         <insert schemaName="apps" tableName="wf_activities_tl">
-            <column name="code" type="varchar2" value="NOT_SIGNED"/>
+            <column name="code" type="varchar2" value="NOT_SIGN"/>
             <column name="lang" type="varchar2" value="KZ"/>
             <column name="name" type="varchar2" value="Не подписать"/>
         </insert>
@@ -1682,17 +1682,16 @@
         <rollback/>
     </changeSet>
 
-<!--
-    <changeSet id="wf-rus-102" logicalFilePath="path-independent" author="ruslan" context="dev">
+    <changeSet id="wf-rus-108" logicalFilePath="path-independent" author="ruslan" context="dev">
         <comment>insert into wf_object_activities</comment>
         <insert schemaName="apps" tableName="wf_activities">
             <column name="object_code" type="varchar2" value="CONTRACT"/>
-            <column name="ACTIVITY_CODE" type="varchar2" value="MAKE_READY"/>
+            <column name="ACTIVITY_CODE" type="varchar2" value="COMPLETE"/>
         </insert>
         <rollback/>
     </changeSet>
 
-    <changeSet id="wf-rus-103" logicalFilePath="path-independent" author="ruslan" context="dev">
+    <changeSet id="wf-rus-109" logicalFilePath="path-independent" author="ruslan" context="dev">
         <comment>insert into wf_object_activities</comment>
         <insert schemaName="apps" tableName="wf_activities">
             <column name="object_code" type="varchar2" value="CONTRACT"/>
@@ -1701,7 +1700,7 @@
         <rollback/>
     </changeSet>
 
-    <changeSet id="wf-rus-104" logicalFilePath="path-independent" author="ruslan" context="dev">
+    <changeSet id="wf-rus-110" logicalFilePath="path-independent" author="ruslan" context="dev">
         <comment>insert into wf_object_activities</comment>
         <insert schemaName="apps" tableName="wf_activities">
             <column name="object_code" type="varchar2" value="CONTRACT"/>
@@ -1710,7 +1709,7 @@
         <rollback/>
     </changeSet>
 
-    <changeSet id="wf-rus-105" logicalFilePath="path-independent" author="ruslan" context="dev">
+    <changeSet id="wf-rus-111" logicalFilePath="path-independent" author="ruslan" context="dev">
         <comment>insert into wf_object_activities</comment>
         <insert schemaName="apps" tableName="wf_activities">
             <column name="object_code" type="varchar2" value="CONTRACT"/>
@@ -1719,7 +1718,7 @@
         <rollback/>
     </changeSet>
 
-    <changeSet id="wf-rus-106" logicalFilePath="path-independent" author="ruslan" context="dev">
+    <changeSet id="wf-rus-112" logicalFilePath="path-independent" author="ruslan" context="dev">
         <comment>insert into wf_object_activities</comment>
         <insert schemaName="apps" tableName="wf_activities">
             <column name="object_code" type="varchar2" value="CONTRACT"/>
@@ -1728,12 +1727,111 @@
         <rollback/>
     </changeSet>
 
-    <changeSet id="wf-rus-107" logicalFilePath="path-independent" author="ruslan" context="dev">
+    <changeSet id="wf-rus-113" logicalFilePath="path-independent" author="ruslan" context="dev">
         <comment>insert into wf_object_activities</comment>
         <insert schemaName="apps" tableName="wf_activities">
             <column name="object_code" type="varchar2" value="CONTRACT"/>
+            <column name="ACTIVITY_CODE" type="varchar2" value="CLOSE"/>
+        </insert>
+        <rollback/>
+    </changeSet>
+
+    <changeSet id="wf-rus-114" logicalFilePath="path-independent" author="ruslan" context="dev">
+        <comment>insert into wf_object_activities</comment>
+        <insert schemaName="apps" tableName="wf_activities">
+            <column name="object_code" type="varchar2" value="CONTRACT"/>
+            <column name="ACTIVITY_CODE" type="varchar2" value="NOT_VALIDATE"/>
+        </insert>
+        <rollback/>
+    </changeSet>
+
+    <changeSet id="wf-rus-115" logicalFilePath="path-independent" author="ruslan" context="dev">
+        <comment>insert into wf_object_activities</comment>
+        <insert schemaName="apps" tableName="wf_activities">
+            <column name="object_code" type="varchar2" value="CONTRACT"/>
+            <column name="ACTIVITY_CODE" type="varchar2" value="NOT_SIGN"/>
+        </insert>
+        <rollback/>
+    </changeSet>
+
+    <changeSet id="wf-rus-116" logicalFilePath="path-independent" author="ruslan" context="dev">
+        <comment>insert into wf_object_activities</comment>
+        <insert schemaName="apps" tableName="wf_activities">
+            <column name="object_code" type="varchar2" value="CONTRACT"/>
+            <column name="ACTIVITY_CODE" type="varchar2" value="VALIDATE"/>
+        </insert>
+        <rollback/>
+    </changeSet>
+
+    <changeSet id="wf-rus-117" logicalFilePath="path-independent" author="ruslan" context="dev">
+        <comment>insert into wf_object_activities</comment>
+        <insert schemaName="apps" tableName="wf_activities">
+            <column name="object_code" type="varchar2" value="CONTRACT"/>
+            <column name="ACTIVITY_CODE" type="varchar2" value="SIGN"/>
+        </insert>
+        <rollback/>
+    </changeSet>
+
+    <changeSet id="wf-rus-118" logicalFilePath="path-independent" author="ruslan" context="dev">
+        <comment>insert into wf_object_activities</comment>
+        <insert schemaName="apps" tableName="wf_activities">
+            <column name="object_code" type="varchar2" value="PERFORMANCE_ACT"/>
+            <column name="ACTIVITY_CODE" type="varchar2" value="SEND_ON_AGREEMENT"/>
+        </insert>
+        <rollback/>
+    </changeSet>
+
+    <changeSet id="wf-rus-119" logicalFilePath="path-independent" author="ruslan" context="dev">
+        <comment>insert into wf_object_activities</comment>
+        <insert schemaName="apps" tableName="wf_activities">
+            <column name="object_code" type="varchar2" value="PERFORMANCE_ACT"/>
+            <column name="ACTIVITY_CODE" type="varchar2" value="NOT_VALIDATE"/>
+        </insert>
+        <rollback/>
+    </changeSet>
+
+    <changeSet id="wf-rus-120" logicalFilePath="path-independent" author="ruslan" context="dev">
+        <comment>insert into wf_object_activities</comment>
+        <insert schemaName="apps" tableName="wf_activities">
+            <column name="object_code" type="varchar2" value="PERFORMANCE_ACT"/>
+            <column name="ACTIVITY_CODE" type="varchar2" value="VALIDATE"/>
+        </insert>
+        <rollback/>
+    </changeSet>
+
+    <changeSet id="wf-rus-121" logicalFilePath="path-independent" author="ruslan" context="dev">
+        <comment>insert into wf_object_activities</comment>
+        <insert schemaName="apps" tableName="wf_activities">
+            <column name="object_code" type="varchar2" value="PERFORMANCE_ACT"/>
+            <column name="ACTIVITY_CODE" type="varchar2" value="SEND_ON_SIGNING_BP1"/>
+        </insert>
+        <rollback/>
+    </changeSet>
+
+    <changeSet id="wf-rus-122" logicalFilePath="path-independent" author="ruslan" context="dev">
+        <comment>insert into wf_object_activities</comment>
+        <insert schemaName="apps" tableName="wf_activities">
+            <column name="object_code" type="varchar2" value="PERFORMANCE_ACT"/>
             <column name="ACTIVITY_CODE" type="varchar2" value="SEND_ON_SIGNING_BP2"/>
         </insert>
         <rollback/>
-    </changeSet>-->
+    </changeSet>
+
+    <changeSet id="wf-rus-123" logicalFilePath="path-independent" author="ruslan" context="dev">
+        <comment>insert into wf_object_activities</comment>
+        <insert schemaName="apps" tableName="wf_activities">
+            <column name="object_code" type="varchar2" value="PERFORMANCE_ACT"/>
+            <column name="ACTIVITY_CODE" type="varchar2" value="SIGN"/>
+        </insert>
+        <rollback/>
+    </changeSet>
+
+    <changeSet id="wf-rus-124" logicalFilePath="path-independent" author="ruslan" context="dev">
+        <comment>insert into wf_object_activities</comment>
+        <insert schemaName="apps" tableName="wf_activities">
+            <column name="object_code" type="varchar2" value="PERFORMANCE_ACT"/>
+            <column name="ACTIVITY_CODE" type="varchar2" value="NOT_SIGN"/>
+        </insert>
+        <rollback/>
+    </changeSet>
 </databaseChangeLog>
