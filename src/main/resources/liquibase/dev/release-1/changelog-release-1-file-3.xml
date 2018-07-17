@@ -1834,4 +1834,58 @@
         </insert>
         <rollback/>
     </changeSet>
+
+    <changeSet id="wf-rus-125" logicalFilePath="path-independent" author="ruslan" context="dev">
+        <comment>insert into wf_object_activities</comment>
+        <insert schemaName="apps" tableName="wf_object_activities">
+            <column name="object_code" type="varchar2" value="INVOICE"/>
+            <column name="ACTIVITY_CODE" type="varchar2" value="SEND_ON_AGREEMENT"/>
+        </insert>
+        <rollback/>
+    </changeSet>
+
+    <changeSet id="wf-rus-126" logicalFilePath="path-independent" author="ruslan" context="dev">
+        <comment>insert into wf_object_activities</comment>
+        <insert schemaName="apps" tableName="wf_object_activities">
+            <column name="object_code" type="varchar2" value="INVOICE"/>
+            <column name="ACTIVITY_CODE" type="varchar2" value="VALIDATE"/>
+        </insert>
+        <rollback/>
+    </changeSet>
+
+    <changeSet id="wf-rus-127" logicalFilePath="path-independent" author="ruslan" context="dev">
+        <comment>insert into wf_object_activities</comment>
+        <insert schemaName="apps" tableName="wf_object_activities">
+            <column name="object_code" type="varchar2" value="INVOICE"/>
+            <column name="ACTIVITY_CODE" type="varchar2" value="NOT_VALIDATE"/>
+        </insert>
+        <rollback/>
+    </changeSet>
+
+    <changeSet id="wf-rus-128" logicalFilePath="path-independent" author="ruslan" context="dev">
+        <comment>insert into wf_object_activities</comment>
+        <insert schemaName="apps" tableName="wf_object_activities">
+            <column name="object_code" type="varchar2" value="FIN_PAYMENT_REQUESTS"/>
+            <column name="ACTIVITY_CODE" type="varchar2" value="SEND_ON_AGREEMENT"/>
+        </insert>
+        <rollback/>
+    </changeSet>
+
+    <changeSet id="wf-rus-129" logicalFilePath="path-independent" author="ruslan" context="dev">
+        <comment>insert into wf_object_activities</comment>
+        <insert schemaName="apps" tableName="wf_object_activities">
+            <column name="object_code" type="varchar2" value="FIN_PAYMENT_REQUESTS"/>
+            <column name="ACTIVITY_CODE" type="varchar2" value="VALIDATE"/>
+        </insert>
+        <rollback/>
+    </changeSet>
+
+    <changeSet id="wf-rus-130" logicalFilePath="path-independent" author="ruslan" context="dev">
+        <comment>insert into wf_object_activities</comment>
+        <insert schemaName="apps" tableName="wf_object_activities">
+            <column name="object_code" type="varchar2" value="FIN_PAYMENT_REQUESTS"/>
+            <column name="ACTIVITY_CODE" type="varchar2" value="NOT_VALIDATE"/>
+        </insert>
+        <rollback/>
+    </changeSet>
 </databaseChangeLog>
