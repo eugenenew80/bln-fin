@@ -104,7 +104,7 @@ public class AppConfig  {
     }
 
     @Bean
-    public WebServiceTemplate purchaceContractServiceTemplate(HttpComponentsMessageSender messageSender) {
+    public WebServiceTemplate purchaseContractServiceTemplate(HttpComponentsMessageSender messageSender) {
         Jaxb2Marshaller jaxb2Marshaller = new Jaxb2Marshaller();
         jaxb2Marshaller.setContextPath("sap.erp.contract.mm");
 
