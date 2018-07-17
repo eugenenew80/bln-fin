@@ -9,6 +9,7 @@ import bln.fin.ws.server.invoice.InvoiceBusinessService;
 import bln.fin.ws.server.invoice.InvoiceServiceImpl;
 import bln.fin.ws.server.req.ReqBusinessService;
 import bln.fin.ws.server.req.ReqServiceImpl;
+import bln.fin.ws.server.saleInvoice.SaleInvoiceServiceImpl;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.datatype.jdk8.Jdk8Module;
@@ -156,6 +157,14 @@ public class AppConfig  {
         endpoint.publish("/BusinessPartnerService");
         return endpoint;
     }
+
+    @Bean
+    public Endpoint endpoint5() {
+        EndpointImpl endpoint = new EndpointImpl(springBus(), new SaleInvoiceServiceImpl());
+        endpoint.publish("/SaleInvoiceService");
+        return endpoint;
+    }
+
 
     @Autowired
     private final ReqLineRepo reqLineRepo;
