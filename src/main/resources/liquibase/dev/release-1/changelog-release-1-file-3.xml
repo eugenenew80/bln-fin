@@ -768,7 +768,7 @@
                 startValue="1"/>
     </changeSet>
 
-    <changeSet id="fin-rus-13" logicalFilePath="path-independent" author="ruslan" context="dev">
+    <changeSet id="wf-rus-13" logicalFilePath="path-independent" author="ruslan" context="dev">
         <comment>Creating unique for table: wf_object_workflows_tl</comment>
         <addUniqueConstraint columnNames="object_workflow_id, lang"
                              constraintName="uk_wf_object_workflows_tl"
@@ -797,7 +797,7 @@
         />
     </changeSet>
 
-  <!--  <changeSet id="wf-rus-15" logicalFilePath="path-independent" author="ruslan" context="dev">
+  <changeSet id="wf-rus-15" logicalFilePath="path-independent" author="ruslan" context="dev">
         <comment>insert into wf_states</comment>
         <insert schemaName="apps" tableName="wf_states">
             <column name="code" type="varchar2" value="NOT_COMPLETE"/>
@@ -1215,5 +1215,62 @@
             <column name="name" type="varchar2" value="Счет на оплату"/>
         </insert>
         <rollback/>
-    </changeSet>-->
+    </changeSet>
+
+    <changeSet id="wf-rus-54" logicalFilePath="path-independent" author="ruslan" context="dev">
+        <comment>insert into wf_states</comment>
+        <insert schemaName="apps" tableName="wf_states">
+            <column name="code" type="varchar2" value="VALIDATED"/>
+        </insert>
+        <rollback/>
+    </changeSet>
+
+    <changeSet id="wf-rus-55" logicalFilePath="path-independent" author="ruslan" context="dev">
+        <comment>insert into wf_states_tl</comment>
+        <insert schemaName="apps" tableName="wf_states_tl">
+            <column name="code" type="varchar2" value="VALIDATED"/>
+            <column name="lang" type="varchar2" value="RU"/>
+            <column name="name" type="varchar2" value="Согласован"/>
+        </insert>
+        <rollback/>
+    </changeSet>
+
+    <changeSet id="wf-rus-56" logicalFilePath="path-independent" author="ruslan" context="dev">
+        <comment>insert into wf_states_tl</comment>
+        <insert schemaName="apps" tableName="wf_states_tl">
+            <column name="code" type="varchar2" value="VALIDATED"/>
+            <column name="lang" type="varchar2" value="KZ"/>
+            <column name="name" type="varchar2" value="Согласован"/>
+        </insert>
+        <rollback/>
+    </changeSet>
+
+    <changeSet id="wf-rus-57" logicalFilePath="path-independent" author="ruslan" context="dev">
+        <comment>insert into wf_states</comment>
+        <insert schemaName="apps" tableName="wf_states">
+            <column name="code" type="varchar2" value="NOT_VALIDATED"/>
+        </insert>
+        <rollback/>
+    </changeSet>
+
+    <changeSet id="wf-rus-58" logicalFilePath="path-independent" author="ruslan" context="dev">
+        <comment>insert into wf_states_tl</comment>
+        <insert schemaName="apps" tableName="wf_states_tl">
+            <column name="code" type="varchar2" value="NOT_VALIDATED"/>
+            <column name="lang" type="varchar2" value="RU"/>
+            <column name="name" type="varchar2" value="Не согласован"/>
+        </insert>
+        <rollback/>
+    </changeSet>
+
+    <changeSet id="wf-rus-59" logicalFilePath="path-independent" author="ruslan" context="dev">
+        <comment>insert into wf_states_tl</comment>
+        <insert schemaName="apps" tableName="wf_states_tl">
+            <column name="code" type="varchar2" value="NOT_VALIDATED"/>
+            <column name="lang" type="varchar2" value="KZ"/>
+            <column name="name" type="varchar2" value="Не согласован"/>
+        </insert>
+        <rollback/>
+    </changeSet>
+
 </databaseChangeLog>
