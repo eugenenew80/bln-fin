@@ -541,7 +541,7 @@
         <addForeignKeyConstraint
                 baseTableSchemaName="apps"
                 baseTableName="fin_payment_requests"
-                baseColumnNames="status"
+                baseColumnNames="period_id"
                 constraintName="fk_fin_payment_requests_4"
                 deferrable="true"
                 initiallyDeferred="true"
