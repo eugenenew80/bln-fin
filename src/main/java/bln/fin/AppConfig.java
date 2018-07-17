@@ -79,7 +79,7 @@ public class AppConfig  {
     @Bean
     public WebServiceTemplate salePlanServiceTemplate(HttpComponentsMessageSender messageSender) {
         Jaxb2Marshaller jaxb2Marshaller = new Jaxb2Marshaller();
-        jaxb2Marshaller.setContextPath("sap.erp.plan");
+        jaxb2Marshaller.setContextPath("sap.plan");
 
         WebServiceTemplate webServiceTemplate = new WebServiceTemplate();
         webServiceTemplate.setMarshaller(jaxb2Marshaller);
@@ -91,9 +91,23 @@ public class AppConfig  {
     }
 
     @Bean
+    public WebServiceTemplate saleInvoiceServiceTemplate(HttpComponentsMessageSender messageSender) {
+        Jaxb2Marshaller jaxb2Marshaller = new Jaxb2Marshaller();
+        jaxb2Marshaller.setContextPath("sap.saleInvoice");
+
+        WebServiceTemplate webServiceTemplate = new WebServiceTemplate();
+        webServiceTemplate.setMarshaller(jaxb2Marshaller);
+        webServiceTemplate.setUnmarshaller(jaxb2Marshaller);
+        webServiceTemplate.setMessageSender(messageSender);
+        webServiceTemplate.setDefaultUri("http://kegoci10.corp.kegoc.kz:50000/XISOAPAdapter/MessageServlet?senderParty=&senderService=BIS_D&receiverParty=&receiverService=&interface=SaleInvoice&interfaceNamespace=urn:kegoc.kz:BIS:LO_0002_3_SalesPlan");
+
+        return webServiceTemplate;
+    }
+
+    @Bean
     public WebServiceTemplate saleContractServiceTemplate(HttpComponentsMessageSender messageSender) {
         Jaxb2Marshaller jaxb2Marshaller = new Jaxb2Marshaller();
-        jaxb2Marshaller.setContextPath("sap.erp.contract.sd");
+        jaxb2Marshaller.setContextPath("sap.contract.sd");
 
         WebServiceTemplate webServiceTemplate = new WebServiceTemplate();
         webServiceTemplate.setMarshaller(jaxb2Marshaller);
@@ -107,7 +121,7 @@ public class AppConfig  {
     @Bean
     public WebServiceTemplate purchaseContractServiceTemplate(HttpComponentsMessageSender messageSender) {
         Jaxb2Marshaller jaxb2Marshaller = new Jaxb2Marshaller();
-        jaxb2Marshaller.setContextPath("sap.erp.contract.mm");
+        jaxb2Marshaller.setContextPath("sap.contract.mm");
 
         WebServiceTemplate webServiceTemplate = new WebServiceTemplate();
         webServiceTemplate.setMarshaller(jaxb2Marshaller);
