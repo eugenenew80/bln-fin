@@ -850,7 +850,7 @@
         <addForeignKeyConstraint
                 baseTableSchemaName="apps"
                 baseTableName="cm_doc_rfc"
-                baseColumnNames="fin_req_line_id"
+                baseColumnNames="req_line_id"
                 constraintName="fk_cm_doc_rfc_29"
                 deferrable="true"
                 initiallyDeferred="true"
