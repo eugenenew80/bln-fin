@@ -793,7 +793,7 @@
                 onUpdate="RESTRICT"
                 referencedTableSchemaName="apps"
                 referencedTableName="wf_object_workflows"
-                referencedColumnNames="code"
+                referencedColumnNames="id"
         />
     </changeSet>
 
