@@ -1144,6 +1144,10 @@
                 <constraints nullable="false"/>
             </column>
 
+            <column name="period_id" type="number" remarks="Идентификатор периода">
+                <constraints nullable="false"/>
+            </column>
+
             <column name="vendor_id" type="number" remarks="Идентификатор поставщика товаров, работ, услуг">
                 <constraints nullable="false"/>
             </column>

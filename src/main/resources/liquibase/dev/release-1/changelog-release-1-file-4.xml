@@ -60,7 +60,7 @@
         </createTable>
     </changeSet>
 
-    <changeSet id="ws-eug-32" logicalFilePath="path-independent" author="eugene">
+    <changeSet id="ws-eug-2" logicalFilePath="path-independent" author="eugene">
         <comment>Creating primary key for table: ws_sessions</comment>
         <addPrimaryKey
                 columnNames="id"
