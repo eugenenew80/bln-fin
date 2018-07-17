@@ -386,7 +386,7 @@
 
 
     <changeSet id="wf-eug-19" logicalFilePath="path-independent" author="eugene">
-        <comment>Creating table: fin_periods</comment>
+        <comment>Creating table: wf_object_workflow_tasks</comment>
         <createTable tableName="wf_object_workflow_tasks" schemaName="apps" remarks="Задачи для пользователей по выполнению рабочего потока">
             <column name="id" type="number" remarks="Идентификатор">
                 <constraints nullable="false"/>
@@ -579,18 +579,18 @@
     </changeSet>
 
     <changeSet id="wf-rus-3" logicalFilePath="path-independent" author="ruslan">
-        <comment>Creating foreign constraint: wf_states to wf_states_tl</comment>
+        <comment>Creating foreign constraint: wf_states_tl to wf_states</comment>
         <addForeignKeyConstraint
                 baseTableSchemaName="apps"
-                baseTableName="wf_states"
+                baseTableName="wf_states_tl"
                 baseColumnNames="code"
-                constraintName="fk_wf_states_1"
+                constraintName="fk_wf_states_tl_1"
                 deferrable="true"
                 initiallyDeferred="true"
                 onDelete="CASCADE"
                 onUpdate="RESTRICT"
                 referencedTableSchemaName="apps"
-                referencedTableName="wf_states_tl"
+                referencedTableName="wf_states"
                 referencedColumnNames="code"
         />
     </changeSet>
@@ -638,18 +638,18 @@
     </changeSet>
 
     <changeSet id="wf-rus-6" logicalFilePath="path-independent" author="ruslan">
-        <comment>Creating foreign constraint: wf_activities to wf_activities_tl</comment>
+        <comment>Creating foreign constraint: wf_activities_tl to wf_activities</comment>
         <addForeignKeyConstraint
                 baseTableSchemaName="apps"
-                baseTableName="wf_activities"
+                baseTableName="wf_activities_tl"
                 baseColumnNames="code"
-                constraintName="fk_wf_activities_1"
+                constraintName="fk_wf_activities_tl_1"
                 deferrable="true"
                 initiallyDeferred="true"
                 onDelete="CASCADE"
                 onUpdate="RESTRICT"
                 referencedTableSchemaName="apps"
-                referencedTableName="wf_states_tl"
+                referencedTableName="wf_activities"
                 referencedColumnNames="code"
         />
     </changeSet>
@@ -697,18 +697,18 @@
     </changeSet>
 
     <changeSet id="wf-rus-9" logicalFilePath="path-independent" author="ruslan">
-        <comment>Creating foreign constraint: wf_objects to wf_objects_tl</comment>
+        <comment>Creating foreign constraint: wf_objects_tl to wf_objects</comment>
         <addForeignKeyConstraint
                 baseTableSchemaName="apps"
-                baseTableName="wf_objects"
+                baseTableName="wf_objects_tl"
                 baseColumnNames="code"
-                constraintName="fk_wf_objects_1"
+                constraintName="fk_wf_objects_tl_1"
                 deferrable="true"
                 initiallyDeferred="true"
                 onDelete="CASCADE"
                 onUpdate="RESTRICT"
                 referencedTableSchemaName="apps"
-                referencedTableName="wf_objects_tl"
+                referencedTableName="wf_objects"
                 referencedColumnNames="code"
         />
     </changeSet>
@@ -781,18 +781,18 @@
 
 
     <changeSet id="wf-rus-14" logicalFilePath="path-independent" author="ruslan">
-        <comment>Creating foreign constraint: wf_objects to wf_objects_tl</comment>
+        <comment>Creating foreign constraint: wf_object_workflows_tl to wf_object_workflows</comment>
         <addForeignKeyConstraint
                 baseTableSchemaName="apps"
-                baseTableName="wf_object_workflows"
+                baseTableName="wf_object_workflows_tl"
                 baseColumnNames="object_workflow_id"
-                constraintName="fk_wf_object_workflows"
+                constraintName="fk_wf_object_workflows_tl_1"
                 deferrable="true"
                 initiallyDeferred="true"
                 onDelete="CASCADE"
                 onUpdate="RESTRICT"
                 referencedTableSchemaName="apps"
-                referencedTableName="wf_object_workflows_tl"
+                referencedTableName="wf_object_workflows"
                 referencedColumnNames="code"
         />
     </changeSet>
