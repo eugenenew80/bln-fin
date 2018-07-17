@@ -23,4 +23,11 @@ public class Util {
             return null;
         }
     }
+
+    public static Throwable getCause(Throwable e) {
+        Throwable cause = e;
+        while (e.getCause()!=null)
+            e = e.getCause();
+        return e;
+    }
 }
