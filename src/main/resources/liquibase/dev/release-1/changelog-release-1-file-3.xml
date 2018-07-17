@@ -2001,7 +2001,7 @@
         <rollback/>
     </changeSet>
 
-    <changeSet id="wf-rus-138" logicalFilePath="path-independent" author="ruslan" context="dev">
+    <changeSet id="wf-rus-139" logicalFilePath="path-independent" author="ruslan" context="dev">
         <comment>insert into wf_object_states</comment>
         <insert schemaName="apps" tableName="wf_object_states">
             <column name="object_code" type="varchar2" value="CONTRACT"/>
@@ -2015,7 +2015,7 @@
         <rollback/>
     </changeSet>
 
-    <changeSet id="wf-rus-139" logicalFilePath="path-independent" author="ruslan" context="dev">
+    <changeSet id="wf-rus-140" logicalFilePath="path-independent" author="ruslan" context="dev">
         <comment>insert into wf_object_states</comment>
         <insert schemaName="apps" tableName="wf_object_states">
             <column name="object_code" type="varchar2" value="CONTRACT"/>
@@ -2029,7 +2029,7 @@
         <rollback/>
     </changeSet>
 
-    <changeSet id="wf-rus-140" logicalFilePath="path-independent" author="ruslan" context="dev">
+    <changeSet id="wf-rus-141" logicalFilePath="path-independent" author="ruslan" context="dev">
         <comment>insert into wf_object_states</comment>
         <insert schemaName="apps" tableName="wf_object_states">
             <column name="object_code" type="varchar2" value="PERFORMANCE_ACT"/>
@@ -2043,7 +2043,7 @@
         <rollback/>
     </changeSet>
 
-    <changeSet id="wf-rus-141" logicalFilePath="path-independent" author="ruslan" context="dev">
+    <changeSet id="wf-rus-142" logicalFilePath="path-independent" author="ruslan" context="dev">
         <comment>insert into wf_object_states</comment>
         <insert schemaName="apps" tableName="wf_object_states">
             <column name="object_code" type="varchar2" value="PERFORMANCE_ACT"/>
@@ -2057,7 +2057,7 @@
         <rollback/>
     </changeSet>
 
-    <changeSet id="wf-rus-142" logicalFilePath="path-independent" author="ruslan" context="dev">
+    <changeSet id="wf-rus-143" logicalFilePath="path-independent" author="ruslan" context="dev">
         <comment>insert into wf_object_states</comment>
         <insert schemaName="apps" tableName="wf_object_states">
             <column name="object_code" type="varchar2" value="PERFORMANCE_ACT"/>
@@ -2071,7 +2071,7 @@
         <rollback/>
     </changeSet>
 
-    <changeSet id="wf-rus-143" logicalFilePath="path-independent" author="ruslan" context="dev">
+    <changeSet id="wf-rus-144" logicalFilePath="path-independent" author="ruslan" context="dev">
         <comment>insert into wf_object_states</comment>
         <insert schemaName="apps" tableName="wf_object_states">
             <column name="object_code" type="varchar2" value="PERFORMANCE_ACT"/>
@@ -2085,7 +2085,7 @@
         <rollback/>
     </changeSet>
 
-    <changeSet id="wf-rus-144" logicalFilePath="path-independent" author="ruslan" context="dev">
+    <changeSet id="wf-rus-145" logicalFilePath="path-independent" author="ruslan" context="dev">
         <comment>insert into wf_object_states</comment>
         <insert schemaName="apps" tableName="wf_object_states">
             <column name="object_code" type="varchar2" value="PERFORMANCE_ACT"/>
@@ -2099,7 +2099,7 @@
         <rollback/>
     </changeSet>
 
-    <changeSet id="wf-rus-145" logicalFilePath="path-independent" author="ruslan" context="dev">
+    <changeSet id="wf-rus-146" logicalFilePath="path-independent" author="ruslan" context="dev">
         <comment>insert into wf_object_states</comment>
         <insert schemaName="apps" tableName="wf_object_states">
             <column name="object_code" type="varchar2" value="PERFORMANCE_ACT"/>
@@ -2113,7 +2113,7 @@
         <rollback/>
     </changeSet>
 
-    <changeSet id="wf-rus-146" logicalFilePath="path-independent" author="ruslan" context="dev">
+    <changeSet id="wf-rus-147" logicalFilePath="path-independent" author="ruslan" context="dev">
         <comment>insert into wf_object_states</comment>
         <insert schemaName="apps" tableName="wf_object_states">
             <column name="object_code" type="varchar2" value="PERFORMANCE_ACT"/>
@@ -2127,7 +2127,7 @@
         <rollback/>
     </changeSet>
 
-    <changeSet id="wf-rus-147" logicalFilePath="path-independent" author="ruslan" context="dev">
+    <changeSet id="wf-rus-148" logicalFilePath="path-independent" author="ruslan" context="dev">
         <comment>insert into wf_object_states</comment>
         <insert schemaName="apps" tableName="wf_object_states">
             <column name="object_code" type="varchar2" value="PERFORMANCE_ACT"/>
@@ -2141,7 +2141,7 @@
         <rollback/>
     </changeSet>
 
-    <changeSet id="wf-rus-148" logicalFilePath="path-independent" author="ruslan" context="dev">
+    <changeSet id="wf-rus-149" logicalFilePath="path-independent" author="ruslan" context="dev">
         <comment>insert into wf_object_states</comment>
         <insert schemaName="apps" tableName="wf_object_states">
             <column name="object_code" type="varchar2" value="INVOICE"/>
@@ -2155,7 +2155,7 @@
         <rollback/>
     </changeSet>
 
-    <changeSet id="wf-rus-149" logicalFilePath="path-independent" author="ruslan" context="dev">
+    <changeSet id="wf-rus-150" logicalFilePath="path-independent" author="ruslan" context="dev">
         <comment>insert into wf_object_states</comment>
         <insert schemaName="apps" tableName="wf_object_states">
             <column name="object_code" type="varchar2" value="INVOICE"/>
@@ -2169,7 +2169,7 @@
         <rollback/>
     </changeSet>
 
-    <changeSet id="wf-rus-150" logicalFilePath="path-independent" author="ruslan" context="dev">
+    <changeSet id="wf-rus-151" logicalFilePath="path-independent" author="ruslan" context="dev">
         <comment>insert into wf_object_states</comment>
         <insert schemaName="apps" tableName="wf_object_states">
             <column name="object_code" type="varchar2" value="INVOICE"/>
@@ -2183,7 +2183,7 @@
         <rollback/>
     </changeSet>
 
-    <changeSet id="wf-rus-151" logicalFilePath="path-independent" author="ruslan" context="dev">
+    <changeSet id="wf-rus-152" logicalFilePath="path-independent" author="ruslan" context="dev">
         <comment>insert into wf_object_states</comment>
         <insert schemaName="apps" tableName="wf_object_states">
             <column name="object_code" type="varchar2" value="INVOICE"/>
