@@ -1747,7 +1747,7 @@
 
     <changeSet id="wf-rus-115" logicalFilePath="path-independent" author="ruslan" context="dev">
         <comment>insert into wf_object_activities</comment>
-        <insert schemaName="apps" tableName="wf_activities">
+        <insert schemaName="apps" tableName="wf_object_activities">
             <column name="object_code" type="varchar2" value="CONTRACT"/>
             <column name="ACTIVITY_CODE" type="varchar2" value="NOT_SIGN"/>
         </insert>
