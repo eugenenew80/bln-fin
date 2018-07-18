@@ -1888,7 +1888,7 @@
                 baseTableSchemaName="apps"
                 baseTableName="fin_periods"
                 baseColumnNames="status"
-                constraintName="fk_fin_periods_1"
+                constraintName="fk_fin_periods_2"
                 deferrable="true"
                 initiallyDeferred="true"
                 onDelete="RESTRICT"
