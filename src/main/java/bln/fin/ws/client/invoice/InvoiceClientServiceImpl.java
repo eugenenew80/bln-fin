@@ -4,6 +4,7 @@ import bln.fin.entity.SaleInvoice;
 import bln.fin.repo.SaleInvoiceRepo;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.ws.client.core.WebServiceTemplate;
 
 import java.util.List;
 
@@ -11,6 +12,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class InvoiceClientServiceImpl implements InvoiceClientService {
     private final SaleInvoiceRepo saleInvoiceRepo;
+    private final WebServiceTemplate saleInvoiceServiceTemplate;
 
     @Override
     public void sendByCustomer(Long vendorId, Long customerId) {

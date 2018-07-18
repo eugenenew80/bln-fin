@@ -38,12 +38,12 @@ public class ReqLineDto {
 
     @XmlElement(required = true)
     @Documentation("Валюта")
-    @Facets(length = 3)
+    @Facets(minLength = 3, maxLength = 3)
     private String currencyCode;
 
     @XmlElement(required = true)
     @Documentation("Балансовая единица")
-    @Facets(length = 4)
+    @Facets(minLength = 4, maxLength = 4)
     private String companyCode;
 
     @XmlElement(required = true)
@@ -52,12 +52,12 @@ public class ReqLineDto {
 
     @XmlElement(defaultValue = "N")
     @Documentation("Флаг удаления заявки")
-    @Facets(length = 1)
+    @Facets(minLength = 1, maxLength = 1)
     private String deleted;
 
     @XmlElement(defaultValue = "N")
     @Documentation("Флаг деблокирования заявки")
-    @Facets(length = 1)
+    @Facets(minLength = 1, maxLength = 1)
     private String unlocked;
 
     @XmlElement(required = true, name = "item")

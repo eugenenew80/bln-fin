@@ -9,6 +9,7 @@ import bln.fin.ws.server.invoice.InvoiceBusinessService;
 import bln.fin.ws.server.invoice.InvoiceServiceImpl;
 import bln.fin.ws.server.req.ReqBusinessService;
 import bln.fin.ws.server.req.ReqServiceImpl;
+import bln.fin.ws.server.saleInvoice.SaleInvoiceServiceImpl;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.datatype.jdk8.Jdk8Module;
@@ -78,7 +79,7 @@ public class AppConfig  {
     @Bean
     public WebServiceTemplate salePlanServiceTemplate(HttpComponentsMessageSender messageSender) {
         Jaxb2Marshaller jaxb2Marshaller = new Jaxb2Marshaller();
-        jaxb2Marshaller.setContextPath("sap.erp.plan");
+        jaxb2Marshaller.setContextPath("sap.plan");
 
         WebServiceTemplate webServiceTemplate = new WebServiceTemplate();
         webServiceTemplate.setMarshaller(jaxb2Marshaller);
@@ -90,9 +91,23 @@ public class AppConfig  {
     }
 
     @Bean
+    public WebServiceTemplate saleInvoiceServiceTemplate(HttpComponentsMessageSender messageSender) {
+        Jaxb2Marshaller jaxb2Marshaller = new Jaxb2Marshaller();
+        jaxb2Marshaller.setContextPath("sap.saleInvoice");
+
+        WebServiceTemplate webServiceTemplate = new WebServiceTemplate();
+        webServiceTemplate.setMarshaller(jaxb2Marshaller);
+        webServiceTemplate.setUnmarshaller(jaxb2Marshaller);
+        webServiceTemplate.setMessageSender(messageSender);
+        webServiceTemplate.setDefaultUri("http://kegoci10.corp.kegoc.kz:50000/XISOAPAdapter/MessageServlet?senderParty=&senderService=BIS_D&receiverParty=&receiverService=&interface=SaleInvoice&interfaceNamespace=urn:kegoc.kz:BIS:LO_0002_3_SalesPlan");
+
+        return webServiceTemplate;
+    }
+
+    @Bean
     public WebServiceTemplate saleContractServiceTemplate(HttpComponentsMessageSender messageSender) {
         Jaxb2Marshaller jaxb2Marshaller = new Jaxb2Marshaller();
-        jaxb2Marshaller.setContextPath("sap.erp.contract.sd");
+        jaxb2Marshaller.setContextPath("sap.contract.sd");
 
         WebServiceTemplate webServiceTemplate = new WebServiceTemplate();
         webServiceTemplate.setMarshaller(jaxb2Marshaller);
@@ -106,7 +121,7 @@ public class AppConfig  {
     @Bean
     public WebServiceTemplate purchaseContractServiceTemplate(HttpComponentsMessageSender messageSender) {
         Jaxb2Marshaller jaxb2Marshaller = new Jaxb2Marshaller();
-        jaxb2Marshaller.setContextPath("sap.erp.contract.mm");
+        jaxb2Marshaller.setContextPath("sap.contract.mm");
 
         WebServiceTemplate webServiceTemplate = new WebServiceTemplate();
         webServiceTemplate.setMarshaller(jaxb2Marshaller);
@@ -156,6 +171,14 @@ public class AppConfig  {
         endpoint.publish("/BusinessPartnerService");
         return endpoint;
     }
+
+    @Bean
+    public Endpoint endpoint5() {
+        EndpointImpl endpoint = new EndpointImpl(springBus(), new SaleInvoiceServiceImpl());
+        endpoint.publish("/SaleInvoiceService");
+        return endpoint;
+    }
+
 
     @Autowired
     private final ReqLineRepo reqLineRepo;

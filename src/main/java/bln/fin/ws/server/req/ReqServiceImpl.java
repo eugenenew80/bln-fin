@@ -3,7 +3,6 @@ package bln.fin.ws.server.req;
 import bln.fin.entity.ReqLine;
 import bln.fin.entity.SoapSession;
 import bln.fin.entity.enums.DirectionEnum;
-import bln.fin.entity.enums.SessionStatusEnum;
 import bln.fin.repo.ReqLineRepo;
 import bln.fin.ws.SessionService;
 import bln.fin.ws.server.MessageDto;
@@ -12,6 +11,7 @@ import org.springframework.stereotype.Service;
 import javax.jws.WebService;
 import java.util.ArrayList;
 import java.util.List;
+import static bln.fin.common.Util.getCause;
 import static java.util.stream.Collectors.toList;
 
 @Service
@@ -31,35 +31,42 @@ public class ReqServiceImpl implements ReqService {
             .filter(t -> t!=null)
             .collect(toList());
 
+        List<MessageDto> messages = new ArrayList<>();
         try {
-            reqLineRepo.save(reqLines);
+            for (ReqLine reqLine : reqLines) {
+                MessageDto msg = save(reqLine);
+                messages.add(msg);
+            }
             sessionService.successSession(session, (long) reqLines.size());
         }
         catch (Exception e) {
             sessionService.errorSession(session, e);
         }
 
-        return createResponse(session);
+        return messages;
     }
 
-    private List<MessageDto> createResponse(SoapSession session) {
-        List<MessageDto> messages = new ArrayList<>();
+    private MessageDto save(ReqLine reqLine) {
         MessageDto msg = new MessageDto();
-        msg.setSysCode("BIS");
-
-        if (session.getStatus()==SessionStatusEnum.C) {
+        try {
+            reqLineRepo.save(reqLine);
             msg.setMsgType("S");
             msg.setMsgNum("0");
-            messages.add(msg);
+            msg.setMsg("OK");
+            msg.setId(reqLine.getId().toString());
+            msg.setSapId(reqLine.getReqNum().toString());
         }
-
-        if (session.getStatus()==SessionStatusEnum.E) {
+        catch (Exception e) {
             msg.setMsgType("E");
             msg.setMsgNum("1");
-            msg.setMsg(session.getErrMsg());
-            messages.add(msg);
+            msg.setSapId(reqLine.getReqNum().toString());
+            Throwable cause = getCause(e);
+            if (cause.getMessage()!=null)
+                msg.setMsg(cause.getMessage());
+            else
+                msg.setMsg(cause.getClass().getCanonicalName());
         }
 
-        return messages;
+        return msg;
     }
 }

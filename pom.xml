@@ -105,6 +105,19 @@
                             <schemaIncludes><include>BIS_MM_Contract.wsdl</include></schemaIncludes>
                         </configuration>
                     </execution>
+
+                    <execution>
+                        <id>4</id>
+                        <goals>
+                            <goal>generate</goal>
+                        </goals>
+                        <configuration>
+                            <generatePackage>sap.saleInvoice</generatePackage>
+                            <generateDirectory>${project.basedir}/src/main/java</generateDirectory>
+                            <schemaDirectory>${project.basedir}/src/main/resources/wsdl</schemaDirectory>
+                            <schemaIncludes><include>SaleInvoiceService.wsdl</include></schemaIncludes>
+                        </configuration>
+                    </execution>
                 </executions>
             </plugin>
             <!-- end::wsdl[] -->
