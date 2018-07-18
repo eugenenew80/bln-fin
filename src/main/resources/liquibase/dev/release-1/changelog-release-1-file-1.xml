@@ -201,7 +201,11 @@
                 <constraints nullable="true"/>
             </column>
 
-            <column name="status" type="varchar2(10)" remarks="Статус СФ в БИС">
+            <column name="status" type="varchar2(20)" remarks="Статус СФ в БИС">
+                <constraints nullable="true"/>
+            </column>
+
+            <column name="is_ready" type="number" remarks="готов">
                 <constraints nullable="true"/>
             </column>
 
@@ -1181,6 +1185,10 @@
             </column>
 
             <column name="amount" type="number" remarks="Сумма счёта-фактуры">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="is_ready" type="number" remarks="Готов">
                 <constraints nullable="false"/>
             </column>
 

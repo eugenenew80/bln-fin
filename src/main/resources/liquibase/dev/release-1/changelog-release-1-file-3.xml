@@ -820,6 +820,7 @@
                                columnName="auto_call_activity_code"
                                schemaName="apps"
                                tableName="wf_object_state_transitions"/>
+        <rollback/>
     </changeSet>
 
     <changeSet id="wf-rus-16" logicalFilePath="path-independent" author="ruslan" context="dev">
@@ -1575,6 +1576,7 @@
         <column name="IS_USERS_REQUIRED" type="number" value="0"/>
         <column name="MIN_USERS" type="number" value="0"/>
         <column name="MAX_USERS" type="number" value="0"/>
+        <rollback/>
     </insert>
     </changeSet>
 
@@ -1593,6 +1595,307 @@
             <column name="STATE_CODE_TO" type="number" value="ON_VALIDATED"/>
             <column name="ACTIVITY_CODE" type="number" value="SEND_ON_VALIDATED"/>
         </insert>
-    <rollback/>
+
+        <insert schemaName="apps" tableName="wf_object_state_transitions">
+            <column name="object_code" type="varchar2" value="CONTRACT"/>
+            <column name="STATE_CODE_FROM" type="varchar2" value="ON_VALIDATED"/>
+            <column name="STATE_CODE_TO" type="number" value="VALIDATED"/>
+            <column name="ACTIVITY_CODE" type="number" value="VALIDATE"/>
+            <column name="auto_call_activity_code" type="varchar2" value="SEND_ON_SIGNING_BP1"/>
+        </insert>
+
+        <insert schemaName="apps" tableName="wf_object_state_transitions">
+            <column name="object_code" type="varchar2" value="CONTRACT"/>
+            <column name="STATE_CODE_FROM" type="varchar2" value="ON_SIGNING_BP1"/>
+            <column name="STATE_CODE_TO" type="number" value="ON_SIGNING_BP2"/>
+            <column name="ACTIVITY_CODE" type="number" value="SIGN"/>
+            <column name="auto_call_activity_code" type="varchar2" value="SEND_ON_SIGNING_BP2"/>
+        </insert>
+
+        <insert schemaName="apps" tableName="wf_object_state_transitions">
+            <column name="object_code" type="varchar2" value="CONTRACT"/>
+            <column name="STATE_CODE_FROM" type="varchar2" value="ON_SIGNING_BP2"/>
+            <column name="STATE_CODE_TO" type="number" value="SIGNED"/>
+            <column name="ACTIVITY_CODE" type="number" value="SIGN"/>
+        </insert>
+
+        <insert schemaName="apps" tableName="wf_object_state_transitions">
+            <column name="object_code" type="varchar2" value="CONTRACT"/>
+            <column name="STATE_CODE_FROM" type="varchar2" value="ON_VALIDATED"/>
+            <column name="STATE_CODE_TO" type="number" value="NOT_VALIDATED"/>
+            <column name="ACTIVITY_CODE" type="number" value="NOT_VALIDATE"/>
+        </insert>
+
+        <insert schemaName="apps" tableName="wf_object_state_transitions">
+            <column name="object_code" type="varchar2" value="CONTRACT"/>
+            <column name="STATE_CODE_FROM" type="varchar2" value="ON_SIGNING_BP1"/>
+            <column name="STATE_CODE_TO" type="number" value="NOT_SIGNED"/>
+            <column name="ACTIVITY_CODE" type="number" value="NOT_SIGN"/>
+        </insert>
+
+        <insert schemaName="apps" tableName="wf_object_state_transitions">
+            <column name="object_code" type="varchar2" value="CONTRACT"/>
+            <column name="STATE_CODE_FROM" type="varchar2" value="ON_SIGNING_BP2"/>
+            <column name="STATE_CODE_TO" type="number" value="NOT_SIGNED"/>
+            <column name="ACTIVITY_CODE" type="number" value="NOT_SIGN"/>
+        </insert>
+
+        <insert schemaName="apps" tableName="wf_object_state_transitions">
+            <column name="object_code" type="varchar2" value="PERFORMANCE_ACT"/>
+            <column name="STATE_CODE_FROM" type="varchar2" value="CREATE"/>
+            <column name="STATE_CODE_TO" type="number" value="ON_VALIDATED"/>
+            <column name="ACTIVITY_CODE" type="number" value="SEND_ON_VALIDATED"/>
+        </insert>
+
+        <insert schemaName="apps" tableName="wf_object_state_transitions">
+            <column name="object_code" type="varchar2" value="PERFORMANCE_ACT"/>
+            <column name="STATE_CODE_FROM" type="varchar2" value="ON_VALIDATED"/>
+            <column name="STATE_CODE_TO" type="number" value="VALIDATED"/>
+            <column name="ACTIVITY_CODE" type="number" value="VALIDATE"/>
+            <column name="auto_call_activity_code" type="varchar2" value="SEND_ON_SIGNING_BP1"/>
+        </insert>
+
+        <insert schemaName="apps" tableName="wf_object_state_transitions">
+            <column name="object_code" type="varchar2" value="PERFORMANCE_ACT"/>
+            <column name="STATE_CODE_FROM" type="varchar2" value="ON_SIGNING_BP1"/>
+            <column name="STATE_CODE_TO" type="number" value="ON_SIGNING_BP2"/>
+            <column name="ACTIVITY_CODE" type="number" value="SIGN"/>
+            <column name="auto_call_activity_code" type="varchar2" value="SEND_ON_SIGNING_BP2"/>
+        </insert>
+
+        <insert schemaName="apps" tableName="wf_object_state_transitions">
+            <column name="object_code" type="varchar2" value="PERFORMANCE_ACT"/>
+            <column name="STATE_CODE_FROM" type="varchar2" value="ON_SIGNING_BP2"/>
+            <column name="STATE_CODE_TO" type="number" value="SIGNED"/>
+            <column name="ACTIVITY_CODE" type="number" value="SIGN"/>
+        </insert>
+
+        <insert schemaName="apps" tableName="wf_object_state_transitions">
+            <column name="object_code" type="varchar2" value="PERFORMANCE_ACT"/>
+            <column name="STATE_CODE_FROM" type="varchar2" value="ON_VALIDATED"/>
+            <column name="STATE_CODE_TO" type="number" value="NOT_VALIDATED"/>
+            <column name="ACTIVITY_CODE" type="number" value="NOT_VALIDATE"/>
+        </insert>
+
+        <insert schemaName="apps" tableName="wf_object_state_transitions">
+            <column name="object_code" type="varchar2" value="PERFORMANCE_ACT"/>
+            <column name="STATE_CODE_FROM" type="varchar2" value="ON_SIGNING_BP1"/>
+            <column name="STATE_CODE_TO" type="number" value="NOT_SIGNED"/>
+            <column name="ACTIVITY_CODE" type="number" value="NOT_SIGN"/>
+        </insert>
+
+        <insert schemaName="apps" tableName="wf_object_state_transitions">
+            <column name="object_code" type="varchar2" value="PERFORMANCE_ACT"/>
+            <column name="STATE_CODE_FROM" type="varchar2" value="ON_SIGNING_BP2"/>
+            <column name="STATE_CODE_TO" type="number" value="NOT_SIGNED"/>
+            <column name="ACTIVITY_CODE" type="number" value="NOT_SIGN"/>
+        </insert>
+
+        <insert schemaName="apps" tableName="wf_object_state_transitions">
+            <column name="object_code" type="varchar2" value="INVOICE"/>
+            <column name="STATE_CODE_FROM" type="varchar2" value="CREATE"/>
+            <column name="STATE_CODE_TO" type="number" value="ON_VALIDATED"/>
+            <column name="ACTIVITY_CODE" type="number" value="SEND_ON_VALIDATED"/>
+        </insert>
+
+        <insert schemaName="apps" tableName="wf_object_state_transitions">
+            <column name="object_code" type="varchar2" value="INVOICE"/>
+            <column name="STATE_CODE_FROM" type="varchar2" value="ON_VALIDATED"/>
+            <column name="STATE_CODE_TO" type="number" value="VALIDATED"/>
+            <column name="ACTIVITY_CODE" type="number" value="VALIDATE"/>
+        </insert>
+
+        <insert schemaName="apps" tableName="wf_object_state_transitions">
+            <column name="object_code" type="varchar2" value="INVOICE"/>
+            <column name="STATE_CODE_FROM" type="varchar2" value="ON_VALIDATED"/>
+            <column name="STATE_CODE_TO" type="number" value="NOT_VALIDATED"/>
+            <column name="ACTIVITY_CODE" type="number" value="NOT_VALIDATE"/>
+        </insert>
+
+        <insert schemaName="apps" tableName="wf_object_state_transitions">
+            <column name="object_code" type="varchar2" value="FIN_PAYMENT_REQUESTS"/>
+            <column name="STATE_CODE_FROM" type="varchar2" value="CREATE"/>
+            <column name="STATE_CODE_TO" type="number" value="ON_VALIDATED"/>
+            <column name="ACTIVITY_CODE" type="number" value="SEND_ON_VALIDATED"/>
+        </insert>
+
+        <insert schemaName="apps" tableName="wf_object_state_transitions">
+            <column name="object_code" type="varchar2" value="FIN_PAYMENT_REQUESTS"/>
+            <column name="STATE_CODE_FROM" type="varchar2" value="ON_VALIDATED"/>
+            <column name="STATE_CODE_TO" type="number" value="VALIDATED"/>
+            <column name="ACTIVITY_CODE" type="number" value="VALIDATE"/>
+        </insert>
+
+        <insert schemaName="apps" tableName="wf_object_state_transitions">
+            <column name="object_code" type="varchar2" value="FIN_PAYMENT_REQUESTS"/>
+            <column name="STATE_CODE_FROM" type="varchar2" value="ON_VALIDATED"/>
+            <column name="STATE_CODE_TO" type="number" value="NOT_VALIDATED"/>
+            <column name="ACTIVITY_CODE" type="number" value="NOT_VALIDATE"/>
+        </insert>
+        <rollback/>
+    </changeSet>
+
+    <changeSet id="fin-rus-56" logicalFilePath="path-independent" author="ruslan">
+    <comment>Creating table: fin_period_status</comment>
+        <createTable tableName="fin_period_status" schemaName="apps" remarks="Список статусов для периодов">
+            <column name="code" type="varchar(20)" remarks="Код действия">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="create_date" type="TIMESTAMP" remarks="Дата создания">
+                <constraints nullable="true"/>
+            </column>
+
+            <column name="last_update_date" type="TIMESTAMP" remarks="Дата изменения">
+                <constraints nullable="true"/>
+            </column>
+
+            <column name="create_by" type="number" remarks="Автор">
+                <constraints nullable="true"/>
+            </column>
+
+            <column name="last_update_by" type="number" remarks="Автор изменения">
+                <constraints nullable="true"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="fin-rus-57" logicalFilePath="path-independent" author="ruslan">
+    <comment>Creating primary key for table: fin_period_status</comment>
+        <addPrimaryKey
+                columnNames="code"
+                constraintName="pk_fin_period_status"
+                schemaName="apps"
+                tableName="fin_period_status"/>
+    </changeSet>
+
+    <changeSet id="fin-rus-58" logicalFilePath="path-independent" author="ruslan">
+        <comment>Creating table: fin_period_status_tl</comment>
+        <createTable tableName="fin_period_status_tl" schemaName="apps" remarks="Перевод Список статусов для периодов">
+            <column name="code" type="varchar2(20)" remarks="Код состояния">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="lang" type="varchar(10)" remarks="язык">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="name" type="varchar(100)" remarks="Наименование состояний">
+                <constraints nullable="true"/>
+            </column>
+
+            <column name="create_date" type="TIMESTAMP" remarks="Дата создания">
+                <constraints nullable="true"/>
+            </column>
+
+            <column name="last_update_date" type="TIMESTAMP" remarks="Дата изменения">
+                <constraints nullable="true"/>
+            </column>
+
+            <column name="create_by" type="number" remarks="Автор">
+                <constraints nullable="true"/>
+            </column>
+
+            <column name="last_update_by" type="number" remarks="Автор изменения">
+                <constraints nullable="true"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="fin-rus-59" logicalFilePath="path-independent" author="ruslan">
+        <comment>Creating primary key for table: fin_period_status_tl</comment>
+        <addPrimaryKey
+                columnNames="code,lang"
+                constraintName="pk_fin_period_status_tl"
+                schemaName="apps"
+                tableName="fin_period_status_tl"/>
+    </changeSet>
+
+    <changeSet id="fin-rus-60" logicalFilePath="path-independent" author="ruslan">
+        <comment>Creating foreign constraint: fin_period_status_tl to fin_period_status</comment>
+        <addForeignKeyConstraint
+                baseTableSchemaName="apps"
+                baseTableName="fin_period_status_tl"
+                baseColumnNames="code"
+                constraintName="fk_fin_period_status_tl_1"
+                deferrable="true"
+                initiallyDeferred="true"
+                onDelete="CASCADE"
+                onUpdate="RESTRICT"
+                referencedTableSchemaName="apps"
+                referencedTableName="fin_period_status"
+                referencedColumnNames="code"
+        />
+    </changeSet>
+
+    <changeSet id="fin-rus-61" logicalFilePath="path-independent" author="ruslan" context="dev">
+        <comment>insert into fin_period_status</comment>
+        <insert schemaName="apps" tableName="fin_period_status">
+            <column name="code" type="varchar2" value="C"/>
+        </insert>
+
+        <insert schemaName="apps" tableName="wf_object_states">
+            <column name="code" type="varchar2" value="O"/>
+        </insert>
+
+        <insert schemaName="apps" tableName="wf_object_states">
+            <column name="code" type="varchar2" value="U"/>
+        </insert>
+    </changeSet>
+
+    <changeSet id="fin-rus-62" logicalFilePath="path-independent" author="ruslan" context="dev">
+        <comment>insert into fin_period_status_tl</comment>
+        <insert schemaName="apps" tableName="fin_period_status_tl">
+            <column name="code" type="varchar2" value="C"/>
+            <column name="lang" type="varchar2" value="RU"/>
+            <column name="name" type="varchar2" value="Закрыт"/>
+        </insert>
+
+        <insert schemaName="apps" tableName="fin_period_status_tl">
+            <column name="code" type="varchar2" value="C"/>
+            <column name="lang" type="varchar2" value="KZ"/>
+            <column name="name" type="varchar2" value="Закрыт"/>
+        </insert>
+
+        <insert schemaName="apps" tableName="wf_object_states">
+            <column name="code" type="varchar2" value="O"/>
+            <column name="lang" type="varchar2" value="RU"/>
+            <column name="name" type="varchar2" value="Открыт"/>
+        </insert>
+
+        <insert schemaName="apps" tableName="wf_object_states">
+            <column name="code" type="varchar2" value="O"/>
+            <column name="lang" type="varchar2" value="KZ"/>
+            <column name="name" type="varchar2" value="Открыт"/>
+        </insert>
+
+        <insert schemaName="apps" tableName="wf_object_states">
+            <column name="code" type="varchar2" value="U"/>
+            <column name="lang" type="varchar2" value="RU"/>
+            <column name="name" type="varchar2" value="Создан"/>
+        </insert>
+
+        <insert schemaName="apps" tableName="wf_object_states">
+            <column name="code" type="varchar2" value="U"/>
+            <column name="lang" type="varchar2" value="KZ"/>
+            <column name="name" type="varchar2" value="Создан"/>
+        </insert>
+    </changeSet>
+
+    <changeSet id="fin-rus-63" logicalFilePath="path-independent" author="ruslan">
+        <comment>Creating foreign constraint: fin_periods to fin_period_status</comment>
+        <addForeignKeyConstraint
+                baseTableSchemaName="apps"
+                baseTableName="fin_periods"
+                baseColumnNames="status"
+                constraintName="fk_fin_periods_1"
+                deferrable="true"
+                initiallyDeferred="true"
+                onDelete="RESTRICT"
+                onUpdate="RESTRICT"
+                referencedTableSchemaName="apps"
+                referencedTableName="fin_period_status"
+                referencedColumnNames="code"
+        />
     </changeSet>
 </databaseChangeLog>
