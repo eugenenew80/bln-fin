@@ -1834,11 +1834,11 @@
             <column name="code" type="varchar2" value="C"/>
         </insert>
 
-        <insert schemaName="apps" tableName="wf_object_states">
+        <insert schemaName="apps" tableName="fin_period_status">
             <column name="code" type="varchar2" value="O"/>
         </insert>
 
-        <insert schemaName="apps" tableName="wf_object_states">
+        <insert schemaName="apps" tableName="fin_period_status">
             <column name="code" type="varchar2" value="U"/>
         </insert>
     </changeSet>
@@ -1857,25 +1857,25 @@
             <column name="name" type="varchar2" value="Закрыт"/>
         </insert>
 
-        <insert schemaName="apps" tableName="wf_object_states">
+        <insert schemaName="apps" tableName="fin_period_status_tl">
             <column name="code" type="varchar2" value="O"/>
             <column name="lang" type="varchar2" value="RU"/>
             <column name="name" type="varchar2" value="Открыт"/>
         </insert>
 
-        <insert schemaName="apps" tableName="wf_object_states">
+        <insert schemaName="apps" tableName="fin_period_status_tl">
             <column name="code" type="varchar2" value="O"/>
             <column name="lang" type="varchar2" value="KZ"/>
             <column name="name" type="varchar2" value="Открыт"/>
         </insert>
 
-        <insert schemaName="apps" tableName="wf_object_states">
+        <insert schemaName="apps" tableName="fin_period_status_tl">
             <column name="code" type="varchar2" value="U"/>
             <column name="lang" type="varchar2" value="RU"/>
             <column name="name" type="varchar2" value="Создан"/>
         </insert>
 
-        <insert schemaName="apps" tableName="wf_object_states">
+        <insert schemaName="apps" tableName="fin_period_status_tl">
             <column name="code" type="varchar2" value="U"/>
             <column name="lang" type="varchar2" value="KZ"/>
             <column name="name" type="varchar2" value="Создан"/>
