@@ -100,7 +100,7 @@ public class SaleInvoice {
 
     @ManyToOne
     @JoinColumn(name = "src_invoice_id")
-    private SaleInvoice saleInvoice;
+    private SaleInvoice srcSaleInvoice;
 
     @Column(name = "transferred_to_erp_date")
     private LocalDateTime transferredToErpDate;

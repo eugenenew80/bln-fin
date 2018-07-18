@@ -1,7 +1,6 @@
 package bln.fin.ws.server.saleInvoice;
 
 import lombok.Data;
-
 import javax.xml.bind.annotation.*;
 
 @Data
@@ -10,17 +9,13 @@ import javax.xml.bind.annotation.*;
 @Documentation("Позиция СФ")
 public class SaleInvoiceLineDto {
 
-    @XmlElement(required = true)
-    @Documentation("№ позиции в СФ")
-    private Long posNum;
+    @XmlElement
+    @Documentation("№ материала/услуги SAP")
+    private String itemNum;
 
     @XmlElement(required = true)
     @Documentation("Наименование позиции")
-    private String posName;
-
-    @XmlElement
-    @Documentation("№ материала/услуги")
-    private String itemNum;
+    private String itemName;
 
     @XmlElement(required = true)
     @Documentation("Единица измерения")
@@ -37,8 +32,4 @@ public class SaleInvoiceLineDto {
     @XmlElement(required = true)
     @Documentation("Стоимость без НДС")
     private Double amount;
-
-    @XmlElement
-    @Documentation("Ставка НДС")
-    private Double taxRate;
 }
