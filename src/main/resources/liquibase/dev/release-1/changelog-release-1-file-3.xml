@@ -814,10 +814,58 @@
         />
     </changeSet>
 
-  <changeSet id="wf-rus-15" logicalFilePath="path-independent" author="ruslan" context="dev">
+    <changeSet id="wf-rus-15" logicalFilePath="path-independent" author="ruslan">
+        <comment>drop not null constraint wf_object_state_transitions.auto_call_activity_code</comment>
+        <dropNotNullConstraint columnDataType="varchar2(20)"
+                               columnName="auto_call_activity_code"
+                               schemaName="apps"
+                               tableName="wf_object_state_transitions"/>
+    </changeSet>
+
+    <changeSet id="wf-rus-16" logicalFilePath="path-independent" author="ruslan" context="dev">
         <comment>insert into wf_states</comment>
         <insert schemaName="apps" tableName="wf_states">
-            <column name="code" type="varchar2" value="NOT_COMPLETE"/>
+            <column name="code" type="varchar2" value="CREATE"/>
+        </insert>
+
+        <insert schemaName="apps" tableName="wf_states">
+            <column name="code" type="varchar2" value="PROJECT"/>
+        </insert>
+
+        <insert schemaName="apps" tableName="wf_states">
+            <column name="code" type="varchar2" value="ON_VALIDATED"/>
+        </insert>
+
+        <insert schemaName="apps" tableName="wf_states">
+            <column name="code" type="varchar2" value="ON_SIGNING_BP1"/>
+        </insert>
+
+        <insert schemaName="apps" tableName="wf_states">
+            <column name="code" type="varchar2" value="ON_SIGNING_BP2"/>
+        </insert>
+
+        <insert schemaName="apps" tableName="wf_states">
+            <column name="code" type="varchar2" value="APPROVED"/>
+        </insert>
+
+        <insert schemaName="apps" tableName="wf_states">
+            <column name="code" type="varchar2" value="SIGNED"/>
+        </insert>
+
+        <insert schemaName="apps" tableName="wf_states">
+            <column name="code" type="varchar2" value="CLOSE"/>
+        </insert>
+
+        <insert schemaName="apps" tableName="wf_states">
+            <column name="code" type="varchar2" value="VALIDATED"/>
+        </insert>
+
+        <insert schemaName="apps" tableName="wf_states">
+            <column name="code" type="varchar2" value="NOT_VALIDATED"/>
+        </insert>
+
+        <insert schemaName="apps" tableName="wf_states">
+            <column name="code" type="varchar2" value="NOT_SIGNED"/>
         </insert>
         <rollback/>
     </changeSet>
@@ -825,1375 +873,726 @@
     <changeSet id="wf-rus-16" logicalFilePath="path-independent" author="ruslan" context="dev">
         <comment>insert into wf_states_tl</comment>
         <insert schemaName="apps" tableName="wf_states_tl">
-            <column name="code" type="varchar2" value="NOT_COMPLETE"/>
+            <column name="code" type="varchar2" value="CREATE"/>
             <column name="lang" type="varchar2" value="RU"/>
-            <column name="name" type="varchar2" value="Не готов"/>
+            <column name="name" type="varchar2" value="Создан"/>
+        </insert>
+
+        <insert schemaName="apps" tableName="wf_states_tl">
+            <column name="code" type="varchar2" value="CREATE"/>
+            <column name="lang" type="varchar2" value="KZ"/>
+            <column name="name" type="varchar2" value="Создан"/>
+        </insert>
+
+        <insert schemaName="apps" tableName="wf_states_tl">
+            <column name="code" type="varchar2" value="PROJECT"/>
+            <column name="lang" type="varchar2" value="RU"/>
+            <column name="name" type="varchar2" value="Проект"/>
+        </insert>
+
+        <insert schemaName="apps" tableName="wf_states_tl">
+            <column name="code" type="varchar2" value="PROJECT"/>
+            <column name="lang" type="varchar2" value="KZ"/>
+            <column name="name" type="varchar2" value="Проект"/>
+        </insert>
+
+        <insert schemaName="apps" tableName="wf_states_tl">
+            <column name="code" type="varchar2" value="ON_VALIDATED"/>
+            <column name="lang" type="varchar2" value="RU"/>
+            <column name="name" type="varchar2" value="На согласовании"/>
+        </insert>
+
+        <insert schemaName="apps" tableName="wf_states_tl">
+            <column name="code" type="varchar2" value="ON_VALIDATED"/>
+            <column name="lang" type="varchar2" value="KZ"/>
+            <column name="name" type="varchar2" value="На согласовании"/>
+        </insert>
+
+        <insert schemaName="apps" tableName="wf_states_tl">
+            <column name="code" type="varchar2" value="ON_SIGNING_BP1"/>
+            <column name="lang" type="varchar2" value="RU"/>
+            <column name="name" type="varchar2" value="На подписании у поставщика"/>
+        </insert>
+
+        <insert schemaName="apps" tableName="wf_states_tl">
+            <column name="code" type="varchar2" value="ON_SIGNING_BP1"/>
+            <column name="lang" type="varchar2" value="KZ"/>
+            <column name="name" type="varchar2" value="На подписании у поставщика"/>
+        </insert>
+
+        <insert schemaName="apps" tableName="wf_states_tl">
+            <column name="code" type="varchar2" value="ON_SIGNING_BP2"/>
+            <column name="lang" type="varchar2" value="RU"/>
+            <column name="name" type="varchar2" value="На подписании у потребителя"/>
+        </insert>
+
+        <insert schemaName="apps" tableName="wf_states_tl">
+            <column name="code" type="varchar2" value="ON_SIGNING_BP2"/>
+            <column name="lang" type="varchar2" value="KZ"/>
+            <column name="name" type="varchar2" value="На подписании у потребителя"/>
+        </insert>
+
+        <insert schemaName="apps" tableName="wf_states_tl">
+            <column name="code" type="varchar2" value="APPROVED"/>
+            <column name="lang" type="varchar2" value="RU"/>
+            <column name="name" type="varchar2" value="Утвержден"/>
+        </insert>
+
+        <insert schemaName="apps" tableName="wf_states_tl">
+            <column name="code" type="varchar2" value="APPROVED"/>
+            <column name="lang" type="varchar2" value="KZ"/>
+            <column name="name" type="varchar2" value="Утвержден"/>
+        </insert>
+
+        <insert schemaName="apps" tableName="wf_states_tl">
+            <column name="code" type="varchar2" value="SIGNED"/>
+            <column name="lang" type="varchar2" value="RU"/>
+            <column name="name" type="varchar2" value="Подписан"/>
+        </insert>
+
+        <insert schemaName="apps" tableName="wf_states_tl">
+            <column name="code" type="varchar2" value="SIGNED"/>
+            <column name="lang" type="varchar2" value="KZ"/>
+            <column name="name" type="varchar2" value="Подписан"/>
+        </insert>
+
+        <insert schemaName="apps" tableName="wf_states_tl">
+            <column name="code" type="varchar2" value="CLOSE"/>
+            <column name="lang" type="varchar2" value="RU"/>
+            <column name="name" type="varchar2" value="Завершен"/>
+        </insert>
+
+        <insert schemaName="apps" tableName="wf_states_tl">
+            <column name="code" type="varchar2" value="CLOSE"/>
+            <column name="lang" type="varchar2" value="KZ"/>
+            <column name="name" type="varchar2" value="Завершен"/>
+        </insert>
+
+        <insert schemaName="apps" tableName="wf_states_tl">
+            <column name="code" type="varchar2" value="VALIDATED"/>
+            <column name="lang" type="varchar2" value="RU"/>
+            <column name="name" type="varchar2" value="Согласован"/>
+        </insert>
+
+        <insert schemaName="apps" tableName="wf_states_tl">
+            <column name="code" type="varchar2" value="VALIDATED"/>
+            <column name="lang" type="varchar2" value="KZ"/>
+            <column name="name" type="varchar2" value="Согласован"/>
+        </insert>
+
+        <insert schemaName="apps" tableName="wf_states_tl">
+            <column name="code" type="varchar2" value="NOT_VALIDATED"/>
+            <column name="lang" type="varchar2" value="RU"/>
+            <column name="name" type="varchar2" value="Не согласован"/>
+        </insert>
+
+        <insert schemaName="apps" tableName="wf_states_tl">
+            <column name="code" type="varchar2" value="NOT_VALIDATED"/>
+            <column name="lang" type="varchar2" value="KZ"/>
+            <column name="name" type="varchar2" value="Не согласован"/>
+        </insert>
+
+        <insert schemaName="apps" tableName="wf_states_tl">
+            <column name="code" type="varchar2" value="NOT_SIGNED"/>
+            <column name="lang" type="varchar2" value="RU"/>
+            <column name="name" type="varchar2" value="Не подписан"/>
+        </insert>
+
+        <insert schemaName="apps" tableName="wf_states_tl">
+            <column name="code" type="varchar2" value="NOT_SIGNED"/>
+            <column name="lang" type="varchar2" value="KZ"/>
+            <column name="name" type="varchar2" value="Не подписан"/>
         </insert>
         <rollback/>
     </changeSet>
 
     <changeSet id="wf-rus-17" logicalFilePath="path-independent" author="ruslan" context="dev">
-        <comment>insert into wf_states_tl</comment>
-        <insert schemaName="apps" tableName="wf_states_tl">
-            <column name="code" type="varchar2" value="NOT_COMPLETE"/>
-            <column name="lang" type="varchar2" value="KZ"/>
-            <column name="name" type="varchar2" value="Не готов"/>
+        <comment>insert into wf_objects</comment>
+        <insert schemaName="apps" tableName="wf_objects">
+            <column name="code" type="varchar2" value="CONTRACT"/>
+        </insert>
+
+        <insert schemaName="apps" tableName="wf_objects">
+            <column name="code" type="varchar2" value="PERFORMANCE_ACT"/>
+        </insert>
+
+        <insert schemaName="apps" tableName="wf_objects">
+            <column name="code" type="varchar2" value="INVOICE"/>
+        </insert>
+
+        <insert schemaName="apps" tableName="wf_objects">
+            <column name="code" type="varchar2" value="FIN_PAYMENT_REQUESTS"/>
         </insert>
         <rollback/>
     </changeSet>
 
     <changeSet id="wf-rus-18" logicalFilePath="path-independent" author="ruslan" context="dev">
-        <comment>insert into wf_states</comment>
-        <insert schemaName="apps" tableName="wf_states">
-            <column name="code" type="varchar2" value="COMPLETE"/>
+        <comment>insert into wf_objects_tl</comment>
+        <insert schemaName="apps" tableName="wf_objects_tl">
+            <column name="code" type="varchar2" value="CONTRACT"/>
+            <column name="lang" type="varchar2" value="RU"/>
+            <column name="name" type="varchar2" value="Договор"/>
+        </insert>
+
+        <insert schemaName="apps" tableName="wf_objects_tl">
+            <column name="code" type="varchar2" value="CONTRACT"/>
+            <column name="lang" type="varchar2" value="KZ"/>
+            <column name="name" type="varchar2" value="Договор"/>
+        </insert>
+
+        <insert schemaName="apps" tableName="wf_objects_tl">
+            <column name="code" type="varchar2" value="PERFORMANCE_ACT"/>
+            <column name="lang" type="varchar2" value="RU"/>
+            <column name="name" type="varchar2" value="Акт выполненных работ"/>
+        </insert>
+
+        <insert schemaName="apps" tableName="wf_objects_tl">
+            <column name="code" type="varchar2" value="PERFORMANCE_ACT"/>
+            <column name="lang" type="varchar2" value="KZ"/>
+            <column name="name" type="varchar2" value="Акт выполненных работ"/>
+        </insert>
+
+        <insert schemaName="apps" tableName="wf_objects_tl">
+            <column name="code" type="varchar2" value="INVOICE"/>
+            <column name="lang" type="varchar2" value="RU"/>
+            <column name="name" type="varchar2" value="Счет-фактура"/>
+        </insert>
+
+        <insert schemaName="apps" tableName="wf_objects_tl">
+            <column name="code" type="varchar2" value="INVOICE"/>
+            <column name="lang" type="varchar2" value="KZ"/>
+            <column name="name" type="varchar2" value="Счет-фактура"/>
+        </insert>
+
+        <insert schemaName="apps" tableName="wf_objects_tl">
+            <column name="code" type="varchar2" value="FIN_PAYMENT_REQUESTS"/>
+            <column name="lang" type="varchar2" value="RU"/>
+            <column name="name" type="varchar2" value="Счет на оплату"/>
+        </insert>
+
+        <insert schemaName="apps" tableName="wf_objects_tl">
+            <column name="code" type="varchar2" value="FIN_PAYMENT_REQUESTS"/>
+            <column name="lang" type="varchar2" value="KZ"/>
+            <column name="name" type="varchar2" value="Счет на оплату"/>
         </insert>
         <rollback/>
     </changeSet>
 
     <changeSet id="wf-rus-19" logicalFilePath="path-independent" author="ruslan" context="dev">
-        <comment>insert into wf_states_tl</comment>
-        <insert schemaName="apps" tableName="wf_states_tl">
-            <column name="code" type="varchar2" value="COMPLETE"/>
-            <column name="lang" type="varchar2" value="RU"/>
-            <column name="name" type="varchar2" value="Готов"/>
+        <comment>insert into wf_activities</comment>
+        <insert schemaName="apps" tableName="wf_activities">
+            <column name="code" type="varchar2" value="MAKE_PROJECT"/>
+        </insert>
+
+        <insert schemaName="apps" tableName="wf_activities">
+            <column name="code" type="varchar2" value="SEND_ON_VALIDATED"/>
+        </insert>
+
+        <insert schemaName="apps" tableName="wf_activities">
+            <column name="code" type="varchar2" value="SEND_ON_SIGNING_BP1"/>
+        </insert>
+
+        <insert schemaName="apps" tableName="wf_activities">
+            <column name="code" type="varchar2" value="SEND_ON_SIGNING_BP2"/>
+        </insert>
+
+        <insert schemaName="apps" tableName="wf_activities">
+            <column name="code" type="varchar2" value="VALIDATE"/>
+        </insert>
+
+        <insert schemaName="apps" tableName="wf_activities">
+            <column name="code" type="varchar2" value="APPROVE"/>
+        </insert>
+
+        <insert schemaName="apps" tableName="wf_activities">
+            <column name="code" type="varchar2" value="SIGN"/>
+        </insert>
+
+        <insert schemaName="apps" tableName="wf_activities">
+            <column name="code" type="varchar2" value="CLOSE"/>
+        </insert>
+
+        <insert schemaName="apps" tableName="wf_activities">
+            <column name="code" type="varchar2" value="NOT_VALIDATE"/>
+        </insert>
+
+        <insert schemaName="apps" tableName="wf_activities">
+            <column name="code" type="varchar2" value="NOT_SIGN"/>
         </insert>
         <rollback/>
     </changeSet>
 
     <changeSet id="wf-rus-20" logicalFilePath="path-independent" author="ruslan" context="dev">
-        <comment>insert into wf_states_tl</comment>
-        <insert schemaName="apps" tableName="wf_states_tl">
-            <column name="code" type="varchar2" value="COMPLETE"/>
+        <comment>insert into wf_activities_tl</comment>
+        <insert schemaName="apps" tableName="wf_activities_tl">
+            <column name="code" type="varchar2" value="MAKE_PROJECT"/>
+            <column name="lang" type="varchar2" value="RU"/>
+            <column name="name" type="varchar2" value="В проект"/>
+        </insert>
+
+        <insert schemaName="apps" tableName="wf_activities_tl">
+            <column name="code" type="varchar2" value="MAKE_PROJECT"/>
             <column name="lang" type="varchar2" value="KZ"/>
-            <column name="name" type="varchar2" value="Готов"/>
+            <column name="name" type="varchar2" value="В проект"/>
+        </insert>
+
+        <insert schemaName="apps" tableName="wf_activities_tl">
+            <column name="code" type="varchar2" value="SEND_ON_VALIDATED"/>
+            <column name="lang" type="varchar2" value="RU"/>
+            <column name="name" type="varchar2" value="Отправить на согласование"/>
+        </insert>
+
+        <insert schemaName="apps" tableName="wf_activities_tl">
+            <column name="code" type="varchar2" value="SEND_ON_VALIDATED"/>
+            <column name="lang" type="varchar2" value="KZ"/>
+            <column name="name" type="varchar2" value="Отправить на согласование"/>
+        </insert>
+
+        <insert schemaName="apps" tableName="wf_activities_tl">
+            <column name="code" type="varchar2" value="SEND_ON_SIGNING_BP1"/>
+            <column name="lang" type="varchar2" value="RU"/>
+            <column name="name" type="varchar2" value="подписать у поставщика"/>
+        </insert>
+
+        <insert schemaName="apps" tableName="wf_activities_tl">
+            <column name="code" type="varchar2" value="SEND_ON_SIGNING_BP1"/>
+            <column name="lang" type="varchar2" value="KZ"/>
+            <column name="name" type="varchar2" value="подписать у поставщика"/>
+        </insert>
+
+        <insert schemaName="apps" tableName="wf_activities_tl">
+            <column name="code" type="varchar2" value="SEND_ON_SIGNING_BP2"/>
+            <column name="lang" type="varchar2" value="RU"/>
+            <column name="name" type="varchar2" value="подписать у потребителя"/>
+        </insert>
+
+        <insert schemaName="apps" tableName="wf_activities_tl">
+            <column name="code" type="varchar2" value="SEND_ON_SIGNING_BP2"/>
+            <column name="lang" type="varchar2" value="KZ"/>
+            <column name="name" type="varchar2" value="подписать у потребителя"/>
+        </insert>
+
+        <insert schemaName="apps" tableName="wf_activities_tl">
+            <column name="code" type="varchar2" value="VALIDATE"/>
+            <column name="lang" type="varchar2" value="RU"/>
+            <column name="name" type="varchar2" value="Соглосовать"/>
+        </insert>
+
+        <insert schemaName="apps" tableName="wf_activities_tl">
+            <column name="code" type="varchar2" value="VALIDATE"/>
+            <column name="lang" type="varchar2" value="KZ"/>
+            <column name="name" type="varchar2" value="Соглосовать"/>
+        </insert>
+
+        <insert schemaName="apps" tableName="wf_activities_tl">
+            <column name="code" type="varchar2" value="APPROVE"/>
+            <column name="lang" type="varchar2" value="RU"/>
+            <column name="name" type="varchar2" value="Утвердить"/>
+        </insert>
+
+        <insert schemaName="apps" tableName="wf_activities_tl">
+            <column name="code" type="varchar2" value="APPROVE"/>
+            <column name="lang" type="varchar2" value="KZ"/>
+            <column name="name" type="varchar2" value="Утвердить"/>
+        </insert>
+
+        <insert schemaName="apps" tableName="wf_activities_tl">
+            <column name="code" type="varchar2" value="SIGN"/>
+            <column name="lang" type="varchar2" value="RU"/>
+            <column name="name" type="varchar2" value="Подписать"/>
+        </insert>
+
+        <insert schemaName="apps" tableName="wf_activities_tl">
+            <column name="code" type="varchar2" value="SIGN"/>
+            <column name="lang" type="varchar2" value="KZ"/>
+            <column name="name" type="varchar2" value="Подписать"/>
+        </insert>
+
+        <insert schemaName="apps" tableName="wf_activities_tl">
+            <column name="code" type="varchar2" value="CLOSE"/>
+            <column name="lang" type="varchar2" value="RU"/>
+            <column name="name" type="varchar2" value="Завершить"/>
+        </insert>
+
+        <insert schemaName="apps" tableName="wf_activities_tl">
+            <column name="code" type="varchar2" value="CLOSE"/>
+            <column name="lang" type="varchar2" value="KZ"/>
+            <column name="name" type="varchar2" value="Завершить"/>
+        </insert>
+
+        <insert schemaName="apps" tableName="wf_activities_tl">
+            <column name="code" type="varchar2" value="NOT_VALIDATE"/>
+            <column name="lang" type="varchar2" value="RU"/>
+            <column name="name" type="varchar2" value="Не соглосовать"/>
+        </insert>
+
+        <insert schemaName="apps" tableName="wf_activities_tl">
+            <column name="code" type="varchar2" value="NOT_VALIDATE"/>
+            <column name="lang" type="varchar2" value="KZ"/>
+            <column name="name" type="varchar2" value="Не соглосовать"/>
+        </insert>
+
+        <insert schemaName="apps" tableName="wf_activities_tl">
+            <column name="code" type="varchar2" value="NOT_SIGN"/>
+            <column name="lang" type="varchar2" value="RU"/>
+            <column name="name" type="varchar2" value="Не подписать"/>
+        </insert>
+
+        <insert schemaName="apps" tableName="wf_activities_tl">
+            <column name="code" type="varchar2" value="NOT_SIGN"/>
+            <column name="lang" type="varchar2" value="KZ"/>
+            <column name="name" type="varchar2" value="Не подписать"/>
         </insert>
         <rollback/>
     </changeSet>
 
     <changeSet id="wf-rus-21" logicalFilePath="path-independent" author="ruslan" context="dev">
-        <comment>insert into wf_states</comment>
-        <insert schemaName="apps" tableName="wf_states">
-            <column name="code" type="varchar2" value="PROJECT"/>
-        </insert>
-        <rollback/>
-    </changeSet>
-
-    <changeSet id="wf-rus-22" logicalFilePath="path-independent" author="ruslan" context="dev">
-        <comment>insert into wf_states_tl</comment>
-        <insert schemaName="apps" tableName="wf_states_tl">
-            <column name="code" type="varchar2" value="PROJECT"/>
-            <column name="lang" type="varchar2" value="RU"/>
-            <column name="name" type="varchar2" value="Проект"/>
-        </insert>
-        <rollback/>
-    </changeSet>
-
-    <changeSet id="wf-rus-23" logicalFilePath="path-independent" author="ruslan" context="dev">
-        <comment>insert into wf_states_tl</comment>
-        <insert schemaName="apps" tableName="wf_states_tl">
-            <column name="code" type="varchar2" value="PROJECT"/>
-            <column name="lang" type="varchar2" value="KZ"/>
-            <column name="name" type="varchar2" value="Проект"/>
-        </insert>
-        <rollback/>
-    </changeSet>
-
-    <changeSet id="wf-rus-24" logicalFilePath="path-independent" author="ruslan" context="dev">
-        <comment>insert into wf_states</comment>
-        <insert schemaName="apps" tableName="wf_states">
-            <column name="code" type="varchar2" value="ON_AGREEMENT"/>
-        </insert>
-        <rollback/>
-    </changeSet>
-
-    <changeSet id="wf-rus-25" logicalFilePath="path-independent" author="ruslan" context="dev">
-        <comment>insert into wf_states_tl</comment>
-        <insert schemaName="apps" tableName="wf_states_tl">
-            <column name="code" type="varchar2" value="ON_AGREEMENT"/>
-            <column name="lang" type="varchar2" value="RU"/>
-            <column name="name" type="varchar2" value="На согласовании"/>
-        </insert>
-        <rollback/>
-    </changeSet>
-
-    <changeSet id="wf-rus-26" logicalFilePath="path-independent" author="ruslan" context="dev">
-        <comment>insert into wf_states_tl</comment>
-        <insert schemaName="apps" tableName="wf_states_tl">
-            <column name="code" type="varchar2" value="ON_AGREEMENT"/>
-            <column name="lang" type="varchar2" value="KZ"/>
-            <column name="name" type="varchar2" value="На согласовании"/>
-        </insert>
-        <rollback/>
-    </changeSet>
-
-    <changeSet id="wf-rus-27" logicalFilePath="path-independent" author="ruslan" context="dev">
-        <comment>insert into wf_states</comment>
-        <insert schemaName="apps" tableName="wf_states">
-            <column name="code" type="varchar2" value="ON_SIGNING_BP1"/>
-        </insert>
-        <rollback/>
-    </changeSet>
-
-    <changeSet id="wf-rus-28" logicalFilePath="path-independent" author="ruslan" context="dev">
-        <comment>insert into wf_states_tl</comment>
-        <insert schemaName="apps" tableName="wf_states_tl">
-            <column name="code" type="varchar2" value="ON_SIGNING_BP1"/>
-            <column name="lang" type="varchar2" value="RU"/>
-            <column name="name" type="varchar2" value="На подписании у поставщика"/>
-        </insert>
-        <rollback/>
-    </changeSet>
-
-    <changeSet id="wf-rus-29" logicalFilePath="path-independent" author="ruslan" context="dev">
-        <comment>insert into wf_states_tl</comment>
-        <insert schemaName="apps" tableName="wf_states_tl">
-            <column name="code" type="varchar2" value="ON_SIGNING_BP1"/>
-            <column name="lang" type="varchar2" value="KZ"/>
-            <column name="name" type="varchar2" value="На подписании у поставщика"/>
-        </insert>
-        <rollback/>
-    </changeSet>
-
-    <changeSet id="wf-rus-30" logicalFilePath="path-independent" author="ruslan" context="dev">
-        <comment>insert into wf_states</comment>
-        <insert schemaName="apps" tableName="wf_states">
-            <column name="code" type="varchar2" value="ON_SIGNING_BP2"/>
-        </insert>
-        <rollback/>
-    </changeSet>
-
-    <changeSet id="wf-rus-31" logicalFilePath="path-independent" author="ruslan" context="dev">
-        <comment>insert into wf_states_tl</comment>
-        <insert schemaName="apps" tableName="wf_states_tl">
-            <column name="code" type="varchar2" value="ON_SIGNING_BP2"/>
-            <column name="lang" type="varchar2" value="RU"/>
-            <column name="name" type="varchar2" value="На подписании у потребителя"/>
-        </insert>
-        <rollback/>
-    </changeSet>
-
-    <changeSet id="wf-rus-32" logicalFilePath="path-independent" author="ruslan" context="dev">
-        <comment>insert into wf_states_tl</comment>
-        <insert schemaName="apps" tableName="wf_states_tl">
-            <column name="code" type="varchar2" value="ON_SIGNING_BP2"/>
-            <column name="lang" type="varchar2" value="KZ"/>
-            <column name="name" type="varchar2" value="На подписании у потребителя"/>
-        </insert>
-        <rollback/>
-    </changeSet>
-
-    <changeSet id="wf-rus-33" logicalFilePath="path-independent" author="ruslan" context="dev">
-        <comment>insert into wf_states</comment>
-        <insert schemaName="apps" tableName="wf_states">
-            <column name="code" type="varchar2" value="APPROVED"/>
-        </insert>
-        <rollback/>
-    </changeSet>
-
-    <changeSet id="wf-rus-34" logicalFilePath="path-independent" author="ruslan" context="dev">
-        <comment>insert into wf_states_tl</comment>
-        <insert schemaName="apps" tableName="wf_states_tl">
-            <column name="code" type="varchar2" value="APPROVED"/>
-            <column name="lang" type="varchar2" value="RU"/>
-            <column name="name" type="varchar2" value="Утвержден"/>
-        </insert>
-        <rollback/>
-    </changeSet>
-
-    <changeSet id="wf-rus-35" logicalFilePath="path-independent" author="ruslan" context="dev">
-        <comment>insert into wf_states_tl</comment>
-        <insert schemaName="apps" tableName="wf_states_tl">
-            <column name="code" type="varchar2" value="APPROVED"/>
-            <column name="lang" type="varchar2" value="KZ"/>
-            <column name="name" type="varchar2" value="Утвержден"/>
-        </insert>
-        <rollback/>
-    </changeSet>
-
-    <changeSet id="wf-rus-36" logicalFilePath="path-independent" author="ruslan" context="dev">
-        <comment>insert into wf_states</comment>
-        <insert schemaName="apps" tableName="wf_states">
-            <column name="code" type="varchar2" value="SIGNED"/>
-        </insert>
-        <rollback/>
-    </changeSet>
-
-    <changeSet id="wf-rus-37" logicalFilePath="path-independent" author="ruslan" context="dev">
-        <comment>insert into wf_states_tl</comment>
-        <insert schemaName="apps" tableName="wf_states_tl">
-            <column name="code" type="varchar2" value="SIGNED"/>
-            <column name="lang" type="varchar2" value="RU"/>
-            <column name="name" type="varchar2" value="Подписан"/>
-        </insert>
-        <rollback/>
-    </changeSet>
-
-    <changeSet id="wf-rus-38" logicalFilePath="path-independent" author="ruslan" context="dev">
-        <comment>insert into wf_states_tl</comment>
-        <insert schemaName="apps" tableName="wf_states_tl">
-            <column name="code" type="varchar2" value="SIGNED"/>
-            <column name="lang" type="varchar2" value="KZ"/>
-            <column name="name" type="varchar2" value="Подписан"/>
-        </insert>
-        <rollback/>
-    </changeSet>
-
-    <changeSet id="wf-rus-39" logicalFilePath="path-independent" author="ruslan" context="dev">
-        <comment>insert into wf_states</comment>
-        <insert schemaName="apps" tableName="wf_states">
-            <column name="code" type="varchar2" value="ADJUSTMENT_BP1"/>
-        </insert>
-        <rollback/>
-    </changeSet>
-
-    <changeSet id="wf-rus-40" logicalFilePath="path-independent" author="ruslan" context="dev">
-        <comment>insert into wf_states_tl</comment>
-        <insert schemaName="apps" tableName="wf_states_tl">
-            <column name="code" type="varchar2" value="ADJUSTMENT_BP1"/>
-            <column name="lang" type="varchar2" value="RU"/>
-            <column name="name" type="varchar2" value="На корректировке (БП1)"/>
-        </insert>
-        <rollback/>
-    </changeSet>
-
-    <changeSet id="wf-rus-41" logicalFilePath="path-independent" author="ruslan" context="dev">
-        <comment>insert into wf_states_tl</comment>
-        <insert schemaName="apps" tableName="wf_states_tl">
-            <column name="code" type="varchar2" value="ADJUSTMENT_BP1"/>
-            <column name="lang" type="varchar2" value="KZ"/>
-            <column name="name" type="varchar2" value="На корректировке (БП1)"/>
-        </insert>
-        <rollback/>
-    </changeSet>
-
-    <changeSet id="wf-rus-42" logicalFilePath="path-independent" author="ruslan" context="dev">
-        <comment>insert into wf_states</comment>
-        <insert schemaName="apps" tableName="wf_states">
-            <column name="code" type="varchar2" value="ADJUSTMENT_BP2"/>
-        </insert>
-        <rollback/>
-    </changeSet>
-
-    <changeSet id="wf-rus-43" logicalFilePath="path-independent" author="ruslan" context="dev">
-        <comment>insert into wf_states_tl</comment>
-        <insert schemaName="apps" tableName="wf_states_tl">
-            <column name="code" type="varchar2" value="ADJUSTMENT_BP2"/>
-            <column name="lang" type="varchar2" value="RU"/>
-            <column name="name" type="varchar2" value="На корректировке (БП2)"/>
-        </insert>
-        <rollback/>
-    </changeSet>
-
-    <changeSet id="wf-rus-44" logicalFilePath="path-independent" author="ruslan" context="dev">
-        <comment>insert into wf_states_tl</comment>
-        <insert schemaName="apps" tableName="wf_states_tl">
-            <column name="code" type="varchar2" value="ADJUSTMENT_BP2"/>
-            <column name="lang" type="varchar2" value="KZ"/>
-            <column name="name" type="varchar2" value="На корректировке (БП2)"/>
-        </insert>
-        <rollback/>
-    </changeSet>
-
-    <changeSet id="wf-rus-45" logicalFilePath="path-independent" author="ruslan" context="dev">
-        <comment>insert into wf_states</comment>
-        <insert schemaName="apps" tableName="wf_states">
-            <column name="code" type="varchar2" value="CLOSE"/>
-        </insert>
-        <rollback/>
-    </changeSet>
-
-    <changeSet id="wf-rus-46" logicalFilePath="path-independent" author="ruslan" context="dev">
-        <comment>insert into wf_states_tl</comment>
-        <insert schemaName="apps" tableName="wf_states_tl">
-            <column name="code" type="varchar2" value="CLOSE"/>
-            <column name="lang" type="varchar2" value="RU"/>
-            <column name="name" type="varchar2" value="Завершен"/>
-        </insert>
-        <rollback/>
-    </changeSet>
-
-    <changeSet id="wf-rus-47" logicalFilePath="path-independent" author="ruslan" context="dev">
-        <comment>insert into wf_states_tl</comment>
-        <insert schemaName="apps" tableName="wf_states_tl">
-            <column name="code" type="varchar2" value="CLOSE"/>
-            <column name="lang" type="varchar2" value="KZ"/>
-            <column name="name" type="varchar2" value="Завершен"/>
-        </insert>
-        <rollback/>
-    </changeSet>
-
-    <changeSet id="wf-rus-48" logicalFilePath="path-independent" author="ruslan" context="dev">
-        <comment>insert into wf_objects</comment>
-        <insert schemaName="apps" tableName="wf_objects">
-            <column name="code" type="varchar2" value="CONTRACT"/>
-        </insert>
-        <rollback/>
-    </changeSet>
-
-    <changeSet id="wf-rus-49" logicalFilePath="path-independent" author="ruslan" context="dev">
-        <comment>insert into wf_objects_tl</comment>
-        <insert schemaName="apps" tableName="wf_objects_tl">
-            <column name="code" type="varchar2" value="CONTRACT"/>
-            <column name="lang" type="varchar2" value="RU"/>
-            <column name="name" type="varchar2" value="Договор"/>
-        </insert>
-        <rollback/>
-    </changeSet>
-
-    <changeSet id="wf-rus-50" logicalFilePath="path-independent" author="ruslan" context="dev">
-        <comment>insert into wf_states_tl</comment>
-        <insert schemaName="apps" tableName="wf_objects_tl">
-            <column name="code" type="varchar2" value="CONTRACT"/>
-            <column name="lang" type="varchar2" value="KZ"/>
-            <column name="name" type="varchar2" value="Договор"/>
-        </insert>
-        <rollback/>
-    </changeSet>
-
-    <changeSet id="wf-rus-51" logicalFilePath="path-independent" author="ruslan" context="dev">
-        <comment>insert into wf_objects</comment>
-        <insert schemaName="apps" tableName="wf_objects">
-            <column name="code" type="varchar2" value="PERFORMANCE_ACT"/>
-        </insert>
-        <rollback/>
-    </changeSet>
-
-    <changeSet id="wf-rus-52" logicalFilePath="path-independent" author="ruslan" context="dev">
-        <comment>insert into wf_objects_tl</comment>
-        <insert schemaName="apps" tableName="wf_objects_tl">
-            <column name="code" type="varchar2" value="PERFORMANCE_ACT"/>
-            <column name="lang" type="varchar2" value="RU"/>
-            <column name="name" type="varchar2" value="Акт выполненных работ"/>
-        </insert>
-        <rollback/>
-    </changeSet>
-
-    <changeSet id="wf-rus-53" logicalFilePath="path-independent" author="ruslan" context="dev">
-        <comment>insert into wf_states_tl</comment>
-        <insert schemaName="apps" tableName="wf_objects_tl">
-            <column name="code" type="varchar2" value="PERFORMANCE_ACT"/>
-            <column name="lang" type="varchar2" value="KZ"/>
-            <column name="name" type="varchar2" value="Акт выполненных работ"/>
-        </insert>
-        <rollback/>
-    </changeSet>
-
-    <changeSet id="wf-rus-54" logicalFilePath="path-independent" author="ruslan" context="dev">
-        <comment>insert into wf_objects</comment>
-        <insert schemaName="apps" tableName="wf_objects">
-            <column name="code" type="varchar2" value="INVOICE"/>
-        </insert>
-        <rollback/>
-    </changeSet>
-
-    <changeSet id="wf-rus-55" logicalFilePath="path-independent" author="ruslan" context="dev">
-        <comment>insert into wf_objects_tl</comment>
-        <insert schemaName="apps" tableName="wf_objects_tl">
-            <column name="code" type="varchar2" value="INVOICE"/>
-            <column name="lang" type="varchar2" value="RU"/>
-            <column name="name" type="varchar2" value="Счет-фактура"/>
-        </insert>
-        <rollback/>
-    </changeSet>
-
-    <changeSet id="wf-rus-56" logicalFilePath="path-independent" author="ruslan" context="dev">
-        <comment>insert into wf_states_tl</comment>
-        <insert schemaName="apps" tableName="wf_objects_tl">
-            <column name="code" type="varchar2" value="INVOICE"/>
-            <column name="lang" type="varchar2" value="KZ"/>
-            <column name="name" type="varchar2" value="Счет-фактура"/>
-        </insert>
-        <rollback/>
-    </changeSet>
-
-    <changeSet id="wf-rus-57" logicalFilePath="path-independent" author="ruslan" context="dev">
-        <comment>insert into wf_objects</comment>
-        <insert schemaName="apps" tableName="wf_objects">
-            <column name="code" type="varchar2" value="FIN_PAYMENT_REQUESTS"/>
-        </insert>
-        <rollback/>
-    </changeSet>
-
-    <changeSet id="wf-rus-58" logicalFilePath="path-independent" author="ruslan" context="dev">
-        <comment>insert into wf_objects_tl</comment>
-        <insert schemaName="apps" tableName="wf_objects_tl">
-            <column name="code" type="varchar2" value="FIN_PAYMENT_REQUESTS"/>
-            <column name="lang" type="varchar2" value="RU"/>
-            <column name="name" type="varchar2" value="Счет на оплату"/>
-        </insert>
-        <rollback/>
-    </changeSet>
-
-    <changeSet id="wf-rus-59" logicalFilePath="path-independent" author="ruslan" context="dev">
-        <comment>insert into wf_states_tl</comment>
-        <insert schemaName="apps" tableName="wf_objects_tl">
-            <column name="code" type="varchar2" value="FIN_PAYMENT_REQUESTS"/>
-            <column name="lang" type="varchar2" value="KZ"/>
-            <column name="name" type="varchar2" value="Счет на оплату"/>
-        </insert>
-        <rollback/>
-    </changeSet>
-
-    <changeSet id="wf-rus-60" logicalFilePath="path-independent" author="ruslan" context="dev">
-        <comment>insert into wf_states</comment>
-        <insert schemaName="apps" tableName="wf_states">
-            <column name="code" type="varchar2" value="VALIDATED"/>
-        </insert>
-        <rollback/>
-    </changeSet>
-
-    <changeSet id="wf-rus-61" logicalFilePath="path-independent" author="ruslan" context="dev">
-        <comment>insert into wf_states_tl</comment>
-        <insert schemaName="apps" tableName="wf_states_tl">
-            <column name="code" type="varchar2" value="VALIDATED"/>
-            <column name="lang" type="varchar2" value="RU"/>
-            <column name="name" type="varchar2" value="Согласован"/>
-        </insert>
-        <rollback/>
-    </changeSet>
-
-    <changeSet id="wf-rus-62" logicalFilePath="path-independent" author="ruslan" context="dev">
-        <comment>insert into wf_states_tl</comment>
-        <insert schemaName="apps" tableName="wf_states_tl">
-            <column name="code" type="varchar2" value="VALIDATED"/>
-            <column name="lang" type="varchar2" value="KZ"/>
-            <column name="name" type="varchar2" value="Согласован"/>
-        </insert>
-        <rollback/>
-    </changeSet>
-
-    <changeSet id="wf-rus-63" logicalFilePath="path-independent" author="ruslan" context="dev">
-        <comment>insert into wf_states</comment>
-        <insert schemaName="apps" tableName="wf_states">
-            <column name="code" type="varchar2" value="NOT_VALIDATED"/>
-        </insert>
-        <rollback/>
-    </changeSet>
-
-    <changeSet id="wf-rus-64" logicalFilePath="path-independent" author="ruslan" context="dev">
-        <comment>insert into wf_states_tl</comment>
-        <insert schemaName="apps" tableName="wf_states_tl">
-            <column name="code" type="varchar2" value="NOT_VALIDATED"/>
-            <column name="lang" type="varchar2" value="RU"/>
-            <column name="name" type="varchar2" value="Не согласован"/>
-        </insert>
-        <rollback/>
-    </changeSet>
-
-    <changeSet id="wf-rus-65" logicalFilePath="path-independent" author="ruslan" context="dev">
-        <comment>insert into wf_states_tl</comment>
-        <insert schemaName="apps" tableName="wf_states_tl">
-            <column name="code" type="varchar2" value="NOT_VALIDATED"/>
-            <column name="lang" type="varchar2" value="KZ"/>
-            <column name="name" type="varchar2" value="Не согласован"/>
-        </insert>
-        <rollback/>
-    </changeSet>
-
-    <changeSet id="wf-rus-66" logicalFilePath="path-independent" author="ruslan" context="dev">
-        <comment>insert into wf_activities</comment>
-        <insert schemaName="apps" tableName="wf_activities">
-            <column name="code" type="varchar2" value="COMPLETE"/>
-        </insert>
-        <rollback/>
-    </changeSet>
-
-    <changeSet id="wf-rus-67" logicalFilePath="path-independent" author="ruslan" context="dev">
-        <comment>insert into wf_activities_tl</comment>
-        <insert schemaName="apps" tableName="wf_activities_tl">
-            <column name="code" type="varchar2" value="COMPLETE"/>
-            <column name="lang" type="varchar2" value="RU"/>
-            <column name="name" type="varchar2" value="Готов"/>
-        </insert>
-        <rollback/>
-    </changeSet>
-
-    <changeSet id="wf-rus-68" logicalFilePath="path-independent" author="ruslan" context="dev">
-        <comment>insert into wf_activities_tl</comment>
-        <insert schemaName="apps" tableName="wf_activities_tl">
-            <column name="code" type="varchar2" value="COMPLETE"/>
-            <column name="lang" type="varchar2" value="KZ"/>
-            <column name="name" type="varchar2" value="Готов"/>
-        </insert>
-        <rollback/>
-    </changeSet>
-
-    <changeSet id="wf-rus-69" logicalFilePath="path-independent" author="ruslan" context="dev">
-        <comment>insert into wf_activities</comment>
-        <insert schemaName="apps" tableName="wf_activities">
-            <column name="code" type="varchar2" value="MAKE_PROJECT"/>
-        </insert>
-        <rollback/>
-    </changeSet>
-
-    <changeSet id="wf-rus-70" logicalFilePath="path-independent" author="ruslan" context="dev">
-        <comment>insert into wf_activities_tl</comment>
-        <insert schemaName="apps" tableName="wf_activities_tl">
-            <column name="code" type="varchar2" value="MAKE_PROJECT"/>
-            <column name="lang" type="varchar2" value="RU"/>
-            <column name="name" type="varchar2" value="В проект"/>
-        </insert>
-        <rollback/>
-    </changeSet>
-
-    <changeSet id="wf-rus-71" logicalFilePath="path-independent" author="ruslan" context="dev">
-        <comment>insert into wf_activities_tl</comment>
-        <insert schemaName="apps" tableName="wf_activities_tl">
-            <column name="code" type="varchar2" value="MAKE_PROJECT"/>
-            <column name="lang" type="varchar2" value="KZ"/>
-            <column name="name" type="varchar2" value="В проект"/>
-        </insert>
-        <rollback/>
-    </changeSet>
-
-    <changeSet id="wf-rus-72" logicalFilePath="path-independent" author="ruslan" context="dev">
-        <comment>insert into wf_activities</comment>
-        <insert schemaName="apps" tableName="wf_activities">
-            <column name="code" type="varchar2" value="SEND_ON_AGREEMENT"/>
-        </insert>
-        <rollback/>
-    </changeSet>
-
-    <changeSet id="wf-rus-73" logicalFilePath="path-independent" author="ruslan" context="dev">
-        <comment>insert into wf_activities_tl</comment>
-        <insert schemaName="apps" tableName="wf_activities_tl">
-            <column name="code" type="varchar2" value="SEND_ON_AGREEMENT"/>
-            <column name="lang" type="varchar2" value="RU"/>
-            <column name="name" type="varchar2" value="Отправить на согласование"/>
-        </insert>
-        <rollback/>
-    </changeSet>
-
-    <changeSet id="wf-rus-74" logicalFilePath="path-independent" author="ruslan" context="dev">
-        <comment>insert into wf_activities_tl</comment>
-        <insert schemaName="apps" tableName="wf_activities_tl">
-            <column name="code" type="varchar2" value="SEND_ON_AGREEMENT"/>
-            <column name="lang" type="varchar2" value="KZ"/>
-            <column name="name" type="varchar2" value="Отправить на согласование"/>
-        </insert>
-        <rollback/>
-    </changeSet>
-
-    <changeSet id="wf-rus-75" logicalFilePath="path-independent" author="ruslan" context="dev">
-        <comment>insert into wf_activities</comment>
-        <insert schemaName="apps" tableName="wf_activities">
-            <column name="code" type="varchar2" value="SEND_ON_SIGNING_BP1"/>
-        </insert>
-        <rollback/>
-    </changeSet>
-
-    <changeSet id="wf-rus-76" logicalFilePath="path-independent" author="ruslan" context="dev">
-        <comment>insert into wf_activities_tl</comment>
-        <insert schemaName="apps" tableName="wf_activities_tl">
-            <column name="code" type="varchar2" value="SEND_ON_SIGNING_BP1"/>
-            <column name="lang" type="varchar2" value="RU"/>
-            <column name="name" type="varchar2" value="подписать у поставщика"/>
-        </insert>
-        <rollback/>
-    </changeSet>
-
-    <changeSet id="wf-rus-77" logicalFilePath="path-independent" author="ruslan" context="dev">
-        <comment>insert into wf_activities_tl</comment>
-        <insert schemaName="apps" tableName="wf_activities_tl">
-            <column name="code" type="varchar2" value="SEND_ON_SIGNING_BP1"/>
-            <column name="lang" type="varchar2" value="KZ"/>
-            <column name="name" type="varchar2" value="подписать у поставщика"/>
-        </insert>
-        <rollback/>
-    </changeSet>
-
-    <changeSet id="wf-rus-78" logicalFilePath="path-independent" author="ruslan" context="dev">
-        <comment>insert into wf_activities</comment>
-        <insert schemaName="apps" tableName="wf_activities">
-            <column name="code" type="varchar2" value="SEND_ON_SIGNING_BP2"/>
-        </insert>
-        <rollback/>
-    </changeSet>
-
-    <changeSet id="wf-rus-79" logicalFilePath="path-independent" author="ruslan" context="dev">
-        <comment>insert into wf_activities_tl</comment>
-        <insert schemaName="apps" tableName="wf_activities_tl">
-            <column name="code" type="varchar2" value="SEND_ON_SIGNING_BP2"/>
-            <column name="lang" type="varchar2" value="RU"/>
-            <column name="name" type="varchar2" value="подписать у потребителя"/>
-        </insert>
-        <rollback/>
-    </changeSet>
-
-    <changeSet id="wf-rus-80" logicalFilePath="path-independent" author="ruslan" context="dev">
-        <comment>insert into wf_activities_tl</comment>
-        <insert schemaName="apps" tableName="wf_activities_tl">
-            <column name="code" type="varchar2" value="SEND_ON_SIGNING_BP2"/>
-            <column name="lang" type="varchar2" value="KZ"/>
-            <column name="name" type="varchar2" value="подписать у потребителя"/>
-        </insert>
-        <rollback/>
-    </changeSet>
-
-    <changeSet id="wf-rus-81" logicalFilePath="path-independent" author="ruslan" context="dev">
-        <comment>insert into wf_activities</comment>
-        <insert schemaName="apps" tableName="wf_activities">
-            <column name="code" type="varchar2" value="VALIDATE"/>
-        </insert>
-        <rollback/>
-    </changeSet>
-
-    <changeSet id="wf-rus-82" logicalFilePath="path-independent" author="ruslan" context="dev">
-        <comment>insert into wf_activities_tl</comment>
-        <insert schemaName="apps" tableName="wf_activities_tl">
-            <column name="code" type="varchar2" value="VALIDATE"/>
-            <column name="lang" type="varchar2" value="RU"/>
-            <column name="name" type="varchar2" value="Соглосовать"/>
-        </insert>
-        <rollback/>
-    </changeSet>
-
-    <changeSet id="wf-rus-83" logicalFilePath="path-independent" author="ruslan" context="dev">
-        <comment>insert into wf_activities_tl</comment>
-        <insert schemaName="apps" tableName="wf_activities_tl">
-            <column name="code" type="varchar2" value="VALIDATE"/>
-            <column name="lang" type="varchar2" value="KZ"/>
-            <column name="name" type="varchar2" value="Соглосовать"/>
-        </insert>
-        <rollback/>
-    </changeSet>
-
-    <changeSet id="wf-rus-84" logicalFilePath="path-independent" author="ruslan" context="dev">
-        <comment>insert into wf_activities</comment>
-        <insert schemaName="apps" tableName="wf_activities">
-            <column name="code" type="varchar2" value="APPROVE"/>
-        </insert>
-        <rollback/>
-    </changeSet>
-
-    <changeSet id="wf-rus-85" logicalFilePath="path-independent" author="ruslan" context="dev">
-        <comment>insert into wf_activities_tl</comment>
-        <insert schemaName="apps" tableName="wf_activities_tl">
-            <column name="code" type="varchar2" value="APPROVE"/>
-            <column name="lang" type="varchar2" value="RU"/>
-            <column name="name" type="varchar2" value="Утвердить"/>
-        </insert>
-        <rollback/>
-    </changeSet>
-
-    <changeSet id="wf-rus-86" logicalFilePath="path-independent" author="ruslan" context="dev">
-        <comment>insert into wf_activities_tl</comment>
-        <insert schemaName="apps" tableName="wf_activities_tl">
-            <column name="code" type="varchar2" value="APPROVE"/>
-            <column name="lang" type="varchar2" value="KZ"/>
-            <column name="name" type="varchar2" value="Утвердить"/>
-        </insert>
-        <rollback/>
-    </changeSet>
-
-    <changeSet id="wf-rus-87" logicalFilePath="path-independent" author="ruslan" context="dev">
-        <comment>insert into wf_activities</comment>
-        <insert schemaName="apps" tableName="wf_activities">
-            <column name="code" type="varchar2" value="SIGN"/>
-        </insert>
-        <rollback/>
-    </changeSet>
-
-    <changeSet id="wf-rus-88" logicalFilePath="path-independent" author="ruslan" context="dev">
-        <comment>insert into wf_activities_tl</comment>
-        <insert schemaName="apps" tableName="wf_activities_tl">
-            <column name="code" type="varchar2" value="SIGN"/>
-            <column name="lang" type="varchar2" value="RU"/>
-            <column name="name" type="varchar2" value="Подписать"/>
-        </insert>
-        <rollback/>
-    </changeSet>
-
-    <changeSet id="wf-rus-89" logicalFilePath="path-independent" author="ruslan" context="dev">
-        <comment>insert into wf_activities_tl</comment>
-        <insert schemaName="apps" tableName="wf_activities_tl">
-            <column name="code" type="varchar2" value="SIGN"/>
-            <column name="lang" type="varchar2" value="KZ"/>
-            <column name="name" type="varchar2" value="Подписать"/>
-        </insert>
-        <rollback/>
-    </changeSet>
-
-    <changeSet id="wf-rus-90" logicalFilePath="path-independent" author="ruslan" context="dev">
-        <comment>insert into wf_activities</comment>
-        <insert schemaName="apps" tableName="wf_activities">
-            <column name="code" type="varchar2" value="SEND_ADJUSTMENT_BP1"/>
-        </insert>
-        <rollback/>
-    </changeSet>
-
-    <changeSet id="wf-rus-91" logicalFilePath="path-independent" author="ruslan" context="dev">
-        <comment>insert into wf_activities_tl</comment>
-        <insert schemaName="apps" tableName="wf_activities_tl">
-            <column name="code" type="varchar2" value="SEND_ADJUSTMENT_BP1"/>
-            <column name="lang" type="varchar2" value="RU"/>
-            <column name="name" type="varchar2" value="Отправить на корректировку (БП1)"/>
-        </insert>
-        <rollback/>
-    </changeSet>
-
-    <changeSet id="wf-rus-92" logicalFilePath="path-independent" author="ruslan" context="dev">
-        <comment>insert into wf_activities_tl</comment>
-        <insert schemaName="apps" tableName="wf_activities_tl">
-            <column name="code" type="varchar2" value="SEND_ADJUSTMENT_BP1"/>
-            <column name="lang" type="varchar2" value="KZ"/>
-            <column name="name" type="varchar2" value="Отправить на корректировку (БП1)"/>
-        </insert>
-        <rollback/>
-    </changeSet>
-
-    <changeSet id="wf-rus-93" logicalFilePath="path-independent" author="ruslan" context="dev">
-        <comment>insert into wf_activities</comment>
-        <insert schemaName="apps" tableName="wf_activities">
-            <column name="code" type="varchar2" value="SEND_ADJUSTMENT_BP2"/>
-        </insert>
-        <rollback/>
-    </changeSet>
-
-    <changeSet id="wf-rus-94" logicalFilePath="path-independent" author="ruslan" context="dev">
-        <comment>insert into wf_activities_tl</comment>
-        <insert schemaName="apps" tableName="wf_activities_tl">
-            <column name="code" type="varchar2" value="SEND_ADJUSTMENT_BP2"/>
-            <column name="lang" type="varchar2" value="RU"/>
-            <column name="name" type="varchar2" value="Отправить на корректировку (БП2)"/>
-        </insert>
-        <rollback/>
-    </changeSet>
-
-    <changeSet id="wf-rus-95" logicalFilePath="path-independent" author="ruslan" context="dev">
-        <comment>insert into wf_activities_tl</comment>
-        <insert schemaName="apps" tableName="wf_activities_tl">
-            <column name="code" type="varchar2" value="SEND_ADJUSTMENT_BP2"/>
-            <column name="lang" type="varchar2" value="KZ"/>
-            <column name="name" type="varchar2" value="Отправить на корректировку (БП2)"/>
-        </insert>
-        <rollback/>
-    </changeSet>
-
-    <changeSet id="wf-rus-96" logicalFilePath="path-independent" author="ruslan" context="dev">
-        <comment>insert into wf_activities</comment>
-        <insert schemaName="apps" tableName="wf_activities">
-            <column name="code" type="varchar2" value="CLOSE"/>
-        </insert>
-        <rollback/>
-    </changeSet>
-
-    <changeSet id="wf-rus-97" logicalFilePath="path-independent" author="ruslan" context="dev">
-        <comment>insert into wf_activities_tl</comment>
-        <insert schemaName="apps" tableName="wf_activities_tl">
-            <column name="code" type="varchar2" value="CLOSE"/>
-            <column name="lang" type="varchar2" value="RU"/>
-            <column name="name" type="varchar2" value="Завершить"/>
-        </insert>
-        <rollback/>
-    </changeSet>
-
-    <changeSet id="wf-rus-98" logicalFilePath="path-independent" author="ruslan" context="dev">
-        <comment>insert into wf_activities_tl</comment>
-        <insert schemaName="apps" tableName="wf_activities_tl">
-            <column name="code" type="varchar2" value="CLOSE"/>
-            <column name="lang" type="varchar2" value="KZ"/>
-            <column name="name" type="varchar2" value="Завершить"/>
-        </insert>
-        <rollback/>
-    </changeSet>
-
-    <changeSet id="wf-rus-99" logicalFilePath="path-independent" author="ruslan" context="dev">
-        <comment>insert into wf_activities</comment>
-        <insert schemaName="apps" tableName="wf_activities">
-            <column name="code" type="varchar2" value="NOT_VALIDATE"/>
-        </insert>
-        <rollback/>
-    </changeSet>
-
-    <changeSet id="wf-rus-100" logicalFilePath="path-independent" author="ruslan" context="dev">
-        <comment>insert into wf_activities_tl</comment>
-        <insert schemaName="apps" tableName="wf_activities_tl">
-            <column name="code" type="varchar2" value="NOT_VALIDATE"/>
-            <column name="lang" type="varchar2" value="RU"/>
-            <column name="name" type="varchar2" value="Не соглосовать"/>
-        </insert>
-        <rollback/>
-    </changeSet>
-
-    <changeSet id="wf-rus-101" logicalFilePath="path-independent" author="ruslan" context="dev">
-        <comment>insert into wf_activities_tl</comment>
-        <insert schemaName="apps" tableName="wf_activities_tl">
-            <column name="code" type="varchar2" value="NOT_VALIDATE"/>
-            <column name="lang" type="varchar2" value="KZ"/>
-            <column name="name" type="varchar2" value="Не соглосовать"/>
-        </insert>
-        <rollback/>
-    </changeSet>
-
-    <changeSet id="wf-rus-102" logicalFilePath="path-independent" author="ruslan" context="dev">
-        <comment>insert into wf_activities</comment>
-        <insert schemaName="apps" tableName="wf_activities">
-            <column name="code" type="varchar2" value="NOT_SIGN"/>
-        </insert>
-        <rollback/>
-    </changeSet>
-
-    <changeSet id="wf-rus-103" logicalFilePath="path-independent" author="ruslan" context="dev">
-        <comment>insert into wf_activities_tl</comment>
-        <insert schemaName="apps" tableName="wf_activities_tl">
-            <column name="code" type="varchar2" value="NOT_SIGN"/>
-            <column name="lang" type="varchar2" value="RU"/>
-            <column name="name" type="varchar2" value="Не подписать"/>
-        </insert>
-        <rollback/>
-    </changeSet>
-
-    <changeSet id="wf-rus-104" logicalFilePath="path-independent" author="ruslan" context="dev">
-        <comment>insert into wf_activities_tl</comment>
-        <insert schemaName="apps" tableName="wf_activities_tl">
-            <column name="code" type="varchar2" value="NOT_SIGN"/>
-            <column name="lang" type="varchar2" value="KZ"/>
-            <column name="name" type="varchar2" value="Не подписать"/>
-        </insert>
-        <rollback/>
-    </changeSet>
-
-    <changeSet id="wf-rus-105" logicalFilePath="path-independent" author="ruslan" context="dev">
-        <comment>insert into wf_states</comment>
-        <insert schemaName="apps" tableName="wf_states">
-            <column name="code" type="varchar2" value="NOT_SIGNED"/>
-        </insert>
-        <rollback/>
-    </changeSet>
-
-    <changeSet id="wf-rus-106" logicalFilePath="path-independent" author="ruslan" context="dev">
-        <comment>insert into wf_states_tl</comment>
-        <insert schemaName="apps" tableName="wf_states_tl">
-            <column name="code" type="varchar2" value="NOT_SIGNED"/>
-            <column name="lang" type="varchar2" value="RU"/>
-            <column name="name" type="varchar2" value="Не подписан"/>
-        </insert>
-        <rollback/>
-    </changeSet>
-
-    <changeSet id="wf-rus-107" logicalFilePath="path-independent" author="ruslan" context="dev">
-        <comment>insert into wf_states_tl</comment>
-        <insert schemaName="apps" tableName="wf_states_tl">
-            <column name="code" type="varchar2" value="NOT_SIGNED"/>
-            <column name="lang" type="varchar2" value="KZ"/>
-            <column name="name" type="varchar2" value="Не подписан"/>
-        </insert>
-        <rollback/>
-    </changeSet>
-
-    <changeSet id="wf-rus-108" logicalFilePath="path-independent" author="ruslan" context="dev">
         <comment>insert into wf_object_activities</comment>
         <insert schemaName="apps" tableName="wf_object_activities">
             <column name="object_code" type="varchar2" value="CONTRACT"/>
-            <column name="ACTIVITY_CODE" type="varchar2" value="COMPLETE"/>
+            <column name="ACTIVITY_CODE" type="varchar2" value="CREATE"/>
         </insert>
-        <rollback/>
-    </changeSet>
 
-    <changeSet id="wf-rus-109" logicalFilePath="path-independent" author="ruslan" context="dev">
-        <comment>insert into wf_object_activities</comment>
         <insert schemaName="apps" tableName="wf_object_activities">
             <column name="object_code" type="varchar2" value="CONTRACT"/>
             <column name="ACTIVITY_CODE" type="varchar2" value="MAKE_PROJECT"/>
         </insert>
-        <rollback/>
-    </changeSet>
 
-    <changeSet id="wf-rus-110" logicalFilePath="path-independent" author="ruslan" context="dev">
-        <comment>insert into wf_object_activities</comment>
         <insert schemaName="apps" tableName="wf_object_activities">
             <column name="object_code" type="varchar2" value="CONTRACT"/>
-            <column name="ACTIVITY_CODE" type="varchar2" value="SEND_ON_AGREEMENT"/>
+            <column name="ACTIVITY_CODE" type="varchar2" value="SEND_ON_VALIDATED"/>
         </insert>
-        <rollback/>
-    </changeSet>
 
-    <changeSet id="wf-rus-111" logicalFilePath="path-independent" author="ruslan" context="dev">
-        <comment>insert into wf_object_activities</comment>
         <insert schemaName="apps" tableName="wf_object_activities">
             <column name="object_code" type="varchar2" value="CONTRACT"/>
             <column name="ACTIVITY_CODE" type="varchar2" value="SEND_ON_SIGNING_BP1"/>
         </insert>
-        <rollback/>
-    </changeSet>
 
-    <changeSet id="wf-rus-112" logicalFilePath="path-independent" author="ruslan" context="dev">
-        <comment>insert into wf_object_activities</comment>
         <insert schemaName="apps" tableName="wf_object_activities">
             <column name="object_code" type="varchar2" value="CONTRACT"/>
             <column name="ACTIVITY_CODE" type="varchar2" value="SEND_ON_SIGNING_BP2"/>
         </insert>
-        <rollback/>
-    </changeSet>
 
-    <changeSet id="wf-rus-113" logicalFilePath="path-independent" author="ruslan" context="dev">
-        <comment>insert into wf_object_activities</comment>
         <insert schemaName="apps" tableName="wf_object_activities">
             <column name="object_code" type="varchar2" value="CONTRACT"/>
             <column name="ACTIVITY_CODE" type="varchar2" value="CLOSE"/>
         </insert>
-        <rollback/>
-    </changeSet>
 
-    <changeSet id="wf-rus-114" logicalFilePath="path-independent" author="ruslan" context="dev">
-        <comment>insert into wf_object_activities</comment>
         <insert schemaName="apps" tableName="wf_object_activities">
             <column name="object_code" type="varchar2" value="CONTRACT"/>
             <column name="ACTIVITY_CODE" type="varchar2" value="NOT_VALIDATE"/>
         </insert>
-        <rollback/>
-    </changeSet>
 
-    <changeSet id="wf-rus-115" logicalFilePath="path-independent" author="ruslan" context="dev">
-        <comment>insert into wf_object_activities</comment>
         <insert schemaName="apps" tableName="wf_object_activities">
             <column name="object_code" type="varchar2" value="CONTRACT"/>
             <column name="ACTIVITY_CODE" type="varchar2" value="NOT_SIGN"/>
         </insert>
-        <rollback/>
-    </changeSet>
 
-    <changeSet id="wf-rus-116" logicalFilePath="path-independent" author="ruslan" context="dev">
-        <comment>insert into wf_object_activities</comment>
         <insert schemaName="apps" tableName="wf_object_activities">
             <column name="object_code" type="varchar2" value="CONTRACT"/>
             <column name="ACTIVITY_CODE" type="varchar2" value="VALIDATE"/>
         </insert>
-        <rollback/>
-    </changeSet>
 
-    <changeSet id="wf-rus-117" logicalFilePath="path-independent" author="ruslan" context="dev">
-        <comment>insert into wf_object_activities</comment>
         <insert schemaName="apps" tableName="wf_object_activities">
             <column name="object_code" type="varchar2" value="CONTRACT"/>
             <column name="ACTIVITY_CODE" type="varchar2" value="SIGN"/>
         </insert>
-        <rollback/>
-    </changeSet>
 
-    <changeSet id="wf-rus-118" logicalFilePath="path-independent" author="ruslan" context="dev">
-        <comment>insert into wf_object_activities</comment>
         <insert schemaName="apps" tableName="wf_object_activities">
             <column name="object_code" type="varchar2" value="PERFORMANCE_ACT"/>
-            <column name="ACTIVITY_CODE" type="varchar2" value="SEND_ON_AGREEMENT"/>
+            <column name="ACTIVITY_CODE" type="varchar2" value="SEND_ON_VALIDATED"/>
         </insert>
-        <rollback/>
-    </changeSet>
 
-    <changeSet id="wf-rus-119" logicalFilePath="path-independent" author="ruslan" context="dev">
-        <comment>insert into wf_object_activities</comment>
         <insert schemaName="apps" tableName="wf_object_activities">
             <column name="object_code" type="varchar2" value="PERFORMANCE_ACT"/>
             <column name="ACTIVITY_CODE" type="varchar2" value="NOT_VALIDATE"/>
         </insert>
-        <rollback/>
-    </changeSet>
 
-    <changeSet id="wf-rus-120" logicalFilePath="path-independent" author="ruslan" context="dev">
-        <comment>insert into wf_object_activities</comment>
         <insert schemaName="apps" tableName="wf_object_activities">
             <column name="object_code" type="varchar2" value="PERFORMANCE_ACT"/>
             <column name="ACTIVITY_CODE" type="varchar2" value="VALIDATE"/>
         </insert>
-        <rollback/>
-    </changeSet>
 
-    <changeSet id="wf-rus-121" logicalFilePath="path-independent" author="ruslan" context="dev">
-        <comment>insert into wf_object_activities</comment>
         <insert schemaName="apps" tableName="wf_object_activities">
             <column name="object_code" type="varchar2" value="PERFORMANCE_ACT"/>
             <column name="ACTIVITY_CODE" type="varchar2" value="SEND_ON_SIGNING_BP1"/>
         </insert>
-        <rollback/>
-    </changeSet>
 
-    <changeSet id="wf-rus-122" logicalFilePath="path-independent" author="ruslan" context="dev">
-        <comment>insert into wf_object_activities</comment>
         <insert schemaName="apps" tableName="wf_object_activities">
             <column name="object_code" type="varchar2" value="PERFORMANCE_ACT"/>
             <column name="ACTIVITY_CODE" type="varchar2" value="SEND_ON_SIGNING_BP2"/>
         </insert>
-        <rollback/>
-    </changeSet>
 
-    <changeSet id="wf-rus-123" logicalFilePath="path-independent" author="ruslan" context="dev">
-        <comment>insert into wf_object_activities</comment>
         <insert schemaName="apps" tableName="wf_object_activities">
             <column name="object_code" type="varchar2" value="PERFORMANCE_ACT"/>
             <column name="ACTIVITY_CODE" type="varchar2" value="SIGN"/>
         </insert>
-        <rollback/>
-    </changeSet>
 
-    <changeSet id="wf-rus-124" logicalFilePath="path-independent" author="ruslan" context="dev">
-        <comment>insert into wf_object_activities</comment>
         <insert schemaName="apps" tableName="wf_object_activities">
             <column name="object_code" type="varchar2" value="PERFORMANCE_ACT"/>
             <column name="ACTIVITY_CODE" type="varchar2" value="NOT_SIGN"/>
         </insert>
-        <rollback/>
-    </changeSet>
 
-    <changeSet id="wf-rus-125" logicalFilePath="path-independent" author="ruslan" context="dev">
-        <comment>insert into wf_object_activities</comment>
         <insert schemaName="apps" tableName="wf_object_activities">
             <column name="object_code" type="varchar2" value="INVOICE"/>
-            <column name="ACTIVITY_CODE" type="varchar2" value="SEND_ON_AGREEMENT"/>
+            <column name="ACTIVITY_CODE" type="varchar2" value="SEND_ON_VALIDATED"/>
         </insert>
-        <rollback/>
-    </changeSet>
 
-    <changeSet id="wf-rus-126" logicalFilePath="path-independent" author="ruslan" context="dev">
-        <comment>insert into wf_object_activities</comment>
         <insert schemaName="apps" tableName="wf_object_activities">
             <column name="object_code" type="varchar2" value="INVOICE"/>
             <column name="ACTIVITY_CODE" type="varchar2" value="VALIDATE"/>
         </insert>
-        <rollback/>
-    </changeSet>
 
-    <changeSet id="wf-rus-127" logicalFilePath="path-independent" author="ruslan" context="dev">
-        <comment>insert into wf_object_activities</comment>
         <insert schemaName="apps" tableName="wf_object_activities">
             <column name="object_code" type="varchar2" value="INVOICE"/>
             <column name="ACTIVITY_CODE" type="varchar2" value="NOT_VALIDATE"/>
         </insert>
-        <rollback/>
-    </changeSet>
 
-    <changeSet id="wf-rus-128" logicalFilePath="path-independent" author="ruslan" context="dev">
-        <comment>insert into wf_object_activities</comment>
         <insert schemaName="apps" tableName="wf_object_activities">
             <column name="object_code" type="varchar2" value="FIN_PAYMENT_REQUESTS"/>
-            <column name="ACTIVITY_CODE" type="varchar2" value="SEND_ON_AGREEMENT"/>
+            <column name="ACTIVITY_CODE" type="varchar2" value="SEND_ON_VALIDATED"/>
         </insert>
-        <rollback/>
-    </changeSet>
 
-    <changeSet id="wf-rus-129" logicalFilePath="path-independent" author="ruslan" context="dev">
-        <comment>insert into wf_object_activities</comment>
         <insert schemaName="apps" tableName="wf_object_activities">
             <column name="object_code" type="varchar2" value="FIN_PAYMENT_REQUESTS"/>
             <column name="ACTIVITY_CODE" type="varchar2" value="VALIDATE"/>
         </insert>
-        <rollback/>
-    </changeSet>
 
-    <changeSet id="wf-rus-130" logicalFilePath="path-independent" author="ruslan" context="dev">
-        <comment>insert into wf_object_activities</comment>
         <insert schemaName="apps" tableName="wf_object_activities">
             <column name="object_code" type="varchar2" value="FIN_PAYMENT_REQUESTS"/>
             <column name="ACTIVITY_CODE" type="varchar2" value="NOT_VALIDATE"/>
         </insert>
-        <rollback/>
+    <rollback/>
     </changeSet>
 
-    <changeSet id="wf-rus-131" logicalFilePath="path-independent" author="ruslan" context="dev">
-        <comment>insert into wf_object_states</comment>
-        <insert schemaName="apps" tableName="wf_object_states">
+    <changeSet id="wf-rus-22" logicalFilePath="path-independent" author="ruslan" context="dev">
+    <comment>insert into wf_object_states</comment>
+    <insert schemaName="apps" tableName="wf_object_states">
+        <column name="object_code" type="varchar2" value="CONTRACT"/>
+        <column name="STATE_CODE" type="varchar2" value="CREATE"/>
+        <column name="IS_INITIAL" type="number" value="1"/>
+        <column name="IS_FINAL" type="number" value="0"/>
+        <column name="IS_USERS_REQUIRED" type="number" value="0"/>
+        <column name="MIN_USERS" type="number" value="0"/>
+        <column name="MAX_USERS" type="number" value="0"/>
+    </insert>
+
+    <insert schemaName="apps" tableName="wf_object_states">
+        <column name="object_code" type="varchar2" value="CONTRACT"/>
+        <column name="STATE_CODE" type="varchar2" value="PROJECT"/>
+        <column name="IS_INITIAL" type="number" value="0"/>
+        <column name="IS_FINAL" type="number" value="0"/>
+        <column name="IS_USERS_REQUIRED" type="number" value="0"/>
+        <column name="MIN_USERS" type="number" value="0"/>
+        <column name="MAX_USERS" type="number" value="0"/>
+    </insert>
+
+    <insert schemaName="apps" tableName="wf_object_states">
+        <column name="object_code" type="varchar2" value="CONTRACT"/>
+        <column name="STATE_CODE" type="varchar2" value="ON_VALIDATED"/>
+        <column name="IS_INITIAL" type="number" value="0"/>
+        <column name="IS_FINAL" type="number" value="0"/>
+        <column name="IS_USERS_REQUIRED" type="number" value="1"/>
+        <column name="MIN_USERS" type="number" value="1"/>
+        <column name="MAX_USERS" type="number" value="10"/>
+    </insert>
+
+    <insert schemaName="apps" tableName="wf_object_states">
+        <column name="object_code" type="varchar2" value="CONTRACT"/>
+        <column name="STATE_CODE" type="varchar2" value="VALIDATED"/>
+        <column name="IS_INITIAL" type="number" value="0"/>
+        <column name="IS_FINAL" type="number" value="0"/>
+        <column name="IS_USERS_REQUIRED" type="number" value="0"/>
+        <column name="MIN_USERS" type="number" value="0"/>
+        <column name="MAX_USERS" type="number" value="0"/>
+    </insert>
+
+    <insert schemaName="apps" tableName="wf_object_states">
+        <column name="object_code" type="varchar2" value="CONTRACT"/>
+        <column name="STATE_CODE" type="varchar2" value="NOT_VALIDATED"/>
+        <column name="IS_INITIAL" type="number" value="0"/>
+        <column name="IS_FINAL" type="number" value="1"/>
+        <column name="IS_USERS_REQUIRED" type="number" value="0"/>
+        <column name="MIN_USERS" type="number" value="0"/>
+        <column name="MAX_USERS" type="number" value="0"/>
+    </insert>
+
+    <insert schemaName="apps" tableName="wf_object_states">
+        <column name="object_code" type="varchar2" value="CONTRACT"/>
+        <column name="STATE_CODE" type="varchar2" value="ON_SIGNING_BP1"/>
+        <column name="IS_INITIAL" type="number" value="0"/>
+        <column name="IS_FINAL" type="number" value="0"/>
+        <column name="IS_USERS_REQUIRED" type="number" value="1"/>
+        <column name="MIN_USERS" type="number" value="1"/>
+        <column name="MAX_USERS" type="number" value="2"/>
+    </insert>
+
+    <insert schemaName="apps" tableName="wf_object_states">
+        <column name="object_code" type="varchar2" value="CONTRACT"/>
+        <column name="STATE_CODE" type="varchar2" value="ON_SIGNING_BP2"/>
+        <column name="IS_INITIAL" type="number" value="0"/>
+        <column name="IS_FINAL" type="number" value="0"/>
+        <column name="IS_USERS_REQUIRED" type="number" value="1"/>
+        <column name="MIN_USERS" type="number" value="1"/>
+        <column name="MAX_USERS" type="number" value="2"/>
+    </insert>
+
+    <insert schemaName="apps" tableName="wf_object_states">
+        <column name="object_code" type="varchar2" value="CONTRACT"/>
+        <column name="STATE_CODE" type="varchar2" value="SIGNED"/>
+        <column name="IS_INITIAL" type="number" value="0"/>
+        <column name="IS_FINAL" type="number" value="1"/>
+        <column name="IS_USERS_REQUIRED" type="number" value="0"/>
+        <column name="MIN_USERS" type="number" value="0"/>
+        <column name="MAX_USERS" type="number" value="0"/>
+    </insert>
+
+    <insert schemaName="apps" tableName="wf_object_states">
+        <column name="object_code" type="varchar2" value="CONTRACT"/>
+        <column name="STATE_CODE" type="varchar2" value="NOT_SIGNED"/>
+        <column name="IS_INITIAL" type="number" value="0"/>
+        <column name="IS_FINAL" type="number" value="1"/>
+        <column name="IS_USERS_REQUIRED" type="number" value="0"/>
+        <column name="MIN_USERS" type="number" value="0"/>
+        <column name="MAX_USERS" type="number" value="0"/>
+    </insert>
+
+    <insert schemaName="apps" tableName="wf_object_states">
+        <column name="object_code" type="varchar2" value="PERFORMANCE_ACT"/>
+        <column name="STATE_CODE" type="varchar2" value="CREATE"/>
+        <column name="IS_INITIAL" type="number" value="1"/>
+        <column name="IS_FINAL" type="number" value="0"/>
+        <column name="IS_USERS_REQUIRED" type="number" value="0"/>
+        <column name="MIN_USERS" type="number" value="0"/>
+        <column name="MAX_USERS" type="number" value="0"/>
+    </insert>
+
+    <insert schemaName="apps" tableName="wf_object_states">
+        <column name="object_code" type="varchar2" value="PERFORMANCE_ACT"/>
+        <column name="STATE_CODE" type="varchar2" value="ON_VALIDATED"/>
+        <column name="IS_INITIAL" type="number" value="0"/>
+        <column name="IS_FINAL" type="number" value="0"/>
+        <column name="IS_USERS_REQUIRED" type="number" value="1"/>
+        <column name="MIN_USERS" type="number" value="1"/>
+        <column name="MAX_USERS" type="number" value="10"/>
+    </insert>
+
+    <insert schemaName="apps" tableName="wf_object_states">
+        <column name="object_code" type="varchar2" value="PERFORMANCE_ACT"/>
+        <column name="STATE_CODE" type="varchar2" value="ON_SIGNING_BP1"/>
+        <column name="IS_INITIAL" type="number" value="0"/>
+        <column name="IS_FINAL" type="number" value="0"/>
+        <column name="IS_USERS_REQUIRED" type="number" value="1"/>
+        <column name="MIN_USERS" type="number" value="1"/>
+        <column name="MAX_USERS" type="number" value="2"/>
+    </insert>
+
+    <insert schemaName="apps" tableName="wf_object_states">
+        <column name="object_code" type="varchar2" value="PERFORMANCE_ACT"/>
+        <column name="STATE_CODE" type="varchar2" value="ON_SIGNING_BP2"/>
+        <column name="IS_INITIAL" type="number" value="0"/>
+        <column name="IS_FINAL" type="number" value="0"/>
+        <column name="IS_USERS_REQUIRED" type="number" value="1"/>
+        <column name="MIN_USERS" type="number" value="1"/>
+        <column name="MAX_USERS" type="number" value="2"/>
+    </insert>
+
+    <insert schemaName="apps" tableName="wf_object_states">
+        <column name="object_code" type="varchar2" value="PERFORMANCE_ACT"/>
+        <column name="STATE_CODE" type="varchar2" value="VALIDATED"/>
+        <column name="IS_INITIAL" type="number" value="0"/>
+        <column name="IS_FINAL" type="number" value="0"/>
+        <column name="IS_USERS_REQUIRED" type="number" value="0"/>
+        <column name="MIN_USERS" type="number" value="0"/>
+        <column name="MAX_USERS" type="number" value="0"/>
+    </insert>
+
+    <insert schemaName="apps" tableName="wf_object_states">
+        <column name="object_code" type="varchar2" value="PERFORMANCE_ACT"/>
+        <column name="STATE_CODE" type="varchar2" value="NOT_VALIDATED"/>
+        <column name="IS_INITIAL" type="number" value="0"/>
+        <column name="IS_FINAL" type="number" value="1"/>
+        <column name="IS_USERS_REQUIRED" type="number" value="0"/>
+        <column name="MIN_USERS" type="number" value="0"/>
+        <column name="MAX_USERS" type="number" value="0"/>
+    </insert>
+
+    <insert schemaName="apps" tableName="wf_object_states">
+        <column name="object_code" type="varchar2" value="PERFORMANCE_ACT"/>
+        <column name="STATE_CODE" type="varchar2" value="SIGNED"/>
+        <column name="IS_INITIAL" type="number" value="0"/>
+        <column name="IS_FINAL" type="number" value="1"/>
+        <column name="IS_USERS_REQUIRED" type="number" value="0"/>
+        <column name="MIN_USERS" type="number" value="0"/>
+        <column name="MAX_USERS" type="number" value="0"/>
+    </insert>
+
+    <insert schemaName="apps" tableName="wf_object_states">
+        <column name="object_code" type="varchar2" value="PERFORMANCE_ACT"/>
+        <column name="STATE_CODE" type="varchar2" value="NOT_SIGNED"/>
+        <column name="IS_INITIAL" type="number" value="0"/>
+        <column name="IS_FINAL" type="number" value="1"/>
+        <column name="IS_USERS_REQUIRED" type="number" value="0"/>
+        <column name="MIN_USERS" type="number" value="0"/>
+        <column name="MAX_USERS" type="number" value="0"/>
+    </insert>
+
+    <insert schemaName="apps" tableName="wf_object_states">
+        <column name="object_code" type="varchar2" value="INVOICE"/>
+        <column name="STATE_CODE" type="varchar2" value="CREATE"/>
+        <column name="IS_INITIAL" type="number" value="1"/>
+        <column name="IS_FINAL" type="number" value="0"/>
+        <column name="IS_USERS_REQUIRED" type="number" value="0"/>
+        <column name="MIN_USERS" type="number" value="0"/>
+        <column name="MAX_USERS" type="number" value="0"/>
+    </insert>
+
+    <insert schemaName="apps" tableName="wf_object_states">
+        <column name="object_code" type="varchar2" value="INVOICE"/>
+        <column name="STATE_CODE" type="varchar2" value="ON_VALIDATED"/>
+        <column name="IS_INITIAL" type="number" value="0"/>
+        <column name="IS_FINAL" type="number" value="0"/>
+        <column name="IS_USERS_REQUIRED" type="number" value="1"/>
+        <column name="MIN_USERS" type="number" value="1"/>
+        <column name="MAX_USERS" type="number" value="10"/>
+    </insert>
+
+    <insert schemaName="apps" tableName="wf_object_states">
+        <column name="object_code" type="varchar2" value="INVOICE"/>
+        <column name="STATE_CODE" type="varchar2" value="VALIDATED"/>
+        <column name="IS_INITIAL" type="number" value="0"/>
+        <column name="IS_FINAL" type="number" value="1"/>
+        <column name="IS_USERS_REQUIRED" type="number" value="0"/>
+        <column name="MIN_USERS" type="number" value="0"/>
+        <column name="MAX_USERS" type="number" value="0"/>
+    </insert>
+
+    <insert schemaName="apps" tableName="wf_object_states">
+        <column name="object_code" type="varchar2" value="INVOICE"/>
+        <column name="STATE_CODE" type="varchar2" value="NOT_VALIDATED"/>
+        <column name="IS_INITIAL" type="number" value="0"/>
+        <column name="IS_FINAL" type="number" value="1"/>
+        <column name="IS_USERS_REQUIRED" type="number" value="0"/>
+        <column name="MIN_USERS" type="number" value="0"/>
+        <column name="MAX_USERS" type="number" value="0"/>
+    </insert>
+    </changeSet>
+
+    <changeSet id="wf-rus-24" logicalFilePath="path-independent" author="ruslan" context="dev">
+    <comment>insert into wf_object_state_transitions</comment>
+        <insert schemaName="apps" tableName="wf_object_state_transitions">
             <column name="object_code" type="varchar2" value="CONTRACT"/>
-            <column name="STATE_CODE" type="varchar2" value="NOT_COMPLETE"/>
-            <column name="IS_INITIAL" type="number" value="1"/>
-            <column name="IS_FINAL" type="number" value="0"/>
-            <column name="IS_USERS_REQUIRED" type="number" value="0"/>
-            <column name="MIN_USERS" type="number" value="0"/>
-            <column name="MAX_USERS" type="number" value="0"/>
+            <column name="STATE_CODE_FROM" type="varchar2" value="CREATE"/>
+            <column name="STATE_CODE_TO" type="number" value="PROJECT"/>
+            <column name="ACTIVITY_CODE" type="number" value="MAKE_PROJECT"/>
         </insert>
-        <rollback/>
-    </changeSet>
 
-    <changeSet id="wf-rus-132" logicalFilePath="path-independent" author="ruslan" context="dev">
-        <comment>insert into wf_object_states</comment>
-        <insert schemaName="apps" tableName="wf_object_states">
+        <insert schemaName="apps" tableName="wf_object_state_transitions">
             <column name="object_code" type="varchar2" value="CONTRACT"/>
-            <column name="STATE_CODE" type="varchar2" value="COMPLETE"/>
-            <column name="IS_INITIAL" type="number" value="0"/>
-            <column name="IS_FINAL" type="number" value="0"/>
-            <column name="IS_USERS_REQUIRED" type="number" value="0"/>
-            <column name="MIN_USERS" type="number" value="0"/>
-            <column name="MAX_USERS" type="number" value="0"/>
+            <column name="STATE_CODE_FROM" type="varchar2" value="PROJECT"/>
+            <column name="STATE_CODE_TO" type="number" value="ON_VALIDATED"/>
+            <column name="ACTIVITY_CODE" type="number" value="SEND_ON_VALIDATED"/>
         </insert>
-        <rollback/>
-    </changeSet>
-
-    <changeSet id="wf-rus-133" logicalFilePath="path-independent" author="ruslan" context="dev">
-        <comment>insert into wf_object_states</comment>
-        <insert schemaName="apps" tableName="wf_object_states">
-            <column name="object_code" type="varchar2" value="CONTRACT"/>
-            <column name="STATE_CODE" type="varchar2" value="PROJECT"/>
-            <column name="IS_INITIAL" type="number" value="0"/>
-            <column name="IS_FINAL" type="number" value="0"/>
-            <column name="IS_USERS_REQUIRED" type="number" value="0"/>
-            <column name="MIN_USERS" type="number" value="0"/>
-            <column name="MAX_USERS" type="number" value="0"/>
-        </insert>
-        <rollback/>
-    </changeSet>
-
-    <changeSet id="wf-rus-134" logicalFilePath="path-independent" author="ruslan" context="dev">
-        <comment>insert into wf_object_states</comment>
-        <insert schemaName="apps" tableName="wf_object_states">
-            <column name="object_code" type="varchar2" value="CONTRACT"/>
-            <column name="STATE_CODE" type="varchar2" value="ON_AGREEMENT"/>
-            <column name="IS_INITIAL" type="number" value="0"/>
-            <column name="IS_FINAL" type="number" value="0"/>
-            <column name="IS_USERS_REQUIRED" type="number" value="1"/>
-            <column name="MIN_USERS" type="number" value="1"/>
-            <column name="MAX_USERS" type="number" value="10"/>
-        </insert>
-        <rollback/>
-    </changeSet>
-
-    <changeSet id="wf-rus-135" logicalFilePath="path-independent" author="ruslan" context="dev">
-        <comment>insert into wf_object_states</comment>
-        <insert schemaName="apps" tableName="wf_object_states">
-            <column name="object_code" type="varchar2" value="CONTRACT"/>
-            <column name="STATE_CODE" type="varchar2" value="VALIDATED"/>
-            <column name="IS_INITIAL" type="number" value="0"/>
-            <column name="IS_FINAL" type="number" value="0"/>
-            <column name="IS_USERS_REQUIRED" type="number" value="0"/>
-            <column name="MIN_USERS" type="number" value="0"/>
-            <column name="MAX_USERS" type="number" value="0"/>
-        </insert>
-        <rollback/>
-    </changeSet>
-
-    <changeSet id="wf-rus-136" logicalFilePath="path-independent" author="ruslan" context="dev">
-        <comment>insert into wf_object_states</comment>
-        <insert schemaName="apps" tableName="wf_object_states">
-            <column name="object_code" type="varchar2" value="CONTRACT"/>
-            <column name="STATE_CODE" type="varchar2" value="NOT_VALIDATED"/>
-            <column name="IS_INITIAL" type="number" value="0"/>
-            <column name="IS_FINAL" type="number" value="1"/>
-            <column name="IS_USERS_REQUIRED" type="number" value="0"/>
-            <column name="MIN_USERS" type="number" value="0"/>
-            <column name="MAX_USERS" type="number" value="0"/>
-        </insert>
-        <rollback/>
-    </changeSet>
-
-    <changeSet id="wf-rus-137" logicalFilePath="path-independent" author="ruslan" context="dev">
-        <comment>insert into wf_object_states</comment>
-        <insert schemaName="apps" tableName="wf_object_states">
-            <column name="object_code" type="varchar2" value="CONTRACT"/>
-            <column name="STATE_CODE" type="varchar2" value="ON_SIGNING_BP1"/>
-            <column name="IS_INITIAL" type="number" value="0"/>
-            <column name="IS_FINAL" type="number" value="0"/>
-            <column name="IS_USERS_REQUIRED" type="number" value="1"/>
-            <column name="MIN_USERS" type="number" value="1"/>
-            <column name="MAX_USERS" type="number" value="2"/>
-        </insert>
-        <rollback/>
-    </changeSet>
-
-    <changeSet id="wf-rus-138" logicalFilePath="path-independent" author="ruslan" context="dev">
-        <comment>insert into wf_object_states</comment>
-        <insert schemaName="apps" tableName="wf_object_states">
-            <column name="object_code" type="varchar2" value="CONTRACT"/>
-            <column name="STATE_CODE" type="varchar2" value="ON_SIGNING_BP2"/>
-            <column name="IS_INITIAL" type="number" value="0"/>
-            <column name="IS_FINAL" type="number" value="0"/>
-            <column name="IS_USERS_REQUIRED" type="number" value="1"/>
-            <column name="MIN_USERS" type="number" value="1"/>
-            <column name="MAX_USERS" type="number" value="2"/>
-        </insert>
-        <rollback/>
-    </changeSet>
-
-    <changeSet id="wf-rus-139" logicalFilePath="path-independent" author="ruslan" context="dev">
-        <comment>insert into wf_object_states</comment>
-        <insert schemaName="apps" tableName="wf_object_states">
-            <column name="object_code" type="varchar2" value="CONTRACT"/>
-            <column name="STATE_CODE" type="varchar2" value="SIGNED"/>
-            <column name="IS_INITIAL" type="number" value="0"/>
-            <column name="IS_FINAL" type="number" value="1"/>
-            <column name="IS_USERS_REQUIRED" type="number" value="0"/>
-            <column name="MIN_USERS" type="number" value="0"/>
-            <column name="MAX_USERS" type="number" value="0"/>
-        </insert>
-        <rollback/>
-    </changeSet>
-
-    <changeSet id="wf-rus-140" logicalFilePath="path-independent" author="ruslan" context="dev">
-        <comment>insert into wf_object_states</comment>
-        <insert schemaName="apps" tableName="wf_object_states">
-            <column name="object_code" type="varchar2" value="CONTRACT"/>
-            <column name="STATE_CODE" type="varchar2" value="NOT_SIGNED"/>
-            <column name="IS_INITIAL" type="number" value="0"/>
-            <column name="IS_FINAL" type="number" value="1"/>
-            <column name="IS_USERS_REQUIRED" type="number" value="0"/>
-            <column name="MIN_USERS" type="number" value="0"/>
-            <column name="MAX_USERS" type="number" value="0"/>
-        </insert>
-        <rollback/>
-    </changeSet>
-
-    <changeSet id="wf-rus-141" logicalFilePath="path-independent" author="ruslan" context="dev">
-        <comment>insert into wf_object_states</comment>
-        <insert schemaName="apps" tableName="wf_object_states">
-            <column name="object_code" type="varchar2" value="PERFORMANCE_ACT"/>
-            <column name="STATE_CODE" type="varchar2" value="COMPLETE"/>
-            <column name="IS_INITIAL" type="number" value="1"/>
-            <column name="IS_FINAL" type="number" value="0"/>
-            <column name="IS_USERS_REQUIRED" type="number" value="0"/>
-            <column name="MIN_USERS" type="number" value="0"/>
-            <column name="MAX_USERS" type="number" value="0"/>
-        </insert>
-        <rollback/>
-    </changeSet>
-
-    <changeSet id="wf-rus-142" logicalFilePath="path-independent" author="ruslan" context="dev">
-        <comment>insert into wf_object_states</comment>
-        <insert schemaName="apps" tableName="wf_object_states">
-            <column name="object_code" type="varchar2" value="PERFORMANCE_ACT"/>
-            <column name="STATE_CODE" type="varchar2" value="ON_AGREEMENT"/>
-            <column name="IS_INITIAL" type="number" value="0"/>
-            <column name="IS_FINAL" type="number" value="0"/>
-            <column name="IS_USERS_REQUIRED" type="number" value="1"/>
-            <column name="MIN_USERS" type="number" value="1"/>
-            <column name="MAX_USERS" type="number" value="10"/>
-        </insert>
-        <rollback/>
-    </changeSet>
-
-    <changeSet id="wf-rus-143" logicalFilePath="path-independent" author="ruslan" context="dev">
-        <comment>insert into wf_object_states</comment>
-        <insert schemaName="apps" tableName="wf_object_states">
-            <column name="object_code" type="varchar2" value="PERFORMANCE_ACT"/>
-            <column name="STATE_CODE" type="varchar2" value="ON_SIGNING_BP1"/>
-            <column name="IS_INITIAL" type="number" value="0"/>
-            <column name="IS_FINAL" type="number" value="0"/>
-            <column name="IS_USERS_REQUIRED" type="number" value="1"/>
-            <column name="MIN_USERS" type="number" value="1"/>
-            <column name="MAX_USERS" type="number" value="2"/>
-        </insert>
-        <rollback/>
-    </changeSet>
-
-    <changeSet id="wf-rus-144" logicalFilePath="path-independent" author="ruslan" context="dev">
-        <comment>insert into wf_object_states</comment>
-        <insert schemaName="apps" tableName="wf_object_states">
-            <column name="object_code" type="varchar2" value="PERFORMANCE_ACT"/>
-            <column name="STATE_CODE" type="varchar2" value="ON_SIGNING_BP2"/>
-            <column name="IS_INITIAL" type="number" value="0"/>
-            <column name="IS_FINAL" type="number" value="0"/>
-            <column name="IS_USERS_REQUIRED" type="number" value="1"/>
-            <column name="MIN_USERS" type="number" value="1"/>
-            <column name="MAX_USERS" type="number" value="2"/>
-        </insert>
-        <rollback/>
-    </changeSet>
-
-    <changeSet id="wf-rus-145" logicalFilePath="path-independent" author="ruslan" context="dev">
-        <comment>insert into wf_object_states</comment>
-        <insert schemaName="apps" tableName="wf_object_states">
-            <column name="object_code" type="varchar2" value="PERFORMANCE_ACT"/>
-            <column name="STATE_CODE" type="varchar2" value="VALIDATED"/>
-            <column name="IS_INITIAL" type="number" value="0"/>
-            <column name="IS_FINAL" type="number" value="0"/>
-            <column name="IS_USERS_REQUIRED" type="number" value="0"/>
-            <column name="MIN_USERS" type="number" value="0"/>
-            <column name="MAX_USERS" type="number" value="0"/>
-        </insert>
-        <rollback/>
-    </changeSet>
-
-    <changeSet id="wf-rus-146" logicalFilePath="path-independent" author="ruslan" context="dev">
-        <comment>insert into wf_object_states</comment>
-        <insert schemaName="apps" tableName="wf_object_states">
-            <column name="object_code" type="varchar2" value="PERFORMANCE_ACT"/>
-            <column name="STATE_CODE" type="varchar2" value="NOT_VALIDATED"/>
-            <column name="IS_INITIAL" type="number" value="0"/>
-            <column name="IS_FINAL" type="number" value="1"/>
-            <column name="IS_USERS_REQUIRED" type="number" value="0"/>
-            <column name="MIN_USERS" type="number" value="0"/>
-            <column name="MAX_USERS" type="number" value="0"/>
-        </insert>
-        <rollback/>
-    </changeSet>
-
-    <changeSet id="wf-rus-147" logicalFilePath="path-independent" author="ruslan" context="dev">
-        <comment>insert into wf_object_states</comment>
-        <insert schemaName="apps" tableName="wf_object_states">
-            <column name="object_code" type="varchar2" value="PERFORMANCE_ACT"/>
-            <column name="STATE_CODE" type="varchar2" value="SIGNED"/>
-            <column name="IS_INITIAL" type="number" value="0"/>
-            <column name="IS_FINAL" type="number" value="1"/>
-            <column name="IS_USERS_REQUIRED" type="number" value="0"/>
-            <column name="MIN_USERS" type="number" value="0"/>
-            <column name="MAX_USERS" type="number" value="0"/>
-        </insert>
-        <rollback/>
-    </changeSet>
-
-    <changeSet id="wf-rus-148" logicalFilePath="path-independent" author="ruslan" context="dev">
-        <comment>insert into wf_object_states</comment>
-        <insert schemaName="apps" tableName="wf_object_states">
-            <column name="object_code" type="varchar2" value="PERFORMANCE_ACT"/>
-            <column name="STATE_CODE" type="varchar2" value="NOT_SIGNED"/>
-            <column name="IS_INITIAL" type="number" value="0"/>
-            <column name="IS_FINAL" type="number" value="1"/>
-            <column name="IS_USERS_REQUIRED" type="number" value="0"/>
-            <column name="MIN_USERS" type="number" value="0"/>
-            <column name="MAX_USERS" type="number" value="0"/>
-        </insert>
-        <rollback/>
-    </changeSet>
-
-    <changeSet id="wf-rus-149" logicalFilePath="path-independent" author="ruslan" context="dev">
-        <comment>insert into wf_object_states</comment>
-        <insert schemaName="apps" tableName="wf_object_states">
-            <column name="object_code" type="varchar2" value="INVOICE"/>
-            <column name="STATE_CODE" type="varchar2" value="COMPLETE"/>
-            <column name="IS_INITIAL" type="number" value="1"/>
-            <column name="IS_FINAL" type="number" value="0"/>
-            <column name="IS_USERS_REQUIRED" type="number" value="0"/>
-            <column name="MIN_USERS" type="number" value="0"/>
-            <column name="MAX_USERS" type="number" value="0"/>
-        </insert>
-        <rollback/>
-    </changeSet>
-
-    <changeSet id="wf-rus-150" logicalFilePath="path-independent" author="ruslan" context="dev">
-        <comment>insert into wf_object_states</comment>
-        <insert schemaName="apps" tableName="wf_object_states">
-            <column name="object_code" type="varchar2" value="INVOICE"/>
-            <column name="STATE_CODE" type="varchar2" value="ON_AGREEMENT"/>
-            <column name="IS_INITIAL" type="number" value="0"/>
-            <column name="IS_FINAL" type="number" value="0"/>
-            <column name="IS_USERS_REQUIRED" type="number" value="1"/>
-            <column name="MIN_USERS" type="number" value="1"/>
-            <column name="MAX_USERS" type="number" value="10"/>
-        </insert>
-        <rollback/>
-    </changeSet>
-
-    <changeSet id="wf-rus-151" logicalFilePath="path-independent" author="ruslan" context="dev">
-        <comment>insert into wf_object_states</comment>
-        <insert schemaName="apps" tableName="wf_object_states">
-            <column name="object_code" type="varchar2" value="INVOICE"/>
-            <column name="STATE_CODE" type="varchar2" value="VALIDATED"/>
-            <column name="IS_INITIAL" type="number" value="0"/>
-            <column name="IS_FINAL" type="number" value="1"/>
-            <column name="IS_USERS_REQUIRED" type="number" value="0"/>
-            <column name="MIN_USERS" type="number" value="0"/>
-            <column name="MAX_USERS" type="number" value="0"/>
-        </insert>
-        <rollback/>
-    </changeSet>
-
-    <changeSet id="wf-rus-152" logicalFilePath="path-independent" author="ruslan" context="dev">
-        <comment>insert into wf_object_states</comment>
-        <insert schemaName="apps" tableName="wf_object_states">
-            <column name="object_code" type="varchar2" value="INVOICE"/>
-            <column name="STATE_CODE" type="varchar2" value="NOT_VALIDATED"/>
-            <column name="IS_INITIAL" type="number" value="0"/>
-            <column name="IS_FINAL" type="number" value="1"/>
-            <column name="IS_USERS_REQUIRED" type="number" value="0"/>
-            <column name="MIN_USERS" type="number" value="0"/>
-            <column name="MAX_USERS" type="number" value="0"/>
-        </insert>
-        <rollback/>
+    <rollback/>
     </changeSet>
 </databaseChangeLog>
