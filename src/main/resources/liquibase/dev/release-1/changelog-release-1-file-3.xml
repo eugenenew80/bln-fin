@@ -870,7 +870,7 @@
         <rollback/>
     </changeSet>
 
-    <changeSet id="wf-rus-16" logicalFilePath="path-independent" author="ruslan" context="dev">
+    <changeSet id="wf-rus-17" logicalFilePath="path-independent" author="ruslan" context="dev">
         <comment>insert into wf_states_tl</comment>
         <insert schemaName="apps" tableName="wf_states_tl">
             <column name="code" type="varchar2" value="CREATE"/>
@@ -1006,7 +1006,7 @@
         <rollback/>
     </changeSet>
 
-    <changeSet id="wf-rus-17" logicalFilePath="path-independent" author="ruslan" context="dev">
+    <changeSet id="wf-rus-18" logicalFilePath="path-independent" author="ruslan" context="dev">
         <comment>insert into wf_objects</comment>
         <insert schemaName="apps" tableName="wf_objects">
             <column name="code" type="varchar2" value="CONTRACT"/>
@@ -1026,7 +1026,7 @@
         <rollback/>
     </changeSet>
 
-    <changeSet id="wf-rus-18" logicalFilePath="path-independent" author="ruslan" context="dev">
+    <changeSet id="wf-rus-19" logicalFilePath="path-independent" author="ruslan" context="dev">
         <comment>insert into wf_objects_tl</comment>
         <insert schemaName="apps" tableName="wf_objects_tl">
             <column name="code" type="varchar2" value="CONTRACT"/>
@@ -1078,7 +1078,7 @@
         <rollback/>
     </changeSet>
 
-    <changeSet id="wf-rus-19" logicalFilePath="path-independent" author="ruslan" context="dev">
+    <changeSet id="wf-rus-20" logicalFilePath="path-independent" author="ruslan" context="dev">
         <comment>insert into wf_activities</comment>
         <insert schemaName="apps" tableName="wf_activities">
             <column name="code" type="varchar2" value="MAKE_PROJECT"/>
@@ -1122,7 +1122,7 @@
         <rollback/>
     </changeSet>
 
-    <changeSet id="wf-rus-20" logicalFilePath="path-independent" author="ruslan" context="dev">
+    <changeSet id="wf-rus-21" logicalFilePath="path-independent" author="ruslan" context="dev">
         <comment>insert into wf_activities_tl</comment>
         <insert schemaName="apps" tableName="wf_activities_tl">
             <column name="code" type="varchar2" value="MAKE_PROJECT"/>
@@ -1246,7 +1246,7 @@
         <rollback/>
     </changeSet>
 
-    <changeSet id="wf-rus-21" logicalFilePath="path-independent" author="ruslan" context="dev">
+    <changeSet id="wf-rus-22" logicalFilePath="path-independent" author="ruslan" context="dev">
         <comment>insert into wf_object_activities</comment>
         <insert schemaName="apps" tableName="wf_object_activities">
             <column name="object_code" type="varchar2" value="CONTRACT"/>
@@ -1365,7 +1365,7 @@
     <rollback/>
     </changeSet>
 
-    <changeSet id="wf-rus-22" logicalFilePath="path-independent" author="ruslan" context="dev">
+    <changeSet id="wf-rus-23" logicalFilePath="path-independent" author="ruslan" context="dev">
     <comment>insert into wf_object_states</comment>
     <insert schemaName="apps" tableName="wf_object_states">
         <column name="object_code" type="varchar2" value="CONTRACT"/>
@@ -1578,7 +1578,7 @@
     </insert>
     </changeSet>
 
-    <changeSet id="wf-rus-24" logicalFilePath="path-independent" author="ruslan" context="dev">
+    <changeSet id="wf-rus-25" logicalFilePath="path-independent" author="ruslan" context="dev">
     <comment>insert into wf_object_state_transitions</comment>
         <insert schemaName="apps" tableName="wf_object_state_transitions">
             <column name="object_code" type="varchar2" value="CONTRACT"/>
