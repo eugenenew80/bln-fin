@@ -1576,8 +1576,8 @@
         <column name="IS_USERS_REQUIRED" type="number" value="0"/>
         <column name="MIN_USERS" type="number" value="0"/>
         <column name="MAX_USERS" type="number" value="0"/>
-        <rollback/>
     </insert>
+    <rollback/>
     </changeSet>
 
     <changeSet id="wf-rus-25" logicalFilePath="path-independent" author="ruslan" context="dev">
