@@ -2020,7 +2020,6 @@
             />
         </changeSet>
 
-
     <changeSet id="fin-rus-72" logicalFilePath="path-independent" author="ruslan" context="dev">
         <comment>Creating table: fin_pro_cldr_lines</comment>
         <createTable tableName="fin_pro_cldr_lines" schemaName="apps" remarks="производственный календарь: выходные дни">
@@ -2087,5 +2086,60 @@
                 referencedTableName="fin_pro_cldr_headers"
                 referencedColumnNames="id"
         />
+    </changeSet>
+
+    <changeSet id="fin-rus-76" logicalFilePath="path-independent" author="ruslan" context="dev">
+        <comment>Creating table: fin_refinancing_rate</comment>
+        <createTable tableName="fin_refinancing_rate" schemaName="apps" remarks="Ставка рефинансирования Национального банка">
+            <column name="id" type="number" remarks="Идентификатор">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="start_date" type="date" remarks="Дата установления ставки(С)">
+                <constraints nullable="true"/>
+            </column>
+
+            <column name="end_date" type="date" remarks="Дата окончания действия ставки (по) ">
+                <constraints nullable="true"/>
+            </column>
+
+            <column name="commutation_rate" type="date" remarks="Размер ставки в % ">
+                <constraints nullable="true"/>
+            </column>
+
+            <column name="create_by" type="number" remarks="Автор">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="create_date" type="TIMESTAMP" remarks="Дата создания">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="last_update_by" type="number" remarks="Автор обновления">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="last_update_date" type="TIMESTAMP" remarks="Дата обновления">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="fin-rus-77" logicalFilePath="path-independent" author="ruslan" context="dev">
+        <comment>Creating primary key for table: fin_refinancing_rate</comment>
+        <addPrimaryKey
+                columnNames="id"
+                constraintName="pk_fin_refinancing_rate"
+                schemaName="apps"
+                tableName="fin_refinancing_rate"/>
+    </changeSet>
+
+    <changeSet id="fin-rus-78" logicalFilePath="path-independent" author="ruslan" context="dev">
+        <comment>Creating sequence for table: fin_refinancing_rate</comment>
+        <createSequence
+                incrementBy="1"
+                schemaName="apps"
+                sequenceName="fin_refinancing_rate_s"
+                startValue="1"/>
     </changeSet>
 </databaseChangeLog>
