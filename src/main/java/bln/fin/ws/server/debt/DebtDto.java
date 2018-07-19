@@ -32,6 +32,10 @@ public class DebtDto {
     private String currencyCode;
 
     @XmlElement
+    @Documentation("Сумма задолженности во внутренней валюте")
+    private Double baseAmount;
+
+    @XmlElement
     @Documentation("Курс валюты")
     private Double exchangeRate;
 

@@ -19,7 +19,7 @@ public class MessageDto {
 
     @XmlElement(required = true)
     @Documentation("Код системы: BIS")
-    private String sysCode;
+    private String system;
 
     @XmlElement(required = true)
     @Documentation("№ сообщения")

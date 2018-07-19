@@ -17,7 +17,7 @@ public class SaleInvoiceDto {
     private Long id;
 
     @XmlElement(required = true)
-    @Documentation("Вид документа")
+    @Documentation("Вид документа: ESTIMATED, FACT, CORRECTED, ADDITION")
     private String docType;
 
     @XmlElement
@@ -30,7 +30,7 @@ public class SaleInvoiceDto {
 
     @XmlElement(required = true)
     @Documentation("№ документа")
-    private String docNum;
+    private String srcDocNum;
 
     @XmlElement(required = true)
     @Documentation("Дата проводки")
