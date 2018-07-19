@@ -57,12 +57,8 @@ public class BusinessPartnerDto {
     private String taxNumber;
 
     @XmlElement(required = true)
-    @Documentation("Юридический адрес")
-    private AddressDto legalAddress;
-
-    @XmlElement
-    @Documentation("Фактический адрес")
-    private AddressDto actualAddress;
+    @Documentation("Адреса")
+    private List<AddressDto> addresses;
 
     @XmlElement(name = "bankAccount")
     @Documentation("Список банковских счетов")
