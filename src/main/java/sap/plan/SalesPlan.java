@@ -179,7 +179,6 @@ public class SalesPlan {
     })
     @XmlRootElement
     public static class Item {
-
         protected long id;
         @XmlElement(required = true)
         protected String itemNum;
