@@ -6,7 +6,7 @@ import javax.xml.bind.annotation.*;
 
 @Data
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "Msg", namespace = "http://bis.kegoc.kz/server")
+@XmlType(name = "Msg", namespace = "http://bis.kegoc.kz/soap")
 public class MessageDto {
 
     @XmlElement

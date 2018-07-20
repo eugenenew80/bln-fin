@@ -43,7 +43,7 @@ public class BusinessPartnerServiceImpl implements BusinessPartnerService {
     private List<MessageDto> createResponse(SoapSession session) {
         List<MessageDto> messages = new ArrayList<>();
         MessageDto msg = new MessageDto();
-        msg.setSysCode("BIS");
+        msg.setSystem("BIS");
 
         if (session.getStatus()==SessionStatusEnum.C) {
             msg.setMsgType("S");

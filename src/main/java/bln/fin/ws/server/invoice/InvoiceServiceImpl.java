@@ -90,6 +90,7 @@ public class InvoiceServiceImpl implements InvoiceService {
         MessageDto msg = new MessageDto();
         try {
             purchaseInvoiceRepo.save(invoice);
+            msg.setSystem("BIS");
             msg.setMsgType("S");
             msg.setMsgNum("0");
             msg.setMsg("OK");
@@ -97,6 +98,7 @@ public class InvoiceServiceImpl implements InvoiceService {
             msg.setSapId(invoice.getErpDocNum());
         }
         catch (Exception e) {
+            msg.setSystem("BIS");
             msg.setMsgType("E");
             msg.setMsgNum("1");
             msg.setSapId(invoice.getErpDocNum());
