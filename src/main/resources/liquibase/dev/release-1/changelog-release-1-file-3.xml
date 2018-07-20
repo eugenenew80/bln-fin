@@ -2142,4 +2142,109 @@
                 sequenceName="fin_refinancing_rate_s"
                 startValue="1"/>
     </changeSet>
+
+    <changeSet id="fin-rus-79" logicalFilePath="path-independent" author="ruslan" context="dev">
+        <comment>Creating table: fin_assessed_penalty</comment>
+        <createTable tableName="fin_assessed_penalty" schemaName="apps" remarks="Начисленная пеня">
+            <column name="id" type="number" remarks="Идентификатор">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="contract_id" type="number" remarks="Идентификатор договора">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="invoice_id" type="number" remarks="Идентификатор выставленной СФ">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="start_date" type="date" remarks="Период начисления пени (с)">
+                <constraints nullable="true"/>
+            </column>
+
+            <column name="end_date" type="date" remarks="Период начисления пени (по)">
+                <constraints nullable="true"/>
+            </column>
+
+            <column name="days" type="number" remarks="Количество дней">
+                <constraints nullable="true"/>
+            </column>
+
+            <column name="fine" type="number" remarks="Сумма начисленной пени">
+                <constraints nullable="true"/>
+            </column>
+
+            <column name="is_current_record" type="number" remarks="Флаг - текущая запись?">
+                <constraints nullable="true"/>
+            </column>
+
+            <column name="create_by" type="number" remarks="Автор">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="create_date" type="TIMESTAMP" remarks="Дата создания">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="last_update_by" type="number" remarks="Автор обновления">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="last_update_date" type="TIMESTAMP" remarks="Дата обновления">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="fin-rus-80" logicalFilePath="path-independent" author="ruslan" context="dev">
+        <comment>Creating primary key for table: fin_assessed_penalty</comment>
+        <addPrimaryKey
+                columnNames="id"
+                constraintName="pk_fin_assessed_penalty"
+                schemaName="apps"
+                tableName="fin_assessed_penalty"/>
+    </changeSet>
+
+    <changeSet id="fin-rus-81" logicalFilePath="path-independent" author="ruslan" context="dev">
+        <comment>Creating sequence for table: fin_assessed_penalty</comment>
+        <createSequence
+                incrementBy="1"
+                schemaName="apps"
+                sequenceName="fin_assessed_penalty_s"
+                startValue="1"/>
+    </changeSet>
+
+    <changeSet id="fin-rus-82" logicalFilePath="path-independent" author="ruslan" context="dev">
+        <comment>Creating foreign constraint: fin_assessed_penalty to cm_doc_keg_cte</comment>
+        <addForeignKeyConstraint
+                baseTableSchemaName="apps"
+                baseTableName="fin_assessed_penalty"
+                baseColumnNames="contract_id"
+                constraintName="fk_fin_assessed_penalty_1"
+                deferrable="true"
+                initiallyDeferred="true"
+                onDelete="RESTRICT"
+                onUpdate="RESTRICT"
+                referencedTableSchemaName="apps"
+                referencedTableName="cm_doc_keg_cte"
+                referencedColumnNames="id"
+        />
+    </changeSet>
+
+    <changeSet id="fin-rus-83" logicalFilePath="path-independent" author="ruslan" context="dev">
+        <comment>Creating foreign constraint: fin_assessed_penalty to fin_sale_invoices</comment>
+        <addForeignKeyConstraint
+                baseTableSchemaName="apps"
+                baseTableName="fin_assessed_penalty"
+                baseColumnNames="invoice_id"
+                constraintName="fk_fin_assessed_penalty_2"
+                deferrable="true"
+                initiallyDeferred="true"
+                onDelete="RESTRICT"
+                onUpdate="RESTRICT"
+                referencedTableSchemaName="apps"
+                referencedTableName="fin_sale_invoices"
+                referencedColumnNames="id"
+        />
+    </changeSet>
 </databaseChangeLog>
