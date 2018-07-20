@@ -3,6 +3,7 @@ package bln.fin.ws.server.bp;
 import lombok.Data;
 
 import javax.xml.bind.annotation.*;
+import java.util.List;
 
 @Data
 @XmlAccessorType(XmlAccessType.FIELD)
@@ -17,14 +18,6 @@ public class AddressDto {
     @XmlElement(required = true)
     @Documentation("Код региона")
     private String region;
-
-    @XmlElement(required = true)
-    @Documentation("Город")
-    private String city;
-
-    @XmlElement(required = true)
-    @Documentation("Улица")
-    private String street;
 
     @XmlElement
     @Documentation("№ дома")
@@ -65,4 +58,8 @@ public class AddressDto {
     @XmlElement
     @Documentation("Адрес электронной почты")
     private String email;
+
+    @XmlElement(required = true, name = "translate")
+    @Documentation("Перевод")
+    private List<AddressTranslateDto> translates;
 }

@@ -12,10 +12,6 @@ import java.util.List;
 @Documentation("Деловой партнер")
 public class BusinessPartnerDto {
 
-    @XmlAttribute(required = true)
-    @Documentation("Код языка")
-    private String lang;
-
     @XmlElement(required = true)
     @Documentation("№ делового партнера")
     private String bpNum;
@@ -23,14 +19,6 @@ public class BusinessPartnerDto {
     @XmlElement(required = true)
     @Documentation("Группа")
     private String group;
-
-    @XmlElement(required = true)
-    @Documentation("Наименование делового партнера")
-    private String name;
-
-    @XmlElement(required = true)
-    @Documentation("Полное наименование делового партнера")
-    private String fullName;
 
     @XmlElement(required = true)
     @Documentation("Критерий поиска")
@@ -55,6 +43,10 @@ public class BusinessPartnerDto {
     @XmlElement(required = true)
     @Documentation("Налоговый номер")
     private String taxNumber;
+
+    @XmlElement(required = true, name = "translate")
+    @Documentation("Перевод")
+    private List<BusinessPartnerTranslateDto> translates;
 
     @XmlElement(required = true)
     @Documentation("Адреса")

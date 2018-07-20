@@ -1,233 +1,239 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <wsdl:definitions name="BIS_SalesPlan" targetNamespace="urn:kegoc.kz:BIS:LO_0002_3_SalesPlan" xmlns:p3="urn:kegoc.kz:BIS:CommonObjects" xmlns:p2="http://sap.com/xi/XI/System/Patterns" xmlns:p1="urn:kegoc.kz:BIS:LO_0002_3_SalesPlan" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:documentation/>
+  <wsp:UsingPolicy wsdl:required="true"/>
+  <wsp:Policy wsu:Id="OP_BIS_SalesPlan"/>
+  <wsdl:types>
+    <xsd:schema targetNamespace="urn:kegoc.kz:BIS:CommonObjects" xmlns="urn:kegoc.kz:BIS:CommonObjects" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+      <xsd:complexType name="ExchangeLogData">
+        <xsd:annotation>
+          <xsd:appinfo source="http://sap.com/xi/VersionID">8c65f97d85c911e8ba440000005576b6</xsd:appinfo>
+        </xsd:annotation>
+        <xsd:sequence>
+          <xsd:element name="severity" type="xsd:string" minOccurs="0"/>
+          <xsd:element name="text" type="xsd:string"/>
+          <xsd:element name="url" type="xsd:string" minOccurs="0"/>
+          <xsd:element name="id" type="xsd:string" minOccurs="0"/>
+        </xsd:sequence>
+      </xsd:complexType>
+      <xsd:complexType name="Response">
+        <xsd:annotation>
+          <xsd:appinfo source="http://sap.com/xi/VersionID">f8167aa1869c11e8b2dc0000005576b6</xsd:appinfo>
+        </xsd:annotation>
+        <xsd:sequence>
+          <xsd:element name="item" minOccurs="0" maxOccurs="unbounded">
+            <xsd:annotation>
+              <xsd:appinfo source="http://sap.com/xi/TextID">63b7d34b835811e88b8a00ff40a6f108</xsd:appinfo>
+            </xsd:annotation>
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="ID_SAP" type="xsd:string" minOccurs="0">
+                  <xsd:annotation>
+                    <xsd:appinfo source="http://sap.com/xi/TextID">63b7d346835811e8825500ff40a6f108</xsd:appinfo>
+                    <xsd:documentation>ID объекта в SAP</xsd:documentation>
+                  </xsd:annotation>
+                </xsd:element>
+                <xsd:element name="ID" type="xsd:string" minOccurs="0">
+                  <xsd:annotation>
+                    <xsd:appinfo source="http://sap.com/xi/TextID">63b7d347835811e899c300ff40a6f108</xsd:appinfo>
+                    <xsd:documentation>ID объекта</xsd:documentation>
+                  </xsd:annotation>
+                </xsd:element>
+                <xsd:element name="Msg_Num" minOccurs="0">
+                  <xsd:annotation>
+                    <xsd:appinfo source="http://sap.com/xi/TextID">63b7d348835811e8ca9b00ff40a6f108</xsd:appinfo>
+                    <xsd:documentation>Результат обработки данных в системе-приемнике, код</xsd:documentation>
+                  </xsd:annotation>
+                  <xsd:simpleType>
+                    <xsd:restriction base="xsd:string">
+                      <xsd:maxLength value="3"/>
+                    </xsd:restriction>
+                  </xsd:simpleType>
+                </xsd:element>
+                <xsd:element name="Msg_Type" minOccurs="0">
+                  <xsd:annotation>
+                    <xsd:appinfo source="http://sap.com/xi/TextID">63b7d349835811e8ae6e00ff40a6f108</xsd:appinfo>
+                    <xsd:documentation>Результат обработки данных в системе-приемнике, тип (S=success, E=error, W=warning)</xsd:documentation>
+                  </xsd:annotation>
+                  <xsd:simpleType>
+                    <xsd:restriction base="xsd:string">
+                      <xsd:maxLength value="1"/>
+                    </xsd:restriction>
+                  </xsd:simpleType>
+                </xsd:element>
+                <xsd:element name="Msg" type="xsd:string" minOccurs="0">
+                  <xsd:annotation>
+                    <xsd:appinfo source="http://sap.com/xi/TextID">63b7d34a835811e8bc4900ff40a6f108</xsd:appinfo>
+                    <xsd:documentation>Результат обработки данных в системе-приемнике (текст)</xsd:documentation>
+                  </xsd:annotation>
+                </xsd:element>
+              </xsd:sequence>
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:sequence>
+      </xsd:complexType>
+      <xsd:complexType name="ExchangeFaultData">
+        <xsd:annotation>
+          <xsd:appinfo source="http://sap.com/xi/VersionID">8c5a31f985c911e885410000005576b6</xsd:appinfo>
+        </xsd:annotation>
+        <xsd:sequence>
+          <xsd:element name="faultText" type="xsd:string"/>
+          <xsd:element name="faultUrl" type="xsd:string" minOccurs="0"/>
+          <xsd:element name="faultDetail" type="ExchangeLogData" minOccurs="0" maxOccurs="unbounded"/>
+        </xsd:sequence>
+      </xsd:complexType>
+    </xsd:schema>
+    <xsd:schema targetNamespace="urn:kegoc.kz:BIS:LO_0002_3_SalesPlan" xmlns:p1="urn:kegoc.kz:BIS:CommonObjects" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="urn:kegoc.kz:BIS:LO_0002_3_SalesPlan">
+      <xsd:import namespace="urn:kegoc.kz:BIS:CommonObjects"/>
+      <xsd:element name="SalesPlan_Resp" type="p1:Response"/>
+      <xsd:element name="SalesPlan" type="SalesPlan"/>
+      <xsd:complexType name="SalesPlan">
+        <xsd:annotation>
+          <xsd:appinfo source="http://sap.com/xi/VersionID">51c253798c0b11e8b6980000005576b6</xsd:appinfo>
+        </xsd:annotation>
+        <xsd:sequence>
+          <xsd:element name="item" minOccurs="0" maxOccurs="unbounded">
+            <xsd:annotation>
+              <xsd:appinfo source="http://sap.com/xi/TextID">7ed343eb85ab11e8b37600ffe0396e09</xsd:appinfo>
+            </xsd:annotation>
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="id" type="xsd:long">
+                  <xsd:annotation>
+                    <xsd:appinfo source="http://sap.com/xi/TextID">03b0c8cb8c0b11e8a83400059a3c7800</xsd:appinfo>
+                    <xsd:documentation>Идентификатор в БИС</xsd:documentation>
+                  </xsd:annotation>
+                </xsd:element>
+                <xsd:element name="itemNum">
+                  <xsd:annotation>
+                    <xsd:appinfo source="http://sap.com/xi/TextID">e9dc894f84f111e8c0f500ff40a6f108</xsd:appinfo>
+                    <xsd:documentation>Основная запись материала</xsd:documentation>
+                  </xsd:annotation>
+                  <xsd:simpleType>
+                    <xsd:restriction base="xsd:string">
+                      <xsd:maxLength value="30"/>
+                    </xsd:restriction>
+                  </xsd:simpleType>
+                </xsd:element>
+                <xsd:element name="version">
+                  <xsd:annotation>
+                    <xsd:appinfo source="http://sap.com/xi/TextID">e9dc895084f111e8b4e600ff40a6f108</xsd:appinfo>
+                    <xsd:documentation>Код версии планирования</xsd:documentation>
+                  </xsd:annotation>
+                  <xsd:simpleType>
+                    <xsd:restriction base="xsd:integer">
+                      <xsd:totalDigits value="3"/>
+                    </xsd:restriction>
+                  </xsd:simpleType>
+                </xsd:element>
+                <xsd:element name="forecastType">
+                  <xsd:annotation>
+                    <xsd:appinfo source="http://sap.com/xi/TextID">e9dc93ad84f111e8c02400ff40a6f108</xsd:appinfo>
+                    <xsd:documentation>Тип прогноза</xsd:documentation>
+                  </xsd:annotation>
+                  <xsd:simpleType>
+                    <xsd:restriction base="xsd:string">
+                      <xsd:maxLength value="1"/>
+                    </xsd:restriction>
+                  </xsd:simpleType>
+                </xsd:element>
+                <xsd:element name="startDate" type="xsd:date">
+                  <xsd:annotation>
+                    <xsd:appinfo source="http://sap.com/xi/TextID">e9dc93ae84f111e8c2c200ff40a6f108</xsd:appinfo>
+                    <xsd:documentation>Дата начала периода</xsd:documentation>
+                  </xsd:annotation>
+                </xsd:element>
+                <xsd:element name="endDate" type="xsd:date">
+                  <xsd:annotation>
+                    <xsd:appinfo source="http://sap.com/xi/TextID">7ed31adb85ab11e8a9de00ffe0396e09</xsd:appinfo>
+                    <xsd:documentation>Дата окончания периода</xsd:documentation>
+                  </xsd:annotation>
+                </xsd:element>
+                <xsd:element name="quantity" type="xsd:double">
+                  <xsd:annotation>
+                    <xsd:appinfo source="http://sap.com/xi/TextID">e9dc93af84f111e8ac6200ff40a6f108</xsd:appinfo>
+                    <xsd:documentation>Плановый объем</xsd:documentation>
+                  </xsd:annotation>
+                </xsd:element>
+                <xsd:element name="amount" type="xsd:double">
+                  <xsd:annotation>
+                    <xsd:appinfo source="http://sap.com/xi/TextID">e9dc93b084f111e89aab00ff40a6f108</xsd:appinfo>
+                    <xsd:documentation>Плановая сумма</xsd:documentation>
+                  </xsd:annotation>
+                </xsd:element>
+                <xsd:element name="currency">
+                  <xsd:annotation>
+                    <xsd:appinfo source="http://sap.com/xi/TextID">e9dc93b184f111e8941600ff40a6f108</xsd:appinfo>
+                    <xsd:documentation>Валюта планирования</xsd:documentation>
+                  </xsd:annotation>
+                  <xsd:simpleType>
+                    <xsd:restriction base="xsd:string">
+                      <xsd:maxLength value="3"/>
+                    </xsd:restriction>
+                  </xsd:simpleType>
+                </xsd:element>
+              </xsd:sequence>
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:sequence>
+      </xsd:complexType>
+    </xsd:schema>
+    <xsd:schema targetNamespace="http://sap.com/xi/XI/System/Patterns" xmlns:p1="urn:kegoc.kz:BIS:CommonObjects" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="http://sap.com/xi/XI/System/Patterns">
+      <xsd:import namespace="urn:kegoc.kz:BIS:CommonObjects"/>
+      <xsd:element name="FaultMessage">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="standard" type="p1:ExchangeFaultData"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+    </xsd:schema>
+  </wsdl:types>
+  <wsdl:message name="SalesPlan">
     <wsdl:documentation/>
-    <wsp:UsingPolicy wsdl:required="true"/>
-    <wsp:Policy wsu:Id="OP_BIS_SalesPlan"/>
-    <wsdl:types>
-        <xsd:schema targetNamespace="urn:kegoc.kz:BIS:CommonObjects" xmlns="urn:kegoc.kz:BIS:CommonObjects" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-            <xsd:complexType name="ExchangeLogData">
-                <xsd:annotation>
-                    <xsd:appinfo source="http://sap.com/xi/VersionID">8c65f97d85c911e8ba440000005576b6</xsd:appinfo>
-                </xsd:annotation>
-                <xsd:sequence>
-                    <xsd:element name="severity" type="xsd:string" minOccurs="0"/>
-                    <xsd:element name="text" type="xsd:string"/>
-                    <xsd:element name="url" type="xsd:string" minOccurs="0"/>
-                    <xsd:element name="id" type="xsd:string" minOccurs="0"/>
-                </xsd:sequence>
-            </xsd:complexType>
-            <xsd:complexType name="Response">
-                <xsd:annotation>
-                    <xsd:appinfo source="http://sap.com/xi/VersionID">f8167aa1869c11e8b2dc0000005576b6</xsd:appinfo>
-                </xsd:annotation>
-                <xsd:sequence>
-                    <xsd:element name="item" minOccurs="0" maxOccurs="unbounded">
-                        <xsd:annotation>
-                            <xsd:appinfo source="http://sap.com/xi/TextID">63b7d34b835811e88b8a00ff40a6f108</xsd:appinfo>
-                        </xsd:annotation>
-                        <xsd:complexType>
-                            <xsd:sequence>
-                                <xsd:element name="ID_SAP" type="xsd:string" minOccurs="0">
-                                    <xsd:annotation>
-                                        <xsd:appinfo source="http://sap.com/xi/TextID">63b7d346835811e8825500ff40a6f108</xsd:appinfo>
-                                        <xsd:documentation>ID объекта в SAP</xsd:documentation>
-                                    </xsd:annotation>
-                                </xsd:element>
-                                <xsd:element name="ID" type="xsd:string" minOccurs="0">
-                                    <xsd:annotation>
-                                        <xsd:appinfo source="http://sap.com/xi/TextID">63b7d347835811e899c300ff40a6f108</xsd:appinfo>
-                                        <xsd:documentation>ID объекта</xsd:documentation>
-                                    </xsd:annotation>
-                                </xsd:element>
-                                <xsd:element name="Msg_Num" minOccurs="0">
-                                    <xsd:annotation>
-                                        <xsd:appinfo source="http://sap.com/xi/TextID">63b7d348835811e8ca9b00ff40a6f108</xsd:appinfo>
-                                        <xsd:documentation>Результат обработки данных в системе-приемнике, код</xsd:documentation>
-                                    </xsd:annotation>
-                                    <xsd:simpleType>
-                                        <xsd:restriction base="xsd:string">
-                                            <xsd:maxLength value="3"/>
-                                        </xsd:restriction>
-                                    </xsd:simpleType>
-                                </xsd:element>
-                                <xsd:element name="Msg_Type" minOccurs="0">
-                                    <xsd:annotation>
-                                        <xsd:appinfo source="http://sap.com/xi/TextID">63b7d349835811e8ae6e00ff40a6f108</xsd:appinfo>
-                                        <xsd:documentation>Результат обработки данных в системе-приемнике, тип (S=success, E=error, W=warning)</xsd:documentation>
-                                    </xsd:annotation>
-                                    <xsd:simpleType>
-                                        <xsd:restriction base="xsd:string">
-                                            <xsd:maxLength value="1"/>
-                                        </xsd:restriction>
-                                    </xsd:simpleType>
-                                </xsd:element>
-                                <xsd:element name="Msg" type="xsd:string" minOccurs="0">
-                                    <xsd:annotation>
-                                        <xsd:appinfo source="http://sap.com/xi/TextID">63b7d34a835811e8bc4900ff40a6f108</xsd:appinfo>
-                                        <xsd:documentation>Результат обработки данных в системе-приемнике (текст)</xsd:documentation>
-                                    </xsd:annotation>
-                                </xsd:element>
-                            </xsd:sequence>
-                        </xsd:complexType>
-                    </xsd:element>
-                </xsd:sequence>
-            </xsd:complexType>
-            <xsd:complexType name="ExchangeFaultData">
-                <xsd:annotation>
-                    <xsd:appinfo source="http://sap.com/xi/VersionID">8c5a31f985c911e885410000005576b6</xsd:appinfo>
-                </xsd:annotation>
-                <xsd:sequence>
-                    <xsd:element name="faultText" type="xsd:string"/>
-                    <xsd:element name="faultUrl" type="xsd:string" minOccurs="0"/>
-                    <xsd:element name="faultDetail" type="ExchangeLogData" minOccurs="0" maxOccurs="unbounded"/>
-                </xsd:sequence>
-            </xsd:complexType>
-        </xsd:schema>
-        <xsd:schema targetNamespace="urn:kegoc.kz:BIS:LO_0002_3_SalesPlan" xmlns:p1="urn:kegoc.kz:BIS:CommonObjects" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="urn:kegoc.kz:BIS:LO_0002_3_SalesPlan">
-            <xsd:import namespace="urn:kegoc.kz:BIS:CommonObjects"/>
-            <xsd:element name="SalesPlan_Resp" type="p1:Response"/>
-            <xsd:element name="SalesPlan" type="SalesPlan"/>
-            <xsd:complexType name="SalesPlan">
-                <xsd:annotation>
-                    <xsd:appinfo source="http://sap.com/xi/VersionID">dfa2c51e85ca11e88d0a0000005576b6</xsd:appinfo>
-                </xsd:annotation>
-                <xsd:sequence>
-                    <xsd:element name="item" minOccurs="0" maxOccurs="unbounded">
-                        <xsd:annotation>
-                            <xsd:appinfo source="http://sap.com/xi/TextID">7ed343eb85ab11e8b37600ffe0396e09</xsd:appinfo>
-                        </xsd:annotation>
-                        <xsd:complexType>
-                            <xsd:sequence>
-                                <xsd:element name="itemNum">
-                                    <xsd:annotation>
-                                        <xsd:appinfo source="http://sap.com/xi/TextID">e9dc894f84f111e8c0f500ff40a6f108</xsd:appinfo>
-                                        <xsd:documentation>Основная запись материала</xsd:documentation>
-                                    </xsd:annotation>
-                                    <xsd:simpleType>
-                                        <xsd:restriction base="xsd:string">
-                                            <xsd:maxLength value="30"/>
-                                        </xsd:restriction>
-                                    </xsd:simpleType>
-                                </xsd:element>
-                                <xsd:element name="version">
-                                    <xsd:annotation>
-                                        <xsd:appinfo source="http://sap.com/xi/TextID">e9dc895084f111e8b4e600ff40a6f108</xsd:appinfo>
-                                        <xsd:documentation>Код версии планирования</xsd:documentation>
-                                    </xsd:annotation>
-                                    <xsd:simpleType>
-                                        <xsd:restriction base="xsd:integer">
-                                            <xsd:totalDigits value="3"/>
-                                        </xsd:restriction>
-                                    </xsd:simpleType>
-                                </xsd:element>
-                                <xsd:element name="forecastType">
-                                    <xsd:annotation>
-                                        <xsd:appinfo source="http://sap.com/xi/TextID">e9dc93ad84f111e8c02400ff40a6f108</xsd:appinfo>
-                                        <xsd:documentation>Тип прогноза</xsd:documentation>
-                                    </xsd:annotation>
-                                    <xsd:simpleType>
-                                        <xsd:restriction base="xsd:string">
-                                            <xsd:maxLength value="30"/>
-                                        </xsd:restriction>
-                                    </xsd:simpleType>
-                                </xsd:element>
-                                <xsd:element name="startDate" type="xsd:date">
-                                    <xsd:annotation>
-                                        <xsd:appinfo source="http://sap.com/xi/TextID">e9dc93ae84f111e8c2c200ff40a6f108</xsd:appinfo>
-                                        <xsd:documentation>Период прогнозирования - дата с</xsd:documentation>
-                                    </xsd:annotation>
-                                </xsd:element>
-                                <xsd:element name="endDate" type="xsd:date">
-                                    <xsd:annotation>
-                                        <xsd:appinfo source="http://sap.com/xi/TextID">7ed31adb85ab11e8a9de00ffe0396e09</xsd:appinfo>
-                                        <xsd:documentation>Период прогнозирования - дата по</xsd:documentation>
-                                    </xsd:annotation>
-                                </xsd:element>
-                                <xsd:element name="quantity" type="xsd:double">
-                                    <xsd:annotation>
-                                        <xsd:appinfo source="http://sap.com/xi/TextID">e9dc93af84f111e8ac6200ff40a6f108</xsd:appinfo>
-                                        <xsd:documentation>Плановый объем</xsd:documentation>
-                                    </xsd:annotation>
-                                </xsd:element>
-                                <xsd:element name="amount" type="xsd:double">
-                                    <xsd:annotation>
-                                        <xsd:appinfo source="http://sap.com/xi/TextID">e9dc93b084f111e89aab00ff40a6f108</xsd:appinfo>
-                                        <xsd:documentation>Плановая сумма</xsd:documentation>
-                                    </xsd:annotation>
-                                </xsd:element>
-                                <xsd:element name="currency">
-                                    <xsd:annotation>
-                                        <xsd:appinfo source="http://sap.com/xi/TextID">e9dc93b184f111e8941600ff40a6f108</xsd:appinfo>
-                                        <xsd:documentation>Валюта планирования</xsd:documentation>
-                                    </xsd:annotation>
-                                    <xsd:simpleType>
-                                        <xsd:restriction base="xsd:string">
-                                            <xsd:maxLength value="3"/>
-                                        </xsd:restriction>
-                                    </xsd:simpleType>
-                                </xsd:element>
-                            </xsd:sequence>
-                        </xsd:complexType>
-                    </xsd:element>
-                </xsd:sequence>
-            </xsd:complexType>
-        </xsd:schema>
-        <xsd:schema targetNamespace="http://sap.com/xi/XI/System/Patterns" xmlns:p1="urn:kegoc.kz:BIS:CommonObjects" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="http://sap.com/xi/XI/System/Patterns">
-            <xsd:import namespace="urn:kegoc.kz:BIS:CommonObjects"/>
-            <xsd:element name="FaultMessage">
-                <xsd:complexType>
-                    <xsd:sequence>
-                        <xsd:element name="standard" type="p1:ExchangeFaultData"/>
-                    </xsd:sequence>
-                </xsd:complexType>
-            </xsd:element>
-        </xsd:schema>
-    </wsdl:types>
-    <wsdl:message name="SalesPlan">
-        <wsdl:documentation/>
-        <wsdl:part name="SalesPlan" element="p1:SalesPlan"/>
-    </wsdl:message>
-    <wsdl:message name="SalesPlan_Resp">
-        <wsdl:documentation/>
-        <wsdl:part name="SalesPlan_Resp" element="p1:SalesPlan_Resp"/>
-    </wsdl:message>
-    <wsdl:message name="p3.FaultMessage">
-        <wsdl:documentation/>
-        <wsdl:part name="FaultMessage" element="p2:FaultMessage"/>
-    </wsdl:message>
-    <wsdl:portType name="BIS_SalesPlan">
-        <wsdl:documentation/>
-        <wsdl:operation name="BIS_SalesPlan">
-            <wsdl:documentation/>
-            <wsp:Policy>
-                <wsp:PolicyReference URI="#OP_BIS_SalesPlan"/>
-            </wsp:Policy>
-            <wsdl:input message="p1:SalesPlan"/>
-            <wsdl:output message="p1:SalesPlan_Resp"/>
-            <wsdl:fault name="p3.FaultMessage" message="p1:p3.FaultMessage"/>
-        </wsdl:operation>
-    </wsdl:portType>
-    <wsdl:binding name="BIS_SalesPlanBinding" type="p1:BIS_SalesPlan">
-        <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"/>
-        <wsdl:operation name="BIS_SalesPlan">
-            <soap:operation soapAction="http://sap.com/xi/WebService/soap1.1" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"/>
-            <wsdl:input>
-                <soap:body use="literal" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"/>
-            </wsdl:input>
-            <wsdl:output>
-                <soap:body use="literal" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"/>
-            </wsdl:output>
-            <wsdl:fault name="p3.FaultMessage">
-                <soap:fault use="literal" name="p3.FaultMessage" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"/>
-            </wsdl:fault>
-        </wsdl:operation>
-    </wsdl:binding>
-    <wsdl:service name="BIS_SalesPlanService">
-        <wsdl:port name="HTTP_Port" binding="p1:BIS_SalesPlanBinding">
-            <soap:address location="http://kegoci10.corp.kegoc.kz:50000/XISOAPAdapter/MessageServlet?senderParty=&amp;senderService=BIS_D&amp;receiverParty=&amp;receiverService=&amp;interface=BIS_SalesPlan&amp;interfaceNamespace=urn%3Akegoc.kz%3ABIS%3ALO_0002_3_SalesPlan" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"/>
-        </wsdl:port>
-        <wsdl:port name="HTTPS_Port" binding="p1:BIS_SalesPlanBinding">
-            <soap:address location="https://kegoci10.corp.kegoc.kz:50001/XISOAPAdapter/MessageServlet?senderParty=&amp;senderService=BIS_D&amp;receiverParty=&amp;receiverService=&amp;interface=BIS_SalesPlan&amp;interfaceNamespace=urn%3Akegoc.kz%3ABIS%3ALO_0002_3_SalesPlan" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"/>
-        </wsdl:port>
-    </wsdl:service>
+    <wsdl:part name="SalesPlan" element="p1:SalesPlan"/>
+  </wsdl:message>
+  <wsdl:message name="SalesPlan_Resp">
+    <wsdl:documentation/>
+    <wsdl:part name="SalesPlan_Resp" element="p1:SalesPlan_Resp"/>
+  </wsdl:message>
+  <wsdl:message name="p3.FaultMessage">
+    <wsdl:documentation/>
+    <wsdl:part name="FaultMessage" element="p2:FaultMessage"/>
+  </wsdl:message>
+  <wsdl:portType name="BIS_SalesPlan">
+    <wsdl:documentation/>
+    <wsdl:operation name="BIS_SalesPlan">
+      <wsdl:documentation/>
+      <wsp:Policy>
+        <wsp:PolicyReference URI="#OP_BIS_SalesPlan"/>
+      </wsp:Policy>
+      <wsdl:input message="p1:SalesPlan"/>
+      <wsdl:output message="p1:SalesPlan_Resp"/>
+      <wsdl:fault name="p3.FaultMessage" message="p1:p3.FaultMessage"/>
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="BIS_SalesPlanBinding" type="p1:BIS_SalesPlan">
+    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"/>
+    <wsdl:operation name="BIS_SalesPlan">
+      <soap:operation soapAction="http://sap.com/xi/WebService/soap1.1" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"/>
+      <wsdl:input>
+        <soap:body use="literal" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"/>
+      </wsdl:output>
+      <wsdl:fault name="p3.FaultMessage">
+        <soap:fault use="literal" name="p3.FaultMessage" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"/>
+      </wsdl:fault>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="BIS_SalesPlanService">
+    <wsdl:port name="HTTP_Port" binding="p1:BIS_SalesPlanBinding">
+      <soap:address location="http://kegoci10.corp.kegoc.kz:50000/XISOAPAdapter/MessageServlet?senderParty=&amp;senderService=BIS_D&amp;receiverParty=&amp;receiverService=&amp;interface=BIS_SalesPlan&amp;interfaceNamespace=urn%3Akegoc.kz%3ABIS%3ALO_0002_3_SalesPlan" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"/>
+    </wsdl:port>
+    <wsdl:port name="HTTPS_Port" binding="p1:BIS_SalesPlanBinding">
+      <soap:address location="https://kegoci10.corp.kegoc.kz:50001/XISOAPAdapter/MessageServlet?senderParty=&amp;senderService=BIS_D&amp;receiverParty=&amp;receiverService=&amp;interface=BIS_SalesPlan&amp;interfaceNamespace=urn%3Akegoc.kz%3ABIS%3ALO_0002_3_SalesPlan" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"/>
+    </wsdl:port>
+  </wsdl:service>
 </wsdl:definitions>
