@@ -6,7 +6,7 @@ import javax.xml.bind.annotation.*;
 
 @Data
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "Msg", namespace = "http://bis.kegoc.kz/server")
+@XmlType(name = "Msg", namespace = "http://bis.kegoc.kz/soap")
 public class MessageDto {
 
     @XmlElement
@@ -19,7 +19,7 @@ public class MessageDto {
 
     @XmlElement(required = true)
     @Documentation("Код системы: BIS")
-    private String sysCode;
+    private String system;
 
     @XmlElement(required = true)
     @Documentation("№ сообщения")

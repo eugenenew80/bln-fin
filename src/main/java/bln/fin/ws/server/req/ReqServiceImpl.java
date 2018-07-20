@@ -50,6 +50,7 @@ public class ReqServiceImpl implements ReqService {
         MessageDto msg = new MessageDto();
         try {
             reqLineRepo.save(reqLine);
+            msg.setSystem("BIS");
             msg.setMsgType("S");
             msg.setMsgNum("0");
             msg.setMsg("OK");
@@ -57,6 +58,7 @@ public class ReqServiceImpl implements ReqService {
             msg.setSapId(reqLine.getReqNum().toString());
         }
         catch (Exception e) {
+            msg.setSystem("BIS");
             msg.setMsgType("E");
             msg.setMsgNum("1");
             msg.setSapId(reqLine.getReqNum().toString());

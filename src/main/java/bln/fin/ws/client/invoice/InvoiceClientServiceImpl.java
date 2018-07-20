@@ -73,7 +73,7 @@ public class InvoiceClientServiceImpl implements InvoiceClientService {
     private sap.saleInvoice.SaleInvoice createItem(SaleInvoice saleInvoice) {
         sap.saleInvoice.SaleInvoice saleInvoiceDto = new sap.saleInvoice.SaleInvoice();
 
-        if (saleInvoice.getDocTypeCode() == DocTypeEnum.ESTIMATED || saleInvoice.getDocTypeCode() == DocTypeEnum.FINAL)
+        if (saleInvoice.getDocTypeCode() == DocTypeEnum.ESTIMATED || saleInvoice.getDocTypeCode() == DocTypeEnum.FACT)
             saleInvoiceDto.setDocType(saleInvoice.getDocTypeCode().name());
         else {
             saleInvoiceDto.setDocType(saleInvoice.getInvoiceTypeCode().name());
