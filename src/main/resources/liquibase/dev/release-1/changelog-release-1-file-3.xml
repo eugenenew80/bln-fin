@@ -2103,7 +2103,7 @@
                 <constraints nullable="true"/>
             </column>
 
-            <column name="commutation_rate" type="date" remarks="Размер ставки в % ">
+            <column name="commutation_rate" type="number" remarks="Размер ставки в % ">
                 <constraints nullable="true"/>
             </column>
 
@@ -2167,6 +2167,10 @@
             </column>
 
             <column name="days" type="number" remarks="Количество дней">
+                <constraints nullable="true"/>
+            </column>
+
+            <column name="amount" type="number" remarks="Сумма недоимки">
                 <constraints nullable="true"/>
             </column>
 
