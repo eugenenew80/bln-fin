@@ -118,6 +118,19 @@
                             <schemaIncludes><include>SaleInvoiceService.wsdl</include></schemaIncludes>
                         </configuration>
                     </execution>
+
+                    <execution>
+                        <id>5</id>
+                        <goals>
+                            <goal>generate</goal>
+                        </goals>
+                        <configuration>
+                            <generatePackage>sap.saleInvoiceRev</generatePackage>
+                            <generateDirectory>${project.basedir}/src/main/java</generateDirectory>
+                            <schemaDirectory>${project.basedir}/src/main/resources/wsdl</schemaDirectory>
+                            <schemaIncludes><include>SaleInvoiceRevService.wsdl</include></schemaIncludes>
+                        </configuration>
+                    </execution>
                 </executions>
             </plugin>
             <!-- end::wsdl[] -->
