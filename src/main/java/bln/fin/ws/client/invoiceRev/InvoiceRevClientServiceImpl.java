@@ -1,4 +1,4 @@
-package bln.fin.ws.client.invoice;
+package bln.fin.ws.client.invoiceRev;
 
 import bln.fin.entity.SaleInvoice;
 import bln.fin.entity.SaleInvoiceLine;
@@ -16,21 +16,16 @@ import static java.util.stream.Collectors.toList;
 
 @Service
 @RequiredArgsConstructor
-public class InvoiceClientServiceImpl implements InvoiceClientService {
+public class InvoiceRevClientServiceImpl implements InvoiceRevClientService {
     private final SaleInvoiceRepo saleInvoiceRepo;
     private final WebServiceTemplate saleInvoiceServiceTemplate;
 
     @Override
-    public void sendByCustomer(Long vendorId, Long customerId) {
-        List<SaleInvoice> invoices = saleInvoiceRepo.findAllByVendorIdAndCustomerId(vendorId, customerId);
+    public void sendAll() {
+        List<SaleInvoice> invoices = saleInvoiceRepo.findAll();
         request(invoices);
     }
 
-    @Override
-    public void sendByContract(Long contractId) {
-        List<SaleInvoice> invoices = saleInvoiceRepo.findAllByContractId(contractId);
-        request(invoices);
-    }
 
     @Override
     public void sendOne(Long invoiceId) {

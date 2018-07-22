@@ -1,10 +1,9 @@
-package bln.fin.ws.client.invoice;
+package bln.fin.ws.client.invoiceRev;
 
 import org.springframework.stereotype.Service;
 
 @Service
-public interface InvoiceClientService {
-    void sendByCustomer(Long vendorId, Long customerId);
-    void sendByContract(Long contractId);
+public interface InvoiceRevClientService {
+    void sendAll();
     void sendOne(Long invoiceId);
 }
