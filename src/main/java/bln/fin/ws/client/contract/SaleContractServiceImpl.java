@@ -11,6 +11,8 @@ import sap.contract.sd.ObjectFactory;
 import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.List;
+
+import static bln.fin.common.Util.toXMLGregorianCalendar;
 import static java.util.stream.Collectors.toList;
 
 
@@ -73,6 +75,12 @@ public class SaleContractServiceImpl implements SaleContractService {
 
     private Contract.Item createItem(ContractKeg contract) {
         Contract.Item item = new Contract.Item();
+
+        item.setId(contract.getId());
+        item.setExtContractNum(contract.getContractNum());
+        item.setContractDate(toXMLGregorianCalendar(contract.getDocDate()));
+        item.setCompanyCode(contract.getBp1().getErpCompanyCode());
+
         return item;
     }
 

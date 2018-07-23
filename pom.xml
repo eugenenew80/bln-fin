@@ -89,7 +89,7 @@
                             <generatePackage>sap.contract.sd</generatePackage>
                             <generateDirectory>${project.basedir}/src/main/java</generateDirectory>
                             <schemaDirectory>${project.basedir}/src/main/resources/wsdl</schemaDirectory>
-                            <schemaIncludes><include>BIS_LO_Contract.wsdl</include></schemaIncludes>
+                            <schemaIncludes><include>BIS_LO_ContractService.wsdl</include></schemaIncludes>
                         </configuration>
                     </execution>
 
