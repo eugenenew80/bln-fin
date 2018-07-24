@@ -2565,10 +2565,12 @@
         <comment>insert into fin_invoice_line_types</comment>
         <insert schemaName="apps" tableName="fin_invoice_line_types">
             <column name="code" type="varchar2" value="LINE"/>
+            <column name="name" type="varchar2" value="позиция"/>
         </insert>
 
         <insert schemaName="apps" tableName="fin_invoice_line_types">
             <column name="code" type="varchar2" value="TAX"/>
+            <column name="name" type="varchar2" value="налог"/>
         </insert>
     </changeSet>
 
