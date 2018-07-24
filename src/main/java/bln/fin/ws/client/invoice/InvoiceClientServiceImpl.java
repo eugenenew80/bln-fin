@@ -3,6 +3,7 @@ package bln.fin.ws.client.invoice;
 import bln.fin.entity.SaleInvoice;
 import bln.fin.entity.SaleInvoiceLine;
 import bln.fin.entity.enums.DocTypeEnum;
+import bln.fin.entity.enums.InvoiceTypeEnum;
 import bln.fin.repo.SaleInvoiceRepo;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -73,13 +74,25 @@ public class InvoiceClientServiceImpl implements InvoiceClientService {
     private sap.saleInvoice.SaleInvoice createItem(SaleInvoice saleInvoice) {
         sap.saleInvoice.SaleInvoice saleInvoiceDto = new sap.saleInvoice.SaleInvoice();
 
-        if (saleInvoice.getDocTypeCode() == DocTypeEnum.ESTIMATED || saleInvoice.getDocTypeCode() == DocTypeEnum.FACT)
-            saleInvoiceDto.setDocType(saleInvoice.getDocTypeCode().name());
-        else {
-            saleInvoiceDto.setDocType(saleInvoice.getInvoiceTypeCode().name());
-            if (saleInvoice.getSrcSaleInvoice()!=null)
-                saleInvoiceDto.setSapDocNum(saleInvoice.getSrcSaleInvoice().getErpDocNum());
+        if (saleInvoice.getDocTypeCode() == DocTypeEnum.ESTIMATED)
+            saleInvoiceDto.setDocType("ZFO");
+
+        if (saleInvoice.getDocTypeCode() == DocTypeEnum.FACT) {
+            if (saleInvoice.getInvoiceTypeCode() == InvoiceTypeEnum.ORDINARY)
+                saleInvoiceDto.setDocType("ZF2");
+
+            if (saleInvoice.getInvoiceTypeCode() == InvoiceTypeEnum.CREDIT)
+                saleInvoiceDto.setDocType("ZG2");
+
+            if (saleInvoice.getInvoiceTypeCode() == InvoiceTypeEnum.DEBIT)
+                saleInvoiceDto.setDocType("ZL2");
+
+            if (saleInvoice.getInvoiceTypeCode() == InvoiceTypeEnum.CORRECTED)
+                saleInvoiceDto.setDocType("ZL2");
         }
+
+        if (saleInvoice.getSrcSaleInvoice()!=null)
+            saleInvoiceDto.setSapDocNum(saleInvoice.getSrcSaleInvoice().getErpDocNum());
 
         saleInvoiceDto.setId(saleInvoice.getId());
         saleInvoiceDto.setTurnoverDate(toXMLGregorianCalendar(saleInvoice.getTurnoverDate()));

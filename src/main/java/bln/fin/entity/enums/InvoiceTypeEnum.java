@@ -1,5 +1,9 @@
 package bln.fin.entity.enums;
 
 public enum InvoiceTypeEnum {
-	ORDINARY
+	ORDINARY,
+	CORRECTED,
+	ADDITIONAL,
+	DEBIT,
+	CREDIT
 }
