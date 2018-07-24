@@ -2683,22 +2683,27 @@
         <comment>insert into fin_invoice_types</comment>
         <insert schemaName="apps" tableName="fin_invoice_types">
             <column name="code" type="varchar2" value="ORDINARY"/>
+            <column name="name" type="varchar2" value="Обычный"/>
         </insert>
 
         <insert schemaName="apps" tableName="fin_invoice_types">
             <column name="code" type="varchar2" value="CORRECTED"/>
+            <column name="name" type="varchar2" value="Исправленный"/>
         </insert>
 
         <insert schemaName="apps" tableName="fin_invoice_types">
             <column name="code" type="varchar2" value="ADDITIONAL"/>
+            <column name="name" type="varchar2" value="Дополнительный"/>
         </insert>
 
         <insert schemaName="apps" tableName="fin_invoice_types">
             <column name="code" type="varchar2" value="DEBIT"/>
+            <column name="name" type="varchar2" value="Дебетовое авизо"/>
         </insert>
 
         <insert schemaName="apps" tableName="fin_invoice_types">
             <column name="code" type="varchar2" value="CREDIT"/>
+            <column name="name" type="varchar2" value="Кредитовое авизо"/>
         </insert>
     </changeSet>
 
