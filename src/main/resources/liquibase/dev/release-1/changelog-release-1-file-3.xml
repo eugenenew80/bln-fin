@@ -1567,8 +1567,7 @@
     <comment>insert into wf_object_state_transitions</comment>
         <insert schemaName="apps" tableName="wf_object_state_transitions">
             <column name="object_code" type="varchar2" value="CONTRACT"/>
-            <column name="STATE_CODE_FROM" type="varchar2" value="CREATE"/>
-            <column name="STATE_CODE_TO" type="number" value="PROJECT"/>
+            <column name="STATE_CODE_FROM" type="varchar2" value="CREATE"/><column name="STATE_CODE_TO" type="number" value="PROJECT"/>
             <column name="ACTIVITY_CODE" type="number" value="MAKE_PROJECT"/>
         </insert>
 
@@ -2250,5 +2249,513 @@
                 referencedTableName="fin_sale_invoices"
                 referencedColumnNames="id"
         />
+    </changeSet>
+
+    <changeSet id="wf-rus-26" logicalFilePath="path-independent" author="ruslan" context="dev">
+        <comment>Creating table: wf_routes</comment>
+        <createTable tableName="wf_routes" schemaName="apps" remarks="Маршруты для соглосования">
+            <column name="id" type="number" remarks="Идентификатор">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="object" type="varchar2(30)" remarks="Код обьекта">
+                <constraints nullable="true"/>
+            </column>
+
+            <column name="org_id" type="number" remarks="Ид организации">
+                <constraints nullable="true"/>
+            </column>
+
+            <column name="name" type="varchar2(400)" remarks="Наименование">
+                <constraints nullable="true"/>
+            </column>
+
+            <column name="create_by" type="number" remarks="Автор">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="create_date" type="TIMESTAMP" remarks="Дата создания">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="last_update_by" type="number" remarks="Автор обновления">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="last_update_date" type="TIMESTAMP" remarks="Дата обновления">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="wf-rus-27" logicalFilePath="path-independent" author="ruslan" context="dev">
+        <comment>Creating primary key for table: wf_routes</comment>
+        <addPrimaryKey
+                columnNames="id"
+                constraintName="pk_wf_routes"
+                schemaName="apps"
+                tableName="wf_routes"/>
+    </changeSet>
+
+    <changeSet id="wf-rus-28" logicalFilePath="path-independent" author="ruslan" context="dev">
+        <comment>Creating sequence for table: wf_routes</comment>
+        <createSequence
+                incrementBy="1"
+                schemaName="apps"
+                sequenceName="wf_routes_s"
+                startValue="1"/>
+    </changeSet>
+
+    <changeSet id="wf-rus-29" logicalFilePath="path-independent" author="ruslan" context="dev">
+        <comment>Creating table: wf_route_users</comment>
+        <createTable tableName="wf_route_users" schemaName="apps" remarks="Маршруты для соглосования: пользователи для маршрутов">
+            <column name="id" type="number" remarks="Идентификатор">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="route_id" type="number" remarks="Ид маршрута">
+                <constraints nullable="true"/>
+            </column>
+
+            <column name="user_id" type="number" remarks="Идентификатор пользователя">
+                <constraints nullable="true"/>
+            </column>
+
+            <column name="user_type_code" type="number" remarks="Тип пользователя">
+                <constraints nullable="true"/>
+            </column>
+
+            <column name="create_by" type="number" remarks="Автор">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="create_date" type="TIMESTAMP" remarks="Дата создания">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="last_update_by" type="number" remarks="Автор обновления">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="last_update_date" type="TIMESTAMP" remarks="Дата обновления">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="wf-rus-30" logicalFilePath="path-independent" author="ruslan" context="dev">
+        <comment>Creating primary key for table: wf_route_users</comment>
+        <addPrimaryKey
+                columnNames="id"
+                constraintName="pk_wf_route_users"
+                schemaName="apps"
+                tableName="wf_route_users"/>
+    </changeSet>
+
+    <changeSet id="wf-rus-31" logicalFilePath="path-independent" author="ruslan" context="dev">
+        <comment>Creating sequence for table: wf_route_users</comment>
+        <createSequence
+                incrementBy="1"
+                schemaName="apps"
+                sequenceName="wf_route_users_s"
+                startValue="1"/>
+    </changeSet>
+
+    <changeSet id="wf-rus-32" logicalFilePath="path-independent" author="eugene">
+        <comment>Creating table: wf_route_user_type</comment>
+        <createTable tableName="wf_route_user_type" schemaName="apps" remarks="Список состояний">
+            <column name="code" type="varchar(20)" remarks="Код состояния">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="create_date" type="TIMESTAMP" remarks="Дата создания">
+                <constraints nullable="true"/>
+            </column>
+
+            <column name="last_update_date" type="TIMESTAMP" remarks="Дата изменения">
+                <constraints nullable="true"/>
+            </column>
+
+            <column name="create_by" type="number" remarks="Автор">
+                <constraints nullable="true"/>
+            </column>
+
+            <column name="last_update_by" type="number" remarks="Автор изменения">
+                <constraints nullable="true"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="wf-rus-33" logicalFilePath="path-independent" author="eugene">
+        <comment>Creating primary key for table: wf_route_user_type</comment>
+        <addPrimaryKey
+                columnNames="code"
+                constraintName="pk_wf_route_user_type"
+                schemaName="apps"
+                tableName="wf_route_user_type"/>
+    </changeSet>
+
+    <changeSet id="wf-rus-34" logicalFilePath="path-independent" author="ruslan">
+        <comment>Creating table: wf_route_user_type_tl</comment>
+        <createTable tableName="wf_route_user_type_tl" schemaName="apps" remarks="Перевод Список состояний">
+            <column name="code" type="varchar2(20)" remarks="Код действия">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="lang" type="varchar(10)" remarks="язык">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="name" type="varchar(100)" remarks="Наименование действия">
+                <constraints nullable="true"/>
+            </column>
+
+            <column name="create_date" type="TIMESTAMP" remarks="Дата создания">
+                <constraints nullable="true"/>
+            </column>
+
+            <column name="last_update_date" type="TIMESTAMP" remarks="Дата изменения">
+                <constraints nullable="true"/>
+            </column>
+
+            <column name="create_by" type="number" remarks="Автор">
+                <constraints nullable="true"/>
+            </column>
+
+            <column name="last_update_by" type="number" remarks="Автор изменения">
+                <constraints nullable="true"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="wf-rus-35" logicalFilePath="path-independent" author="ruslan">
+        <comment>Creating primary key for table: wf_route_user_type_tl</comment>
+        <addPrimaryKey
+                columnNames="code,lang"
+                constraintName="pk_wf_route_user_type_tl"
+                schemaName="apps"
+                tableName="wf_route_user_type_tl"/>
+    </changeSet>
+
+    <changeSet id="wf-rus-36" logicalFilePath="path-independent" author="ruslan">
+        <comment>Creating foreign constraint: wf_route_user_type_tl to wf_route_user_type</comment>
+        <addForeignKeyConstraint
+                baseTableSchemaName="apps"
+                baseTableName="wf_route_user_type_tl"
+                baseColumnNames="code"
+                constraintName="fk_wf_route_user_type_tl_1"
+                deferrable="true"
+                initiallyDeferred="true"
+                onDelete="CASCADE"
+                onUpdate="RESTRICT"
+                referencedTableSchemaName="apps"
+                referencedTableName="wf_route_user_type"
+                referencedColumnNames="code"
+        />
+    </changeSet>
+
+    <changeSet id="wf-rus-37" logicalFilePath="path-independent" author="ruslan" context="dev">
+        <comment>insert into wf_route_user_type</comment>
+        <insert schemaName="apps" tableName="wf_route_user_type">
+            <column name="code" type="varchar2" value="V"/>
+        </insert>
+
+        <insert schemaName="apps" tableName="wf_route_user_type">
+            <column name="code" type="varchar2" value="S1"/>
+        </insert>
+
+        <insert schemaName="apps" tableName="wf_route_user_type">
+            <column name="code" type="varchar2" value="S2"/>
+        </insert>
+    </changeSet>
+
+    <changeSet id="wf-rus-38" logicalFilePath="path-independent" author="ruslan" context="dev">
+        <comment>insert into wf_route_user_type_tl</comment>
+        <insert schemaName="apps" tableName="wf_route_user_type_tl">
+            <column name="code" type="varchar2" value="V"/>
+            <column name="lang" type="varchar2" value="RU"/>
+            <column name="name" type="varchar2" value="Согласующий"/>
+        </insert>
+
+        <insert schemaName="apps" tableName="wf_route_user_type_tl">
+            <column name="code" type="varchar2" value="V"/>
+            <column name="lang" type="varchar2" value="KZ"/>
+            <column name="name" type="varchar2" value="Согласующий"/>
+        </insert>
+
+        <insert schemaName="apps" tableName="wf_route_user_type_tl">
+            <column name="code" type="varchar2" value="S1"/>
+            <column name="lang" type="varchar2" value="RU"/>
+            <column name="name" type="varchar2" value="Подписание со стороны поставшика"/>
+        </insert>
+
+        <insert schemaName="apps" tableName="wf_route_user_type_tl">
+            <column name="code" type="varchar2" value="S1"/>
+            <column name="lang" type="varchar2" value="KZ"/>
+            <column name="name" type="varchar2" value="Подписание со стороны поставшика"/>
+        </insert>
+
+        <insert schemaName="apps" tableName="wf_route_user_type_tl">
+            <column name="code" type="varchar2" value="S2"/>
+            <column name="lang" type="varchar2" value="RU"/>
+            <column name="name" type="varchar2" value="Подписание со стороны потребителя"/>
+        </insert>
+
+        <insert schemaName="apps" tableName="wf_route_user_type_tl">
+            <column name="code" type="varchar2" value="S2"/>
+            <column name="lang" type="varchar2" value="KZ"/>
+            <column name="name" type="varchar2" value="Подписание со стороны потребителя"/>
+        </insert>
+    </changeSet>
+
+    <changeSet id="wf-rus-39" logicalFilePath="path-independent" author="ruslan">
+        <comment>Creating foreign constraint: wf_route_users to wf_route_user_type</comment>
+        <addForeignKeyConstraint
+                baseTableSchemaName="apps"
+                baseTableName="wf_route_users"
+                baseColumnNames="user_type_code"
+                constraintName="fk_wf_route_users_1"
+                deferrable="true"
+                initiallyDeferred="true"
+                onDelete="RESTRICT"
+                onUpdate="RESTRICT"
+                referencedTableSchemaName="apps"
+                referencedTableName="wf_route_user_type"
+                referencedColumnNames="code"
+        />
+    </changeSet>
+
+    <changeSet id="wf-rus-40" logicalFilePath="path-independent" author="ruslan">
+        <comment>Creating foreign constraint: wf_routes to dict_organizations</comment>
+        <addForeignKeyConstraint
+                baseTableSchemaName="apps"
+                baseTableName="wf_routes"
+                baseColumnNames="org_id"
+                constraintName="fk_wf_routes_1"
+                deferrable="true"
+                initiallyDeferred="true"
+                onDelete="RESTRICT"
+                onUpdate="RESTRICT"
+                referencedTableSchemaName="apps"
+                referencedTableName="dict_organizations"
+                referencedColumnNames="id"
+        />
+    </changeSet>
+
+    <changeSet id="wf-rus-41" logicalFilePath="path-independent" author="ruslan">
+        <comment>Creating foreign constraint: wf_routes to dict_organizations</comment>
+        <addForeignKeyConstraint
+                baseTableSchemaName="apps"
+                baseTableName="wf_routes"
+                baseColumnNames="object"
+                constraintName="fk_wf_routes_2"
+                deferrable="true"
+                initiallyDeferred="true"
+                onDelete="RESTRICT"
+                onUpdate="RESTRICT"
+                referencedTableSchemaName="apps"
+                referencedTableName="wf_objects"
+                referencedColumnNames="code"
+        />
+    </changeSet>
+
+    <changeSet id="fin-rus-84" logicalFilePath="path-independent" author="ruslan" context="dev">
+        <comment>insert into fin_invoice_line_types</comment>
+        <insert schemaName="apps" tableName="fin_invoice_line_types">
+            <column name="code" type="varchar2" value="LINE"/>
+        </insert>
+
+        <insert schemaName="apps" tableName="fin_invoice_line_types">
+            <column name="code" type="varchar2" value="TAX"/>
+        </insert>
+    </changeSet>
+
+    <changeSet id="fin-rus-85" logicalFilePath="path-independent" author="ruslan" context="dev">
+        <comment>insert into fin_invoice_line_types_tl</comment>
+        <insert schemaName="apps" tableName="fin_invoice_line_types_tl">
+            <column name="code" type="varchar2" value="LINE"/>
+            <column name="lang" type="varchar2" value="RU"/>
+            <column name="name" type="varchar2" value="позиция"/>
+        </insert>
+
+        <insert schemaName="apps" tableName="fin_invoice_line_types_tl">
+            <column name="code" type="varchar2" value="LINE"/>
+            <column name="lang" type="varchar2" value="KZ"/>
+            <column name="name" type="varchar2" value="позиция"/>
+        </insert>
+
+        <insert schemaName="apps" tableName="fin_invoice_line_types_tl">
+            <column name="code" type="varchar2" value="TAX"/>
+            <column name="lang" type="varchar2" value="RU"/>
+            <column name="name" type="varchar2" value="налог"/>
+        </insert>
+
+        <insert schemaName="apps" tableName="fin_invoice_line_types_tl">
+            <column name="code" type="varchar2" value="TAX"/>
+            <column name="lang" type="varchar2" value="KZ"/>
+            <column name="name" type="varchar2" value="налог"/>
+        </insert>
+    </changeSet>
+
+    <changeSet id="fin-rus-86" logicalFilePath="path-independent" author="ruslan" context="dev">
+        <comment>insert into fin_debt_types</comment>
+        <insert schemaName="apps" tableName="fin_debt_types">
+            <column name="code" type="varchar2" value="I"/>
+        </insert>
+
+        <insert schemaName="apps" tableName="fin_debt_types">
+            <column name="code" type="varchar2" value="D"/>
+        </insert>
+    </changeSet>
+
+    <changeSet id="fin-rus-87" logicalFilePath="path-independent" author="ruslan" context="dev">
+        <comment>insert into fin_debt_types_tl</comment>
+        <insert schemaName="apps" tableName="fin_debt_types_tl">
+            <column name="code" type="varchar2" value="I"/>
+            <column name="lang" type="varchar2" value="RU"/>
+            <column name="name" type="varchar2" value="Счет-фактура"/>
+        </insert>
+
+        <insert schemaName="apps" tableName="fin_debt_types_tl">
+            <column name="code" type="varchar2" value="I"/>
+            <column name="lang" type="varchar2" value="KZ"/>
+            <column name="name" type="varchar2" value="Счет-фактура"/>
+        </insert>
+
+        <insert schemaName="apps" tableName="fin_debt_types_tl">
+            <column name="code" type="varchar2" value="D"/>
+            <column name="lang" type="varchar2" value="RU"/>
+            <column name="name" type="varchar2" value="Аванс"/>
+        </insert>
+
+        <insert schemaName="apps" tableName="fin_debt_types_tl">
+            <column name="code" type="varchar2" value="D"/>
+            <column name="lang" type="varchar2" value="KZ"/>
+            <column name="name" type="varchar2" value="Аванс"/>
+        </insert>
+    </changeSet>
+
+    <changeSet id="fin-rus-88" logicalFilePath="path-independent" author="ruslan" context="dev">
+        <comment>insert into fin_doc_types</comment>
+        <insert schemaName="apps" tableName="fin_doc_types">
+            <column name="code" type="varchar2" value="ESTIMATED"/>
+        </insert>
+
+        <insert schemaName="apps" tableName="fin_doc_types">
+            <column name="code" type="varchar2" value="FACT"/>
+        </insert>
+    </changeSet>
+
+    <changeSet id="fin-rus-89" logicalFilePath="path-independent" author="ruslan" context="dev">
+        <comment>insert into fin_doc_types_tl</comment>
+        <insert schemaName="apps" tableName="fin_doc_types_tl">
+            <column name="code" type="varchar2" value="ESTIMATED"/>
+            <column name="lang" type="varchar2" value="RU"/>
+            <column name="name" type="varchar2" value="Фактический СФ"/>
+        </insert>
+
+        <insert schemaName="apps" tableName="fin_doc_types_tl">
+            <column name="code" type="varchar2" value="ESTIMATED"/>
+            <column name="lang" type="varchar2" value="KZ"/>
+            <column name="name" type="varchar2" value="Оценочный СФ"/>
+        </insert>
+
+        <insert schemaName="apps" tableName="fin_doc_types_tl">
+            <column name="code" type="varchar2" value="FACT"/>
+            <column name="lang" type="varchar2" value="RU"/>
+            <column name="name" type="varchar2" value="Фактический СФ"/>
+        </insert>
+
+        <insert schemaName="apps" tableName="fin_doc_types_tl">
+            <column name="code" type="varchar2" value="FACT"/>
+            <column name="lang" type="varchar2" value="KZ"/>
+            <column name="name" type="varchar2" value="Фактический СФ"/>
+        </insert>
+    </changeSet>
+
+    <changeSet id="fin-rus-90" logicalFilePath="path-independent" author="ruslan" context="dev">
+        <comment>insert into fin_invoice_types</comment>
+        <insert schemaName="apps" tableName="fin_invoice_types">
+            <column name="code" type="varchar2" value="ORDINARY"/>
+        </insert>
+
+        <insert schemaName="apps" tableName="fin_invoice_types">
+            <column name="code" type="varchar2" value="CORRECTED"/>
+        </insert>
+
+        <insert schemaName="apps" tableName="fin_invoice_types">
+            <column name="code" type="varchar2" value="ADDITIONAL"/>
+        </insert>
+
+        <insert schemaName="apps" tableName="fin_invoice_types">
+            <column name="code" type="varchar2" value="DEBIT"/>
+        </insert>
+
+        <insert schemaName="apps" tableName="fin_invoice_types">
+            <column name="code" type="varchar2" value="CREDIT"/>
+        </insert>
+    </changeSet>
+
+    <changeSet id="fin-rus-91" logicalFilePath="path-independent" author="ruslan" context="dev">
+        <comment>insert into fin_doc_types_tl</comment>
+        <insert schemaName="apps" tableName="fin_doc_types_tl">
+            <column name="code" type="varchar2" value="ORDINARY"/>
+            <column name="lang" type="varchar2" value="RU"/>
+            <column name="name" type="varchar2" value="Обычный"/>
+        </insert>
+
+        <insert schemaName="apps" tableName="fin_doc_types_tl">
+            <column name="code" type="varchar2" value="ORDINARY"/>
+            <column name="lang" type="varchar2" value="KZ"/>
+            <column name="name" type="varchar2" value="Обычный"/>
+        </insert>
+
+        <insert schemaName="apps" tableName="fin_doc_types_tl">
+            <column name="code" type="varchar2" value="CORRECTED"/>
+            <column name="lang" type="varchar2" value="RU"/>
+            <column name="name" type="varchar2" value="Исправленный"/>
+        </insert>
+
+        <insert schemaName="apps" tableName="fin_doc_types_tl">
+            <column name="code" type="varchar2" value="CORRECTED"/>
+            <column name="lang" type="varchar2" value="KZ"/>
+            <column name="name" type="varchar2" value="Исправленный"/>
+        </insert>
+
+        <insert schemaName="apps" tableName="fin_doc_types_tl">
+            <column name="code" type="varchar2" value="ADDITIONAL"/>
+            <column name="lang" type="varchar2" value="RU"/>
+            <column name="name" type="varchar2" value="Дополнительный"/>
+        </insert>
+
+        <insert schemaName="apps" tableName="fin_doc_types_tl">
+            <column name="code" type="varchar2" value="ADDITIONAL"/>
+            <column name="lang" type="varchar2" value="KZ"/>
+            <column name="name" type="varchar2" value="Дополнительный"/>
+        </insert>
+
+        <insert schemaName="apps" tableName="fin_doc_types_tl">
+            <column name="code" type="varchar2" value="DEBIT"/>
+            <column name="lang" type="varchar2" value="RU"/>
+            <column name="name" type="varchar2" value="Дебетовое авизо"/>
+        </insert>
+
+        <insert schemaName="apps" tableName="fin_doc_types_tl">
+            <column name="code" type="varchar2" value="DEBIT"/>
+            <column name="lang" type="varchar2" value="KZ"/>
+            <column name="name" type="varchar2" value="Дебетовое авизо"/>
+        </insert>
+
+        <insert schemaName="apps" tableName="fin_doc_types_tl">
+            <column name="code" type="varchar2" value="CREDIT"/>
+            <column name="lang" type="varchar2" value="RU"/>
+            <column name="name" type="varchar2" value="Кредитовое авизо"/>
+        </insert>
+
+        <insert schemaName="apps" tableName="fin_doc_types_tl">
+            <column name="code" type="varchar2" value="CREDIT"/>
+            <column name="lang" type="varchar2" value="KZ"/>
+            <column name="name" type="varchar2" value="Кредитовое авизо"/>
+        </insert>
     </changeSet>
 </databaseChangeLog>
