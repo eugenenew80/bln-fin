@@ -2258,7 +2258,7 @@
                 <constraints nullable="false"/>
             </column>
 
-            <column name="object" type="varchar2(30)" remarks="Код обьекта">
+            <column name="object" type="varchar2(20)" remarks="Код обьекта">
                 <constraints nullable="true"/>
             </column>
 
