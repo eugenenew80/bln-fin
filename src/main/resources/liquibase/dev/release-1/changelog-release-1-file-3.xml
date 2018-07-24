@@ -2643,10 +2643,12 @@
         <comment>insert into fin_doc_types</comment>
         <insert schemaName="apps" tableName="fin_doc_types">
             <column name="code" type="varchar2" value="ESTIMATED"/>
+            <column name="name" type="varchar2" value="Фактический СФ"/>
         </insert>
 
         <insert schemaName="apps" tableName="fin_doc_types">
             <column name="code" type="varchar2" value="FACT"/>
+            <column name="name" type="varchar2" value="Оценочный СФ"/>
         </insert>
     </changeSet>
 
