@@ -2321,7 +2321,7 @@
                 <constraints nullable="true"/>
             </column>
 
-            <column name="user_type_code" type="number" remarks="Тип пользователя">
+            <column name="user_type_code" type="varchar2(20)" remarks="Тип пользователя">
                 <constraints nullable="true"/>
             </column>
 
@@ -2363,8 +2363,8 @@
 
     <changeSet id="wf-rus-32" logicalFilePath="path-independent" author="eugene">
         <comment>Creating table: wf_route_user_type</comment>
-        <createTable tableName="wf_route_user_type" schemaName="apps" remarks="Список состояний">
-            <column name="code" type="varchar(20)" remarks="Код состояния">
+        <createTable tableName="wf_route_user_type" schemaName="apps" remarks="Маршруты для соглосования: типы пользователей для маршрутов">
+            <column name="code" type="varchar(20)" remarks="Код">
                 <constraints nullable="false"/>
             </column>
 
@@ -2397,7 +2397,7 @@
 
     <changeSet id="wf-rus-34" logicalFilePath="path-independent" author="ruslan">
         <comment>Creating table: wf_route_user_type_tl</comment>
-        <createTable tableName="wf_route_user_type_tl" schemaName="apps" remarks="Перевод Список состояний">
+        <createTable tableName="wf_route_user_type_tl" schemaName="apps" remarks="Перевод Маршруты для соглосования: типы пользователей для маршрутов">
             <column name="code" type="varchar2(20)" remarks="Код действия">
                 <constraints nullable="false"/>
             </column>
@@ -2467,6 +2467,7 @@
         <insert schemaName="apps" tableName="wf_route_user_type">
             <column name="code" type="varchar2" value="S2"/>
         </insert>
+        <rollback/>
     </changeSet>
 
     <changeSet id="wf-rus-38" logicalFilePath="path-independent" author="ruslan" context="dev">
@@ -2506,6 +2507,7 @@
             <column name="lang" type="varchar2" value="KZ"/>
             <column name="name" type="varchar2" value="Подписание со стороны потребителя"/>
         </insert>
+    <rollback/>
     </changeSet>
 
     <changeSet id="wf-rus-39" logicalFilePath="path-independent" author="ruslan">
