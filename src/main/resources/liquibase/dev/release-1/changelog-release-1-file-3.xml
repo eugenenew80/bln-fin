@@ -3011,12 +3011,10 @@
         <comment>insert into wf_task_types</comment>
         <insert schemaName="apps" tableName="wf_task_types">
             <column name="code" type="varchar2" value="S"/>
-            <column name="name" type="varchar2" value="Фактический СФ"/>
         </insert>
 
         <insert schemaName="apps" tableName="wf_task_types">
             <column name="code" type="varchar2" value="A"/>
-            <column name="name" type="varchar2" value="Оценочный СФ"/>
         </insert>
     </changeSet>
 
