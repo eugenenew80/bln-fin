@@ -432,6 +432,10 @@
                 <constraints nullable="true"/>
             </column>
 
+            <column name="task_type" type="varchar(20)" remarks="Тип задачи">
+                <constraints nullable="true"/>
+            </column>
+
             <column name="create_date" type="TIMESTAMP" remarks="Дата создания">
                 <constraints nullable="true"/>
             </column>
@@ -1007,6 +1011,10 @@
         <insert schemaName="apps" tableName="wf_objects">
             <column name="code" type="varchar2" value="FIN_PAYMENT_REQUESTS"/>
         </insert>
+
+        <insert schemaName="apps" tableName="wf_objects">
+            <column name="code" type="varchar2" value="REPAYMENT_SCHEDULE"/>
+        </insert>
         <rollback/>
     </changeSet>
 
@@ -1058,6 +1066,18 @@
             <column name="code" type="varchar2" value="FIN_PAYMENT_REQUESTS"/>
             <column name="lang" type="varchar2" value="KZ"/>
             <column name="name" type="varchar2" value="Счет на оплату"/>
+        </insert>
+
+        <insert schemaName="apps" tableName="wf_objects_tl">
+            <column name="code" type="varchar2" value="REPAYMENT_SCHEDULE"/>
+            <column name="lang" type="varchar2" value="RU"/>
+            <column name="name" type="varchar2" value="Запрос на предоставление графика погашения задолженности"/>
+        </insert>
+
+        <insert schemaName="apps" tableName="wf_objects_tl">
+            <column name="code" type="varchar2" value="REPAYMENT_SCHEDULE"/>
+            <column name="lang" type="varchar2" value="KZ"/>
+            <column name="name" type="varchar2" value="Запрос на предоставление графика погашения задолженности"/>
         </insert>
         <rollback/>
     </changeSet>
@@ -1346,6 +1366,21 @@
             <column name="object_code" type="varchar2" value="FIN_PAYMENT_REQUESTS"/>
             <column name="ACTIVITY_CODE" type="varchar2" value="NOT_VALIDATE"/>
         </insert>
+
+        <insert schemaName="apps" tableName="wf_object_activities">
+            <column name="object_code" type="varchar2" value="REPAYMENT_SCHEDULE"/>
+            <column name="ACTIVITY_CODE" type="varchar2" value="SEND_ON_VALIDATED"/>
+        </insert>
+
+        <insert schemaName="apps" tableName="wf_object_activities">
+            <column name="object_code" type="varchar2" value="REPAYMENT_SCHEDULE"/>
+            <column name="ACTIVITY_CODE" type="varchar2" value="VALIDATE"/>
+        </insert>
+
+        <insert schemaName="apps" tableName="wf_object_activities">
+            <column name="object_code" type="varchar2" value="REPAYMENT_SCHEDULE"/>
+            <column name="ACTIVITY_CODE" type="varchar2" value="NOT_VALIDATE"/>
+        </insert>
     <rollback/>
     </changeSet>
 
@@ -1560,6 +1595,86 @@
         <column name="MIN_USERS" type="number" value="0"/>
         <column name="MAX_USERS" type="number" value="0"/>
     </insert>
+
+    <insert schemaName="apps" tableName="wf_object_states">
+        <column name="object_code" type="varchar2" value="REPAYMENT_SCHEDULE"/>
+        <column name="STATE_CODE" type="varchar2" value="CREATE"/>
+        <column name="IS_INITIAL" type="number" value="1"/>
+        <column name="IS_FINAL" type="number" value="0"/>
+        <column name="IS_USERS_REQUIRED" type="number" value="0"/>
+        <column name="MIN_USERS" type="number" value="0"/>
+        <column name="MAX_USERS" type="number" value="0"/>
+    </insert>
+
+    <insert schemaName="apps" tableName="wf_object_states">
+        <column name="object_code" type="varchar2" value="REPAYMENT_SCHEDULE"/>
+        <column name="STATE_CODE" type="varchar2" value="ON_VALIDATED"/>
+        <column name="IS_INITIAL" type="number" value="0"/>
+        <column name="IS_FINAL" type="number" value="0"/>
+        <column name="IS_USERS_REQUIRED" type="number" value="1"/>
+        <column name="MIN_USERS" type="number" value="1"/>
+        <column name="MAX_USERS" type="number" value="10"/>
+    </insert>
+
+    <insert schemaName="apps" tableName="wf_object_states">
+        <column name="object_code" type="varchar2" value="REPAYMENT_SCHEDULE"/>
+        <column name="STATE_CODE" type="varchar2" value="VALIDATED"/>
+        <column name="IS_INITIAL" type="number" value="0"/>
+        <column name="IS_FINAL" type="number" value="1"/>
+        <column name="IS_USERS_REQUIRED" type="number" value="0"/>
+        <column name="MIN_USERS" type="number" value="0"/>
+        <column name="MAX_USERS" type="number" value="0"/>
+    </insert>
+
+    <insert schemaName="apps" tableName="wf_object_states">
+        <column name="object_code" type="varchar2" value="REPAYMENT_SCHEDULE"/>
+        <column name="STATE_CODE" type="varchar2" value="NOT_VALIDATED"/>
+        <column name="IS_INITIAL" type="number" value="0"/>
+        <column name="IS_FINAL" type="number" value="1"/>
+        <column name="IS_USERS_REQUIRED" type="number" value="0"/>
+        <column name="MIN_USERS" type="number" value="0"/>
+        <column name="MAX_USERS" type="number" value="0"/>
+    </insert>
+
+    <insert schemaName="apps" tableName="wf_object_states">
+        <column name="object_code" type="varchar2" value="FIN_PAYMENT_REQUESTS"/>
+        <column name="STATE_CODE" type="varchar2" value="CREATE"/>
+        <column name="IS_INITIAL" type="number" value="1"/>
+        <column name="IS_FINAL" type="number" value="0"/>
+        <column name="IS_USERS_REQUIRED" type="number" value="0"/>
+        <column name="MIN_USERS" type="number" value="0"/>
+        <column name="MAX_USERS" type="number" value="0"/>
+    </insert>
+
+    <insert schemaName="apps" tableName="wf_object_states">
+        <column name="object_code" type="varchar2" value="FIN_PAYMENT_REQUESTS"/>
+        <column name="STATE_CODE" type="varchar2" value="ON_VALIDATED"/>
+        <column name="IS_INITIAL" type="number" value="0"/>
+        <column name="IS_FINAL" type="number" value="0"/>
+        <column name="IS_USERS_REQUIRED" type="number" value="1"/>
+        <column name="MIN_USERS" type="number" value="1"/>
+        <column name="MAX_USERS" type="number" value="10"/>
+    </insert>
+
+    <insert schemaName="apps" tableName="wf_object_states">
+        <column name="object_code" type="varchar2" value="FIN_PAYMENT_REQUESTS"/>
+        <column name="STATE_CODE" type="varchar2" value="VALIDATED"/>
+        <column name="IS_INITIAL" type="number" value="0"/>
+        <column name="IS_FINAL" type="number" value="1"/>
+        <column name="IS_USERS_REQUIRED" type="number" value="0"/>
+        <column name="MIN_USERS" type="number" value="0"/>
+        <column name="MAX_USERS" type="number" value="0"/>
+    </insert>
+
+    <insert schemaName="apps" tableName="wf_object_states">
+        <column name="object_code" type="varchar2" value="FIN_PAYMENT_REQUESTS"/>
+        <column name="STATE_CODE" type="varchar2" value="NOT_VALIDATED"/>
+        <column name="IS_INITIAL" type="number" value="0"/>
+        <column name="IS_FINAL" type="number" value="1"/>
+        <column name="IS_USERS_REQUIRED" type="number" value="0"/>
+        <column name="MIN_USERS" type="number" value="0"/>
+        <column name="MAX_USERS" type="number" value="0"/>
+    </insert>
     <rollback/>
     </changeSet>
 
@@ -1567,7 +1682,8 @@
     <comment>insert into wf_object_state_transitions</comment>
         <insert schemaName="apps" tableName="wf_object_state_transitions">
             <column name="object_code" type="varchar2" value="CONTRACT"/>
-            <column name="STATE_CODE_FROM" type="varchar2" value="CREATE"/><column name="STATE_CODE_TO" type="number" value="PROJECT"/>
+            <column name="STATE_CODE_FROM" type="varchar2" value="CREATE"/>
+            <column name="STATE_CODE_TO" type="number" value="PROJECT"/>
             <column name="ACTIVITY_CODE" type="number" value="MAKE_PROJECT"/>
         </insert>
 
@@ -1710,6 +1826,27 @@
 
         <insert schemaName="apps" tableName="wf_object_state_transitions">
             <column name="object_code" type="varchar2" value="FIN_PAYMENT_REQUESTS"/>
+            <column name="STATE_CODE_FROM" type="varchar2" value="ON_VALIDATED"/>
+            <column name="STATE_CODE_TO" type="number" value="NOT_VALIDATED"/>
+            <column name="ACTIVITY_CODE" type="number" value="NOT_VALIDATE"/>
+        </insert>
+
+        <insert schemaName="apps" tableName="wf_object_state_transitions">
+            <column name="object_code" type="varchar2" value="REPAYMENT_SCHEDULE"/>
+            <column name="STATE_CODE_FROM" type="varchar2" value="CREATE"/>
+            <column name="STATE_CODE_TO" type="number" value="ON_VALIDATED"/>
+            <column name="ACTIVITY_CODE" type="number" value="SEND_ON_VALIDATED"/>
+        </insert>
+
+        <insert schemaName="apps" tableName="wf_object_state_transitions">
+            <column name="object_code" type="varchar2" value="REPAYMENT_SCHEDULE"/>
+            <column name="STATE_CODE_FROM" type="varchar2" value="ON_VALIDATED"/>
+            <column name="STATE_CODE_TO" type="number" value="VALIDATED"/>
+            <column name="ACTIVITY_CODE" type="number" value="VALIDATE"/>
+        </insert>
+
+        <insert schemaName="apps" tableName="wf_object_state_transitions">
+            <column name="object_code" type="varchar2" value="REPAYMENT_SCHEDULE"/>
             <column name="STATE_CODE_FROM" type="varchar2" value="ON_VALIDATED"/>
             <column name="STATE_CODE_TO" type="number" value="NOT_VALIDATED"/>
             <column name="ACTIVITY_CODE" type="number" value="NOT_VALIDATE"/>
@@ -2769,4 +2906,423 @@
             <column name="name" type="varchar2" value="Кредитовое авизо"/>
         </insert>
     </changeSet>
+
+
+    <changeSet id="wf-rus-42" logicalFilePath="path-independent" author="ruslan">
+        <comment>Creating table: wf_task_types</comment>
+        <createTable tableName="wf_task_types" schemaName="apps" remarks="Справочник типы задач">
+            <column name="code" type="varchar(20)" remarks="Код">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="create_date" type="TIMESTAMP" remarks="Дата создания">
+                <constraints nullable="true"/>
+            </column>
+
+            <column name="last_update_date" type="TIMESTAMP" remarks="Дата изменения">
+                <constraints nullable="true"/>
+            </column>
+
+            <column name="create_by" type="number" remarks="Автор">
+                <constraints nullable="true"/>
+            </column>
+
+            <column name="last_update_by" type="number" remarks="Автор изменения">
+                <constraints nullable="true"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="wf-rus-43" logicalFilePath="path-independent" author="ruslan">
+        <comment>Creating primary key for table: wf_task_types</comment>
+        <addPrimaryKey
+                columnNames="code"
+                constraintName="pk_wf_task_types"
+                schemaName="apps"
+                tableName="wf_task_types"/>
+    </changeSet>
+
+    <changeSet id="wf-rus-44" logicalFilePath="path-independent" author="ruslan">
+        <comment>Creating table: wf_task_types_tl</comment>
+        <createTable tableName="wf_task_types_tl" schemaName="apps" remarks="Перевод справочник типов задач">
+            <column name="code" type="varchar2(20)" remarks="Код типа">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="lang" type="varchar(10)" remarks="язык">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="name" type="varchar(100)" remarks="Наименование типа">
+                <constraints nullable="true"/>
+            </column>
+
+            <column name="create_date" type="TIMESTAMP" remarks="Дата создания">
+                <constraints nullable="true"/>
+            </column>
+
+            <column name="last_update_date" type="TIMESTAMP" remarks="Дата изменения">
+                <constraints nullable="true"/>
+            </column>
+
+            <column name="create_by" type="number" remarks="Автор">
+                <constraints nullable="true"/>
+            </column>
+
+            <column name="last_update_by" type="number" remarks="Автор изменения">
+                <constraints nullable="true"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="wf-rus-45" logicalFilePath="path-independent" author="ruslan">
+        <comment>Creating primary key for table: wf_task_types_tl</comment>
+        <addPrimaryKey
+                columnNames="code,lang"
+                constraintName="pk_wf_task_types_tl"
+                schemaName="apps"
+                tableName="wf_task_types_tl"/>
+    </changeSet>
+
+    <changeSet id="wf-rus-46" logicalFilePath="path-independent" author="ruslan">
+        <comment>Creating foreign constraint: wf_task_types_tl to wf_task_types</comment>
+        <addForeignKeyConstraint
+                baseTableSchemaName="apps"
+                baseTableName="wf_task_types_tl"
+                baseColumnNames="code"
+                constraintName="fk_wf_task_types_tl_1"
+                deferrable="true"
+                initiallyDeferred="true"
+                onDelete="CASCADE"
+                onUpdate="RESTRICT"
+                referencedTableSchemaName="apps"
+                referencedTableName="wf_task_types"
+                referencedColumnNames="code"
+        />
+    </changeSet>
+
+    <changeSet id="wf-rus-47" logicalFilePath="path-independent" author="ruslan" context="dev">
+        <comment>insert into wf_task_types</comment>
+        <insert schemaName="apps" tableName="wf_task_types">
+            <column name="code" type="varchar2" value="S"/>
+            <column name="name" type="varchar2" value="Фактический СФ"/>
+        </insert>
+
+        <insert schemaName="apps" tableName="wf_task_types">
+            <column name="code" type="varchar2" value="A"/>
+            <column name="name" type="varchar2" value="Оценочный СФ"/>
+        </insert>
+    </changeSet>
+
+    <changeSet id="wf-rus-48" logicalFilePath="path-independent" author="ruslan" context="dev">
+        <comment>insert into wf_task_types_tl</comment>
+        <insert schemaName="apps" tableName="wf_task_types_tl">
+            <column name="code" type="varchar2" value="S"/>
+            <column name="lang" type="varchar2" value="RU"/>
+            <column name="name" type="varchar2" value="Подписать"/>
+        </insert>
+
+        <insert schemaName="apps" tableName="wf_task_types_tl">
+            <column name="code" type="varchar2" value="S"/>
+            <column name="lang" type="varchar2" value="KZ"/>
+            <column name="name" type="varchar2" value="Подписать"/>
+        </insert>
+
+        <insert schemaName="apps" tableName="wf_task_types_tl">
+            <column name="code" type="varchar2" value="A"/>
+            <column name="lang" type="varchar2" value="RU"/>
+            <column name="name" type="varchar2" value="Соглосовать"/>
+        </insert>
+
+        <insert schemaName="apps" tableName="wf_task_types_tl">
+            <column name="code" type="varchar2" value="A"/>
+            <column name="lang" type="varchar2" value="KZ"/>
+            <column name="name" type="varchar2" value="Соглосовать"/>
+        </insert>
+    </changeSet>
+
+    <changeSet id="wf-rus-49" logicalFilePath="path-independent" author="ruslan">
+        <comment>Creating foreign constraint: wf_object_workflow_tasks to wf_task_types</comment>
+        <addForeignKeyConstraint
+                baseTableSchemaName="apps"
+                baseTableName="wf_object_workflow_tasks"
+                baseColumnNames="task_type"
+                constraintName="fk_wf_object_workflow_tasks_1"
+                deferrable="true"
+                initiallyDeferred="true"
+                onDelete="RESTRICT"
+                onUpdate="RESTRICT"
+                referencedTableSchemaName="apps"
+                referencedTableName="wf_task_types"
+                referencedColumnNames="code"
+        />
+    </changeSet>
+
+    <changeSet id="fin-rus-92" logicalFilePath="path-independent" author="ruslan" context="dev">
+        <comment>Creating table: fin_req_debt_repayment_schedule</comment>
+        <createTable tableName="fin_req_debt_repayment_schedule" schemaName="apps" remarks="Запрос на предоставление графика погашения задолженности">
+            <column name="id" type="number" remarks="Идентификатор">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="contract_id" type="number" remarks="Идентификатор договора">
+                <constraints nullable="true"/>
+            </column>
+
+            <column name="receipt_application_id" type="number" remarks="Идентификатор учета">
+                <constraints nullable="true"/>
+            </column>
+
+            <column name="bp_id" type="number" remarks="Идентификатор бизнес партнера">
+                <constraints nullable="true"/>
+            </column>
+
+            <column name="amount" type="number" remarks="сумма">
+                <constraints nullable="true"/>
+            </column>
+
+            <column name="text" type="varchar2(300)" remarks="Текст">
+                <constraints nullable="true"/>
+            </column>
+
+            <column name="create_by" type="number" remarks="Автор">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="create_date" type="TIMESTAMP" remarks="Дата создания">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="last_update_by" type="number" remarks="Автор обновления">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="last_update_date" type="TIMESTAMP" remarks="Дата обновления">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="fin-rus-93" logicalFilePath="path-independent" author="ruslan" context="dev">
+        <comment>Creating primary key for table: fin_pro_cldr_headers</comment>
+        <addPrimaryKey
+                columnNames="id"
+                constraintName="pk_fin_pro_cldr_headers"
+                schemaName="apps"
+                tableName="fin_pro_cldr_headers"/>
+    </changeSet>
+
+    <changeSet id="fin-rus-94" logicalFilePath="path-independent" author="ruslan" context="dev">
+        <comment>Creating sequence for table: fin_req_debt_repayment_schedule</comment>
+        <createSequence
+                incrementBy="1"
+                schemaName="apps"
+                sequenceName="fin_req_debt_repayment_schedule_s"
+                startValue="1"/>
+    </changeSet>
+
+    <changeSet id="fin-rus-95" logicalFilePath="path-independent" author="ruslan">
+        <comment>Creating foreign constraint: fin_req_debt_repayment_schedule to fin_receipt_applications</comment>
+        <addForeignKeyConstraint
+                baseTableSchemaName="apps"
+                baseTableName="fin_req_debt_repayment_schedule"
+                baseColumnNames="receipt_application_id"
+                constraintName="fk_fin_req_debt_repayment_schedule_1"
+                deferrable="true"
+                initiallyDeferred="true"
+                onDelete="RESTRICT"
+                onUpdate="RESTRICT"
+                referencedTableSchemaName="apps"
+                referencedTableName="fin_receipt_applications"
+                referencedColumnNames="id"
+        />
+    </changeSet>
+
+    <changeSet id="fin-rus-96" logicalFilePath="path-independent" author="ruslan">
+        <comment>Creating foreign constraint: fin_req_debt_repayment_schedule to dict_business_partners</comment>
+        <addForeignKeyConstraint
+                baseTableSchemaName="apps"
+                baseTableName="fin_req_debt_repayment_schedule"
+                baseColumnNames="bp_id"
+                constraintName="fk_fin_req_debt_repayment_schedule_2"
+                deferrable="true"
+                initiallyDeferred="true"
+                onDelete="RESTRICT"
+                onUpdate="RESTRICT"
+                referencedTableSchemaName="apps"
+                referencedTableName="dict_business_partners"
+                referencedColumnNames="id"
+        />
+    </changeSet>
+    
+    <changeSet id="fin-rus-97" logicalFilePath="path-independent" author="ruslan" context="dev">
+        <comment>Creating table: fin_debt_repayment_schedule_h</comment>
+        <createTable tableName="fin_debt_repayment_schedule_h" schemaName="apps" remarks="Заголовок графика погашения задолженности">
+            <column name="id" type="number" remarks="Идентификатор">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="contract_id" type="number" remarks="Идентификатор договора">
+                <constraints nullable="true"/>
+            </column>
+
+            <column name="receipt_application_id" type="number" remarks="Идентификатор учета">
+                <constraints nullable="true"/>
+            </column>
+
+            <column name="bp_id" type="number" remarks="Идентификатор бизнес партнера">
+                <constraints nullable="true"/>
+            </column>
+
+            <column name="amount" type="number" remarks="сумма">
+                <constraints nullable="true"/>
+            </column>
+
+            <column name="create_by" type="number" remarks="Автор">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="create_date" type="TIMESTAMP" remarks="Дата создания">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="last_update_by" type="number" remarks="Автор обновления">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="last_update_date" type="TIMESTAMP" remarks="Дата обновления">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="fin-rus-98" logicalFilePath="path-independent" author="ruslan" context="dev">
+        <comment>Creating primary key for table: fin_debt_repayment_schedule_h</comment>
+        <addPrimaryKey
+                columnNames="id"
+                constraintName="pk_fin_debt_repayment_schedule_h"
+                schemaName="apps"
+                tableName="fin_debt_repayment_schedule_h"/>
+    </changeSet>
+
+    <changeSet id="fin-rus-99" logicalFilePath="path-independent" author="ruslan" context="dev">
+        <comment>Creating sequence for table: fin_debt_repayment_schedule_h</comment>
+        <createSequence
+                incrementBy="1"
+                schemaName="apps"
+                sequenceName="fin_debt_repayment_schedule_h_s"
+                startValue="1"/>
+    </changeSet>
+
+    <changeSet id="fin-rus-100" logicalFilePath="path-independent" author="ruslan">
+        <comment>Creating foreign constraint: fin_debt_repayment_schedule_h to fin_receipt_applications</comment>
+        <addForeignKeyConstraint
+                baseTableSchemaName="apps"
+                baseTableName="fin_debt_repayment_schedule_h"
+                baseColumnNames="receipt_application_id"
+                constraintName="fk_fin_debt_repayment_schedule_h_1"
+                deferrable="true"
+                initiallyDeferred="true"
+                onDelete="RESTRICT"
+                onUpdate="RESTRICT"
+                referencedTableSchemaName="apps"
+                referencedTableName="fin_receipt_applications"
+                referencedColumnNames="id"
+        />
+    </changeSet>
+
+    <changeSet id="fin-rus-101" logicalFilePath="path-independent" author="ruslan">
+        <comment>Creating foreign constraint: fin_debt_repayment_schedule_h to dict_business_partners</comment>
+        <addForeignKeyConstraint
+                baseTableSchemaName="apps"
+                baseTableName="fin_debt_repayment_schedule_h"
+                baseColumnNames="bp_id"
+                constraintName="fk_fin_debt_repayment_schedule_h_2"
+                deferrable="true"
+                initiallyDeferred="true"
+                onDelete="RESTRICT"
+                onUpdate="RESTRICT"
+                referencedTableSchemaName="apps"
+                referencedTableName="dict_business_partners"
+                referencedColumnNames="id"
+        />
+    </changeSet>
+
+    <changeSet id="fin-rus-102" logicalFilePath="path-independent" author="ruslan" context="dev">
+        <comment>Creating table: fin_debt_repayment_schedule_l</comment>
+        <createTable tableName="fin_debt_repayment_schedule_l" schemaName="apps" remarks="Строка графика погашения задолженности">
+            <column name="id" type="number" remarks="Идентификатор">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="header_id" type="number" remarks="Идентификатор заголовка">
+                <constraints nullable="true"/>
+            </column>
+
+            <column name="payment_date" type="date" remarks="Дата оплаты">
+                <constraints nullable="true"/>
+            </column>
+
+            <column name="text" type="number" remarks="Комментарий">
+                <constraints nullable="true"/>
+            </column>
+
+            <column name="amount" type="number" remarks="сумма оплаты">
+                <constraints nullable="true"/>
+            </column>
+
+            <column name="create_by" type="number" remarks="Автор">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="create_date" type="TIMESTAMP" remarks="Дата создания">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="last_update_by" type="number" remarks="Автор обновления">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="last_update_date" type="TIMESTAMP" remarks="Дата обновления">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="fin-rus-103" logicalFilePath="path-independent" author="ruslan" context="dev">
+        <comment>Creating primary key for table: fin_debt_repayment_schedule_l</comment>
+        <addPrimaryKey
+                columnNames="id"
+                constraintName="pk_fin_debt_repayment_schedule_l"
+                schemaName="apps"
+                tableName="fin_debt_repayment_schedule_l"/>
+    </changeSet>
+
+    <changeSet id="fin-rus-104" logicalFilePath="path-independent" author="ruslan" context="dev">
+        <comment>Creating sequence for table: fin_debt_repayment_schedule_l</comment>
+        <createSequence
+                incrementBy="1"
+                schemaName="apps"
+                sequenceName="fin_debt_repayment_schedule_l_s"
+                startValue="1"/>
+    </changeSet>
+
+    <changeSet id="fin-rus-105" logicalFilePath="path-independent" author="ruslan">
+        <comment>Creating foreign constraint: fin_debt_repayment_schedule_l to fin_debt_repayment_schedule_h</comment>
+        <addForeignKeyConstraint
+                baseTableSchemaName="apps"
+                baseTableName="fin_debt_repayment_schedule_l"
+                baseColumnNames="header_id"
+                constraintName="fk_fin_debt_repayment_schedule_l_1"
+                deferrable="true"
+                initiallyDeferred="true"
+                onDelete="RESTRICT"
+                onUpdate="RESTRICT"
+                referencedTableSchemaName="apps"
+                referencedTableName="fin_debt_repayment_schedule_h"
+                referencedColumnNames="id"
+        />
+    </changeSet>
+
+
 </databaseChangeLog>
