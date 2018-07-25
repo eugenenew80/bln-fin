@@ -3113,12 +3113,12 @@
     </changeSet>
 
     <changeSet id="fin-rus-93" logicalFilePath="path-independent" author="ruslan" context="dev">
-        <comment>Creating primary key for table: fin_pro_cldr_headers</comment>
+        <comment>Creating primary key for table: fin_req_debt_repayment_schedule</comment>
         <addPrimaryKey
                 columnNames="id"
-                constraintName="pk_fin_pro_cldr_headers"
+                constraintName="pk_ffin_req_debt_repayment_schedule"
                 schemaName="apps"
-                tableName="fin_pro_cldr_headers"/>
+                tableName="fin_req_debt_repayment_schedule"/>
     </changeSet>
 
     <changeSet id="fin-rus-94" logicalFilePath="path-independent" author="ruslan" context="dev">
