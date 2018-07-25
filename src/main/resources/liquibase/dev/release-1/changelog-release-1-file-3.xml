@@ -2709,6 +2709,7 @@
             <column name="code" type="varchar2" value="TAX"/>
             <column name="name" type="varchar2" value="налог"/>
         </insert>
+        <rollback/>
     </changeSet>
 
     <changeSet id="fin-rus-85" logicalFilePath="path-independent" author="ruslan" context="dev">
@@ -2747,6 +2748,7 @@
         <insert schemaName="apps" tableName="fin_debt_types">
             <column name="code" type="varchar2" value="D"/>
         </insert>
+        <rollback/>
     </changeSet>
 
     <changeSet id="fin-rus-87" logicalFilePath="path-independent" author="ruslan" context="dev">
@@ -2774,6 +2776,7 @@
             <column name="lang" type="varchar2" value="KZ"/>
             <column name="name" type="varchar2" value="Аванс"/>
         </insert>
+        <rollback/>
     </changeSet>
 
     <changeSet id="fin-rus-88" logicalFilePath="path-independent" author="ruslan" context="dev">
@@ -2787,6 +2790,7 @@
             <column name="code" type="varchar2" value="FACT"/>
             <column name="name" type="varchar2" value="Оценочный СФ"/>
         </insert>
+        <rollback/>
     </changeSet>
 
     <changeSet id="fin-rus-89" logicalFilePath="path-independent" author="ruslan" context="dev">
@@ -2842,6 +2846,7 @@
             <column name="code" type="varchar2" value="CREDIT"/>
             <column name="name" type="varchar2" value="Кредитовое авизо"/>
         </insert>
+        <rollback/>
     </changeSet>
 
     <changeSet id="fin-rus-91" logicalFilePath="path-independent" author="ruslan" context="dev">
@@ -2905,6 +2910,7 @@
             <column name="lang" type="varchar2" value="KZ"/>
             <column name="name" type="varchar2" value="Кредитовое авизо"/>
         </insert>
+        <rollback/>
     </changeSet>
 
 
@@ -3039,6 +3045,7 @@
             <column name="lang" type="varchar2" value="KZ"/>
             <column name="name" type="varchar2" value="Соглосовать"/>
         </insert>
+        <rollback/>
     </changeSet>
 
     <changeSet id="wf-rus-49" logicalFilePath="path-independent" author="ruslan">
@@ -3078,6 +3085,10 @@
             </column>
 
             <column name="amount" type="number" remarks="сумма">
+                <constraints nullable="true"/>
+            </column>
+
+            <column name="user_id" type="number" remarks="сумма">
                 <constraints nullable="true"/>
             </column>
 
