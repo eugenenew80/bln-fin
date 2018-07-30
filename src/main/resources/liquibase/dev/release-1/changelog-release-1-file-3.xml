@@ -3335,10 +3335,9 @@
 
     <changeSet id="fin-rus-106" logicalFilePath="path-independent" author="ruslan">
         <comment>drop not null constraint fin_sale_invoices.doc_num</comment>
-        <dropNotNullConstraint columnDataType="varchar2(20)"
-                               columnName="doc_num"
-                               schemaName="apps"
-                               tableName="fin_sale_invoices"/>
+        <sql dbms="postgres, oracle" endDelimiter=";" splitStatements="true" stripComments="true">
+        ALTER TABLE apps.fin_sale_invoices MODIFY doc_num not NULL;
+        </sql>
     </changeSet>
 
     <changeSet id="fin-rus-107" logicalFilePath="path-independent" author="ruslan">
