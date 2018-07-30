@@ -3333,5 +3333,30 @@
         />
     </changeSet>
 
+    <changeSet id="fin-rus-106" logicalFilePath="path-independent" author="ruslan">
+        <comment>drop not null constraint fin_sale_invoices.doc_num</comment>
+        <dropNotNullConstraint columnDataType="varchar2(20)"
+                               columnName="doc_num"
+                               schemaName="apps"
+                               tableName="fin_sale_invoices"/>
+    </changeSet>
+
+    <changeSet id="fin-rus-107" logicalFilePath="path-independent" author="ruslan">
+        <comment>rename column fin_sale_invoices.accounting_date_date to fin_sale_invoices.accounting_date</comment>
+        <renameColumn columnDataType="date"
+                      newColumnName="accounting_date"
+                      oldColumnName="accounting_date_date"
+                      remarks="Дата проводки"
+                      schemaName="apps"
+                      tableName="fin_sale_invoices"/>
+    </changeSet>
+
+    <changeSet id="fin-rus-108" logicalFilePath="path-independent" author="ruslan">
+        <comment>rename column fin_sale_invoices.accounting_date_date to fin_sale_invoices.accounting_date</comment>
+        <sql dbms="postgres, oracle" endDelimiter=";" splitStatements="true" stripComments="true">
+            comment on column apps.fin_sale_invoices.is_ready
+            is 'Флаг для проверки на коректность данных';
+        </sql>
+    </changeSet>
 
 </databaseChangeLog>
