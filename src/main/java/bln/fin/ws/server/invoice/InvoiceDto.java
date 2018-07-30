@@ -33,8 +33,8 @@ public class InvoiceDto {
     private Date accountingDate;
 
     @XmlElement(required = true)
-    @Documentation("№ делового партнера в SAP")
-    private String bpNum;
+    @Documentation("№ делового партнера-поставщика в SAP")
+    private String vendorNum;
 
     @XmlElement(required = true)
     @Documentation("№ договора в SAP")
@@ -47,10 +47,6 @@ public class InvoiceDto {
     @XmlElement(required = true)
     @Documentation("Балансовая единица")
     private String companyCode;
-
-    @XmlElement(required = true)
-    @Documentation("Идентификатор системы-приёмника")
-    private String sysCode;
 
     @XmlElement(required = true)
     @Documentation("Сумма СФ включая НДС")
