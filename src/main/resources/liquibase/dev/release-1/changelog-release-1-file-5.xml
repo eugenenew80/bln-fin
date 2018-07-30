@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.3.xsd">
+
+    <changeSet id="fin-eug-153" logicalFilePath="path-independent" author="eugene">
+        <addColumn schemaName="apps" tableName="fin_doc_types">
+            <column name="is_invoice_required" type="number" >
+                <constraints nullable="true"/>
+            </column>
+
+            <column name="is_act_required" type="number">
+                <constraints nullable="true"/>
+            </column>
+
+            <column name="is_invoice_approve_required" type="number">
+                <constraints nullable="true"/>
+            </column>
+
+            <column name="is_act_approve_required" type="number">
+                <constraints nullable="true"/>
+            </column>
+        </addColumn>
+    </changeSet>
+
+</databaseChangeLog>
