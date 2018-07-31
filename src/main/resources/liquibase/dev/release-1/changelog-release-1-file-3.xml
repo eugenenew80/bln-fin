@@ -3358,4 +3358,12 @@
         </sql>
     </changeSet>
 
+    <changeSet id="fin-rus-109" logicalFilePath="path-independent" author="ruslan">
+        <comment>drop not null constraint</comment>
+        <dropNotNullConstraint columnDataType="varchar2(20)"
+                               columnName="doc_num"
+                               schemaName="apps"
+                               tableName="fin_sale_invoices"/>
+    </changeSet>
+
 </databaseChangeLog>
