@@ -18,10 +18,6 @@ public class InvoiceLineDto {
     @Documentation("Наименование позиции")
     private String posName;
 
-    @XmlElement
-    @Documentation("№ материала/услуги")
-    private String itemNum;
-
     @XmlElement(required = true)
     @Documentation("Единица измерения")
     private String unit;
@@ -31,14 +27,6 @@ public class InvoiceLineDto {
     private Double quantity;
 
     @XmlElement(required = true)
-    @Documentation("Цена за единицу")
-    private Double price;
-
-    @XmlElement(required = true)
     @Documentation("Стоимость без НДС")
     private Double amount;
-
-    @XmlElement
-    @Documentation("Ставка НДС")
-    private Double taxRate;
 }
