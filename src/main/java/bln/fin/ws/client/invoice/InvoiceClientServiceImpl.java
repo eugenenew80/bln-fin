@@ -81,12 +81,6 @@ public class InvoiceClientServiceImpl implements InvoiceClientService {
             if (saleInvoice.getInvoiceTypeCode() == InvoiceTypeEnum.ORDINARY)
                 saleInvoiceDto.setDocType("ZF2");
 
-            if (saleInvoice.getInvoiceTypeCode() == InvoiceTypeEnum.CREDIT)
-                saleInvoiceDto.setDocType("ZG2");
-
-            if (saleInvoice.getInvoiceTypeCode() == InvoiceTypeEnum.DEBIT)
-                saleInvoiceDto.setDocType("ZL2");
-
             if (saleInvoice.getInvoiceTypeCode() == InvoiceTypeEnum.CORRECTED)
                 saleInvoiceDto.setDocType("ZL2");
         }

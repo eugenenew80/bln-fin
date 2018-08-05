@@ -115,20 +115,20 @@ public class InvoiceBusinessServiceImpl implements InvoiceBusinessService{
             .orElse(new PurchaseInvoiceLine());
 
         Unit unit = unitRepo.findByCode(lineDto.getUnit())!=null ? unitRepo.findByCode(lineDto.getUnit()) : null;
-        Item item = lineDto.getItemNum()!=null ? itemRepo.findByErpCode(lineDto.getItemNum()) : null;
+        //Item item = lineDto.getItemNum()!=null ? itemRepo.findByErpCode(lineDto.getItemNum()) : null;
 
         invoiceLine.setInvoice(invoice);
         invoiceLine.setPosNum(lineDto.getPosNum());
         invoiceLine.setAmount(lineDto.getAmount());
         invoiceLine.setQuantity(lineDto.getQuantity());
-        invoiceLine.setUnitPrice(lineDto.getPrice());
+        //invoiceLine.setUnitPrice(lineDto.getPrice());
         invoiceLine.setLineTypeCode(InvoiceLineTypeEnum.LINE);
         invoiceLine.setUnit(unit);
         invoiceLine.setUnitName(lineDto.getUnit());
-        invoiceLine.setItem(item);
+        //invoiceLine.setItem(item);
         invoiceLine.setDescription(lineDto.getPosName());
-        invoiceLine.setItemNum(lineDto.getItemNum());
-        invoiceLine.setTaxRateValue(lineDto.getTaxRate());
+        //invoiceLine.setItemNum(lineDto.getItemNum());
+        //invoiceLine.setTaxRateValue(lineDto.getTaxRate());
 
         return invoiceLine;
     }

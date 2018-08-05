@@ -91,6 +91,8 @@ public class SalePlanServiceImpl implements SalePlanService {
         item.setAmount(line.getAmount());
         item.setStartDate(toXMLGregorianCalendar(header.getStartDate()));
         item.setEndDate(toXMLGregorianCalendar(header.getEndDate()));
+        item.setCompanyCode("1010");
+        item.setChannel("10");
         return item;
     }
 
