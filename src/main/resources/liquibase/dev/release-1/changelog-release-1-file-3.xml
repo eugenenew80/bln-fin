@@ -3366,4 +3366,66 @@
                                tableName="fin_sale_invoices"/>
     </changeSet>
 
+    <changeSet id="fin-rus-110" logicalFilePath="path-independent" author="ruslan">
+        <comment>add column to fin_total_delivery_headers</comment>
+        <addColumn schemaName="apps" tableName="fin_total_delivery_headers">
+        <column name="prev_delivery_header_id" type="number" remarks="Идентификтор предыдущей записи">
+            <constraints nullable="true"/>
+        </column>
+        </addColumn>
+    </changeSet>
+
+    <changeSet id="fin-rus-111" logicalFilePath="path-independent" author="ruslan">
+        <comment>rename column fin_total_delivery_headers.version_id to fin_total_delivery_headers.version</comment>
+        <renameColumn columnDataType="number"
+                      newColumnName="version"
+                      oldColumnName="version_id"
+                      remarks="номер версии"
+                      schemaName="apps"
+                      tableName="fin_total_delivery_headers"/>
+    </changeSet>
+
+    <changeSet id="fin-rus-112" logicalFilePath="path-independent" author="ruslan">
+        <comment>add column to fin_total_delivery_lines</comment>
+        <addColumn schemaName="apps" tableName="fin_total_delivery_lines">
+            <column name="prev_delivery_line_id" type="number" remarks="Идентификтор предыдущей записи">
+                <constraints nullable="true"/>
+            </column>
+
+            <column name="contract_type" type="varchar2(10)" remarks="Тип контракта: KEG, RFC" defaultValue="KEG">
+                <constraints nullable="true"/>
+            </column>
+        </addColumn>
+    </changeSet>
+
+    <changeSet id="fin-rus-113" logicalFilePath="path-independent" author="ruslan">
+        <comment>add column to fin_total_delivery_lines</comment>
+        <addColumn schemaName="apps" tableName="fin_total_delivery_lines">
+            <column name="is_act_created" type="number" remarks="Флаг акт создан">
+                <constraints nullable="true"/>
+            </column>
+
+            <column name="is_current_record" type="number" remarks="Флаг необходимая запись">
+                <constraints nullable="true"/>
+            </column>
+        </addColumn>
+    </changeSet>
+
+    <changeSet id="fin-rus-114" logicalFilePath="path-independent" author="ruslan">
+        <comment>add column to fin_total_delivery_headers</comment>
+        <addColumn schemaName="apps" tableName="fin_total_delivery_headers">
+            <column name="prev_delivery_header_id" type="number" remarks="Идентификтор предыдущей записи">
+                <constraints nullable="true"/>
+            </column>
+        </addColumn>
+    </changeSet>
+
+    <changeSet id="fin-rus-116" logicalFilePath="path-independent" author="ruslan">
+        <comment>add column to fin_payment_requests</comment>
+        <addColumn schemaName="apps" tableName="fin_payment_requests">
+            <column name="tax" type="number" remarks="Сумма НДС">
+                <constraints nullable="false"/>
+            </column>
+        </addColumn>
+    </changeSet>
 </databaseChangeLog>
