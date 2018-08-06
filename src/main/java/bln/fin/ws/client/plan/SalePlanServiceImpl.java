@@ -4,32 +4,15 @@ import bln.fin.entity.SalePlanHeader;
 import bln.fin.entity.SalePlanLine;
 import bln.fin.repo.SalePlanHeaderRepo;
 import lombok.RequiredArgsConstructor;
-import org.apache.http.Header;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
-import org.springframework.ws.WebServiceMessage;
-import org.springframework.ws.client.core.WebServiceMessageCallback;
 import org.springframework.ws.client.core.WebServiceTemplate;
-import org.springframework.ws.soap.SoapHeader;
-import org.springframework.ws.soap.SoapHeaderElement;
-import org.springframework.ws.soap.SoapMessage;
-import org.springframework.ws.soap.client.SoapFaultClientException;
 
-import org.springframework.ws.soap.saaj.SaajSoapMessage;
-import org.springframework.ws.transport.context.TransportContext;
-import org.springframework.ws.transport.context.TransportContextHolder;
-import org.springframework.ws.transport.http.HttpComponentsConnection;
-import org.springframework.xml.transform.StringSource;
 import sap.plan.ObjectFactory;
 import sap.plan.SalesPlan;
 
-import javax.xml.soap.SOAPHeader;
-import javax.xml.soap.SOAPMessage;
-import javax.xml.transform.Transformer;
-import javax.xml.transform.TransformerException;
-import javax.xml.transform.TransformerFactory;
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
 import java.io.IOException;
@@ -40,12 +23,10 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.time.LocalDateTime;
 import java.util.Arrays;
-import java.util.Iterator;
 import java.util.List;
 import static bln.fin.common.Util.toXMLGregorianCalendar;
 import static java.util.stream.Collectors.groupingBy;
 import static java.util.stream.Collectors.toList;
-import static java.util.stream.IntStream.range;
 
 @Service
 @RequiredArgsConstructor
@@ -80,13 +61,7 @@ public class SalePlanServiceImpl implements SalePlanService {
         StringBuffer response = new StringBuffer();
         HttpURLConnection con = null;
         try {
-            con = (HttpURLConnection) new URL("http://kegoci10.corp.kegoc.kz:50000/XISOAPAdapter/MessageServlet?senderParty=&senderService=BIS_D&receiverParty=&receiverService=&interface=BIS_SalesPlan&interfaceNamespace=urn:kegoc.kz:BIS:LO_0002_3_SalesPlan").openConnection();
-            con.setDoInput(true);
-            con.setDoOutput(true);
-            con.setRequestMethod("POST");
-            con.setRequestProperty("Content-Type", "text/xml;charset=UTF-8");
-            con.setRequestProperty("Authorization", "Basic UElBUFBMQklTX0Q6UXdlciExMTExMQ==");
-
+            con = getConnection(new URL("http://kegoci10.corp.kegoc.kz:50000/XISOAPAdapter/MessageServlet?senderParty=&senderService=BIS_D&receiverParty=&receiverService=&interface=BIS_SalesPlan&interfaceNamespace=urn:kegoc.kz:BIS:LO_0002_3_SalesPlan"));
             String body = getBody(salesPlanReq);
             try (DataOutputStream wr = new DataOutputStream(con.getOutputStream())) {
                 wr.write(body.getBytes());
@@ -106,7 +81,6 @@ public class SalePlanServiceImpl implements SalePlanService {
 
         catch (IOException e) {
             logger.error("doRequest failed: " + e);
-            //throw e;
         }
 
         finally {
@@ -186,51 +160,71 @@ public class SalePlanServiceImpl implements SalePlanService {
         salePlanHeaderRepo.save(headers);
     }
 
+
+
+    private HttpURLConnection getConnection(URL url) {
+        HttpURLConnection con = null;
+        try {
+            con = (HttpURLConnection) url.openConnection();
+            con.setDoInput(true);
+            con.setDoOutput(true);
+            con.setRequestMethod("POST");
+            con.setRequestProperty("Content-Type", "text/xml;charset=UTF-8");
+            con.setRequestProperty("Authorization", "Basic UElBUFBMQklTX0Q6UXdlciExMTExMQ==");
+            return con;
+        }
+
+        catch (IOException e) {
+            logger.error("getConnection failed: " + e);
+        }
+
+        return null;
+    }
+
     private String getBody(SalesPlan salesPlan) {
-        SalesPlan.Item item = salesPlan.getItem().get(0);
+        String bodyTemplate = new String(envelopeTemplate);
+        for (SalesPlan.Item item : salesPlan.getItem()) {
+            String lineTemplate = new String(this.itemTemplate);
+            itemTemplate = itemTemplate.replace("#id#", item.getId() + "");
+            itemTemplate = itemTemplate.replace("#itemNum#", item.getItemNum());
+            itemTemplate = itemTemplate.replace("#version#", item.getVersion() + "");
+            itemTemplate = itemTemplate.replace("#forecastType#", item.getForecastType());
+            itemTemplate = itemTemplate.replace("#startDate#", item.getStartDate().toXMLFormat());
+            itemTemplate = itemTemplate.replace("#endDate#", item.getEndDate().toXMLFormat());
+            itemTemplate = itemTemplate.replace("#amount#", item.getAmount() + "");
+            itemTemplate = itemTemplate.replace("#quantity#", item.getQuantity() + "");
+            itemTemplate = itemTemplate.replace("#currencyCode#", item.getCurrency());
+            itemTemplate = itemTemplate.replace("#companyCode#", item.getCompanyCode());
+            itemTemplate = itemTemplate.replace("#channel#", item.getChannel());
+            bodyTemplate = bodyTemplate.replace("#items#", lineTemplate);
+        }
 
-        String bodyTemplate = new String(envelope);
-        String itemTemplate = new String(this.itemTemplate);
-
-        itemTemplate = itemTemplate.replace("#id#", item.getId() + "");
-        itemTemplate = itemTemplate.replace("#itemNum#", item.getItemNum());
-        itemTemplate = itemTemplate.replace("#version#", item.getVersion() + "");
-        itemTemplate = itemTemplate.replace("#forecastType#", item.getForecastType());
-        itemTemplate = itemTemplate.replace("#startDate#", item.getStartDate().toXMLFormat());
-        itemTemplate = itemTemplate.replace("#endDate#", item.getEndDate().toXMLFormat());
-        itemTemplate = itemTemplate.replace("#amount#", item.getAmount() + "");
-        itemTemplate = itemTemplate.replace("#quantity#", item.getQuantity() + "");
-        itemTemplate = itemTemplate.replace("#currencyCode#", item.getCurrency());
-        itemTemplate = itemTemplate.replace("#companyCode#", item.getCompanyCode());
-        itemTemplate = itemTemplate.replace("#channel#", item.getChannel());
-
-        bodyTemplate = bodyTemplate.replace("#items#", itemTemplate);
         return bodyTemplate;
     }
 
 
-    private String envelope = "" +
-            "<soapenv:Envelope xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:urn=\"urn:kegoc.kz:BIS:LO_0002_3_SalesPlan\">\n" +
-            "   <soapenv:Header/>\n" +
-            "   <soapenv:Body>\n" +
-            "      <urn:SalesPlan>\n" +
-            "           #items#" +
-            "     </urn:SalesPlan>\n" +
-            "   </soapenv:Body>\n" +
-            "</soapenv:Envelope>";
+    private String envelopeTemplate = "" +
+        "<soapenv:Envelope xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelopeTemplate/\" xmlns:urn=\"urn:kegoc.kz:BIS:LO_0002_3_SalesPlan\">\n" +
+        "   <soapenv:Header/>\n" +
+        "   <soapenv:Body>\n" +
+        "      <urn:SalesPlan>\n" +
+        "           #items#" +
+        "     </urn:SalesPlan>\n" +
+        "   </soapenv:Body>\n" +
+        "</soapenv:Envelope>";
 
     private String itemTemplate = "" +
-            "          <item>\n" +
-            "            <id>#id#</id>\n" +
-            "            <itemNum>#itemNum#</itemNum>\n" +
-            "            <version>#version#</version>\n" +
-            "            <forecastType>#forecastType#</forecastType>\n" +
-            "            <startDate>#startDate#</startDate>\n" +
-            "            <endDate>#endDate#</endDate>\n" +
-            "            <quantity>#quantity#</quantity>\n" +
-            "            <amount>#amount#</amount>\n" +
-            "            <currency>#currencyCode#</currency>\n" +
-            "            <companyCode>#companyCode#</companyCode>\n" +
-            "            <channel>#channel#</channel>\n" +
-            "         </item>\n";
+        "          <item>\n" +
+        "            <id>#id#</id>\n" +
+        "            <itemNum>#itemNum#</itemNum>\n" +
+        "            <version>#version#</version>\n" +
+        "            <forecastType>#forecastType#</forecastType>\n" +
+        "            <startDate>#startDate#</startDate>\n" +
+        "            <endDate>#endDate#</endDate>\n" +
+        "            <quantity>#quantity#</quantity>\n" +
+        "            <amount>#amount#</amount>\n" +
+        "            <currency>#currencyCode#</currency>\n" +
+        "            <companyCode>#companyCode#</companyCode>\n" +
+        "            <channel>#channel#</channel>\n" +
+        "         </item>\n";
 }
