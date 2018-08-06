@@ -2,6 +2,7 @@ package bln.fin;
 
 import bln.fin.repo.*;
 import bln.fin.ws.SessionService;
+import bln.fin.ws.client.CustomEndpointInterceptor;
 import bln.fin.ws.server.bp.BusinessPartnerServiceImpl;
 import bln.fin.ws.server.debt.DebtBusinessService;
 import bln.fin.ws.server.debt.DebtServiceImpl;
@@ -36,6 +37,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.oxm.jaxb.Jaxb2Marshaller;
 import org.springframework.ws.client.core.WebServiceTemplate;
+import org.springframework.ws.client.support.interceptor.ClientInterceptor;
 import org.springframework.ws.transport.http.HttpComponentsMessageSender;
 
 import javax.xml.ws.Endpoint;
@@ -78,17 +80,15 @@ public class AppConfig  {
     }
 
     @Bean
-    public WebServiceTemplate salePlanServiceTemplate(HttpComponentsMessageSender messageSender) {
+    public WebServiceTemplate salePlanServiceTemplate() {
         Jaxb2Marshaller jaxb2Marshaller = new Jaxb2Marshaller();
         jaxb2Marshaller.setContextPath("sap.plan");
 
         WebServiceTemplate webServiceTemplate = new WebServiceTemplate();
         webServiceTemplate.setMarshaller(jaxb2Marshaller);
         webServiceTemplate.setUnmarshaller(jaxb2Marshaller);
-        webServiceTemplate.setMessageSender(messageSender);
-
         webServiceTemplate.setDefaultUri("http://kegoci10.corp.kegoc.kz:50000/XISOAPAdapter/MessageServlet?senderParty=&senderService=BIS_D&receiverParty=&receiverService=&interface=BIS_SalesPlan&interfaceNamespace=urn:kegoc.kz:BIS:LO_0002_3_SalesPlan");
-
+        webServiceTemplate.setInterceptors(new ClientInterceptor[] {new CustomEndpointInterceptor()});
 
         return webServiceTemplate;
     }
