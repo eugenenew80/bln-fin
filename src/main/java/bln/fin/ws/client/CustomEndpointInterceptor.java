@@ -3,10 +3,14 @@ package bln.fin.ws.client;
 import org.apache.http.Header;
 import org.springframework.stereotype.Component;
 import org.springframework.ws.client.WebServiceClientException;
+import org.springframework.ws.client.WebServiceIOException;
 import org.springframework.ws.client.support.interceptor.ClientInterceptor;
 import org.springframework.ws.context.MessageContext;
 import org.springframework.ws.transport.context.TransportContextHolder;
 import org.springframework.ws.transport.http.HttpComponentsConnection;
+
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 
 @Component
 public class CustomEndpointInterceptor implements ClientInterceptor {
@@ -21,6 +25,19 @@ public class CustomEndpointInterceptor implements ClientInterceptor {
         for (Header header : allHeaders) {
             System.out.println(header.getName() + "=" + header.getValue());
         }
+
+
+        /*
+        ByteArrayOutputStream os = new ByteArrayOutputStream();
+        try {
+            messageContext.getRequest().writeTo(os);
+        } catch (IOException e) {
+            throw new WebServiceIOException(e.getMessage(), e);
+        }
+        String request = new String(os.toByteArray());
+        System.out.println("Request Envelope: " + request);
+
+        */
 
         return true;
     }
