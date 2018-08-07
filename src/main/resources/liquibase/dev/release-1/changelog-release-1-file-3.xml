@@ -3366,4 +3366,142 @@
                                tableName="fin_sale_invoices"/>
     </changeSet>
 
+    <changeSet id="fin-rus-110" logicalFilePath="path-independent" author="ruslan">
+        <comment>add column to fin_total_delivery_headers</comment>
+        <addColumn schemaName="apps" tableName="fin_total_delivery_headers">
+        <column name="prev_delivery_header_id" type="number" remarks="Идентификтор предыдущей записи">
+            <constraints nullable="true"/>
+        </column>
+        </addColumn>
+    </changeSet>
+
+    <changeSet id="fin-rus-111" logicalFilePath="path-independent" author="ruslan">
+        <comment>rename column fin_total_delivery_headers.version_id to fin_total_delivery_headers.version</comment>
+        <renameColumn columnDataType="number"
+                      newColumnName="version"
+                      oldColumnName="version_id"
+                      remarks="номер версии"
+                      schemaName="apps"
+                      tableName="fin_total_delivery_headers"/>
+    </changeSet>
+
+    <changeSet id="fin-rus-112" logicalFilePath="path-independent" author="ruslan">
+        <comment>add column to fin_total_delivery_lines</comment>
+        <addColumn schemaName="apps" tableName="fin_total_delivery_lines">
+            <column name="prev_delivery_line_id" type="number" remarks="Идентификтор предыдущей записи">
+                <constraints nullable="true"/>
+            </column>
+
+            <column name="contract_type" type="varchar2(10)" remarks="Тип контракта: KEG, RFC" defaultValue="KEG">
+                <constraints nullable="true"/>
+            </column>
+        </addColumn>
+    </changeSet>
+
+    <changeSet id="fin-rus-113" logicalFilePath="path-independent" author="ruslan">
+        <comment>add column to fin_total_delivery_lines</comment>
+        <addColumn schemaName="apps" tableName="fin_total_delivery_lines">
+            <column name="is_act_created" type="number" remarks="Флаг акт создан">
+                <constraints nullable="true"/>
+            </column>
+
+            <column name="is_current_record" type="number" remarks="Флаг необходимая запись">
+                <constraints nullable="true"/>
+            </column>
+        </addColumn>
+    </changeSet>
+
+    <changeSet id="fin-rus-114" logicalFilePath="path-independent" author="ruslan">
+        <comment>add column to fin_total_delivery_headers</comment>
+        <addColumn schemaName="apps" tableName="fin_total_delivery_headers">
+            <column name="prev_delivery_header_id" type="number" remarks="Идентификтор предыдущей записи">
+                <constraints nullable="true"/>
+            </column>
+        </addColumn>
+    </changeSet>
+
+    <changeSet id="fin-rus-116" logicalFilePath="path-independent" author="ruslan">
+        <comment>add column to fin_payment_requests</comment>
+        <addColumn schemaName="apps" tableName="fin_payment_requests">
+            <column name="tax" type="number" remarks="Сумма НДС">
+                <constraints nullable="false"/>
+            </column>
+        </addColumn>
+    </changeSet>
+
+    <changeSet id="fin-rus-117" logicalFilePath="path-independent" author="ruslan">
+        <comment>add column to fin_debt_repayment_schedule_h</comment>
+        <addColumn schemaName="apps" tableName="fin_debt_repayment_schedule_h">
+            <column name="request_id" type="number" remarks="Ид запроса на основание которого было создано">
+                <constraints nullable="true"/>
+            </column>
+        </addColumn>
+    </changeSet>
+
+    <changeSet id="fin-rus-118" logicalFilePath="path-independent" author="ruslan">
+        <comment>add column to fin_assessed_penalty</comment>
+        <addColumn schemaName="apps" tableName="fin_assessed_penalty">
+            <column name="refinancing_rate_id" type="number" remarks="Ид Ставки рефинансирования">
+                <constraints nullable="true"/>
+            </column>
+        </addColumn>
+    </changeSet>
+
+    <changeSet id="fin-rus-119" logicalFilePath="path-independent" author="ruslan">
+        <comment>Creating foreign constraint: fin_assessed_penalty to fin_refinancing_rate</comment>
+        <addForeignKeyConstraint
+                baseTableSchemaName="apps"
+                baseTableName="fin_assessed_penalty"
+                baseColumnNames="refinancing_rate_id"
+                constraintName="fk_fin_assessed_penalty_3"
+                deferrable="true"
+                initiallyDeferred="true"
+                onDelete="RESTRICT"
+                onUpdate="RESTRICT"
+                referencedTableSchemaName="apps"
+                referencedTableName="fin_refinancing_rate"
+                referencedColumnNames="id"
+        />
+    </changeSet>
+
+    <changeSet id="fin-rus-120" logicalFilePath="path-independent" author="ruslan">
+        <comment>add column to fin_debt_repayment_schedule_h</comment>
+        <addColumn schemaName="apps" tableName="fin_debt_repayment_schedule_h">
+            <column name="is_active" type="number" remarks="Статус записи: Активно/Не активно">
+                <constraints nullable="true"/>
+            </column>
+        </addColumn>
+    </changeSet>
+
+    <changeSet id="fin-rus-121" logicalFilePath="path-independent" author="ruslan">
+        <comment>drop table: repayment_schedule_headers</comment>
+        <dropTable cascadeConstraints="true"
+                   schemaName="apps"
+                   tableName="repayment_schedule_headers"/>
+    </changeSet>
+
+    <changeSet id="fin-rus-122" logicalFilePath="path-independent" author="ruslan">
+        <comment>drop table: repayment_schedule_lines</comment>
+        <dropTable cascadeConstraints="true"
+                   schemaName="apps"
+                   tableName="repayment_schedule_lines"/>
+    </changeSet>
+
+    <changeSet id="fin-rus-123" logicalFilePath="path-independent" author="ruslan">
+        <comment>comment on table APPS.dict_tariffs</comment>
+        <sql dbms="postgres, oracle" endDelimiter=";" splitStatements="true" stripComments="true">
+            comment on column FIN_PAYMENT_REQUEST_LINES.amount
+            is 'Стоимость Уcлуги';
+        </sql>
+        <rollback/>
+    </changeSet>
+
+    <changeSet id="fin-rus-124" logicalFilePath="path-independent" author="ruslan">
+        <comment>change data type fin_debt_repayment_schedule_l.text</comment>
+        <modifyDataType columnName="text"
+                        newDataType="varchar2(300)"
+                        schemaName="apps"
+                        tableName="fin_debt_repayment_schedule_l"/>
+        <rollback/>
+    </changeSet>
 </databaseChangeLog>
