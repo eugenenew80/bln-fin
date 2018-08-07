@@ -25,7 +25,7 @@ public class SaleContractServiceImpl implements SaleContractService {
     @Override
     public void sendByBp(Long bp1Id, Long bp2Id) {
         List<ContractKeg> contracts = contractRepo.findAllByBp1IdAndBp2Id(bp1Id, bp2Id);
-        List<Contract.Item> items = createItems(contracts);
+        List<Contract.Item> items = mapToContractItems(contracts);
         if (items.isEmpty())
             return;
 
@@ -38,7 +38,7 @@ public class SaleContractServiceImpl implements SaleContractService {
     @Override
     public void sendOne(Long contractId) {
         List<ContractKeg> contracts = Arrays.asList(contractRepo.findOne(contractId));
-        List<Contract.Item> items = createItems(contracts);
+        List<Contract.Item> items = mapToContractItems(contracts);
         if (items.isEmpty())
             return;
 
@@ -56,7 +56,6 @@ public class SaleContractServiceImpl implements SaleContractService {
         catch (SoapFaultClientException e) {
             System.out.println("Fault Code: " + e.getFaultCode());
             System.out.println("Fault Reason: " + e.getFaultStringOrReason());
-            System.out.println("Message: " + e.getLocalizedMessage());
         }
 
         catch (Exception e) {
@@ -64,23 +63,21 @@ public class SaleContractServiceImpl implements SaleContractService {
         }
     }
 
-    private List<Contract.Item> createItems(List<ContractKeg> contracts) {
+    private List<Contract.Item> mapToContractItems(List<ContractKeg> contracts) {
         return contracts
             .stream()
             .filter(t -> t.getTransferredToErpDate()==null)
-            .map(t -> createItem(t))
+            .map(t -> mapToContractItem(t))
             .filter(t -> t != null)
             .collect(toList());
     }
 
-    private Contract.Item createItem(ContractKeg contract) {
+    private Contract.Item mapToContractItem(ContractKeg contract) {
         Contract.Item item = new Contract.Item();
-
         item.setId(contract.getId());
         item.setExtContractNum(contract.getContractNum());
         item.setContractDate(toXMLGregorianCalendar(contract.getDocDate()));
         item.setCompanyCode(contract.getBp1().getErpCompanyCode());
-
         return item;
     }
 
