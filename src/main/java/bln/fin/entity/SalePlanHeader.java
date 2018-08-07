@@ -37,6 +37,15 @@ public class SalePlanHeader {
     @Column(name = "transferred_to_erp_date")
     private LocalDateTime transferredToErpDate;
 
+    @Column(name = "erp_id")
+    private String erpId;
+
+    @Column(name = "transferred_status")
+    private String transferredStatus;
+
+    @Column(name = "transferred_text")
+    private String transferredText;
+
     @OneToMany(mappedBy = "header", fetch = FetchType.LAZY)
     private List<SalePlanLine> lines;
 }

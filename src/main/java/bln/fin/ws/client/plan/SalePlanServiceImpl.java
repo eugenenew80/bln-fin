@@ -12,7 +12,6 @@ import org.springframework.ws.soap.client.SoapFaultClientException;
 import sap.plan.ObjectFactory;
 import sap.plan.Response;
 import sap.plan.SalesPlan;
-
 import javax.xml.bind.JAXBElement;
 import java.math.BigInteger;
 import java.time.LocalDateTime;
@@ -52,7 +51,7 @@ public class SalePlanServiceImpl implements SalePlanService {
 
         try {
             JAXBElement<Response> response = (JAXBElement<Response>) salePlanServiceTemplate.marshalSendAndReceive(salesPlanReq);
-            updateHeaders(headers);
+            updateHeaders(headers, response.getValue());
         }
 
         catch (SoapFaultClientException e) {
@@ -98,9 +97,20 @@ public class SalePlanServiceImpl implements SalePlanService {
         return item;
     }
 
-    private void updateHeaders(List<SalePlanHeader> headers) {
-        for (SalePlanHeader header: headers)
-            header.setTransferredToErpDate(LocalDateTime.now());
+    private void updateHeaders(List<SalePlanHeader> headers, Response response) {
+        for (SalePlanHeader header: headers) {
+            Response.Item status = getStatus(header, response);
+            if (status.getMsgType().equals("S")) {
+                header.setTransferredToErpDate(LocalDateTime.now());
+                header.setErpId(status.getIDSAP().trim());
+            }
+            header.setTransferredStatus(status.getMsgType());
+            header.setTransferredText(status.getMsg());
+        }
         salePlanHeaderRepo.save(headers);
+    }
+
+    private Response.Item getStatus(SalePlanHeader header, Response response) {
+        return response.getItem().get(0);
     }
 }
