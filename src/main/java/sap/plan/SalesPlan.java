@@ -94,7 +94,7 @@ import javax.xml.datatype.XMLGregorianCalendar;
 @XmlType(name = "SalesPlan", namespace = "urn:kegoc.kz:BIS:LO_0002_3_SalesPlan", propOrder = {
     "item"
 })
-@XmlRootElement
+@XmlRootElement(name = "SalesPlan", namespace = "urn:kegoc.kz:BIS:LO_0002_3_SalesPlan")
 public class SalesPlan {
 
     protected List<SalesPlan.Item> item;
