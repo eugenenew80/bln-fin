@@ -115,7 +115,7 @@
                             <generatePackage>sap.saleInvoice</generatePackage>
                             <generateDirectory>${project.basedir}/src/main/java</generateDirectory>
                             <schemaDirectory>${project.basedir}/src/main/resources/wsdl</schemaDirectory>
-                            <schemaIncludes><include>SaleInvoiceService.wsdl</include></schemaIncludes>
+                            <schemaIncludes><include>BIS_LO_EstimatedChargeInvoices.wsdl</include></schemaIncludes>
                         </configuration>
                     </execution>
 

@@ -6,7 +6,7 @@
 //
 
 
-package sap.contract.mm;
+package sap.saleInvoice;
 
 import java.util.ArrayList;
 import java.util.List;
