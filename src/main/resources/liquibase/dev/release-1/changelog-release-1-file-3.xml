@@ -2069,7 +2069,6 @@
                     startValue="1"/>
         </changeSet>
 
-
         <changeSet id="fin-rus-67" logicalFilePath="path-independent" author="ruslan" context="dev">
             <comment>Creating table: fin_pro_cldr_headers_tl</comment>
             <createTable tableName="fin_pro_cldr_headers_tl" schemaName="apps" remarks="Перевод производственный календарь: заголовок">
@@ -3333,12 +3332,12 @@
         />
     </changeSet>
 
-    <changeSet id="fin-rus-106" logicalFilePath="path-independent" author="ruslan">
+   <!-- <changeSet id="fin-rus-106" logicalFilePath="path-independent" author="ruslan">
         <comment>drop not null constraint fin_sale_invoices.doc_num</comment>
         <sql dbms="postgres, oracle" endDelimiter=";" splitStatements="true" stripComments="true">
         ALTER TABLE apps.fin_sale_invoices MODIFY doc_num not NULL;
         </sql>
-    </changeSet>
+    </changeSet>-->
 
     <changeSet id="fin-rus-107" logicalFilePath="path-independent" author="ruslan">
         <comment>rename column fin_sale_invoices.accounting_date_date to fin_sale_invoices.accounting_date</comment>
@@ -3410,7 +3409,7 @@
             </column>
         </addColumn>
     </changeSet>
-
+<!--
     <changeSet id="fin-rus-114" logicalFilePath="path-independent" author="ruslan">
         <comment>add column to fin_total_delivery_headers</comment>
         <addColumn schemaName="apps" tableName="fin_total_delivery_headers">
@@ -3419,7 +3418,7 @@
             </column>
         </addColumn>
     </changeSet>
-
+-->
     <changeSet id="fin-rus-116" logicalFilePath="path-independent" author="ruslan">
         <comment>add column to fin_payment_requests</comment>
         <addColumn schemaName="apps" tableName="fin_payment_requests">
@@ -3490,7 +3489,7 @@
     <changeSet id="fin-rus-123" logicalFilePath="path-independent" author="ruslan">
         <comment>comment on table APPS.dict_tariffs</comment>
         <sql dbms="postgres, oracle" endDelimiter=";" splitStatements="true" stripComments="true">
-            comment on column FIN_PAYMENT_REQUEST_LINES.amount
+            comment on column APPS.FIN_PAYMENT_REQUEST_LINES.amount
             is 'Стоимость Уcлуги';
         </sql>
         <rollback/>
@@ -3504,4 +3503,351 @@
                         tableName="fin_debt_repayment_schedule_l"/>
         <rollback/>
     </changeSet>
+
+    <changeSet id="fin-rus-125" logicalFilePath="path-independent" author="ruslan">
+        <comment>add column to fin_payment_request_lines</comment>
+        <addColumn schemaName="apps" tableName="fin_payment_request_lines">
+            <column name="due_date" type="date" remarks="Дата оплаты">
+                <constraints nullable="true"/>
+            </column>
+        </addColumn>
+    </changeSet>
+
+
+    <changeSet id="fin-rus-126" logicalFilePath="path-independent" author="ruslan">
+        <comment>Creating table: fin_calendar_month</comment>
+        <createTable tableName="fin_calendar_month" schemaName="apps" remarks="Справочник месецов">
+            <column name="code" type="varchar(20)" remarks="Код месеца">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="create_date" type="TIMESTAMP" remarks="Дата создания">
+                <constraints nullable="true"/>
+            </column>
+
+            <column name="last_update_date" type="TIMESTAMP" remarks="Дата изменения">
+                <constraints nullable="true"/>
+            </column>
+
+            <column name="create_by" type="number" remarks="Автор">
+                <constraints nullable="true"/>
+            </column>
+
+            <column name="last_update_by" type="number" remarks="Автор изменения">
+                <constraints nullable="true"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="fin-rus-127" logicalFilePath="path-independent" author="ruslan">
+        <comment>Creating primary key for table: fin_calendar_month</comment>
+        <addPrimaryKey
+                columnNames="code"
+                constraintName="pk_fin_calendar_month"
+                schemaName="apps"
+                tableName="fin_calendar_month"/>
+    </changeSet>
+
+    <changeSet id="fin-rus-128" logicalFilePath="path-independent" author="ruslan">
+        <comment>Creating table: fin_calendar_month_tl</comment>
+        <createTable tableName="fin_calendar_month_tl" schemaName="apps" remarks="Перевод Справочник месецов">
+            <column name="code" type="varchar2(20)" remarks="Код месеца">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="lang" type="varchar(10)" remarks="язык">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="name" type="varchar(100)" remarks="Наименование месеца">
+                <constraints nullable="true"/>
+            </column>
+
+            <column name="create_date" type="TIMESTAMP" remarks="Дата создания">
+                <constraints nullable="true"/>
+            </column>
+
+            <column name="last_update_date" type="TIMESTAMP" remarks="Дата изменения">
+                <constraints nullable="true"/>
+            </column>
+
+            <column name="create_by" type="number" remarks="Автор">
+                <constraints nullable="true"/>
+            </column>
+
+            <column name="last_update_by" type="number" remarks="Автор изменения">
+                <constraints nullable="true"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="fin-rus-129" logicalFilePath="path-independent" author="ruslan">
+        <comment>Creating primary key for table: fin_calendar_month_tl</comment>
+        <addPrimaryKey
+                columnNames="code,lang"
+                constraintName="pk_fin_calendar_month_tl"
+                schemaName="apps"
+                tableName="fin_calendar_month_tl"/>
+    </changeSet>
+
+    <changeSet id="fin-rus-130" logicalFilePath="path-independent" author="ruslan">
+        <comment>Creating foreign constraint: fin_calendar_month_tl to fin_calendar_month</comment>
+        <addForeignKeyConstraint
+                baseTableSchemaName="apps"
+                baseTableName="fin_calendar_month_tl"
+                baseColumnNames="code"
+                constraintName="fk_fin_calendar_month_tl_1"
+                deferrable="true"
+                initiallyDeferred="true"
+                onDelete="CASCADE"
+                onUpdate="RESTRICT"
+                referencedTableSchemaName="apps"
+                referencedTableName="fin_calendar_month"
+                referencedColumnNames="code"
+        />
+    </changeSet>
+
+
+    <changeSet id="fin-rus-131" logicalFilePath="path-independent" author="ruslan" context="dev">
+        <comment>insert into fin_calendar_month</comment>
+        <insert schemaName="apps" tableName="fin_calendar_month">
+            <column name="code" type="varchar2" value="M01"/>
+        </insert>
+
+        <insert schemaName="apps" tableName="fin_calendar_month">
+            <column name="code" type="varchar2" value="M02"/>
+        </insert>
+
+        <insert schemaName="apps" tableName="fin_calendar_month">
+            <column name="code" type="varchar2" value="M03"/>
+        </insert>
+
+        <insert schemaName="apps" tableName="fin_calendar_month">
+            <column name="code" type="varchar2" value="M04"/>
+        </insert>
+
+        <insert schemaName="apps" tableName="fin_calendar_month">
+            <column name="code" type="varchar2" value="M05"/>
+        </insert>
+
+        <insert schemaName="apps" tableName="fin_calendar_month">
+            <column name="code" type="varchar2" value="M06"/>
+        </insert>
+
+        <insert schemaName="apps" tableName="fin_calendar_month">
+            <column name="code" type="varchar2" value="M07"/>
+        </insert>
+
+        <insert schemaName="apps" tableName="fin_calendar_month">
+            <column name="code" type="varchar2" value="M08"/>
+        </insert>
+
+        <insert schemaName="apps" tableName="fin_calendar_month">
+            <column name="code" type="varchar2" value="M09"/>
+        </insert>
+
+        <insert schemaName="apps" tableName="fin_calendar_month">
+            <column name="code" type="varchar2" value="M10"/>
+        </insert>
+
+        <insert schemaName="apps" tableName="fin_calendar_month">
+            <column name="code" type="varchar2" value="M11"/>
+        </insert>
+
+        <insert schemaName="apps" tableName="fin_calendar_month">
+            <column name="code" type="varchar2" value="M12"/>
+        </insert>
+        <rollback/>
+    </changeSet>
+
+    <changeSet id="fin-rus-133" logicalFilePath="path-independent" author="ruslan" context="dev">
+        <comment>insert into fin_doc_types_tl</comment>
+        <insert schemaName="apps" tableName="fin_calendar_month_tl">
+            <column name="code" type="varchar2" value="M01"/>
+            <column name="lang" type="varchar2" value="RU"/>
+            <column name="name" type="varchar2" value="Январь"/>
+        </insert>
+
+        <insert schemaName="apps" tableName="fin_calendar_month_tl">
+            <column name="code" type="varchar2" value="M01"/>
+            <column name="lang" type="varchar2" value="KZ"/>
+            <column name="name" type="varchar2" value="Қаңтар"/>
+        </insert>
+
+        <insert schemaName="apps" tableName="fin_calendar_month_tl">
+            <column name="code" type="varchar2" value="M02"/>
+            <column name="lang" type="varchar2" value="RU"/>
+            <column name="name" type="varchar2" value="февраль"/>
+        </insert>
+
+        <insert schemaName="apps" tableName="fin_calendar_month_tl">
+            <column name="code" type="varchar2" value="M02"/>
+            <column name="lang" type="varchar2" value="KZ"/>
+            <column name="name" type="varchar2" value="Ақпан"/>
+        </insert>
+
+        <insert schemaName="apps" tableName="fin_calendar_month_tl">
+            <column name="code" type="varchar2" value="M03"/>
+            <column name="lang" type="varchar2" value="RU"/>
+            <column name="name" type="varchar2" value="Март"/>
+        </insert>
+
+        <insert schemaName="apps" tableName="fin_calendar_month_tl">
+            <column name="code" type="varchar2" value="M03"/>
+            <column name="lang" type="varchar2" value="KZ"/>
+            <column name="name" type="varchar2" value="Наурыз"/>
+        </insert>
+
+        <insert schemaName="apps" tableName="fin_calendar_month_tl">
+            <column name="code" type="varchar2" value="M04"/>
+            <column name="lang" type="varchar2" value="RU"/>
+            <column name="name" type="varchar2" value="Апрель"/>
+        </insert>
+
+        <insert schemaName="apps" tableName="fin_calendar_month_tl">
+            <column name="code" type="varchar2" value="M04"/>
+            <column name="lang" type="varchar2" value="KZ"/>
+            <column name="name" type="varchar2" value="Сәуiр"/>
+        </insert>
+
+        <insert schemaName="apps" tableName="fin_calendar_month_tl">
+            <column name="code" type="varchar2" value="M05"/>
+            <column name="lang" type="varchar2" value="RU"/>
+            <column name="name" type="varchar2" value="Май"/>
+        </insert>
+
+        <insert schemaName="apps" tableName="fin_calendar_month_tl">
+            <column name="code" type="varchar2" value="M05"/>
+            <column name="lang" type="varchar2" value="KZ"/>
+            <column name="name" type="varchar2" value="Мамыр"/>
+        </insert>
+
+        <insert schemaName="apps" tableName="fin_calendar_month_tl">
+            <column name="code" type="varchar2" value="M06"/>
+            <column name="lang" type="varchar2" value="RU"/>
+            <column name="name" type="varchar2" value="Июнь"/>
+        </insert>
+
+        <insert schemaName="apps" tableName="fin_calendar_month_tl">
+            <column name="code" type="varchar2" value="M06"/>
+            <column name="lang" type="varchar2" value="KZ"/>
+            <column name="name" type="varchar2" value="Маусым"/>
+        </insert>
+
+        <insert schemaName="apps" tableName="fin_calendar_month_tl">
+            <column name="code" type="varchar2" value="M07"/>
+            <column name="lang" type="varchar2" value="RU"/>
+            <column name="name" type="varchar2" value="Июль"/>
+        </insert>
+
+        <insert schemaName="apps" tableName="fin_calendar_month_tl">
+            <column name="code" type="varchar2" value="M07"/>
+            <column name="lang" type="varchar2" value="KZ"/>
+            <column name="name" type="varchar2" value="Шiлде"/>
+        </insert>
+        <rollback/>
+
+        <insert schemaName="apps" tableName="fin_calendar_month_tl">
+            <column name="code" type="varchar2" value="M08"/>
+            <column name="lang" type="varchar2" value="RU"/>
+            <column name="name" type="varchar2" value="Август"/>
+        </insert>
+
+        <insert schemaName="apps" tableName="fin_calendar_month_tl">
+            <column name="code" type="varchar2" value="M08"/>
+            <column name="lang" type="varchar2" value="KZ"/>
+            <column name="name" type="varchar2" value="Тамыз"/>
+        </insert>
+
+        <insert schemaName="apps" tableName="fin_calendar_month_tl">
+            <column name="code" type="varchar2" value="M09"/>
+            <column name="lang" type="varchar2" value="RU"/>
+            <column name="name" type="varchar2" value="Сентябрь"/>
+        </insert>
+
+        <insert schemaName="apps" tableName="fin_calendar_month_tl">
+            <column name="code" type="varchar2" value="M09"/>
+            <column name="lang" type="varchar2" value="KZ"/>
+            <column name="name" type="varchar2" value="Қыркүйек"/>
+        </insert>
+
+        <insert schemaName="apps" tableName="fin_calendar_month_tl">
+            <column name="code" type="varchar2" value="M10"/>
+            <column name="lang" type="varchar2" value="RU"/>
+            <column name="name" type="varchar2" value="Октябрь"/>
+        </insert>
+
+        <insert schemaName="apps" tableName="fin_calendar_month_tl">
+            <column name="code" type="varchar2" value="M10"/>
+            <column name="lang" type="varchar2" value="KZ"/>
+            <column name="name" type="varchar2" value="Қазан"/>
+        </insert>
+
+        <insert schemaName="apps" tableName="fin_calendar_month_tl">
+            <column name="code" type="varchar2" value="M11"/>
+            <column name="lang" type="varchar2" value="RU"/>
+            <column name="name" type="varchar2" value="Ноябрь"/>
+        </insert>
+
+        <insert schemaName="apps" tableName="fin_calendar_month_tl">
+            <column name="code" type="varchar2" value="M11"/>
+            <column name="lang" type="varchar2" value="KZ"/>
+            <column name="name" type="varchar2" value="Қараша"/>
+        </insert>
+
+        <insert schemaName="apps" tableName="fin_calendar_month_tl">
+            <column name="code" type="varchar2" value="M12"/>
+            <column name="lang" type="varchar2" value="RU"/>
+            <column name="name" type="varchar2" value="Декабрь"/>
+        </insert>
+
+        <insert schemaName="apps" tableName="fin_calendar_month_tl">
+            <column name="code" type="varchar2" value="M12"/>
+            <column name="lang" type="varchar2" value="KZ"/>
+            <column name="name" type="varchar2" value="Желтоқсан"/>
+        </insert>
+        <rollback/>
+    </changeSet>
+
+    <changeSet id="fin-rus-134" logicalFilePath="path-independent" author="ruslan" context="dev">
+    <comment>drop column in fin_debt_repayment_schedule_h</comment>
+    <dropColumn columnName="receipt_application_id"
+                schemaName="apps"
+                tableName="fin_debt_repayment_schedule_h"/>
+    </changeSet>
+
+    <changeSet id="fin-rus-135" logicalFilePath="path-independent" author="ruslan">
+        <comment>add column to fin_debt_repayment_schedule_h</comment>
+        <addColumn schemaName="apps" tableName="fin_debt_repayment_schedule_h">
+            <column name="sale_invoice_id" type="number" remarks="Идентификтор счета фактуры">
+                <constraints nullable="false"/>
+            </column>
+        </addColumn>
+    </changeSet>
+
+    <changeSet id="fin-rus-136" logicalFilePath="path-independent" author="ruslan">
+        <comment>Creating foreign constraint: fin_debt_repayment_schedule_h to fin_sale_invoices</comment>
+        <addForeignKeyConstraint
+                baseTableSchemaName="apps"
+                baseTableName="fin_debt_repayment_schedule_h"
+                baseColumnNames="sale_invoice_id"
+                constraintName="fk_fin_debt_repayment_schedule_h_3"
+                deferrable="true"
+                initiallyDeferred="true"
+                onDelete="RESTRICT"
+                onUpdate="RESTRICT"
+                referencedTableSchemaName="apps"
+                referencedTableName="fin_sale_invoices"
+                referencedColumnNames="id"
+        />
+    </changeSet>
+
+    <changeSet id="fin-rus-137" logicalFilePath="path-independent" author="ruslan">
+        <comment>add not null constraint fin_debt_repayment_schedule_h</comment>
+        <addNotNullConstraint columnDataType="number"
+                              columnName="contract_id"
+                              schemaName="apps"
+                              tableName="fin_debt_repayment_schedule_h"/>
+    </changeSet>
+
 </databaseChangeLog>
