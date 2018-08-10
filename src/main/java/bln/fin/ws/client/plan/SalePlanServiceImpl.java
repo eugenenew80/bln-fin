@@ -2,7 +2,10 @@ package bln.fin.ws.client.plan;
 
 import bln.fin.entity.SalePlanHeader;
 import bln.fin.entity.SalePlanLine;
+import bln.fin.entity.SoapSession;
+import bln.fin.entity.enums.DirectionEnum;
 import bln.fin.repo.SalePlanHeaderRepo;
+import bln.fin.ws.SessionService;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -25,6 +28,7 @@ import static java.util.stream.Collectors.toList;
 public class SalePlanServiceImpl implements SalePlanService {
     private final SalePlanHeaderRepo salePlanHeaderRepo;
     private final WebServiceTemplate salePlanServiceTemplate;
+    private final SessionService sessionService;
     private static final Logger logger = LoggerFactory.getLogger(SalePlanServiceImpl.class);
 
     @Override
@@ -44,7 +48,8 @@ public class SalePlanServiceImpl implements SalePlanService {
         if (items.isEmpty())
             return;
 
-        logger.info("Batch started");
+        SoapSession session = sessionService.createSession("SalePlan", DirectionEnum.EXPORT);
+        logger.info("Request started");
 
         SalesPlan salesPlanReq = new ObjectFactory().createSalesPlan();
         salesPlanReq.getItem().addAll(items);
@@ -52,20 +57,20 @@ public class SalePlanServiceImpl implements SalePlanService {
         try {
             JAXBElement<Response> response = (JAXBElement<Response>) salePlanServiceTemplate.marshalSendAndReceive(salesPlanReq);
             updateHeaders(headers, response.getValue());
+            sessionService.successSession(session, (long) items.size());
         }
 
         catch (SoapFaultClientException e) {
             logger.error("Fault Code: " + e.getFaultCode());
             logger.error("Fault Reason: " + e.getFaultStringOrReason());
+            sessionService.errorSession(session, e);
         }
 
         catch (Exception e) {
             e.printStackTrace();
+            sessionService.errorSession(session, e);
         }
-
-        finally {
-            logger.info("Batch completed");
-        }
+        logger.info("Request completed");
     }
 
     private List<SalesPlan.Item> mapToSalePlanItems(List<SalePlanHeader> headers) {
@@ -98,6 +103,10 @@ public class SalePlanServiceImpl implements SalePlanService {
     }
 
     private void updateHeaders(List<SalePlanHeader> headers, Response response) {
+
+
+
+
         for (SalePlanHeader header: headers) {
             Response.Item status = getStatus(header, response);
             if (status.getMsgType().equals("S")) {

@@ -11,7 +11,6 @@ import bln.fin.ws.server.invoice.InvoiceServiceImpl;
 import bln.fin.ws.server.req.ReqBusinessService;
 import bln.fin.ws.server.req.ReqServiceImpl;
 import bln.fin.ws.server.saleInvoice.SaleInvoiceServiceImpl;
-import bln.fin.ws.server.saleInvoiceRev.SaleInvoiceRevServiceImpl;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.datatype.jdk8.Jdk8Module;
@@ -67,7 +66,7 @@ public class AppConfig  {
         WebServiceTemplate webServiceTemplate = new WebServiceTemplate();
         webServiceTemplate.setMarshaller(jaxb2Marshaller);
         webServiceTemplate.setUnmarshaller(jaxb2Marshaller);
-        webServiceTemplate.setDefaultUri("http://kegoci10.corp.kegoc.kz:50000/XISOAPAdapter/MessageServlet?senderParty=&senderService=BIS_D&receiverParty=&receiverService=&interface=SaleInvoice&interfaceNamespace=urn:kegoc.kz:BIS:LO_0002_3_SalesPlan");
+        webServiceTemplate.setDefaultUri("http://kegoci10.corp.kegoc.kz:50000/XISOAPAdapter/MessageServlet?senderParty=&senderService=BIS_D&receiverParty=&receiverService=&interface=BIS_EstimatedChargeInvoices&interfaceNamespace=urn:kegoc.kz:BIS:LO_0002_1_EstimatedChargeInvoice");
 
         return webServiceTemplate;
     }
@@ -142,13 +141,6 @@ public class AppConfig  {
     public Endpoint endpoint5() {
         EndpointImpl endpoint = new EndpointImpl(springBus(), new SaleInvoiceServiceImpl());
         endpoint.publish("/SaleInvoiceService");
-        return endpoint;
-    }
-
-    @Bean
-    public Endpoint endpoint6() {
-        EndpointImpl endpoint = new EndpointImpl(springBus(), new SaleInvoiceRevServiceImpl());
-        endpoint.publish("/SaleInvoiceRevService");
         return endpoint;
     }
 

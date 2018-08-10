@@ -40,12 +40,12 @@ public class InvoiceClientServiceImpl implements InvoiceClientService {
     }
 
     private void request(List<SaleInvoice> invoices) {
-        List<sap.saleInvoice.SaleInvoice> items = createItems(invoices);
+        List<sap.saleInvoice.EstimatedChargeInvoices.Item> items = createItems(invoices);
         if (items.isEmpty())
             return;
 
-        sap.saleInvoice.CreateInvoices saleInvoiceReq = new sap.saleInvoice.ObjectFactory().createCreateInvoices();
-        saleInvoiceReq.getInvoice().addAll(items);
+        sap.saleInvoice.EstimatedChargeInvoices saleInvoiceReq = new sap.saleInvoice.ObjectFactory().createEstimatedChargeInvoices();
+        saleInvoiceReq.getItem().addAll(items);
 
         try {
             Object response = saleInvoiceServiceTemplate.marshalSendAndReceive(saleInvoiceReq);
@@ -62,17 +62,17 @@ public class InvoiceClientServiceImpl implements InvoiceClientService {
         }
     }
 
-    private List<sap.saleInvoice.SaleInvoice> createItems(List<SaleInvoice> invoices) {
+    private List<sap.saleInvoice.EstimatedChargeInvoices.Item> createItems(List<SaleInvoice> invoices) {
         return invoices
             .stream()
             .filter(t -> t.getTransferredToErpDate()==null)
-            .map(t -> createItem(t))
+            .map(t -> mapToInvoiceDto(t))
             .filter(t -> t != null)
             .collect(toList());
     }
 
-    private sap.saleInvoice.SaleInvoice createItem(SaleInvoice saleInvoice) {
-        sap.saleInvoice.SaleInvoice saleInvoiceDto = new sap.saleInvoice.SaleInvoice();
+    private sap.saleInvoice.EstimatedChargeInvoices.Item mapToInvoiceDto(SaleInvoice saleInvoice) {
+        sap.saleInvoice.EstimatedChargeInvoices.Item saleInvoiceDto = new sap.saleInvoice.EstimatedChargeInvoices.Item();
 
         if (saleInvoice.getDocTypeCode() == DocTypeEnum.ESTIMATED)
             saleInvoiceDto.setDocType("ZFO");
@@ -86,7 +86,7 @@ public class InvoiceClientServiceImpl implements InvoiceClientService {
         }
 
         if (saleInvoice.getSrcSaleInvoice()!=null)
-            saleInvoiceDto.setSapDocNum(saleInvoice.getSrcSaleInvoice().getErpDocNum());
+            saleInvoiceDto.setSrcDocNum(saleInvoice.getSrcSaleInvoice().getErpDocNum());
 
         saleInvoiceDto.setId(saleInvoice.getId());
         saleInvoiceDto.setTurnoverDate(toXMLGregorianCalendar(saleInvoice.getTurnoverDate()));
@@ -109,13 +109,13 @@ public class InvoiceClientServiceImpl implements InvoiceClientService {
         saleInvoiceDto.setCurrencyCode(saleInvoice.getCurrencyCode());
 
         for (SaleInvoiceLine line : saleInvoice.getLines())
-            saleInvoiceDto.getLine().add(createLine(line));
+            saleInvoiceDto.getRow().add(mapToInvoiceLineDto(line));
 
         return saleInvoiceDto;
     }
 
-    private sap.saleInvoice.Line createLine(SaleInvoiceLine line) {
-        sap.saleInvoice.Line lineDto = new sap.saleInvoice.Line();
+    private sap.saleInvoice.EstimatedChargeInvoices.Item.Row mapToInvoiceLineDto(SaleInvoiceLine line) {
+        sap.saleInvoice.EstimatedChargeInvoices.Item.Row lineDto = new sap.saleInvoice.EstimatedChargeInvoices.Item.Row();
 
         if (line.getItem()!=null)
             lineDto.setItemNum(line.getItem().getErpCode());
@@ -123,7 +123,7 @@ public class InvoiceClientServiceImpl implements InvoiceClientService {
         if (line.getUnit()!=null)
             lineDto.setUnit(line.getUnit().getCode());
 
-        lineDto.setItemName(line.getDescription());
+        lineDto.setPosName(line.getDescription());
         lineDto.setQuantity(line.getQuantity());
         lineDto.setPrice(lineDto.getPrice());
         lineDto.setAmount(lineDto.getAmount());

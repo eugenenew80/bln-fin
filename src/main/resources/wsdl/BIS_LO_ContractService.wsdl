@@ -10,7 +10,7 @@
             <xsd:element name="Contract_Resp" type="p1:Response"/>
             <xsd:complexType name="Contract">
                 <xsd:annotation>
-                    <xsd:appinfo source="http://sap.com/xi/VersionID">87e450d78e4211e8b8d70000005576b6</xsd:appinfo>
+                    <xsd:appinfo source="http://sap.com/xi/VersionID">6064e6af9ad411e8c25e0000005576b6</xsd:appinfo>
                 </xsd:annotation>
                 <xsd:sequence>
                     <xsd:element name="item" minOccurs="0" maxOccurs="unbounded">
@@ -53,6 +53,12 @@
                                     <xsd:annotation>
                                         <xsd:appinfo source="http://sap.com/xi/TextID">aa047bcf8e4111e8b74200059a3c7800</xsd:appinfo>
                                         <xsd:documentation>Канал сбыта</xsd:documentation>
+                                    </xsd:annotation>
+                                </xsd:element>
+                                <xsd:element name="salesDepartCode" type="xsd:string">
+                                    <xsd:annotation>
+                                        <xsd:appinfo source="http://sap.com/xi/TextID">2a034a119ad411e894bd00ff7039910a</xsd:appinfo>
+                                        <xsd:documentation>код отдела сбыта</xsd:documentation>
                                     </xsd:annotation>
                                 </xsd:element>
                                 <xsd:element name="companyCode" type="xsd:string">

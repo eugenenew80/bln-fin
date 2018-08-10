@@ -10,6 +10,8 @@ import java.io.IOException;
 
 @Component
 public class CustomEndpointInterceptor implements ClientInterceptor {
+    private String username = "PIAPPLBIS_D";
+    private String password = "Qwer!11111";
 
     @Override
     public boolean handleRequest(MessageContext messageContext) throws WebServiceClientException {
