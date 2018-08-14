@@ -3850,4 +3850,12 @@
                               tableName="fin_debt_repayment_schedule_h"/>
     </changeSet>
 
+    <changeSet id="fin-rus-138" logicalFilePath="path-independent" author="ruslan">
+        <comment>add column to fin_debt_repayment_schedule_h</comment>
+        <addColumn schemaName="apps" tableName="fin_debt_repayment_schedule_h">
+            <column name="sale_invoice_id" type="number" remarks="Идентификтор счета фактуры">
+                <constraints nullable="false"/>
+            </column>
+        </addColumn>
+    </changeSet>
 </databaseChangeLog>
