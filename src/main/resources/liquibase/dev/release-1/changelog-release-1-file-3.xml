@@ -3849,7 +3849,7 @@
                               schemaName="apps"
                               tableName="fin_debt_repayment_schedule_h"/>
     </changeSet>
-
+<!--
     <changeSet id="fin-rus-138" logicalFilePath="path-independent" author="ruslan">
         <comment>add column to fin_debt_repayment_schedule_h</comment>
         <addColumn schemaName="apps" tableName="fin_debt_repayment_schedule_h">
@@ -3858,4 +3858,102 @@
             </column>
         </addColumn>
     </changeSet>
+-->
+    <changeSet id="fin-rus-139" logicalFilePath="path-independent" author="ruslan">
+        <comment>add column to fin_payment_requests</comment>
+        <dropColumn columnName="due_date"
+                    schemaName="apps"
+                    tableName="fin_payment_requests"/>
+    </changeSet>
+
+
+    <changeSet id="fin-rus-140" logicalFilePath="path-independent" author="ruslan">
+        <comment>add column to fin_sale_invoices</comment>
+        <addColumn schemaName="apps" tableName="fin_sale_invoices">
+            <column name="total_delivery_line_id" type="number" remarks="идентифактор из таблицы объёмов оказанных услуг - строка">
+                <constraints nullable="true"/>
+            </column>
+        </addColumn>
+    </changeSet>
+
+    <changeSet id="fin-rus-141" logicalFilePath="path-independent" author="ruslan" context="dev">
+        <comment>Creating table: fin_expected_payment</comment>
+        <createTable tableName="fin_expected_payment" schemaName="apps" remarks="Ожидаемая оплата для условия платежей">
+            <column name="id" type="number" remarks="Идентификатор">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="contract_id" type="number" remarks="Идентификатор договора">
+                <constraints nullable="true"/>
+            </column>
+
+            <column name="payment_type" type="date" remarks="Тип">
+                <constraints nullable="true"/>
+            </column>
+
+            <column name="amount" type="number" remarks="сумма">
+                <constraints nullable="true"/>
+            </column>
+
+            <column name="payment_day" type="date" remarks="уплотить до">
+                <constraints nullable="true"/>
+            </column>
+
+            <column name="create_by" type="number" remarks="Автор">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="text" type="varchar2(300)" remarks="Комментарий">
+                <constraints nullable="true"/>
+            </column>
+
+            <column name="create_date" type="TIMESTAMP" remarks="Дата создания">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="last_update_by" type="number" remarks="Автор обновления">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="last_update_date" type="TIMESTAMP" remarks="Дата обновления">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="fin-rus-142" logicalFilePath="path-independent" author="ruslan" context="dev">
+        <comment>Creating primary key for table: fin_expected_payment</comment>
+        <addPrimaryKey
+                columnNames="id"
+                constraintName="pk_fin_expected_payment"
+                schemaName="apps"
+                tableName="fin_expected_payment"/>
+    </changeSet>
+
+    <changeSet id="fin-rus-143" logicalFilePath="path-independent" author="ruslan" context="dev">
+        <comment>Creating sequence for table: fin_expected_payment</comment>
+        <createSequence
+                incrementBy="1"
+                schemaName="apps"
+                sequenceName="fin_expected_payment_s"
+                startValue="1"/>
+    </changeSet>
+
+    <changeSet id="fin-rus-144" logicalFilePath="path-independent" author="ruslan">
+        <comment>Creating foreign constraint: fin_expected_payment to cm_doc_keg_cte</comment>
+        <addForeignKeyConstraint
+                baseTableSchemaName="apps"
+                baseTableName="fin_expected_payment"
+                baseColumnNames="contract_id"
+                constraintName="fk_fin_expected_payment_1"
+                deferrable="true"
+                initiallyDeferred="true"
+                onDelete="RESTRICT"
+                onUpdate="RESTRICT"
+                referencedTableSchemaName="apps"
+                referencedTableName="cm_doc_keg_cte"
+                referencedColumnNames="id"
+        />
+    </changeSet>
+
 </databaseChangeLog>
