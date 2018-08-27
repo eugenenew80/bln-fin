@@ -3956,4 +3956,52 @@
         />
     </changeSet>
 
+    <changeSet id="fin-rus-145" logicalFilePath="path-independent" author="ruslan">
+        <comment>add column to fin_expected_payment</comment>
+        <addColumn schemaName="apps" tableName="fin_expected_payment">
+            <column name="sale_id" type="number" remarks="идентифактор СФ">
+                <constraints nullable="true"/>
+            </column>
+        </addColumn>
+    </changeSet>
+
+    <changeSet id="fin-rus-146" logicalFilePath="path-independent" author="ruslan">
+        <comment>Creating foreign constraint: fin_expected_payment to fin_sale_invoices</comment>
+        <addForeignKeyConstraint
+                baseTableSchemaName="apps"
+                baseTableName="fin_expected_payment"
+                baseColumnNames="sale_id"
+                constraintName="fk_fin_expected_payment_2"
+                deferrable="true"
+                initiallyDeferred="true"
+                onDelete="RESTRICT"
+                onUpdate="RESTRICT"
+                referencedTableSchemaName="apps"
+                referencedTableName="fin_sale_invoices"
+                referencedColumnNames="id"
+        />
+    </changeSet>
+
+    <changeSet id="fin-rus-147" logicalFilePath="path-independent" author="ruslan" context="dev">
+        <dropNotNullConstraint columnDataType="number"
+                               columnName="create_by"
+                               schemaName="apps"
+                               tableName="fin_debt_repayment_schedule_h"/>
+    </changeSet>
+
+    <changeSet id="fin-rus-148" logicalFilePath="path-independent" author="ruslan" context="dev">
+        <comment>Add comments to the columns fin_debt_repayment_schedule_h.bp_id</comment>
+        <addNotNullConstraint columnDataType="number"
+                              columnName="bp_id"
+                              schemaName="apps"
+                              tableName="fin_debt_repayment_schedule_h"/>
+    </changeSet>
+
+    <changeSet id="fin-rus-149" logicalFilePath="path-independent" author="ruslan" context="dev">
+        <comment>Add comments to the columns fin_debt_repayment_schedule_h.amount</comment>
+        <addNotNullConstraint columnDataType="number"
+                              columnName="amount"
+                              schemaName="apps"
+                              tableName="fin_debt_repayment_schedule_h"/>
+    </changeSet>
 </databaseChangeLog>
