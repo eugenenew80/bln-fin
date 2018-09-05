@@ -152,7 +152,7 @@
                  <driver>oracle.jdbc.OracleDriver</driver>
                  <url>jdbc:oracle:thin:@10.9.44.240:1521:BLNDEV</url>
                  <username>system</username>
-                 <password>Pbsaer9580</password>
+                 <password>qwerty</password>
                  <scripts>dev</scripts>
                  <skipTests>true</skipTests>
              </properties>
