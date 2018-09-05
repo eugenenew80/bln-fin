@@ -10,7 +10,7 @@ import org.springframework.stereotype.Component;
 public class AutoSender {
     private final SalePlanService salePlanService;
 
-    @Scheduled(cron = "0 */1 * * * *")
+    //@Scheduled(cron = "0 */1 * * * *")
     public void run() {
         salePlanService.sendAll();
     }
