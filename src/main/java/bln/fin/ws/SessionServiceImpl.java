@@ -48,7 +48,7 @@ public class SessionServiceImpl implements SessionService {
     public SoapSession errorSession(SoapSession session, Exception e) {
         session.setEndDate(LocalDateTime.now());
         session.setStatus(SessionStatusEnum.E);
-        session.setErrMsg(e.getMessage().substring(0, 300));
+        session.setErrMsg(e.getMessage()!=null ? e.getMessage().substring(0, 300) : e.getClass().getCanonicalName());
         session = sessionRepo.save(session);
         return session;
     }

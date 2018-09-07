@@ -4,7 +4,6 @@ import lombok.Data;
 
 import javax.xml.bind.annotation.*;
 import java.util.Date;
-import java.util.List;
 
 @Data
 @XmlAccessorType(XmlAccessType.FIELD)
@@ -25,16 +24,20 @@ public class ReqLineDto {
     private String posName;
 
     @XmlElement(required = true)
+    @Documentation("Номер материала")
+    private String itemNum;
+
+    @XmlElement(required = true)
     @Documentation("Количество")
     private Double quantity;
 
     @XmlElement(required = true)
-    @Documentation("Единица измерения")
-    private String unit;
+    @Documentation("Цена за единицу")
+    private Double price;
 
     @XmlElement(required = true)
-    @Documentation("Стоимость")
-    private Double amount;
+    @Documentation("Единица измерения")
+    private String unit;
 
     @XmlElement(required = true)
     @Documentation("Валюта")
@@ -59,8 +62,4 @@ public class ReqLineDto {
     @Documentation("Флаг деблокирования заявки")
     @Facets(minLength = 1, maxLength = 1)
     private String unlocked;
-
-    @XmlElement(required = true, name = "item")
-    @Documentation("Позиции из каталога услуг")
-    private List<ReqItemDto> items;
 }

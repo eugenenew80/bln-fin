@@ -5,7 +5,6 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import javax.persistence.*;
 import java.util.Date;
-import java.util.List;
 
 @Data
 @EqualsAndHashCode(of= {"id"})
@@ -26,8 +25,14 @@ public class ReqLine {
     @Column(name = "pos_name")
     private String posName;
 
+    @Column(name = "item_num")
+    private String itemNum;
+
     @Column(name = "quantity")
     private Double quantity;
+
+    @Column(name = "unit_price")
+    private Double price;
 
     @Column(name = "unit")
     private String unit;
@@ -51,7 +56,4 @@ public class ReqLine {
     @Column(name = "is_unlocked")
     @Convert(converter = BooleanToIntConverter.class)
     private Boolean unlocked;
-
-    @OneToMany(mappedBy = "line", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<ReqItem> items;
 }
