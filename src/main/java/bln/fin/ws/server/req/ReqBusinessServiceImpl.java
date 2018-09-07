@@ -16,23 +16,29 @@ public class ReqBusinessServiceImpl implements ReqBusinessService {
         if (reqLine == null)
             reqLine = new ReqLine();
 
-        reqLine.setReqNum(lineDto.getReqNum());
-        reqLine.setPosNum(lineDto.getPosNum());
-        reqLine.setPosName(lineDto.getPosName());
-        reqLine.setCompanyCode(lineDto.getCompanyCode());
-        reqLine.setAmount(lineDto.getQuantity() * lineDto.getPrice());
-        reqLine.setCurrencyCode(lineDto.getCurrencyCode());
-        reqLine.setExpectedDate(lineDto.getExpectedDate());
-        reqLine.setQuantity(lineDto.getQuantity());
-        reqLine.setUnit(lineDto.getUnit());
-        reqLine.setPrice(lineDto.getPrice());
-        reqLine.setItemNum(lineDto.getItemNum());
-
         if (lineDto.getUnlocked()!=null)
             reqLine.setUnlocked(lineDto.getUnlocked().toUpperCase().equals("Y") ? true : false);
+        else
+            reqLine.setUnlocked(true);
 
         if (lineDto.getDeleted()!=null)
             reqLine.setDeleted(lineDto.getDeleted().toUpperCase().equals("Y") ? true : false);
+        else
+            reqLine.setDeleted(false);
+
+        if (reqLine.getId() == null || reqLine.getUnlocked()) {
+            reqLine.setReqNum(lineDto.getReqNum());
+            reqLine.setPosNum(lineDto.getPosNum());
+            reqLine.setPosName(lineDto.getPosName());
+            reqLine.setCompanyCode(lineDto.getCompanyCode());
+            reqLine.setAmount(lineDto.getQuantity() * lineDto.getPrice());
+            reqLine.setCurrencyCode(lineDto.getCurrencyCode());
+            reqLine.setExpectedDate(lineDto.getExpectedDate());
+            reqLine.setQuantity(lineDto.getQuantity());
+            reqLine.setUnit(lineDto.getUnit());
+            reqLine.setPrice(lineDto.getPrice());
+            reqLine.setItemNum(lineDto.getItemNum());
+        }
 
         return reqLine;
     }

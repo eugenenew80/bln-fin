@@ -29,8 +29,18 @@ public class ReqServiceImpl implements ReqService {
     @Override
     public List<MessageDto> createReqLines(List<ReqLineDto> list) {
         logger.info("started");
-        debugRequest(list);
+        if (list == null) {
+            logger.warn("Input data list is empty");
+            MessageDto msg = new MessageDto();
+            msg.setSystem("BIS");
+            msg.setMsgType("E");
+            msg.setMsgNum("1");
+            msg.setSapId(null);
+            msg.setMsg("Input data list is empty");
+            return Arrays.asList(msg);
+        }
 
+        debugRequest(list);
         SoapSession session = sessionService.createSession("REQ", DirectionEnum.IMPORT);
 
         List<ReqLine> reqLines;
