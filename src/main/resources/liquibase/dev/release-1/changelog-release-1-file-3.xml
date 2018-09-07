@@ -4004,4 +4004,18 @@
                               schemaName="apps"
                               tableName="fin_debt_repayment_schedule_h"/>
     </changeSet>
+
+    <changeSet id="fin-rus-150" logicalFilePath="path-independent" author="ruslan">
+        <comment>add column to fin_debt_repayment_schedule_h</comment>
+        <dropColumn columnName="amount"
+                    schemaName="apps"
+                    tableName="fin_debt_repayment_schedule_h"/>
+    </changeSet>
+
+    <changeSet id="fin-rus-151" logicalFilePath="path-independent" author="ruslan">
+        <comment>add column to fin_debt_repayment_schedule_h</comment>
+        <dropColumn columnName="sale_invoice_id"
+                    schemaName="apps"
+                    tableName="fin_debt_repayment_schedule_h"/>
+    </changeSet>
 </databaseChangeLog>
