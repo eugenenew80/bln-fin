@@ -29,10 +29,10 @@ public class ReqBusinessServiceImpl implements ReqBusinessService {
         reqLine.setItemNum(lineDto.getItemNum());
 
         if (lineDto.getUnlocked()!=null)
-            reqLine.setUnlocked(lineDto.getUnlocked().equals("Y") ? true : false);
+            reqLine.setUnlocked(lineDto.getUnlocked().toUpperCase().equals("Y") ? true : false);
 
         if (lineDto.getDeleted()!=null)
-            reqLine.setDeleted(lineDto.getDeleted().equals("Y") ? true : false);
+            reqLine.setDeleted(lineDto.getDeleted().toUpperCase().equals("Y") ? true : false);
 
         return reqLine;
     }
