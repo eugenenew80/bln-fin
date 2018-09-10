@@ -102,7 +102,7 @@ public class SaleInvoice {
     @JoinColumn(name = "src_invoice_id")
     private SaleInvoice srcSaleInvoice;
 
-    @Column(name = "transferred_to_erp_date")
+    @Column(name = "transfer_to_erp_date")
     private LocalDateTime transferredToErpDate;
 
     @OneToMany(mappedBy = "invoice", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)

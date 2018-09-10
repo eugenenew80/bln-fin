@@ -33,10 +33,11 @@ public class DebtBusinessServiceImpl implements DebtBusinessService {
             list.add(check);
         }
 
-        if (check != null && !accountingDate.equals(check.getAccountingDate()) && !check.getAmount().equals(debtDto.getAmount())) {
+        if (check.getAccountingDate() != null && !accountingDate.equals(check.getAccountingDate()) && !check.getAmount().equals(debtDto.getAmount())) {
             check.setCurrentRecord(false);
             list.add(check);
             check = new CheckApplication();
+            list.add(check);
         }
 
         BusinessPartner vendor = businessPartnerRepo.findByErpBpNum(debtDto.getBpNum());
@@ -67,7 +68,7 @@ public class DebtBusinessServiceImpl implements DebtBusinessService {
     public List<ReceiptApplication> createReceiptApplication(DebtDto debtDto) {
         List<ReceiptApplication> list = new ArrayList<>();
         LocalDate accountingDate = toLocalDate(debtDto.getAccountingDate());
-        LocalDate erpDocDate =  toLocalDate(debtDto.getDocDate());
+        LocalDate erpDocDate = toLocalDate(debtDto.getDocDate());
 
         ReceiptApplication receipt = receiptApplicationRepo.findByErpDocNumAndErpDocDateAndCurrentRecordIsTrue(debtDto.getDocNum(), erpDocDate);
         if (receipt == null){
@@ -75,10 +76,11 @@ public class DebtBusinessServiceImpl implements DebtBusinessService {
             list.add(receipt);
         }
 
-        if (receipt != null && !accountingDate.equals(receipt.getAccountingDate()) && !receipt.getAmount().equals(debtDto.getAmount())) {
+        if (receipt.getAccountingDate()!=null && !accountingDate.equals(receipt.getAccountingDate()) && !receipt.getAmount().equals(debtDto.getAmount())) {
             receipt.setCurrentRecord(false);
             list.add(receipt);
             receipt = new ReceiptApplication();
+            list.add(receipt);
         }
 
         BusinessPartner vendor = businessPartnerRepo.findByErpCompanyCode(debtDto.getCompanyCode());

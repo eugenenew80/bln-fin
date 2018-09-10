@@ -33,7 +33,7 @@ public class ReqServiceImpl implements ReqService {
             logger.warn("Input data list is empty");
             MessageDto msg = new MessageDto();
             msg.setSystem("BIS");
-            msg.setMsgType("E");
+            msg.setMsgType("W");
             msg.setMsgNum("1");
             msg.setSapId(null);
             msg.setMsg("Input data list is empty");
@@ -87,7 +87,7 @@ public class ReqServiceImpl implements ReqService {
         logger.debug("List of input records");
         for (ReqLineDto line: list) {
             logger.debug("-----------------------");
-            logger.debug("company code: " + line.getCompanyCode());
+            logger.debug("companyCode: " + line.getCompanyCode());
             logger.debug("reqNum: " + line.getReqNum());
             logger.debug("posNum: " + line.getPosNum());
             logger.debug("posName: " + line.getPosName());
