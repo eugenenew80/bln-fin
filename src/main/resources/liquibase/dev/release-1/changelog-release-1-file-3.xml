@@ -4018,4 +4018,42 @@
                     schemaName="apps"
                     tableName="fin_debt_repayment_schedule_h"/>
     </changeSet>
+
+    <changeSet id="fin-rus-152" logicalFilePath="path-independent" author="ruslan" context="dev">
+        <comment>insert into wf_states</comment>
+        <insert schemaName="apps" tableName="wf_states">
+            <column name="code" type="varchar2" value="CANCEL"/>
+        </insert>
+
+        <insert schemaName="apps" tableName="wf_states">
+            <column name="code" type="varchar2" value="REJECT"/>
+        </insert>
+    </changeSet>
+
+    <changeSet id="fin-rus-153" logicalFilePath="path-independent" author="ruslan" context="dev">
+        <comment>insert into wf_states_tl</comment>
+        <insert schemaName="apps" tableName="wf_states_tl">
+            <column name="code" type="varchar2" value="CANCEL"/>
+            <column name="lang" type="varchar2" value="RU"/>
+            <column name="name" type="varchar2" value="Отменен"/>
+        </insert>
+
+        <insert schemaName="apps" tableName="wf_states_tl">
+            <column name="code" type="varchar2" value="CANCEL"/>
+            <column name="lang" type="varchar2" value="KZ"/>
+            <column name="name" type="varchar2" value="Отменен"/>
+        </insert>
+
+        <insert schemaName="apps" tableName="wf_states_tl">
+            <column name="code" type="varchar2" value="REJECT"/>
+            <column name="lang" type="varchar2" value="RU"/>
+            <column name="name" type="varchar2" value="Отклонен"/>
+        </insert>
+
+        <insert schemaName="apps" tableName="wf_states_tl">
+            <column name="code" type="varchar2" value="REJECT"/>
+            <column name="lang" type="varchar2" value="KZ"/>
+            <column name="name" type="varchar2" value="Отклонен"/>
+        </insert>
+    </changeSet>
 </databaseChangeLog>
