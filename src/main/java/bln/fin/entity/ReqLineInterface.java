@@ -1,6 +1,7 @@
 package bln.fin.entity;
 
 import bln.fin.entity.enums.BatchStatusEnum;
+import bln.fin.entity.interfaces.Monitored;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import javax.persistence.*;
@@ -11,7 +12,7 @@ import java.time.LocalDateTime;
 @EqualsAndHashCode(of= {"id"})
 @Entity
 @Table(name = "fin_req_line_interface")
-public class ReqLineInterface {
+public class ReqLineInterface implements Monitored {
     @Id
     @SequenceGenerator(name="fin_req_line_interface_s", sequenceName = "fin_req_line_interface_s", allocationSize=1)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "fin_req_line_interface_s")

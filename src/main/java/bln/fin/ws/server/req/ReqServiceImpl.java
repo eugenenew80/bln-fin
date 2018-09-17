@@ -12,13 +12,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import javax.jws.WebService;
-import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.List;
-
-import static bln.fin.common.Util.createErrorEmptyMessage;
-import static bln.fin.common.Util.getCause;
-import static bln.fin.common.Util.toLocalDate;
+import static bln.fin.common.Util.*;
 import static java.util.stream.Collectors.toList;
 
 @Service
@@ -50,85 +46,46 @@ public class ReqServiceImpl implements ReqService {
     }
 
     private MessageDto createReq(ReqLineDto lineDto, SoapSession session) {
-        MessageDto msg = new MessageDto();
+        MessageDto msg;
+        String sapId = lineDto.getReqNum()!=null ? lineDto.getReqNum().toString() : "";
         try {
             logger.debug("Creating line: reqNum = " + lineDto.getReqNum() + ", posNum = " + lineDto.getPosNum());
-            ReqLineInterface lineInterface = reqLineInterfaceRepo.findByReqNumAndPosNum(lineDto.getReqNum(), lineDto.getPosNum())
+            ReqLineInterface line = reqLineInterfaceRepo.findByReqNumAndPosNum(lineDto.getReqNum(), lineDto.getPosNum())
                 .stream()
                 .filter(t -> t.getStatus() == BatchStatusEnum.W)
                 .findFirst()
                 .orElse(new ReqLineInterface());
 
-            if (lineInterface.getId() == null)  {
-                lineInterface.setCreateDate(LocalDateTime.now());
-                lineInterface.setLastUpdateDate(null);
-            }
+            addMonitoring(line);
+            line.setReqNum(lineDto.getReqNum());
+            line.setPosNum(lineDto.getPosNum());
+            line.setPosName(lineDto.getPosName());
+            line.setItemNum(lineDto.getItemNum());
+            line.setQuantity(lineDto.getQuantity());
+            line.setPrice(lineDto.getPrice());
+            line.setUnit(lineDto.getUnit());
+            line.setCurrencyCode(lineDto.getCurrencyCode());
+            line.setCompanyCode(lineDto.getCompanyCode());
+            line.setExpectedDate(toLocalDate(lineDto.getExpectedDate()));
+            line.setDeleted(lineDto.getDeleted());
+            line.setUnlocked(lineDto.getUnlocked());
+            line.setStatus(BatchStatusEnum.W);
+            line.setSession(session);
 
-            if (lineInterface.getId() != null)
-                lineInterface.setLastUpdateDate(LocalDateTime.now());
-
-            lineInterface.setReqNum(lineDto.getReqNum());
-            lineInterface.setPosNum(lineDto.getPosNum());
-            lineInterface.setPosName(lineDto.getPosName());
-            lineInterface.setItemNum(lineDto.getItemNum());
-            lineInterface.setQuantity(lineDto.getQuantity());
-            lineInterface.setPrice(lineDto.getPrice());
-            lineInterface.setUnit(lineDto.getUnit());
-            lineInterface.setCurrencyCode(lineDto.getCurrencyCode());
-            lineInterface.setCompanyCode(lineDto.getCompanyCode());
-            lineInterface.setExpectedDate(toLocalDate(lineDto.getExpectedDate()));
-            lineInterface.setDeleted(lineDto.getDeleted());
-            lineInterface.setUnlocked(lineDto.getUnlocked());
-            lineInterface.setStatus(BatchStatusEnum.W);
-            lineInterface.setSession(session);
-            lineInterface = reqLineInterfaceRepo.save(lineInterface);
-
-            msg.setSystem("BIS");
-            msg.setMsgType("S");
-            msg.setMsgNum("0");
-            msg.setMsg("OK");
-            msg.setId(lineInterface.getId().toString());
-            msg.setSapId(lineDto.getReqNum().toString());
-
+            line = reqLineInterfaceRepo.save(line);
+            msg = createSuccessLineMessage(sapId, line.getId().toString());
             logger.debug("Creating line successfully completed");
         }
         catch (Exception e) {
             logger.debug("Error during creating line: " + e.getMessage());
-
-            String err;
-            Throwable cause = getCause(e);
-            if (cause.getMessage()!=null)
-                err = cause.getMessage();
-            else
-                err = cause.getClass().getCanonicalName();
-
-            String sapId = lineDto.getReqNum()!=null ? lineDto.getReqNum().toString() : "";
-            msg.setSystem("BIS");
-            msg.setMsgType("E");
-            msg.setMsgNum("2");
-            msg.setSapId(sapId);
-            msg.setMsg(err);
+            msg = createErrorLineMessage(sapId, e);
         }
         return msg;
     }
 
     private void debugRequest(List<ReqLineDto> list) {
-        logger.debug("List of input records");
-        for (ReqLineDto line: list) {
-            logger.debug("-----------------------");
-            logger.debug("companyCode: " + line.getCompanyCode());
-            logger.debug("reqNum: " + line.getReqNum());
-            logger.debug("posNum: " + line.getPosNum());
-            logger.debug("posName: " + line.getPosName());
-            logger.debug("itemNum: " + line.getItemNum());
-            logger.debug("currencyCode: " + line.getCurrencyCode());
-            logger.debug("price: " + line.getPrice());
-            logger.debug("quantity: " + line.getQuantity());
-            logger.debug("unit: " + line.getUnit());
-            logger.debug("deleted: " + line.getDeleted());
-            logger.debug("unlocked: " + line.getUnlocked());
-            logger.debug("-----------------------");
-            logger.debug("");
-        }
+        logger.debug("---------------------------------");
+        for (ReqLineDto line: list) logger.debug(line.toString());
+        logger.debug("---------------------------------");
     }
 }

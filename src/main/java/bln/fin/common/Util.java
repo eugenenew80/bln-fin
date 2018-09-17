@@ -1,5 +1,7 @@
 package bln.fin.common;
 
+import bln.fin.entity.ReqLineInterface;
+import bln.fin.entity.interfaces.Monitored;
 import bln.fin.ws.server.MessageDto;
 
 import javax.xml.datatype.DatatypeConfigurationException;
@@ -7,6 +9,7 @@ import javax.xml.datatype.DatatypeConstants;
 import javax.xml.datatype.DatatypeFactory;
 import javax.xml.datatype.XMLGregorianCalendar;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.Calendar;
 import java.util.Date;
@@ -68,6 +71,28 @@ public class Util {
         msg.setSapId(sapId);
         msg.setMsg(err);
         return msg;
+    }
+
+    public static MessageDto createSuccessLineMessage(String sapId, String id) {
+        MessageDto msg;
+        msg = new MessageDto();
+        msg.setSystem("BIS");
+        msg.setMsgType("S");
+        msg.setMsgNum("0");
+        msg.setMsg("OK");
+        msg.setId(id);
+        msg.setSapId(sapId);
+        return msg;
+    }
+
+    public static void addMonitoring(Monitored monitored) {
+        if (monitored.getId() == null)  {
+            monitored.setCreateDate(LocalDateTime.now());
+            monitored.setLastUpdateDate(null);
+        }
+
+        if (monitored.getId() != null)
+            monitored.setLastUpdateDate(LocalDateTime.now());
     }
 
 }

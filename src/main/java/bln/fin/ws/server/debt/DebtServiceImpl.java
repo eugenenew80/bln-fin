@@ -11,14 +11,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import javax.jws.WebService;
-import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
-
-import static bln.fin.common.Util.createErrorEmptyMessage;
-import static bln.fin.common.Util.createErrorLineMessage;
-import static bln.fin.common.Util.toLocalDate;
+import static bln.fin.common.Util.*;
 
 @RequiredArgsConstructor
 @Service
@@ -51,6 +47,7 @@ public class DebtServiceImpl implements DebtService {
     private MessageDto createDebt(DebtDto debtDto, SoapSession session) {
         logger.debug("Creating line:: docNum = " + debtDto.getDocNum() + ", docDate = " + debtDto.getDocDate());
 
+        String sapId = debtDto.getDocNum()!=null ? debtDto.getDocNum() : "";
         MessageDto msg;
         try {
             DebtInterface debtInterface = debtInterfaceRepo.findByDocNumAndDocDate(debtDto.getDocNum(), toLocalDate(debtDto.getDocDate()))
@@ -60,14 +57,7 @@ public class DebtServiceImpl implements DebtService {
                 .findFirst()
                 .orElse(new DebtInterface());
 
-            if (debtInterface.getId() == null)  {
-                debtInterface.setCreateDate(LocalDateTime.now());
-                debtInterface.setLastUpdateDate(null);
-            }
-
-            if (debtInterface.getId() != null)
-                debtInterface.setLastUpdateDate(LocalDateTime.now());
-
+            addMonitoring(debtInterface);
             debtInterface.setBpType(debtDto.getBpType());
             debtInterface.setBpNum(debtDto.getBpNum());
             debtInterface.setContractNum(debtDto.getContractNum());
@@ -83,21 +73,13 @@ public class DebtServiceImpl implements DebtService {
             debtInterface.setCompanyCode(debtDto.getCompanyCode());
             debtInterface.setStatus(BatchStatusEnum.W);
             debtInterface.setSession(session);
+
             debtInterface = debtInterfaceRepo.save(debtInterface);
-
-            msg = new MessageDto();
-            msg.setSystem("BIS");
-            msg.setMsgType("S");
-            msg.setMsgNum("0");
-            msg.setMsg("OK");
-            msg.setId(debtInterface.getId().toString());
-            msg.setSapId(debtDto.getDocNum().toString());
-
+            msg = createSuccessLineMessage(sapId, debtInterface.getId().toString());
             logger.debug("Creating line successfully completed");
         }
         catch (Exception e) {
             logger.debug("Error during creating line: " + e.getMessage());
-            String sapId = debtDto.getDocNum()!=null ? debtDto.getDocNum().toString() : "";
             msg = createErrorLineMessage(sapId, e);
         }
 

@@ -1,5 +1,6 @@
 package bln.fin.entity;
 
+import bln.fin.entity.interfaces.Monitored;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import javax.persistence.*;
@@ -9,7 +10,7 @@ import java.time.LocalDateTime;
 @EqualsAndHashCode(of= {"id"})
 @Entity
 @Table(name = "dict_bp_interface_tl")
-public class BusinessPartnerTranslateInterface {
+public class BusinessPartnerTranslateInterface implements Monitored {
     @Id
     @SequenceGenerator(name="dict_bp_interface_tl_s", sequenceName = "dict_bp_interface_tl_s", allocationSize=1)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "dict_bp_interface_tl_s")

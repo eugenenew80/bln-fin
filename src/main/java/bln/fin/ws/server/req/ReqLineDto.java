@@ -1,7 +1,6 @@
 package bln.fin.ws.server.req;
 
 import lombok.Data;
-
 import javax.xml.bind.annotation.*;
 import java.util.Date;
 
@@ -19,37 +18,37 @@ public class ReqLineDto {
     @Documentation("Номер позиции")
     private Long posNum;
 
-    @XmlElement(required = false)
+    @XmlElement
     @Documentation("Наименование позиции")
     private String posName;
 
-    @XmlElement(required = false)
+    @XmlElement
     @Documentation("Номер материала")
     private String itemNum;
 
-    @XmlElement(required = false)
+    @XmlElement
     @Documentation("Количество")
     private Double quantity;
 
-    @XmlElement(required = false)
+    @XmlElement
     @Documentation("Цена за единицу")
     private Double price;
 
-    @XmlElement(required = false)
+    @XmlElement
     @Documentation("Единица измерения")
     private String unit;
 
-    @XmlElement(required = false)
+    @XmlElement
     @Documentation("Валюта")
     @Facets(minLength = 3, maxLength = 3)
     private String currencyCode;
 
-    @XmlElement(required = false)
+    @XmlElement
     @Documentation("Балансовая единица")
     @Facets(minLength = 4, maxLength = 4)
     private String companyCode;
 
-    @XmlElement(required = false)
+    @XmlElement
     @Documentation("Ожидаемая дата поставки")
     private Date expectedDate;
 

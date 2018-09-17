@@ -11,7 +11,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import javax.jws.WebService;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -49,6 +48,7 @@ public class BusinessPartnerServiceImpl implements BusinessPartnerService {
     private MessageDto createBusinessPartner(BusinessPartnerDto businessPartnerDto, SoapSession session) {
         logger.debug("Creating line:: bpNum = " + businessPartnerDto.getBpNum());
 
+        String sapId = businessPartnerDto.getBpNum()!=null ? businessPartnerDto.getBpNum() : "";
         MessageDto msg;
         try {
             BusinessPartnerInterface bp = businessPartnerInterfaceRepo.findByBpNum(businessPartnerDto.getBpNum())
@@ -57,14 +57,7 @@ public class BusinessPartnerServiceImpl implements BusinessPartnerService {
                 .findFirst()
                 .orElse(new BusinessPartnerInterface());
 
-            if (bp.getId() == null) {
-                bp.setCreateDate(LocalDateTime.now());
-                bp.setLastUpdateDate(null);
-            }
-
-            if (bp.getId() != null)
-                bp.setLastUpdateDate(LocalDateTime.now());
-
+            addMonitoring(bp);
             bp.setBpNum(businessPartnerDto.getBpNum());
             bp.setGroup(businessPartnerDto.getGroup());
             bp.setSearchCriteria(businessPartnerDto.getSearchCriteria());
@@ -86,14 +79,7 @@ public class BusinessPartnerServiceImpl implements BusinessPartnerService {
                     .findFirst()
                     .orElse(new BusinessPartnerTranslateInterface());
 
-                if (tl.getId() == null)  {
-                    tl.setCreateDate(LocalDateTime.now());
-                    tl.setLastUpdateDate(null);
-                }
-
-                if (tl.getId() != null)
-                    tl.setLastUpdateDate(LocalDateTime.now());
-
+                addMonitoring(tl);
                 tl.setBusinessPartner(bp);
                 tl.setLang(businessPartnerTranslateDto.getLang());
                 tl.setName(businessPartnerTranslateDto.getName());
@@ -112,14 +98,7 @@ public class BusinessPartnerServiceImpl implements BusinessPartnerService {
                     .findFirst()
                     .orElse(new BusinessPartnerBankAccountInterface());
 
-                if (ba.getId() == null)  {
-                    ba.setCreateDate(LocalDateTime.now());
-                    ba.setLastUpdateDate(null);
-                }
-
-                if (ba.getId() != null)
-                    ba.setLastUpdateDate(LocalDateTime.now());
-
+                addMonitoring(ba);
                 ba.setBusinessPartner(bp);
                 ba.setBik(bankAccountDto.getBik());
                 ba.setAccount(bankAccountDto.getAccount());
@@ -139,14 +118,7 @@ public class BusinessPartnerServiceImpl implements BusinessPartnerService {
                     .findFirst()
                     .orElse(new BusinessPartnerRelationInterface());
 
-                if (rel.getId() == null)  {
-                    rel.setCreateDate(LocalDateTime.now());
-                    rel.setLastUpdateDate(null);
-                }
-
-                if (rel.getId() != null)
-                    rel.setLastUpdateDate(LocalDateTime.now());
-
+                addMonitoring(rel);
                 rel.setBusinessPartner(bp);
                 rel.setBpNum(relationDto.getBpNum());
                 rel.setRelationType(relationDto.getRelationType());
@@ -164,14 +136,7 @@ public class BusinessPartnerServiceImpl implements BusinessPartnerService {
                     .findFirst()
                     .orElse(new BusinessPartnerAddressInterface());
 
-                if (address.getId() == null)  {
-                    address.setCreateDate(LocalDateTime.now());
-                    address.setLastUpdateDate(null);
-                }
-
-                if (address.getId() != null)
-                    address.setLastUpdateDate(LocalDateTime.now());
-
+                addMonitoring(address);
                 address.setBusinessPartner(bp);
                 address.setAddressType(addressDto.getAddressType());
                 address.setCountry(addressDto.getCountry());
@@ -199,14 +164,7 @@ public class BusinessPartnerServiceImpl implements BusinessPartnerService {
                         .findFirst()
                         .orElse(new BusinessPartnerAddressTranslateInterface());
 
-                    if (tl.getId() == null)  {
-                        tl.setCreateDate(LocalDateTime.now());
-                        tl.setLastUpdateDate(null);
-                    }
-
-                    if (tl.getId() != null)
-                        tl.setLastUpdateDate(LocalDateTime.now());
-
+                    addMonitoring(tl);
                     tl.setAddress(address);
                     tl.setLang(addressTranslateDto.getLang());
                     tl.setCity(addressTranslateDto.getCity());
@@ -216,19 +174,11 @@ public class BusinessPartnerServiceImpl implements BusinessPartnerService {
             }
 
             bp = businessPartnerInterfaceRepo.save(bp);
-
-            msg = new MessageDto();
-            msg.setSystem("BIS");
-            msg.setMsgType("S");
-            msg.setMsgNum("0");
-            msg.setMsg("OK");
-            msg.setId(bp.getId().toString());
-            msg.setSapId(businessPartnerDto.getBpNum());
+            msg = createSuccessLineMessage(sapId, bp.getId().toString());
             logger.debug("Creating line successfully completed");
         }
         catch (Exception e) {
             logger.debug("Error during creating line: " + e.getMessage());
-            String sapId = businessPartnerDto.getBpNum()!=null ? businessPartnerDto.getBpNum().toString() : "";
             msg = createErrorLineMessage(sapId, e);
         }
         return msg;
