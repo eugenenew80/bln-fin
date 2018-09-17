@@ -41,7 +41,7 @@ public class ReqServiceImpl implements ReqService {
             .collect(toList());
 
         sessionService.successSession(session, (long) list.size());
-        logger.info("completed");
+        logger.info("completed, received records: " + list.size());
         return messages;
     }
 
