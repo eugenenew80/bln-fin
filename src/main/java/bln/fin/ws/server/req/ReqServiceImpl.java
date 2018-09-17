@@ -56,21 +56,10 @@ public class ReqServiceImpl implements ReqService {
                 .findFirst()
                 .orElse(new ReqLineInterface());
 
-            addMonitoring(line);
-            line.setReqNum(lineDto.getReqNum());
-            line.setPosNum(lineDto.getPosNum());
-            line.setPosName(lineDto.getPosName());
-            line.setItemNum(lineDto.getItemNum());
-            line.setQuantity(lineDto.getQuantity());
-            line.setPrice(lineDto.getPrice());
-            line.setUnit(lineDto.getUnit());
-            line.setCurrencyCode(lineDto.getCurrencyCode());
-            line.setCompanyCode(lineDto.getCompanyCode());
-            line.setExpectedDate(toLocalDate(lineDto.getExpectedDate()));
-            line.setDeleted(lineDto.getDeleted());
-            line.setUnlocked(lineDto.getUnlocked());
+            line = lineDto.toInterface(line);
             line.setStatus(BatchStatusEnum.W);
             line.setSession(session);
+            addMonitoring(line);
 
             line = reqLineInterfaceRepo.save(line);
             msg = createSuccessLineMessage(sapId, line.getId().toString());

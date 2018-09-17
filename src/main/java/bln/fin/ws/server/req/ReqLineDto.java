@@ -1,8 +1,11 @@
 package bln.fin.ws.server.req;
 
+import bln.fin.entity.ReqLineInterface;
 import lombok.Data;
 import javax.xml.bind.annotation.*;
 import java.util.Date;
+
+import static bln.fin.common.Util.toLocalDate;
 
 @Data
 @XmlAccessorType(XmlAccessType.FIELD)
@@ -61,4 +64,20 @@ public class ReqLineDto {
     @Documentation("Флаг деблокирования заявки")
     @Facets(minLength = 1, maxLength = 1)
     private String unlocked;
+
+    public ReqLineInterface toInterface(final ReqLineInterface line) {
+        line.setReqNum(getReqNum());
+        line.setPosNum(getPosNum());
+        line.setPosName(getPosName());
+        line.setItemNum(getItemNum());
+        line.setQuantity(getQuantity());
+        line.setPrice(getPrice());
+        line.setUnit(getUnit());
+        line.setCurrencyCode(getCurrencyCode());
+        line.setCompanyCode(getCompanyCode());
+        line.setExpectedDate(toLocalDate(getExpectedDate()));
+        line.setDeleted(getDeleted());
+        line.setUnlocked(getUnlocked());
+        return line;
+    }
 }
