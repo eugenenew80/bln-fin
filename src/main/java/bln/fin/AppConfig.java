@@ -4,13 +4,9 @@ import bln.fin.repo.*;
 import bln.fin.ws.SessionService;
 import bln.fin.ws.client.CustomEndpointInterceptor;
 import bln.fin.ws.server.bp.BusinessPartnerServiceImpl;
-import bln.fin.ws.server.debt.DebtBusinessService;
 import bln.fin.ws.server.debt.DebtServiceImpl;
-import bln.fin.ws.server.invoice.InvoiceBusinessService;
 import bln.fin.ws.server.invoice.InvoiceServiceImpl;
-import bln.fin.ws.server.req.ReqBusinessService;
 import bln.fin.ws.server.req.ReqServiceImpl;
-import bln.fin.ws.server.saleInvoice.SaleInvoiceServiceImpl;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.datatype.jdk8.Jdk8Module;
@@ -111,21 +107,21 @@ public class AppConfig  {
 
     @Bean
     public Endpoint endpoint1() {
-        EndpointImpl endpoint = new EndpointImpl(springBus(), new DebtServiceImpl(debtBusinessService, checkApplicationRepo, receiptApplicationRepo, sessionService));
+        EndpointImpl endpoint = new EndpointImpl(springBus(), new DebtServiceImpl(debtInterfaceRepo, sessionService));
         endpoint.publish("/DebtService");
         return endpoint;
     }
 
     @Bean
     public Endpoint endpoint2() {
-        EndpointImpl endpoint = new EndpointImpl(springBus(), new InvoiceServiceImpl(invoiceBusinessService, purchaseInvoiceRepo, saleInvoiceRepo, sessionService));
+        EndpointImpl endpoint = new EndpointImpl(springBus(), new InvoiceServiceImpl(invoiceInterfaceRepo, invoiceStatusInterfaceRepo, sessionService));
         endpoint.publish("/InvoiceService");
         return endpoint;
     }
 
     @Bean
     public Endpoint endpoint3() {
-        EndpointImpl endpoint = new EndpointImpl(springBus(), new ReqServiceImpl(reqBusinessService, reqLineRepo, sessionService));
+        EndpointImpl endpoint = new EndpointImpl(springBus(), new ReqServiceImpl(reqLineInterfaceRepo, sessionService));
         endpoint.publish("/ReqService");
         return endpoint;
     }
@@ -137,41 +133,22 @@ public class AppConfig  {
         return endpoint;
     }
 
-    @Bean
-    public Endpoint endpoint5() {
-        EndpointImpl endpoint = new EndpointImpl(springBus(), new SaleInvoiceServiceImpl());
-        endpoint.publish("/SaleInvoiceService");
-        return endpoint;
-    }
-
-
-    @Autowired
-    private final ReqLineRepo reqLineRepo;
-
-    @Autowired
-    private final CheckApplicationRepo checkApplicationRepo;
-
-    @Autowired
-    private final ReceiptApplicationRepo receiptApplicationRepo;
-
-    @Autowired
-    private final PurchaseInvoiceRepo purchaseInvoiceRepo;
-
-    @Autowired
-    private final SaleInvoiceRepo saleInvoiceRepo;
 
     @Autowired
     private final BusinessPartnerRepo businessPartnerRepo;
 
     @Autowired
-    private final InvoiceBusinessService invoiceBusinessService;
-
-    @Autowired
-    private final ReqBusinessService reqBusinessService;
-
-    @Autowired
-    private final DebtBusinessService debtBusinessService;
-
-    @Autowired
     private final SessionService sessionService;
+
+    @Autowired
+    private final ReqLineInterfaceRepo reqLineInterfaceRepo;
+
+    @Autowired
+    private final DebtInterfaceRepo debtInterfaceRepo;
+
+    @Autowired
+    private final InvoiceInterfaceRepo invoiceInterfaceRepo;
+
+    @Autowired
+    private final InvoiceStatusInterfaceRepo invoiceStatusInterfaceRepo;
 }

@@ -2,6 +2,7 @@ package bln.fin.ws.server.invoice;
 
 import lombok.Data;
 
+import javax.persistence.Column;
 import javax.xml.bind.annotation.*;
 import java.util.Date;
 

@@ -61,7 +61,7 @@ public class InvoiceBusinessServiceImpl implements InvoiceBusinessService{
         if (inv == null)
             inv = new PurchaseInvoice();
 
-        BusinessPartner vendor = businessPartnerRepo.findByErpBpNum(invoiceDto.getVendorNum());
+        BusinessPartner vendor = businessPartnerRepo.findByErpBpNum(invoiceDto.getBpNum());
         BusinessPartner customer = businessPartnerRepo.findByErpCompanyCode(invoiceDto.getCompanyCode());
         ContractKeg contract = contractKegRepo.findByContractNum(invoiceDto.getExtContractNum());
 

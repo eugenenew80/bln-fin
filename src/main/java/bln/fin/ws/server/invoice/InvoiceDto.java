@@ -34,7 +34,7 @@ public class InvoiceDto {
 
     @XmlElement(required = true)
     @Documentation("№ делового партнера-поставщика в SAP")
-    private String vendorNum;
+    private String bpNum;
 
     @XmlElement(required = true)
     @Documentation("№ договора в SAP")
