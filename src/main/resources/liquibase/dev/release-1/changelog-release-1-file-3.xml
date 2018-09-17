@@ -4018,4 +4018,168 @@
                     schemaName="apps"
                     tableName="fin_debt_repayment_schedule_h"/>
     </changeSet>
+
+    <changeSet id="fin-rus-152" logicalFilePath="path-independent" author="ruslan" context="dev">
+        <comment>insert into wf_states</comment>
+        <insert schemaName="apps" tableName="wf_states">
+            <column name="code" type="varchar2" value="CANCEL"/>
+        </insert>
+
+        <insert schemaName="apps" tableName="wf_states">
+            <column name="code" type="varchar2" value="REJECT"/>
+        </insert>
+    </changeSet>
+
+    <changeSet id="fin-rus-153" logicalFilePath="path-independent" author="ruslan" context="dev">
+        <comment>insert into wf_states_tl</comment>
+        <insert schemaName="apps" tableName="wf_states_tl">
+            <column name="code" type="varchar2" value="CANCEL"/>
+            <column name="lang" type="varchar2" value="RU"/>
+            <column name="name" type="varchar2" value="Отменен"/>
+        </insert>
+
+        <insert schemaName="apps" tableName="wf_states_tl">
+            <column name="code" type="varchar2" value="CANCEL"/>
+            <column name="lang" type="varchar2" value="KZ"/>
+            <column name="name" type="varchar2" value="Отменен"/>
+        </insert>
+
+        <insert schemaName="apps" tableName="wf_states_tl">
+            <column name="code" type="varchar2" value="REJECT"/>
+            <column name="lang" type="varchar2" value="RU"/>
+            <column name="name" type="varchar2" value="Отклонен"/>
+        </insert>
+
+        <insert schemaName="apps" tableName="wf_states_tl">
+            <column name="code" type="varchar2" value="REJECT"/>
+            <column name="lang" type="varchar2" value="KZ"/>
+            <column name="name" type="varchar2" value="Отклонен"/>
+        </insert>
+    </changeSet>
+
+    <changeSet id="fin-rus-154" logicalFilePath="path-independent" author="ruslan" context="dev">
+        <comment>insert into wf_states</comment>
+        <insert schemaName="apps" tableName="wf_states">
+            <column name="code" type="varchar2" value="ON_INVESTIGATE"/>
+        </insert>
+
+        <insert schemaName="apps" tableName="wf_states">
+            <column name="code" type="varchar2" value="ON_AGREEING"/>
+        </insert>
+
+        <insert schemaName="apps" tableName="wf_states">
+            <column name="code" type="varchar2" value="ADOPTED"/>
+        </insert>
+
+        <insert schemaName="apps" tableName="wf_states">
+            <column name="code" type="varchar2" value="ACCEPT_INVESTIGATE"/>
+        </insert>
+
+        <insert schemaName="apps" tableName="wf_states">
+            <column name="code" type="varchar2" value="SENT"/>
+        </insert>
+    </changeSet>
+
+    <changeSet id="fin-rus-155" logicalFilePath="path-independent" author="ruslan" context="dev">
+        <comment>insert into wf_states_tl</comment>
+        <insert schemaName="apps" tableName="wf_states_tl">
+            <column name="code" type="varchar2" value="ON_INVESTIGATE"/>
+            <column name="lang" type="varchar2" value="RU"/>
+            <column name="name" type="varchar2" value="На рассмотрении"/>
+        </insert>
+
+        <insert schemaName="apps" tableName="wf_states_tl">
+            <column name="code" type="varchar2" value="ON_INVESTIGATE"/>
+            <column name="lang" type="varchar2" value="KZ"/>
+            <column name="name" type="varchar2" value="На рассмотрении"/>
+        </insert>
+
+        <insert schemaName="apps" tableName="wf_states_tl">
+            <column name="code" type="varchar2" value="ON_AGREEING"/>
+            <column name="lang" type="varchar2" value="RU"/>
+            <column name="name" type="varchar2" value="На согласовании"/>
+        </insert>
+
+        <insert schemaName="apps" tableName="wf_states_tl">
+            <column name="code" type="varchar2" value="ON_AGREEING"/>
+            <column name="lang" type="varchar2" value="KZ"/>
+            <column name="name" type="varchar2" value="На согласовании"/>
+        </insert>
+
+        <insert schemaName="apps" tableName="wf_states_tl">
+            <column name="code" type="varchar2" value="ADOPTED"/>
+            <column name="lang" type="varchar2" value="RU"/>
+            <column name="name" type="varchar2" value="Одобрен"/>
+        </insert>
+
+        <insert schemaName="apps" tableName="wf_states_tl">
+            <column name="code" type="varchar2" value="ADOPTED"/>
+            <column name="lang" type="varchar2" value="KZ"/>
+            <column name="name" type="varchar2" value="Одобрен"/>
+        </insert>
+
+        <insert schemaName="apps" tableName="wf_states_tl">
+            <column name="code" type="varchar2" value="ACCEPT_INVESTIGATE"/>
+            <column name="lang" type="varchar2" value="RU"/>
+            <column name="name" type="varchar2" value="Принят к рассмотрению"/>
+        </insert>
+
+        <insert schemaName="apps" tableName="wf_states_tl">
+            <column name="code" type="varchar2" value="ACCEPT_INVESTIGATE"/>
+            <column name="lang" type="varchar2" value="KZ"/>
+            <column name="name" type="varchar2" value="Принят к рассмотрению"/>
+        </insert>
+
+        <insert schemaName="apps" tableName="wf_states_tl">
+            <column name="code" type="varchar2" value="SENT"/>
+            <column name="lang" type="varchar2" value="RU"/>
+            <column name="name" type="varchar2" value="Отправлен"/>
+        </insert>
+
+        <insert schemaName="apps" tableName="wf_states_tl">
+            <column name="code" type="varchar2" value="SENT"/>
+            <column name="lang" type="varchar2" value="KZ"/>
+            <column name="name" type="varchar2" value="Отправлен"/>
+        </insert>
+    </changeSet>
+
+    <changeSet id="fin-rus-156" logicalFilePath="path-independent" author="ruslan">
+        <comment>add column to wf_states_tl</comment>
+        <addColumn schemaName="apps" tableName="fin_total_delivery_headers">
+            <column name="description" type="varchar2(200)" remarks="Описание статуса">
+                <constraints nullable="true"/>
+            </column>
+        </addColumn>
+    </changeSet>
+
+    <changeSet id="fin-rus-157" logicalFilePath="path-independent" author="ruslan" context="dev">
+        <comment>insert into wf_states</comment>
+        <insert schemaName="apps" tableName="wf_states">
+            <column name="code" type="varchar2" value="EXPIRED"/>
+        </insert>
+    </changeSet>
+
+    <changeSet id="fin-rus-158" logicalFilePath="path-independent" author="ruslan" context="dev">
+        <comment>insert into wf_states_tl</comment>
+        <insert schemaName="apps" tableName="wf_states_tl">
+            <column name="code" type="varchar2" value="EXPIRED"/>
+            <column name="lang" type="varchar2" value="RU"/>
+            <column name="name" type="varchar2" value="Завершон"/>
+        </insert>
+
+        <insert schemaName="apps" tableName="wf_states_tl">
+            <column name="code" type="varchar2" value="EXPIRED"/>
+            <column name="lang" type="varchar2" value="KZ"/>
+            <column name="name" type="varchar2" value="Завершен"/>
+        </insert>
+    </changeSet>
+
+    <changeSet id="fin-rus-159" logicalFilePath="path-independent" author="ruslan">
+        <comment>update table</comment>
+        <sql dbms="postgres, oracle" endDelimiter=";" splitStatements="true" stripComments="true">
+           update apps.wf_states_tl
+            set name = 'Закрыт'
+            where code = 'CLOSE';
+        </sql>
+    </changeSet>
 </databaseChangeLog>
