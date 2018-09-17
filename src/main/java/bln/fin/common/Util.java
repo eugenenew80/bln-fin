@@ -1,5 +1,7 @@
 package bln.fin.common;
 
+import bln.fin.ws.server.MessageDto;
+
 import javax.xml.datatype.DatatypeConfigurationException;
 import javax.xml.datatype.DatatypeConstants;
 import javax.xml.datatype.DatatypeFactory;
@@ -40,4 +42,32 @@ public class Util {
             e = e.getCause();
         return e;
     }
+
+    public static MessageDto createErrorEmptyMessage() {
+        MessageDto msg = new MessageDto();
+        msg.setSystem("BIS");
+        msg.setMsgType("W");
+        msg.setMsgNum("1");
+        msg.setSapId(null);
+        msg.setMsg("Input data list is empty");
+        return msg;
+    }
+
+    public static MessageDto createErrorLineMessage(String sapId, Exception e) {
+        String err;
+        Throwable cause = getCause(e);
+        if (cause.getMessage()!=null)
+            err = cause.getMessage();
+        else
+            err = cause.getClass().getCanonicalName();
+
+        MessageDto msg = new MessageDto();
+        msg.setSystem("BIS");
+        msg.setMsgType("E");
+        msg.setMsgNum("2");
+        msg.setSapId(sapId);
+        msg.setMsg(err);
+        return msg;
+    }
+
 }
