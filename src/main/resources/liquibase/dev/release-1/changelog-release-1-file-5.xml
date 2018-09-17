@@ -407,8 +407,6 @@
                 startValue="1"/>
     </changeSet>
 
-
-
     <changeSet id="fin-eug-168" logicalFilePath="path-independent" author="eugene">
         <comment>Creating table: fin_invoice_line_interface</comment>
         <createTable tableName="fin_invoice_line_interface" schemaName="apps" remarks="Строки счетов-фактур  - интерфейсная таблица">
@@ -474,6 +472,563 @@
                 schemaName="apps"
                 sequenceName="fin_invoice_line_interface_s"
                 startValue="1"/>
+    </changeSet>
+
+
+
+    <changeSet id="fin-eug-171" logicalFilePath="path-independent" author="eugene">
+        <comment>Creating table: dict_bp_interface</comment>
+        <createTable tableName="dict_bp_interface" schemaName="apps" remarks="Деловые партнеры  - интерфейсная таблица">
+            <column name="id" type="number" remarks="Идентификатор">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="bp_num" type="varchar(30)" remarks="Номер делового партнера">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="search_group" type="varchar(30)" remarks="Группа">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="search_criteria" type="varchar(20)" remarks="Критерий поиска">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="found_date" type="date" remarks="Дата документа">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="liq_date" type="date" remarks="Дата ликвидации">
+                <constraints nullable="true"/>
+            </column>
+
+            <column name="industry" type="varchar(30)" remarks="Отрасль">
+                <constraints nullable="true"/>
+            </column>
+
+            <column name="tax_number_type" type="varchar(30)" remarks="Тип налогового номера">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="tax_number" type="varchar(20)" remarks="Налоговый номер">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="status" type="varchar2(1)" remarks="Статус обработки записи">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="ws_session_id" type="number" >
+                <constraints nullable="true"/>
+            </column>
+
+            <column name="create_date" type="TIMESTAMP" remarks="Дата создания">
+                <constraints nullable="true"/>
+            </column>
+
+            <column name="last_update_date" type="TIMESTAMP" remarks="Дата изменения">
+                <constraints nullable="true"/>
+            </column>
+
+            <column name="create_by" type="number" remarks="Автор">
+                <constraints nullable="true"/>
+            </column>
+
+            <column name="last_update_by" type="number" remarks="Автор изменения">
+                <constraints nullable="true"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="fin-eug-172" logicalFilePath="path-independent" author="eugene">
+        <comment>Creating primary key for table: dict_bp_interface</comment>
+        <addPrimaryKey
+                columnNames="id"
+                constraintName="pk_dict_bp_interface"
+                schemaName="apps"
+                tableName="dict_bp_interface"/>
+    </changeSet>
+
+    <changeSet id="fin-eug-173" logicalFilePath="path-independent" author="eugene">
+        <comment>Creating sequence for table: dict_bp_interface</comment>
+        <createSequence
+                incrementBy="1"
+                schemaName="apps"
+                sequenceName="dict_bp_interface_s"
+                startValue="1"/>
+    </changeSet>
+
+
+    <changeSet id="fin-eug-174" logicalFilePath="path-independent" author="eugene" context="dev">
+        <comment>Creating table: dict_bp_interface_tl</comment>
+        <createTable tableName="dict_bp_interface_tl" schemaName="apps" remarks="Перевод - деловые партнеры">
+            <column name="id" type="number" remarks="Идентификатор">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="bp_interface_id" type="number" remarks="Идентификатор родительской записи">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="lang" type="varchar(10)" remarks="язык">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="name" type="varchar(120)" remarks="Наименование делового партнера">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="full_name" type="varchar(500)" remarks="Полное наименование делового партнера">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="create_date" type="TIMESTAMP" remarks="Дата создания">
+                <constraints nullable="true"/>
+            </column>
+
+            <column name="last_update_date" type="TIMESTAMP" remarks="Дата изменения">
+                <constraints nullable="true"/>
+            </column>
+
+            <column name="create_by" type="number" remarks="Автор">
+                <constraints nullable="true"/>
+            </column>
+
+            <column name="last_update_by" type="number" remarks="Автор изменения">
+                <constraints nullable="true"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="fin-eug-175" logicalFilePath="path-independent" author="eugene" context="dev">
+        <comment>Creating primary key for table: dict_bp_interface_tl</comment>
+        <addPrimaryKey
+                columnNames="id"
+                constraintName="pk_dict_bp_interface_tl"
+                schemaName="apps"
+                tableName="dict_bp_interface_tl"/>
+    </changeSet>
+
+    <changeSet id="fin-eug-176" logicalFilePath="path-independent" author="eugene" context="dev">
+        <comment>Creating unique key for table: dict_bp_interface_tl</comment>
+        <addUniqueConstraint
+                columnNames="bp_interface_id, lang"
+                constraintName="uk_dict_bp_interface_tl_1"
+                schemaName="apps"
+                tableName="dict_bp_interface_tl"/>
+    </changeSet>
+
+    <changeSet id="fin-eug-177" logicalFilePath="path-independent" author="eugene" context="dev">
+        <comment>Creating sequence for table: dict_bp_interface_tl</comment>
+        <createSequence
+                incrementBy="1"
+                schemaName="apps"
+                sequenceName="dict_bp_interface_tl_s"
+                startValue="1"/>
+    </changeSet>
+
+    <changeSet id="fin-eug-178" logicalFilePath="path-independent" author="eugene" context="dev">
+        <comment>creating index for table: dict_bp_interface_tl</comment>
+        <createIndex indexName="idx_dict_bp_interface_tl_1" schemaName="apps" tableName="dict_bp_interface_tl">
+            <column name="bp_interface_id"  type="number"/>
+        </createIndex>
+    </changeSet>
+
+    <changeSet id="fin-eug-179" logicalFilePath="path-independent" author="eugene" context="dev">
+        <comment>Creating foreign constraint: dict_bp_interface_tl to dict_bp_interface</comment>
+        <addForeignKeyConstraint
+                baseTableSchemaName="apps"
+                baseTableName="dict_bp_interface_tl"
+                baseColumnNames="bp_interface_id"
+                constraintName="fk_dict_bp_interface_tl_1"
+                deferrable="true"
+                onDelete="CASCADE"
+                onUpdate="RESTRICT"
+                referencedTableSchemaName="apps"
+                referencedTableName="dict_bp_interface"
+                referencedColumnNames="id"
+        />
+    </changeSet>
+
+    <changeSet id="fin-eug-180" logicalFilePath="path-independent" author="eugene" context="dev">
+        <comment>Creating table: dict_bp_bank_account_interface</comment>
+        <createTable tableName="dict_bp_bank_account_interface" schemaName="apps" remarks="Банковские счета деловых партнеров - интерфейсная таблица">
+            <column name="id" type="number" remarks="Идентификатор">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="bp_interface_id" type="number" remarks="Идентификатор родительской записи">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="country" type="varchar(2)" remarks="Страна">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="bik" type="varchar(20)" remarks="БИК">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="account" type="varchar(40)" remarks="Банковский счет">
+                <constraints nullable="true"/>
+            </column>
+
+            <column name="iban" type="varchar(40)" remarks="IBAN">
+                <constraints nullable="true"/>
+            </column>
+
+            <column name="create_date" type="TIMESTAMP" remarks="Дата создания">
+                <constraints nullable="true"/>
+            </column>
+
+            <column name="last_update_date" type="TIMESTAMP" remarks="Дата изменения">
+                <constraints nullable="true"/>
+            </column>
+
+            <column name="create_by" type="number" remarks="Автор">
+                <constraints nullable="true"/>
+            </column>
+
+            <column name="last_update_by" type="number" remarks="Автор изменения">
+                <constraints nullable="true"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="fin-eug-181" logicalFilePath="path-independent" author="eugene" context="dev">
+        <comment>Creating primary key for table: dict_bp_bank_account_interface</comment>
+        <addPrimaryKey
+                columnNames="id"
+                constraintName="pk_dict_bp_bank_account_interface"
+                schemaName="apps"
+                tableName="dict_bp_bank_account_interface"/>
+    </changeSet>
+
+    <changeSet id="fin-eug-182" logicalFilePath="path-independent" author="eugene" context="dev">
+        <comment>Creating sequence for table: dict_bp_bank_account_interface</comment>
+        <createSequence
+                incrementBy="1"
+                schemaName="apps"
+                sequenceName="dict_bp_bank_account_interface_s"
+                startValue="1"/>
+    </changeSet>
+
+    <changeSet id="fin-eug-183" logicalFilePath="path-independent" author="eugene" context="dev">
+        <comment>creating index for table: dict_bp_interface_tl</comment>
+        <createIndex indexName="idx_dict_bp_bank_account_interface_1" schemaName="apps" tableName="dict_bp_bank_account_interface">
+            <column name="bp_interface_id"  type="number"/>
+        </createIndex>
+    </changeSet>
+
+    <changeSet id="fin-eug-184" logicalFilePath="path-independent" author="eugene" context="dev">
+        <comment>Creating foreign constraint: dict_bp_bank_account_interface to dict_bp_interface</comment>
+        <addForeignKeyConstraint
+                baseTableSchemaName="apps"
+                baseTableName="dict_bp_bank_account_interface"
+                baseColumnNames="bp_interface_id"
+                constraintName="fk_dict_bp_bank_account_interface_1"
+                deferrable="true"
+                onDelete="RESTRICT"
+                onUpdate="RESTRICT"
+                referencedTableSchemaName="apps"
+                referencedTableName="dict_bp_interface"
+                referencedColumnNames="id"
+        />
+    </changeSet>
+
+
+    <changeSet id="fin-eug-185" logicalFilePath="path-independent" author="eugene" context="dev">
+        <comment>Creating table: dict_bp_relation_interface</comment>
+        <createTable tableName="dict_bp_relation_interface" schemaName="apps" remarks="Отношения деловых партнеров - интерфейсная таблица">
+            <column name="id" type="number" remarks="Идентификатор">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="bp_interface_id" type="number" remarks="Идентификатор родительской записи">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="bp_num" type="varchar(30)" remarks="Номер делового партнера">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="relation_type" type="varchar(20)" remarks="БИК">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="create_date" type="TIMESTAMP" remarks="Дата создания">
+                <constraints nullable="true"/>
+            </column>
+
+            <column name="last_update_date" type="TIMESTAMP" remarks="Дата изменения">
+                <constraints nullable="true"/>
+            </column>
+
+            <column name="create_by" type="number" remarks="Автор">
+                <constraints nullable="true"/>
+            </column>
+
+            <column name="last_update_by" type="number" remarks="Автор изменения">
+                <constraints nullable="true"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="fin-eug-186" logicalFilePath="path-independent" author="eugene" context="dev">
+        <comment>Creating primary key for table: dict_bp_relation_interface</comment>
+        <addPrimaryKey
+                columnNames="id"
+                constraintName="pk_dict_bp_relation_interface"
+                schemaName="apps"
+                tableName="dict_bp_relation_interface"/>
+    </changeSet>
+
+    <changeSet id="fin-eug-187" logicalFilePath="path-independent" author="eugene" context="dev">
+        <comment>Creating sequence for table: dict_bp_relation_interface</comment>
+        <createSequence
+                incrementBy="1"
+                schemaName="apps"
+                sequenceName="dict_bp_relation_interface_s"
+                startValue="1"/>
+    </changeSet>
+
+    <changeSet id="fin-eug-188" logicalFilePath="path-independent" author="eugene" context="dev">
+        <comment>creating index for table: dict_bp_relation_interface</comment>
+        <createIndex indexName="idx_dict_bp_relation_interface_1" schemaName="apps" tableName="dict_bp_relation_interface">
+            <column name="bp_interface_id"  type="number"/>
+        </createIndex>
+    </changeSet>
+
+    <changeSet id="fin-eug-189" logicalFilePath="path-independent" author="eugene" context="dev">
+        <comment>Creating foreign constraint: dict_bp_relation_interface to dict_bp_interface</comment>
+        <addForeignKeyConstraint
+                baseTableSchemaName="apps"
+                baseTableName="dict_bp_relation_interface"
+                baseColumnNames="bp_interface_id"
+                constraintName="fk_dict_bp_relation_interface_1"
+                deferrable="true"
+                onDelete="RESTRICT"
+                onUpdate="RESTRICT"
+                referencedTableSchemaName="apps"
+                referencedTableName="dict_bp_interface"
+                referencedColumnNames="id"
+        />
+    </changeSet>
+
+
+    <changeSet id="fin-eug-190" logicalFilePath="path-independent" author="eugene" context="dev">
+        <comment>Creating table: dict_bp_address_interface</comment>
+        <createTable tableName="dict_bp_address_interface" schemaName="apps" remarks="Адреса - интерфейсная таблица">
+            <column name="id" type="number" remarks="Идентификатор">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="bp_interface_id" type="number" remarks="Идентификатор родительской записи">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="address_type" type="varchar(30)" remarks="Тип адреса">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="country" type="varchar(100)" remarks="Код страны">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="region" type="varchar(100)" remarks="Код региона">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="house_num" type="varchar(20)" remarks="№ дома">
+                <constraints nullable="true"/>
+            </column>
+
+            <column name="build_num" type="varchar(20)" remarks="№ строения">
+                <constraints nullable="true"/>
+            </column>
+
+            <column name="post_code" type="varchar(20)" remarks="Почтовый индекс">
+                <constraints nullable="true"/>
+            </column>
+
+            <column name="room" type="varchar(20)" remarks="№ кабинета">
+                <constraints nullable="true"/>
+            </column>
+
+            <column name="area" type="varchar(100)" remarks="Район">
+                <constraints nullable="true"/>
+            </column>
+
+            <column name="phone_num" type="varchar(20)" remarks="№ телефона">
+                <constraints nullable="true"/>
+            </column>
+
+            <column name="int_phone_num" type="varchar(20)" remarks="Внутренний №  телефона">
+                <constraints nullable="true"/>
+            </column>
+
+            <column name="cell_phone_num" type="varchar(20)" remarks="№ мобильного телефона">
+                <constraints nullable="true"/>
+            </column>
+
+            <column name="fax" type="varchar(20)" remarks="Факс">
+                <constraints nullable="true"/>
+            </column>
+
+            <column name="email" type="varchar(100)" remarks="Адрес электронной почты">
+                <constraints nullable="true"/>
+            </column>
+
+            <column name="create_date" type="TIMESTAMP" remarks="Дата создания">
+                <constraints nullable="true"/>
+            </column>
+
+            <column name="last_update_date" type="TIMESTAMP" remarks="Дата изменения">
+                <constraints nullable="true"/>
+            </column>
+
+            <column name="create_by" type="number" remarks="Автор">
+                <constraints nullable="true"/>
+            </column>
+
+            <column name="last_update_by" type="number" remarks="Автор изменения">
+                <constraints nullable="true"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="fin-eug-191" logicalFilePath="path-independent" author="eugene" context="dev">
+        <comment>Creating primary key for table: dict_bp_address_interface</comment>
+        <addPrimaryKey
+                columnNames="id"
+                constraintName="pk_dict_bp_address_interface"
+                schemaName="apps"
+                tableName="dict_bp_address_interface"/>
+    </changeSet>
+
+    <changeSet id="fin-eug-192" logicalFilePath="path-independent" author="eugene" context="dev">
+        <comment>Creating sequence for table: dict_bp_address_interface</comment>
+        <createSequence
+                incrementBy="1"
+                schemaName="apps"
+                sequenceName="dict_bp_address_interface_s"
+                startValue="1"/>
+    </changeSet>
+
+    <changeSet id="fin-eug-193" logicalFilePath="path-independent" author="eugene" context="dev">
+        <comment>creating index for table: dict_bp_address_interface</comment>
+        <createIndex indexName="idx_dict_bp_address_interface_1" schemaName="apps" tableName="dict_bp_address_interface">
+            <column name="bp_interface_id"  type="number"/>
+        </createIndex>
+    </changeSet>
+
+    <changeSet id="fin-eug-194" logicalFilePath="path-independent" author="eugene" context="dev">
+        <comment>Creating foreign constraint: dict_bp_address_interface to dict_bp_interface</comment>
+        <addForeignKeyConstraint
+                baseTableSchemaName="apps"
+                baseTableName="dict_bp_address_interface"
+                baseColumnNames="bp_interface_id"
+                constraintName="fk_dict_bp_address_interface_1"
+                deferrable="true"
+                onDelete="RESTRICT"
+                onUpdate="RESTRICT"
+                referencedTableSchemaName="apps"
+                referencedTableName="dict_bp_interface"
+                referencedColumnNames="id"
+        />
+    </changeSet>
+
+
+    <changeSet id="fin-eug-195" logicalFilePath="path-independent" author="eugene" context="dev">
+        <comment>Creating table: dict_bp_address_interface_tl</comment>
+        <createTable tableName="dict_bp_address_interface_tl" schemaName="apps" remarks="Перевод - адреса деловых партнеров - интерфейсная таблица">
+            <column name="id" type="number" remarks="Идентификатор">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="bp_address_interface_id" type="number" remarks="Идентификатор родительской записи">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="lang" type="varchar(10)" remarks="язык">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="city" type="varchar(100)" remarks="Город">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="street" type="varchar(100)" remarks="Улица">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="create_date" type="TIMESTAMP" remarks="Дата создания">
+                <constraints nullable="true"/>
+            </column>
+
+            <column name="last_update_date" type="TIMESTAMP" remarks="Дата изменения">
+                <constraints nullable="true"/>
+            </column>
+
+            <column name="create_by" type="number" remarks="Автор">
+                <constraints nullable="true"/>
+            </column>
+
+            <column name="last_update_by" type="number" remarks="Автор изменения">
+                <constraints nullable="true"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="fin-eug-196" logicalFilePath="path-independent" author="eugene" context="dev">
+        <comment>Creating primary key for table: dict_bp_address_interface_tl</comment>
+        <addPrimaryKey
+                columnNames="id"
+                constraintName="pk_dict_bp_address_interface_tl"
+                schemaName="apps"
+                tableName="dict_bp_address_interface_tl"/>
+    </changeSet>
+
+    <changeSet id="fin-eug-197" logicalFilePath="path-independent" author="eugene" context="dev">
+        <comment>Creating unique key for table: dict_bp_address_interface_tl</comment>
+        <addUniqueConstraint
+                columnNames="bp_address_interface_id, lang"
+                constraintName="uk_dict_bp_address_interface_tl_1"
+                schemaName="apps"
+                tableName="dict_bp_address_interface_tl"/>
+    </changeSet>
+
+    <changeSet id="fin-eug-198" logicalFilePath="path-independent" author="eugene" context="dev">
+        <comment>Creating sequence for table: dict_bp_address_interface_tl</comment>
+        <createSequence
+                incrementBy="1"
+                schemaName="apps"
+                sequenceName="dict_bp_address_interface_tl_s"
+                startValue="1"/>
+    </changeSet>
+
+    <changeSet id="fin-eug-199" logicalFilePath="path-independent" author="eugene" context="dev">
+        <comment>creating index for table: dict_bp_address_interface_tl</comment>
+        <createIndex indexName="idx_dict_bp_address_interface_tl_1" schemaName="apps" tableName="dict_bp_address_interface_tl">
+            <column name="bp_address_interface_id"  type="number"/>
+        </createIndex>
+    </changeSet>
+
+    <changeSet id="fin-eug-200" logicalFilePath="path-independent" author="eugene" context="dev">
+        <comment>Creating foreign constraint: dict_bp_address_interface_tl to dict_bp_address_interface</comment>
+        <addForeignKeyConstraint
+                baseTableSchemaName="apps"
+                baseTableName="dict_bp_address_interface_tl"
+                baseColumnNames="bp_address_interface_id"
+                constraintName="fk_dict_bp_address_interface_tl_1"
+                deferrable="true"
+                onDelete="CASCADE"
+                onUpdate="RESTRICT"
+                referencedTableSchemaName="apps"
+                referencedTableName="dict_bp_address_interface"
+                referencedColumnNames="id"
+        />
     </changeSet>
 
 </databaseChangeLog>

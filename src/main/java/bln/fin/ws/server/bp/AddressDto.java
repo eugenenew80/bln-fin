@@ -1,7 +1,6 @@
 package bln.fin.ws.server.bp;
 
 import lombok.Data;
-
 import javax.xml.bind.annotation.*;
 import java.util.List;
 
@@ -10,6 +9,10 @@ import java.util.List;
 @XmlType(name = "Address", namespace = "http://bis.kegoc.kz/soap")
 @Documentation("Адрес")
 public class AddressDto {
+
+    @XmlElement(required = true)
+    @Documentation("Тип адреса")
+    private String addressType;
 
     @XmlElement(required = true)
     @Documentation("Код страны")

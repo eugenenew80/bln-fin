@@ -1,7 +1,6 @@
 package bln.fin.ws.server.bp;
 
 import lombok.Data;
-
 import javax.xml.bind.annotation.*;
 import java.util.Date;
 import java.util.List;
@@ -48,7 +47,7 @@ public class BusinessPartnerDto {
     @Documentation("Перевод")
     private List<BusinessPartnerTranslateDto> translates;
 
-    @XmlElement(required = true)
+    @XmlElement(required = true, name = "address")
     @Documentation("Адреса")
     private List<AddressDto> addresses;
 

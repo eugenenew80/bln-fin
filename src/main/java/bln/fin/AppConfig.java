@@ -128,7 +128,7 @@ public class AppConfig  {
 
     @Bean
     public Endpoint endpoint4() {
-        EndpointImpl endpoint = new EndpointImpl(springBus(), new BusinessPartnerServiceImpl(businessPartnerRepo, sessionService));
+        EndpointImpl endpoint = new EndpointImpl(springBus(), new BusinessPartnerServiceImpl(businessPartnerInterfaceRepo, sessionService));
         endpoint.publish("/BusinessPartnerService");
         return endpoint;
     }
@@ -151,4 +151,7 @@ public class AppConfig  {
 
     @Autowired
     private final InvoiceStatusInterfaceRepo invoiceStatusInterfaceRepo;
+
+    @Autowired
+    private final BusinessPartnerInterfaceRepo businessPartnerInterfaceRepo;
 }
