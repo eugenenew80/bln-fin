@@ -7,6 +7,7 @@ import bln.fin.repo.*;
 import bln.fin.ws.SessionService;
 import bln.fin.ws.server.MessageDto;
 import lombok.RequiredArgsConstructor;
+import org.dozer.DozerBeanMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -23,6 +24,7 @@ public class DebtServiceImpl implements DebtService {
     private static final Logger logger = LoggerFactory.getLogger(DebtService.class);
     private final DebtInterfaceRepo debtInterfaceRepo;
     private final SessionService sessionService;
+    private final DozerBeanMapper mapper;
 
     @Override
     public List<MessageDto> createDebts(List<DebtDto> list) {
@@ -57,22 +59,10 @@ public class DebtServiceImpl implements DebtService {
                 .findFirst()
                 .orElse(new DebtInterface());
 
-            addMonitoring(debtInterface);
-            debtInterface.setBpType(debtDto.getBpType());
-            debtInterface.setBpNum(debtDto.getBpNum());
-            debtInterface.setContractNum(debtDto.getContractNum());
-            debtInterface.setExtContractNum(debtDto.getExtContractNum());
-            debtInterface.setDebtType(debtDto.getDebtType());
-            debtInterface.setAccountingDate(toLocalDate(debtDto.getAccountingDate()));
-            debtInterface.setAmount(debtDto.getAmount());
-            debtInterface.setBaseAmount(debtDto.getBaseAmount());
-            debtInterface.setCurrencyCode(debtDto.getCurrencyCode());
-            debtInterface.setExchangeRate(debtDto.getExchangeRate());
-            debtInterface.setDocNum(debtDto.getDocNum());
-            debtInterface.setDocDate(toLocalDate(debtDto.getDocDate()));
-            debtInterface.setCompanyCode(debtDto.getCompanyCode());
+            mapper.map(debtDto, debtInterface);
             debtInterface.setStatus(BatchStatusEnum.W);
             debtInterface.setSession(session);
+            addMonitoring(debtInterface);
 
             debtInterface = debtInterfaceRepo.save(debtInterface);
             msg = createSuccessLineMessage(sapId, debtInterface.getId().toString());
@@ -87,24 +77,8 @@ public class DebtServiceImpl implements DebtService {
     }
 
     private void debugRequest(List<DebtDto> list) {
-        logger.debug("List of input records");
-        for (DebtDto line: list) {
-            logger.debug("-----------------------");
-            logger.debug("bpType: " + line.getBpType());
-            logger.debug("debtType: " + line.getDebtType());
-            logger.debug("accountingDate: " + line.getAccountingDate());
-            logger.debug("amount: " + line.getAmount());
-            logger.debug("baseAmount: " + line.getBaseAmount());
-            logger.debug("exchangeRate: " + line.getExchangeRate());
-            logger.debug("currencyCode: " + line.getCurrencyCode());
-            logger.debug("docNum: " + line.getDocNum());
-            logger.debug("docDate: " + line.getDocDate());
-            logger.debug("bpNum: " + line.getBpNum());
-            logger.debug("contractNum: " + line.getContractNum());
-            logger.debug("extContractNum: " + line.getExtContractNum());
-            logger.debug("companyCode: " + line.getCompanyCode());
-            logger.debug("-----------------------");
-            logger.debug("");
-        }
+        logger.debug("---------------------------------");
+        for (DebtDto line: list) logger.debug(line.toString());
+        logger.debug("---------------------------------");
     }
 }

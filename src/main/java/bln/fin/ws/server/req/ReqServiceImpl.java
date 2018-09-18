@@ -58,10 +58,7 @@ public class ReqServiceImpl implements ReqService {
                 .findFirst()
                 .orElse(new ReqLineInterface());
 
-
             mapper.map(lineDto, line);
-
-            line = lineDto.toInterface(line);
             line.setStatus(BatchStatusEnum.W);
             line.setSession(session);
             addMonitoring(line);

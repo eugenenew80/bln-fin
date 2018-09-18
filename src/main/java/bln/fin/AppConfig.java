@@ -47,7 +47,11 @@ public class AppConfig  {
         DozerBeanMapper mapper = new DozerBeanMapper();
         mapper.setMappingFiles(Arrays.asList(
             "dozer/MappingConfig.xml",
-            "dozer/ReqLineDto.xml"
+            "dozer/ReqLineDto.xml",
+            "dozer/DebtDto.xml",
+            "dozer/InvoiceStatusDto.xml",
+            "dozer/InvoiceDto.xml",
+            "dozer/InvoiceLineDto.xml"
         ));
 
         return mapper;
@@ -120,21 +124,21 @@ public class AppConfig  {
 
     @Bean
     public Endpoint endpoint1() {
-        EndpointImpl endpoint = new EndpointImpl(springBus(), new DebtServiceImpl(debtInterfaceRepo, sessionService));
+        EndpointImpl endpoint = new EndpointImpl(springBus(), new DebtServiceImpl(debtInterfaceRepo, sessionService, dozerBeanMapper()));
         endpoint.publish("/DebtService");
         return endpoint;
     }
 
     @Bean
     public Endpoint endpoint2() {
-        EndpointImpl endpoint = new EndpointImpl(springBus(), new InvoiceServiceImpl(invoiceInterfaceRepo, invoiceStatusInterfaceRepo, sessionService));
+        EndpointImpl endpoint = new EndpointImpl(springBus(), new InvoiceServiceImpl(invoiceInterfaceRepo, invoiceStatusInterfaceRepo, sessionService, dozerBeanMapper()));
         endpoint.publish("/InvoiceService");
         return endpoint;
     }
 
     @Bean
     public Endpoint endpoint3() {
-        EndpointImpl endpoint = new EndpointImpl(springBus(), new ReqServiceImpl(reqLineInterfaceRepo, sessionService, mapper));
+        EndpointImpl endpoint = new EndpointImpl(springBus(), new ReqServiceImpl(reqLineInterfaceRepo, sessionService, dozerBeanMapper()));
         endpoint.publish("/ReqService");
         return endpoint;
     }
@@ -146,9 +150,6 @@ public class AppConfig  {
         return endpoint;
     }
 
-
-    @Autowired
-    private final BusinessPartnerRepo businessPartnerRepo;
 
     @Autowired
     private final SessionService sessionService;
@@ -167,7 +168,4 @@ public class AppConfig  {
 
     @Autowired
     private final BusinessPartnerInterfaceRepo businessPartnerInterfaceRepo;
-
-    @Autowired
-    private final DozerBeanMapper mapper;
 }
