@@ -1,6 +1,6 @@
 package bln.fin.ws.server.req;
 
-import bln.fin.entity.ReqLineInterface;
+import bln.fin.entity.pi.ReqLineInterface;
 import bln.fin.entity.SoapSession;
 import bln.fin.entity.enums.BatchStatusEnum;
 import bln.fin.entity.enums.DirectionEnum;

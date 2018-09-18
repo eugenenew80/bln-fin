@@ -1,4 +1,4 @@
-package bln.fin.entity;
+package bln.fin.entity.pi;
 
 import bln.fin.entity.interfaces.Monitored;
 import lombok.Data;
@@ -11,7 +11,7 @@ import java.time.LocalDateTime;
 @EqualsAndHashCode(of= {"id"})
 @Entity
 @Table(name = "dict_bp_bank_account_interface")
-public class BusinessPartnerBankAccountInterface implements Monitored {
+public class BpBankAccountInterface implements Monitored {
     @Id
     @SequenceGenerator(name="dict_bp_bank_account_interface_s", sequenceName = "dict_bp_bank_account_interface_s", allocationSize=1)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "dict_bp_bank_account_interface_s")
@@ -19,7 +19,7 @@ public class BusinessPartnerBankAccountInterface implements Monitored {
 
     @ManyToOne
     @JoinColumn(name = "bp_interface_id")
-    private BusinessPartnerInterface businessPartner;
+    private BpInterface businessPartner;
 
     @Column(name = "country")
     private String country;

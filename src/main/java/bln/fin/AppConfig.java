@@ -51,7 +51,13 @@ public class AppConfig  {
             "dozer/DebtDto.xml",
             "dozer/InvoiceStatusDto.xml",
             "dozer/InvoiceDto.xml",
-            "dozer/InvoiceLineDto.xml"
+            "dozer/InvoiceLineDto.xml",
+            "dozer/AddressDto.xml",
+            "dozer/AddressTranslateDto.xml",
+            "dozer/BankAccountDto.xml",
+            "dozer/RelationDto.xml",
+            "dozer/BusinessPartnerDto.xml",
+            "dozer/BusinessPartnerTranslateDto.xml"
         ));
 
         return mapper;
@@ -145,7 +151,7 @@ public class AppConfig  {
 
     @Bean
     public Endpoint endpoint4() {
-        EndpointImpl endpoint = new EndpointImpl(springBus(), new BusinessPartnerServiceImpl(businessPartnerInterfaceRepo, sessionService));
+        EndpointImpl endpoint = new EndpointImpl(springBus(), new BusinessPartnerServiceImpl(businessPartnerInterfaceRepo, sessionService, dozerBeanMapper()));
         endpoint.publish("/BusinessPartnerService");
         return endpoint;
     }

@@ -1,6 +1,6 @@
 package bln.fin.repo;
 
-import bln.fin.entity.InvoiceInterface;
+import bln.fin.entity.pi.InvoiceInterface;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 import java.time.LocalDate;

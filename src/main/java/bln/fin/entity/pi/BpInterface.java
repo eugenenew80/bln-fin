@@ -1,5 +1,6 @@
-package bln.fin.entity;
+package bln.fin.entity.pi;
 
+import bln.fin.entity.SoapSession;
 import bln.fin.entity.enums.BatchStatusEnum;
 import bln.fin.entity.interfaces.Monitored;
 import lombok.Data;
@@ -7,13 +8,13 @@ import lombok.EqualsAndHashCode;
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.List;
+import java.util.Set;
 
 @Data
 @EqualsAndHashCode(of= {"id"})
 @Entity
 @Table(name = "dict_bp_interface")
-public class BusinessPartnerInterface implements Monitored {
+public class BpInterface implements Monitored {
     @Id
     @SequenceGenerator(name="dict_bp_interface_s", sequenceName = "dict_bp_interface_s", allocationSize=1)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "dict_bp_interface_s")
@@ -52,16 +53,16 @@ public class BusinessPartnerInterface implements Monitored {
     private SoapSession session;
 
     @OneToMany(mappedBy = "businessPartner", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
-    private List<BusinessPartnerAddressInterface> addresses;
+    private Set<BpAddressInterface> addresses;
 
     @OneToMany(mappedBy = "businessPartner", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
-    private List<BusinessPartnerRelationInterface> relations;
+    private Set<BpRelationInterface> relations;
 
     @OneToMany(mappedBy = "businessPartner", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
-    private List<BusinessPartnerBankAccountInterface> bankAccounts;
+    private Set<BpBankAccountInterface> bankAccounts;
 
     @OneToMany(mappedBy = "businessPartner", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
-    private List<BusinessPartnerTranslateInterface> translates;
+    private Set<BpTranslateInterface> translates;
 
     @Column(name = "create_date")
     private LocalDateTime createDate;

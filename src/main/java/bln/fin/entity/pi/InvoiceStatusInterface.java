@@ -1,5 +1,6 @@
-package bln.fin.entity;
+package bln.fin.entity.pi;
 
+import bln.fin.entity.SoapSession;
 import bln.fin.entity.enums.BatchStatusEnum;
 import bln.fin.entity.interfaces.Monitored;
 import lombok.Data;

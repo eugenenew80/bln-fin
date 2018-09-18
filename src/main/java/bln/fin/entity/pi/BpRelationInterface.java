@@ -1,4 +1,4 @@
-package bln.fin.entity;
+package bln.fin.entity.pi;
 
 import bln.fin.entity.interfaces.Monitored;
 import lombok.Data;
@@ -10,7 +10,7 @@ import java.time.LocalDateTime;
 @EqualsAndHashCode(of= {"id"})
 @Entity
 @Table(name = "dict_bp_relation_interface")
-public class BusinessPartnerRelationInterface implements Monitored {
+public class BpRelationInterface implements Monitored {
     @Id
     @SequenceGenerator(name="dict_bp_relation_interface_s", sequenceName = "dict_bp_relation_interface_s", allocationSize=1)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "dict_bp_relation_interface_s")
@@ -18,7 +18,7 @@ public class BusinessPartnerRelationInterface implements Monitored {
 
     @ManyToOne
     @JoinColumn(name = "bp_interface_id")
-    private BusinessPartnerInterface businessPartner;
+    private BpInterface businessPartner;
 
     @Column(name = "relation_type")
     private String relationType;

@@ -1,5 +1,6 @@
-package bln.fin.entity;
+package bln.fin.entity.pi;
 
+import bln.fin.entity.SoapSession;
 import bln.fin.entity.enums.BatchStatusEnum;
 import bln.fin.entity.interfaces.Monitored;
 import lombok.Data;
@@ -7,16 +8,15 @@ import lombok.EqualsAndHashCode;
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.List;
 
 @Data
 @EqualsAndHashCode(of= {"id"})
 @Entity
-@Table(name = "fin_invoice_interface")
-public class InvoiceInterface implements Monitored {
+@Table(name = "fin_debt_interface")
+public class DebtInterface implements Monitored {
     @Id
-    @SequenceGenerator(name="fin_invoice_interface_s", sequenceName = "fin_invoice_interface_s", allocationSize=1)
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "fin_invoice_interface_s")
+    @SequenceGenerator(name="fin_debt_interface_s", sequenceName = "fin_debt_interface_s", allocationSize=1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "fin_debt_interface_s")
     private Long id;
 
     @Column(name = "bp_type")
@@ -31,29 +31,32 @@ public class InvoiceInterface implements Monitored {
     @Column(name = "ext_contract_num")
     private String extContractNum;
 
-    @Column(name = "doc_num")
-    private String docNum;
+    @Column(name = "debt_type")
+    private String debtType;
 
-    @Column(name = "doc_date")
-    private LocalDate docDate;
-
-    @Column(name = "ext_doc_num")
-    private String extDocNum;
-
-    @Column(name = "company_code")
-    private String companyCode;
+    @Column(name = "accounting_date")
+    private LocalDate accountingDate;
 
     @Column(name = "amount")
     private Double amount;
 
-    @Column(name = "tax")
-    private Double tax;
+    @Column(name = "base_amount")
+    private Double baseAmount;
 
     @Column(name = "currency_code")
     private String currencyCode;
 
     @Column(name = "exchange_rate")
     private Double exchangeRate;
+
+    @Column(name = "doc_num")
+    private String docNum;
+
+    @Column(name = "doc_date")
+    private LocalDate docDate;
+
+    @Column(name = "company_code")
+    private String companyCode;
 
     @Column(name="status")
     @Enumerated(EnumType.STRING)
@@ -68,7 +71,4 @@ public class InvoiceInterface implements Monitored {
 
     @Column(name = "last_update_date")
     private LocalDateTime lastUpdateDate;
-
-    @OneToMany(mappedBy = "invoice", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
-    private List<InvoiceLineInterface> lines;
 }

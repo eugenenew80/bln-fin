@@ -3,17 +3,17 @@ package bln.fin.ws.server.bp;
 import bln.fin.entity.*;
 import bln.fin.entity.enums.BatchStatusEnum;
 import bln.fin.entity.enums.DirectionEnum;
+import bln.fin.entity.pi.*;
 import bln.fin.repo.BusinessPartnerInterfaceRepo;
 import bln.fin.ws.SessionService;
 import bln.fin.ws.server.MessageDto;
 import lombok.RequiredArgsConstructor;
+import org.dozer.DozerBeanMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import javax.jws.WebService;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 import static bln.fin.common.Util.*;
 import static java.util.stream.Collectors.toList;
 
@@ -24,6 +24,7 @@ public class BusinessPartnerServiceImpl implements BusinessPartnerService {
     private static final Logger logger = LoggerFactory.getLogger(BusinessPartnerService.class);
     private final BusinessPartnerInterfaceRepo businessPartnerInterfaceRepo;
     private final SessionService sessionService;
+    private final DozerBeanMapper mapper;
 
     @Override
     public List<MessageDto> createBusinessPartners(List<BusinessPartnerDto> list) {
@@ -45,131 +46,50 @@ public class BusinessPartnerServiceImpl implements BusinessPartnerService {
         return messages;
     }
 
-    private MessageDto createBusinessPartner(BusinessPartnerDto businessPartnerDto, SoapSession session) {
-        logger.debug("Creating line:: bpNum = " + businessPartnerDto.getBpNum());
+    private MessageDto createBusinessPartner(BusinessPartnerDto bpDto, SoapSession session) {
+        logger.debug("Creating line:: bpNum = " + bpDto.getBpNum());
 
-        String sapId = businessPartnerDto.getBpNum()!=null ? businessPartnerDto.getBpNum() : "";
+        String sapId = bpDto.getBpNum()!=null ? bpDto.getBpNum() : "";
         MessageDto msg;
         try {
-            BusinessPartnerInterface bp = businessPartnerInterfaceRepo.findByBpNum(businessPartnerDto.getBpNum())
+            BpInterface bp = businessPartnerInterfaceRepo.findByBpNum(bpDto.getBpNum())
                 .stream()
                 .filter(t -> t.getStatus() == BatchStatusEnum.W)
                 .findFirst()
-                .orElse(new BusinessPartnerInterface());
+                .orElse(new BpInterface());
 
-            addMonitoring(bp);
-            bp.setBpNum(businessPartnerDto.getBpNum());
-            bp.setGroup(businessPartnerDto.getGroup());
-            bp.setSearchCriteria(businessPartnerDto.getSearchCriteria());
-            bp.setFoundDate(toLocalDate(businessPartnerDto.getFoundDate()));
-            bp.setLiqDate(toLocalDate(businessPartnerDto.getLiqDate()));
-            bp.setIndustry(businessPartnerDto.getIndustry());
-            bp.setTaxNumberType(businessPartnerDto.getTaxNumberType());
-            bp.setTaxNumber(businessPartnerDto.getTaxNumber());
+            mapper.map(bpDto, bp);
             bp.setStatus(BatchStatusEnum.W);
             bp.setSession(session);
+            addMonitoring(bp);
 
-            if (bp.getTranslates()==null)
-                bp.setTranslates(new ArrayList<>());
-
-            for (BusinessPartnerTranslateDto businessPartnerTranslateDto : businessPartnerDto.getTranslates()) {
-                BusinessPartnerTranslateInterface tl = bp.getTranslates()
-                    .stream()
-                    .filter(t -> t.getLang().equals(businessPartnerTranslateDto.getLang()))
-                    .findFirst()
-                    .orElse(new BusinessPartnerTranslateInterface());
-
-                addMonitoring(tl);
-                tl.setBusinessPartner(bp);
-                tl.setLang(businessPartnerTranslateDto.getLang());
-                tl.setName(businessPartnerTranslateDto.getName());
-                tl.setFullName(businessPartnerTranslateDto.getFullName());
-                bp.getTranslates().add(tl);
+            bp.setTranslates(Optional.ofNullable(bp.getTranslates()).orElse(new HashSet<>()));
+            for (BusinessPartnerTranslateDto bpTranslateDto : bpDto.getTranslates()) {
+                BpTranslateInterface bpTranslate = getBpTranslate(bp, bpTranslateDto);
+                bp.getTranslates().add(bpTranslate);
             }
 
-
-            if (bp.getBankAccounts()==null)
-                bp.setBankAccounts(new ArrayList<>());
-
-            for (BankAccountDto bankAccountDto : businessPartnerDto.getBankAccounts()) {
-                BusinessPartnerBankAccountInterface ba = bp.getBankAccounts()
-                    .stream()
-                    .filter(t -> t.getAccount().equals(bankAccountDto.getAccount()))
-                    .findFirst()
-                    .orElse(new BusinessPartnerBankAccountInterface());
-
-                addMonitoring(ba);
-                ba.setBusinessPartner(bp);
-                ba.setBik(bankAccountDto.getBik());
-                ba.setAccount(bankAccountDto.getAccount());
-                ba.setIban(bankAccountDto.getIban());
-                ba.setCountry(bankAccountDto.getCountry());
+            bp.setBankAccounts(Optional.ofNullable(bp.getBankAccounts()).orElse(new HashSet<>()));
+            for (BankAccountDto baDto : bpDto.getBankAccounts()) {
+                BpBankAccountInterface ba = getBankAccount(bp, baDto);
                 bp.getBankAccounts().add(ba);
             }
 
-
-            if (bp.getRelations()==null)
-                bp.setRelations(new ArrayList<>());
-
-            for (RelationDto relationDto : businessPartnerDto.getRelations()) {
-                BusinessPartnerRelationInterface rel = bp.getRelations()
-                    .stream()
-                    .filter(t -> t.getBpNum().equals(relationDto.getBpNum()))
-                    .findFirst()
-                    .orElse(new BusinessPartnerRelationInterface());
-
-                addMonitoring(rel);
-                rel.setBusinessPartner(bp);
-                rel.setBpNum(relationDto.getBpNum());
-                rel.setRelationType(relationDto.getRelationType());
+            bp.setRelations(Optional.ofNullable(bp.getRelations()).orElse(new HashSet<>()));
+            for (RelationDto relDto : bpDto.getRelations()) {
+                BpRelationInterface rel = getRelation(bp, relDto);
                 bp.getRelations().add(rel);
             }
 
-
-            if (bp.getAddresses()==null)
-                bp.setAddresses(new ArrayList<>());
-
-            for (AddressDto addressDto : businessPartnerDto.getAddresses()) {
-                BusinessPartnerAddressInterface address = bp.getAddresses()
-                    .stream()
-                    .filter(t -> t.getAddressType().equals(addressDto.getAddressType()))
-                    .findFirst()
-                    .orElse(new BusinessPartnerAddressInterface());
-
-                addMonitoring(address);
-                address.setBusinessPartner(bp);
-                address.setAddressType(addressDto.getAddressType());
-                address.setCountry(addressDto.getCountry());
-                address.setRegion(addressDto.getRegion());
-                address.setHouseNum(addressDto.getHouseNum());
-                address.setBuildNum(addressDto.getBuildNum());
-                address.setPostCode(addressDto.getPostCode());
-                address.setRoom(addressDto.getRoom());
-                address.setArea(addressDto.getArea());
-                address.setPhoneNum(addressDto.getPhoneNum());
-                address.setIntPhoneNum(addressDto.getIntPhoneNum());
-                address.setCellPhoneNum(addressDto.getCellPhoneNum());
-                address.setFax(addressDto.getFax());
-                address.setEmail(addressDto.getEmail());
-                address.setArea(addressDto.getArea());
+            bp.setAddresses(Optional.ofNullable(bp.getAddresses()).orElse(new HashSet<>()));
+            for (AddressDto bpAddressDto : bpDto.getAddresses()) {
+                BpAddressInterface address = getAddress(bp, bpAddressDto);
                 bp.getAddresses().add(address);
 
-                if (address.getTranslates() == null)
-                    address.setTranslates(new ArrayList<>());
-
-                for (AddressTranslateDto addressTranslateDto : addressDto.getTranslates()) {
-                    BusinessPartnerAddressTranslateInterface tl = address.getTranslates()
-                        .stream()
-                        .filter(t -> t.getLang().equals(addressTranslateDto.getLang()))
-                        .findFirst()
-                        .orElse(new BusinessPartnerAddressTranslateInterface());
-
-                    addMonitoring(tl);
-                    tl.setAddress(address);
-                    tl.setLang(addressTranslateDto.getLang());
-                    tl.setCity(addressTranslateDto.getCity());
-                    tl.setStreet(addressTranslateDto.getStreet());
-                    address.getTranslates().add(tl);
+                address.setTranslates(Optional.ofNullable(address.getTranslates()).orElse(new HashSet<>()));
+                for (AddressTranslateDto bpAddressTranslateDto : bpAddressDto.getTranslates()) {
+                    BpAddressTranslateInterface addressTranslate = getAddressTranslate(address, bpAddressTranslateDto);
+                    address.getTranslates().add(addressTranslate);
                 }
             }
 
@@ -182,6 +102,71 @@ public class BusinessPartnerServiceImpl implements BusinessPartnerService {
             msg = createErrorLineMessage(sapId, e);
         }
         return msg;
+    }
+
+    private BpTranslateInterface getBpTranslate(BpInterface bp, BusinessPartnerTranslateDto bpTranslateDto) {
+        BpTranslateInterface bpTranslate = bp.getTranslates()
+            .stream()
+            .filter(t -> t.getLang().equals(bpTranslateDto.getLang()))
+            .findFirst()
+            .orElse(new BpTranslateInterface());
+
+        mapper.map(bpTranslateDto, bpTranslate);
+        bpTranslate.setBusinessPartner(bp);
+        addMonitoring(bpTranslate);
+        return bpTranslate;
+    }
+
+    private BpBankAccountInterface getBankAccount(BpInterface bp, BankAccountDto baDto) {
+        BpBankAccountInterface ba = bp.getBankAccounts()
+            .stream()
+            .filter(t -> t.getAccount().equals(baDto.getAccount()))
+            .findFirst()
+            .orElse(new BpBankAccountInterface());
+
+        mapper.map(baDto, ba);
+        ba.setBusinessPartner(bp);
+        addMonitoring(ba);
+        return ba;
+    }
+
+    private BpRelationInterface getRelation(BpInterface bp, RelationDto relDto) {
+        BpRelationInterface rel = bp.getRelations()
+            .stream()
+            .filter(t -> t.getBpNum().equals(relDto.getBpNum()))
+            .findFirst()
+            .orElse(new BpRelationInterface());
+
+        mapper.map(relDto, rel);
+        rel.setBusinessPartner(bp);
+        addMonitoring(rel);
+        return rel;
+    }
+
+    private BpAddressInterface getAddress(BpInterface bp, AddressDto bpAddressDto) {
+        BpAddressInterface address = bp.getAddresses()
+            .stream()
+            .filter(t -> t.getAddressType().equals(bpAddressDto.getAddressType()))
+            .findFirst()
+            .orElse(new BpAddressInterface());
+
+        mapper.map(bpAddressDto, address);
+        address.setBusinessPartner(bp);
+        addMonitoring(address);
+        return address;
+    }
+
+    private BpAddressTranslateInterface getAddressTranslate(BpAddressInterface address, AddressTranslateDto bpAddressTranslateDto) {
+        BpAddressTranslateInterface addressTranslate = address.getTranslates()
+            .stream()
+            .filter(t -> t.getLang().equals(bpAddressTranslateDto.getLang()))
+            .findFirst()
+            .orElse(new BpAddressTranslateInterface());
+
+        mapper.map(bpAddressTranslateDto, addressTranslate);
+        addressTranslate.setAddress(address);
+        addMonitoring(addressTranslate);
+        return addressTranslate;
     }
 
     private void debugRequest(List<BusinessPartnerDto> list) {

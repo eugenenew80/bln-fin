@@ -6,6 +6,6 @@
 
     <mapping map-null="false" map-empty-string="false" trim-strings="true">
         <class-a>bln.fin.ws.server.invoice.InvoiceStatusDto</class-a>
-        <class-b>bln.fin.entity.InvoiceStatusInterface</class-b>
+        <class-b>bln.fin.entity.pi.InvoiceStatusInterface</class-b>
     </mapping>
 </mappings>

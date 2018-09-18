@@ -3,6 +3,9 @@ package bln.fin.ws.server.invoice;
 import bln.fin.entity.*;
 import bln.fin.entity.enums.BatchStatusEnum;
 import bln.fin.entity.enums.DirectionEnum;
+import bln.fin.entity.pi.InvoiceInterface;
+import bln.fin.entity.pi.InvoiceLineInterface;
+import bln.fin.entity.pi.InvoiceStatusInterface;
 import bln.fin.repo.*;
 import bln.fin.ws.SessionService;
 import bln.fin.ws.server.MessageDto;
@@ -12,10 +15,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import javax.jws.WebService;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
+
 import static bln.fin.common.Util.*;
 import static java.util.stream.Collectors.toList;
 
@@ -114,7 +115,7 @@ public class InvoiceServiceImpl implements InvoiceService {
             invoiceInterface.setSession(session);
             addMonitoring(invoiceInterface);
 
-            invoiceInterface.setLines(Optional.ofNullable(invoiceInterface.getLines()).orElse(new ArrayList<>()));
+            invoiceInterface.setLines(Optional.ofNullable(invoiceInterface.getLines()).orElse(new HashSet<>()));
             for (InvoiceLineDto invoiceLineDto : invoiceDto.getLines()) {
                 InvoiceLineInterface invoiceLineInterface = createInvoiceLine(invoiceInterface, invoiceLineDto);
                 invoiceInterface.getLines().add(invoiceLineInterface);

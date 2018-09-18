@@ -1,17 +1,17 @@
-package bln.fin.entity;
+package bln.fin.entity.pi;
 
 import bln.fin.entity.interfaces.Monitored;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import javax.persistence.*;
 import java.time.LocalDateTime;
-import java.util.List;
+import java.util.Set;
 
 @Data
 @EqualsAndHashCode(of= {"id"})
 @Entity
 @Table(name = "dict_bp_address_interface")
-public class BusinessPartnerAddressInterface implements Monitored {
+public class BpAddressInterface implements Monitored {
     @Id
     @SequenceGenerator(name="dict_bp_address_interface_s", sequenceName = "dict_bp_address_interface_s", allocationSize=1)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "dict_bp_address_interface_s")
@@ -19,7 +19,7 @@ public class BusinessPartnerAddressInterface implements Monitored {
 
     @ManyToOne
     @JoinColumn(name = "bp_interface_id")
-    private BusinessPartnerInterface businessPartner;
+    private BpInterface businessPartner;
 
     @Column(name = "address_type")
     private String addressType;
@@ -61,7 +61,7 @@ public class BusinessPartnerAddressInterface implements Monitored {
     private String email;
 
     @OneToMany(mappedBy = "address", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
-    private List<BusinessPartnerAddressTranslateInterface> translates;
+    private Set<BpAddressTranslateInterface> translates;
 
     @Column(name = "create_date")
     private LocalDateTime createDate;

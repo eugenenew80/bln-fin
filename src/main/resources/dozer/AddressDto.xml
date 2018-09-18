@@ -5,12 +5,12 @@
           http://dozer.sourceforge.net/schema/beanmapping.xsd">
 
     <mapping map-null="false" map-empty-string="false" trim-strings="true">
-        <class-a>bln.fin.ws.server.invoice.InvoiceDto</class-a>
-        <class-b>bln.fin.entity.pi.InvoiceInterface</class-b>
+        <class-a>bln.fin.ws.server.bp.AddressDto</class-a>
+        <class-b>bln.fin.entity.pi.BpAddressInterface</class-b>
 
         <field-exclude>
-            <a>lines</a>
-            <b>lines</b>
+            <a>translates</a>
+            <b>translates</b>
         </field-exclude>
     </mapping>
 </mappings>

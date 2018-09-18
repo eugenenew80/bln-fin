@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mappings xmlns="http://dozer.sourceforge.net"
+          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+          xsi:schemaLocation="http://dozer.sourceforge.net
+          http://dozer.sourceforge.net/schema/beanmapping.xsd">
+
+    <mapping map-null="false" map-empty-string="false" trim-strings="true">
+        <class-a>bln.fin.ws.server.bp.BusinessPartnerDto</class-a>
+        <class-b>bln.fin.entity.pi.BpInterface</class-b>
+
+        <field-exclude>
+            <a>addresses</a>
+            <b>addresses</b>
+        </field-exclude>
+
+        <field-exclude>
+            <a>bankAccounts</a>
+            <b>bankAccounts</b>
+        </field-exclude>
+
+        <field-exclude>
+            <a>relations</a>
+            <b>relations</b>
+        </field-exclude>
+
+        <field-exclude>
+            <a>translates</a>
+            <b>translates</b>
+        </field-exclude>
+    </mapping>
+</mappings>

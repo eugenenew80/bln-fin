@@ -3,6 +3,7 @@ package bln.fin.ws.server.debt;
 import bln.fin.entity.*;
 import bln.fin.entity.enums.BatchStatusEnum;
 import bln.fin.entity.enums.DirectionEnum;
+import bln.fin.entity.pi.DebtInterface;
 import bln.fin.repo.*;
 import bln.fin.ws.SessionService;
 import bln.fin.ws.server.MessageDto;

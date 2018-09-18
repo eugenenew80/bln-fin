@@ -1,4 +1,4 @@
-package bln.fin.entity;
+package bln.fin.entity.pi;
 
 import bln.fin.entity.interfaces.Monitored;
 import lombok.Data;
@@ -10,7 +10,7 @@ import java.time.LocalDateTime;
 @EqualsAndHashCode(of= {"id"})
 @Entity
 @Table(name = "dict_bp_address_interface_tl")
-public class BusinessPartnerAddressTranslateInterface implements Monitored {
+public class BpAddressTranslateInterface implements Monitored {
     @Id
     @SequenceGenerator(name="dict_bp_address_interface_tl_s", sequenceName = "dict_bp_address_interface_tl_s", allocationSize=1)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "dict_bp_address_interface_tl_s")
@@ -18,7 +18,7 @@ public class BusinessPartnerAddressTranslateInterface implements Monitored {
 
     @ManyToOne
     @JoinColumn(name = "bp_address_interface_id")
-    private BusinessPartnerAddressInterface address;
+    private BpAddressInterface address;
 
     @Column(name="lang")
     private String lang;
