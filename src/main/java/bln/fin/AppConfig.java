@@ -17,6 +17,7 @@ import org.apache.cxf.Bus;
 import org.apache.cxf.bus.spring.SpringBus;
 import org.apache.cxf.jaxws.EndpointImpl;
 import org.apache.cxf.transport.servlet.CXFServlet;
+import org.dozer.DozerBeanMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.web.servlet.ServletRegistrationBean;
 import org.springframework.context.annotation.Bean;
@@ -25,6 +26,7 @@ import org.springframework.oxm.jaxb.Jaxb2Marshaller;
 import org.springframework.ws.client.core.WebServiceTemplate;
 import org.springframework.ws.client.support.interceptor.ClientInterceptor;
 import javax.xml.ws.Endpoint;
+import java.util.Arrays;
 
 @Configuration
 @RequiredArgsConstructor
@@ -37,6 +39,17 @@ public class AppConfig  {
         mapper.registerModule(new JavaTimeModule());
         mapper.registerModule(new Jdk8Module());
         mapper.configure(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS, false);
+        return mapper;
+    }
+
+    @Bean
+    public DozerBeanMapper dozerBeanMapper() {
+        DozerBeanMapper mapper = new DozerBeanMapper();
+        mapper.setMappingFiles(Arrays.asList(
+            "dozer/MappingConfig.xml",
+            "dozer/ReqLineDto.xml"
+        ));
+
         return mapper;
     }
 
@@ -121,7 +134,7 @@ public class AppConfig  {
 
     @Bean
     public Endpoint endpoint3() {
-        EndpointImpl endpoint = new EndpointImpl(springBus(), new ReqServiceImpl(reqLineInterfaceRepo, sessionService));
+        EndpointImpl endpoint = new EndpointImpl(springBus(), new ReqServiceImpl(reqLineInterfaceRepo, sessionService, mapper));
         endpoint.publish("/ReqService");
         return endpoint;
     }
@@ -154,4 +167,7 @@ public class AppConfig  {
 
     @Autowired
     private final BusinessPartnerInterfaceRepo businessPartnerInterfaceRepo;
+
+    @Autowired
+    private final DozerBeanMapper mapper;
 }

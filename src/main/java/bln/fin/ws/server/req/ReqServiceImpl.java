@@ -8,6 +8,7 @@ import bln.fin.repo.ReqLineInterfaceRepo;
 import bln.fin.ws.SessionService;
 import bln.fin.ws.server.MessageDto;
 import lombok.RequiredArgsConstructor;
+import org.dozer.DozerBeanMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -24,6 +25,7 @@ public class ReqServiceImpl implements ReqService {
     private static final Logger logger = LoggerFactory.getLogger(ReqService.class);
     private final ReqLineInterfaceRepo reqLineInterfaceRepo;
     private final SessionService sessionService;
+    private final DozerBeanMapper mapper;
 
     @Override
     public List<MessageDto> createReqLines(List<ReqLineDto> list) {
@@ -55,6 +57,9 @@ public class ReqServiceImpl implements ReqService {
                 .filter(t -> t.getStatus() == BatchStatusEnum.W)
                 .findFirst()
                 .orElse(new ReqLineInterface());
+
+
+            mapper.map(lineDto, line);
 
             line = lineDto.toInterface(line);
             line.setStatus(BatchStatusEnum.W);
