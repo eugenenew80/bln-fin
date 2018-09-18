@@ -185,20 +185,8 @@ public class BusinessPartnerServiceImpl implements BusinessPartnerService {
     }
 
     private void debugRequest(List<BusinessPartnerDto> list) {
-        logger.debug("List of input records");
-        for (BusinessPartnerDto line: list) {
-            logger.debug("-----------------------");
-            logger.debug("bpNum: " + line.getBpNum());
-            logger.debug("group: " + line.getGroup());
-            logger.debug("searchCriteria: " + line.getSearchCriteria());
-            logger.debug("foundDate: " + line.getFoundDate());
-            logger.debug("liqDate: " + line.getLiqDate());
-            logger.debug("industry: " + line.getIndustry());
-            logger.debug("taxNumberType: " + line.getTaxNumberType());
-            logger.debug("taxNumber: " + line.getTaxNumber());
-            logger.debug("industry: " + line.getIndustry());
-            logger.debug("-----------------------");
-            logger.debug("");
-        }
+        logger.debug("-----------------------");
+        for (BusinessPartnerDto line: list) logger.debug(line.toString());
+        logger.debug("-----------------------");
     }
 }
