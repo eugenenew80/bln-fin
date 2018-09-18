@@ -24,21 +24,22 @@ public class InvoiceClientServiceImpl implements InvoiceClientService {
     @Override
     public void sendByCustomer(Long vendorId, Long customerId) {
         List<SaleInvoice> invoices = saleInvoiceRepo.findAllByVendorIdAndCustomerId(vendorId, customerId);
-        request(invoices);
+        //request(invoices);
     }
 
     @Override
     public void sendByContract(Long contractId) {
         List<SaleInvoice> invoices = saleInvoiceRepo.findAllByContractId(contractId);
-        request(invoices);
+        //request(invoices);
     }
 
     @Override
     public void sendOne(Long invoiceId) {
         List<SaleInvoice> invoices = Arrays.asList(saleInvoiceRepo.findOne(invoiceId));
-        request(invoices);
+        //request(invoices);
     }
 
+    /*
     private void request(List<SaleInvoice> invoices) {
         List<sap.saleInvoice.EstimatedChargeInvoices.Item> items = createItems(invoices);
         if (items.isEmpty())
@@ -129,6 +130,7 @@ public class InvoiceClientServiceImpl implements InvoiceClientService {
         lineDto.setAmount(lineDto.getAmount());
         return lineDto;
     }
+    */
 
     private void updateHeaders(List<SaleInvoice> invoices) {
         for (SaleInvoice invoice: invoices)

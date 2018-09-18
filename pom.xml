@@ -76,7 +76,7 @@
                             <generatePackage>sap.plan</generatePackage>
                             <generateDirectory>${project.basedir}/src/main/java</generateDirectory>
                             <schemaDirectory>${project.basedir}/src/main/resources/wsdl</schemaDirectory>
-                            <schemaIncludes><include>BIS_SalesPlan.wsdl</include></schemaIncludes>
+                            <schemaIncludes><include>BIS_SalesPlanService.wsdl</include></schemaIncludes>
                         </configuration>
                     </execution>
 
@@ -112,10 +112,10 @@
                             <goal>generate</goal>
                         </goals>
                         <configuration>
-                            <generatePackage>sap.saleInvoice</generatePackage>
+                            <generatePackage>sap.invoice</generatePackage>
                             <generateDirectory>${project.basedir}/src/main/java</generateDirectory>
                             <schemaDirectory>${project.basedir}/src/main/resources/wsdl</schemaDirectory>
-                            <schemaIncludes><include>BIS_LO_EstimatedChargeInvoices.wsdl</include></schemaIncludes>
+                            <schemaIncludes><include>BIS_EstimatedChargeInvoicesService.wsdl</include></schemaIncludes>
                         </configuration>
                     </execution>
 
@@ -125,10 +125,10 @@
                             <goal>generate</goal>
                         </goals>
                         <configuration>
-                            <generatePackage>sap.saleInvoiceRev</generatePackage>
+                            <generatePackage>sap.invoiceRev</generatePackage>
                             <generateDirectory>${project.basedir}/src/main/java</generateDirectory>
                             <schemaDirectory>${project.basedir}/src/main/resources/wsdl</schemaDirectory>
-                            <schemaIncludes><include>SaleInvoiceRevService.wsdl</include></schemaIncludes>
+                            <schemaIncludes><include>BIS_ReversedInvoiceService.wsdl</include></schemaIncludes>
                         </configuration>
                     </execution>
                 </executions>
@@ -164,7 +164,7 @@
                 <driver>oracle.jdbc.OracleDriver</driver>
                 <url>jdbc:oracle:thin:@192.168.82.33:1521:blndprod</url>
                 <username>system</username>
-                <password>${settings.servers.server.ora.password}</password>
+                <!-- <password>${settings.servers.server.ora.password}</password> -->
                 <scripts>dev</scripts>
                 <skipTests>true</skipTests>
             </properties>

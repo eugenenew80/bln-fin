@@ -32,14 +32,29 @@ public class InvoiceInterface implements Monitored {
     @Column(name = "ext_contract_num")
     private String extContractNum;
 
+    @Column(name = "doc_type")
+    private String docType;
+
     @Column(name = "doc_num")
     private String docNum;
+
+    @Column(name = "ext_doc_num")
+    private String extDocNum;
+
+    @Column(name = "src_doc_num")
+    private String srcDocNum;
+
+    @Column(name = "order_num")
+    private String orderNum;
 
     @Column(name = "doc_date")
     private LocalDate docDate;
 
-    @Column(name = "ext_doc_num")
-    private String extDocNum;
+    @Column(name = "accounting_date")
+    private LocalDate accountingDate;
+
+    @Column(name = "turnover_date")
+    private LocalDate turnoverDate;
 
     @Column(name = "company_code")
     private String companyCode;

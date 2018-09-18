@@ -20,6 +20,12 @@ public class InvoiceLineInterface implements Monitored {
     @JoinColumn(name = "invoice_interface_id")
     private InvoiceInterface invoice;
 
+    @Column(name = "bp_num")
+    private String bpNum;
+
+    @Column(name = "item_num")
+    private Long itemNum;
+
     @Column(name = "pos_num")
     private Long posNum;
 
@@ -32,8 +38,14 @@ public class InvoiceLineInterface implements Monitored {
     @Column(name = "quantity")
     private Double quantity;
 
+    @Column(name = "price")
+    private Double price;
+
     @Column(name = "amount")
     private Double amount;
+
+    @Column(name = "tax_rate")
+    private Double taxRate;
 
     @Column(name = "create_date")
     private LocalDateTime createDate;
