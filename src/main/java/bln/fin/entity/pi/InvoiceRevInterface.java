@@ -17,6 +17,9 @@ public class InvoiceRevInterface implements Monitored {
     @Id
     private Long id;
 
+    @Column(name = "bp_type")
+    protected String bpType;
+
     @Column(name = "doc_num")
     protected String docNum;
 

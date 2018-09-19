@@ -1031,4 +1031,119 @@
         />
     </changeSet>
 
+    <changeSet id="fin-eug-201" logicalFilePath="path-independent" author="eugene">
+        <comment>Adding column to table: fin_invoice_interface</comment>
+        <addColumn tableName="fin_invoice_interface" schemaName="apps">
+            <column name="accounting_date" type="date" remarks="Дата проводки">
+                <constraints nullable="true"/>
+            </column>
+
+            <column name="turnover_date" type="date" remarks="Дата совершения оборота">
+                <constraints nullable="true"/>
+            </column>
+
+            <column name="doc_type" type="varchar2(20)" remarks="Тип документа">
+                <constraints nullable="true"/>
+            </column>
+
+            <column name="src_doc_num" type="varchar2(30)" remarks="Номер исходного документа">
+                <constraints nullable="true"/>
+            </column>
+
+            <column name="order_num" type="varchar2(30)" remarks="Номер заказа">
+                <constraints nullable="true"/>
+            </column>
+
+        </addColumn>
+    </changeSet>
+
+    <changeSet id="fin-eug-202" logicalFilePath="path-independent" author="eugene">
+        <comment>Adding column to table: fin_invoice_line_interface</comment>
+        <addColumn tableName="fin_invoice_line_interface" schemaName="apps">
+            <column name="item_num" type="varchar2(30)" remarks="Номер основной записи материала">
+                <constraints nullable="true"/>
+            </column>
+
+            <column name="bp_num" type="varchar2(30)" remarks="Номер основной записи делового партнера">
+                <constraints nullable="true"/>
+            </column>
+
+            <column name="price" type="number" remarks="Цена за единицу">
+                <constraints nullable="true"/>
+            </column>
+
+            <column name="tax_rate" type="number" remarks="Ставка налога">
+                <constraints nullable="true"/>
+            </column>
+        </addColumn>
+    </changeSet>
+
+
+    <changeSet id="fin-eug-203" logicalFilePath="path-independent" author="eugene">
+        <comment>Creating table: fin_invoice_rev_interface</comment>
+        <createTable tableName="fin_invoice_rev_interface" schemaName="apps" remarks="Сторнирование счетов-фактур - интерфейсная таблица">
+            <column name="id" type="number" remarks="Идентификатор">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="bp_type" type="varchar(1)" remarks="Тип делового партнера">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="doc_num" type="varchar(30)" remarks="Номер документа">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="doc_date" type="date" remarks="Дата документа">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="rev_date" type="date" remarks="Дата сторнирования">
+                <constraints nullable="true"/>
+            </column>
+
+            <column name="status" type="varchar2(1)" remarks="Статус обработки записи">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="ws_session_id" type="number" >
+                <constraints nullable="true"/>
+            </column>
+
+            <column name="create_date" type="TIMESTAMP" remarks="Дата создания">
+                <constraints nullable="true"/>
+            </column>
+
+            <column name="last_update_date" type="TIMESTAMP" remarks="Дата изменения">
+                <constraints nullable="true"/>
+            </column>
+
+            <column name="create_by" type="number" remarks="Автор">
+                <constraints nullable="true"/>
+            </column>
+
+            <column name="last_update_by" type="number" remarks="Автор изменения">
+                <constraints nullable="true"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="fin-eug-204" logicalFilePath="path-independent" author="eugene">
+        <comment>Creating primary key for table: fin_invoice_rev_interface</comment>
+        <addPrimaryKey
+                columnNames="id"
+                constraintName="pk_fin_invoice_rev_interface"
+                schemaName="apps"
+                tableName="fin_invoice_rev_interface"/>
+    </changeSet>
+
+    <changeSet id="fin-eug-205" logicalFilePath="path-independent" author="eugene">
+        <comment>Creating sequence for table: fin_invoice_rev_interface</comment>
+        <createSequence
+                incrementBy="1"
+                schemaName="apps"
+                sequenceName="fin_invoice_rev_interface_s"
+                startValue="1"/>
+    </changeSet>
+
 </databaseChangeLog>
