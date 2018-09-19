@@ -1146,4 +1146,100 @@
                 startValue="1"/>
     </changeSet>
 
+
+    <changeSet id="fin-eug-206" logicalFilePath="path-independent" author="eugene">
+        <comment>Creating table: fin_sale_plan_interface</comment>
+        <createTable tableName="fin_sale_plan_interface" schemaName="apps" remarks="Прогнозные данные - интерфейсная таблица">
+            <column name="id" type="number" remarks="Идентификатор">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="bp_num" type="varchar(30)" remarks="Номер делового партнера в ERP">
+                <constraints nullable="true"/>
+            </column>
+
+            <column name="item_num" type="varchar2(30)" remarks="Номер основной записи материала">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="version" type="number" >
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="forecast_type" type="varchar2(1)" remarks="Тип прогноза">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="start_date" type="date" remarks="Дата начала периода">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="end_date" type="date" remarks="Дата окончания периода">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="quantity" type="number" >
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="amount" type="number" >
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="currency_code" type="varchar2(3)" remarks="Валюта">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="company_code" type="varchar2(4)" remarks="Код балансовой единицы">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="channel" type="varchar2(2)" remarks="Канал сбыта">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="status" type="varchar2(1)" remarks="Статус обработки записи">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="ws_session_id" type="number" >
+                <constraints nullable="true"/>
+            </column>
+
+            <column name="create_date" type="TIMESTAMP" remarks="Дата создания">
+                <constraints nullable="true"/>
+            </column>
+
+            <column name="last_update_date" type="TIMESTAMP" remarks="Дата изменения">
+                <constraints nullable="true"/>
+            </column>
+
+            <column name="create_by" type="number" remarks="Автор">
+                <constraints nullable="true"/>
+            </column>
+
+            <column name="last_update_by" type="number" remarks="Автор изменения">
+                <constraints nullable="true"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="fin-eug-207" logicalFilePath="path-independent" author="eugene">
+        <comment>Creating primary key for table: fin_sale_plan_interface</comment>
+        <addPrimaryKey
+                columnNames="id"
+                constraintName="pk_fin_sale_plan_interface"
+                schemaName="apps"
+                tableName="fin_sale_plan_interface"/>
+    </changeSet>
+
+    <changeSet id="fin-eug-208" logicalFilePath="path-independent" author="eugene">
+        <comment>Creating sequence for table: fin_sale_plan_interface</comment>
+        <createSequence
+                incrementBy="1"
+                schemaName="apps"
+                sequenceName="fin_sale_plan_interface_s"
+                startValue="1"/>
+    </changeSet>
+
 </databaseChangeLog>

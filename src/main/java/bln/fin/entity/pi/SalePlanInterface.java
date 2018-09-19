@@ -41,7 +41,7 @@ public class SalePlanInterface implements Monitored {
     @Column(name = "amount")
     private double amount;
 
-    @Column(name = "currency")
+    @Column(name = "currency_code")
     private String currency;
 
     @Column(name = "company_code")
