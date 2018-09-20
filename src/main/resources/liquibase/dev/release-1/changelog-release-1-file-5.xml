@@ -1264,4 +1264,27 @@
             comment on column apps.fin_sale_plan_interface.ws_session_id is 'Идентификатор сессии';
         </sql>
     </changeSet>
+
+    <changeSet id="fin-eug-211" logicalFilePath="path-independent" author="eugene">
+        <comment>Drop column from table: dict_bp_relation_interface</comment>
+        <dropColumn schemaName="apps" tableName="dict_bp_relation_interface" columnName="bp_interface_id" />
+        <rollback />
+    </changeSet>
+
+    <changeSet id="fin-eug-212" logicalFilePath="path-independent" author="eugene">
+        <comment>Add column to table: dict_bp_relation_interface</comment>
+        <addColumn schemaName="apps" tableName="dict_bp_relation_interface">
+            <column name="status" type="varchar2(1)" remarks="Статус обработки записи">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="ws_session_id" type="number" remarks="Идентификатор сеанса" >
+                <constraints nullable="true"/>
+            </column>
+
+            <column name="bp_num_rel" type="varchar(30)" remarks="Номер делового партнера, с которым есть отношение">
+                <constraints nullable="false"/>
+            </column>
+        </addColumn>
+    </changeSet>
 </databaseChangeLog>
