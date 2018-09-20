@@ -4,7 +4,8 @@ import bln.fin.entity.*;
 import bln.fin.entity.enums.BatchStatusEnum;
 import bln.fin.entity.enums.DirectionEnum;
 import bln.fin.entity.pi.*;
-import bln.fin.repo.BusinessPartnerInterfaceRepo;
+import bln.fin.repo.BpInterfaceRepo;
+import bln.fin.repo.BpRelationInterfaceRepo;
 import bln.fin.ws.SessionService;
 import bln.fin.ws.server.MessageDto;
 import lombok.RequiredArgsConstructor;
@@ -22,7 +23,8 @@ import static java.util.stream.Collectors.toList;
 @WebService(endpointInterface = "bln.fin.ws.server.bp.BusinessPartnerService", portName = "BusinessPartnerPort", serviceName = "BusinessPartnerService", targetNamespace = "http://bis.kegoc.kz/soap")
 public class BusinessPartnerServiceImpl implements BusinessPartnerService {
     private static final Logger logger = LoggerFactory.getLogger(BusinessPartnerService.class);
-    private final BusinessPartnerInterfaceRepo businessPartnerInterfaceRepo;
+    private final BpInterfaceRepo bpInterfaceRepo;
+    private final BpRelationInterfaceRepo bpRelationInterfaceRepo;
     private final SessionService sessionService;
     private final DozerBeanMapper mapper;
 
@@ -46,13 +48,63 @@ public class BusinessPartnerServiceImpl implements BusinessPartnerService {
         return messages;
     }
 
+    @Override
+    public List<MessageDto> createRelations(List<RelationDto> list) {
+        if (list == null) {
+            logger.warn("Input data list is empty");
+            return Arrays.asList(createErrorEmptyMessage());
+        }
+
+        logger.info("started");
+        debugRelRequest(list);
+        SoapSession session = sessionService.createSession("BP_REL", DirectionEnum.IMPORT);
+
+        List<MessageDto> messages = list.stream()
+            .map(t -> createRelation(t, session))
+            .collect(toList());
+
+        sessionService.successSession(session, (long) list.size());
+        logger.info("completed");
+        return messages;
+    }
+
+
+    private MessageDto createRelation(RelationDto relDto, SoapSession session) {
+        logger.debug("Creating line:: bpNum = " + relDto.getBpNum());
+        String sapId = relDto.getBpNum()!=null ? relDto.getBpNum() : "";
+        MessageDto msg;
+
+        try {
+            BpRelationInterface rel = bpRelationInterfaceRepo.findByRelationTypeAndBpNumAAndBpNumRel(relDto.getRelationType(), relDto.getBpNum(), relDto.getBpNumRel())
+                .stream()
+                .filter(t -> t.getStatus() == BatchStatusEnum.W)
+                .findFirst()
+                .orElse(new BpRelationInterface());
+
+            mapper.map(relDto, rel);
+            rel.setStatus(BatchStatusEnum.W);
+            rel.setSession(session);
+            addMonitoring(rel);
+
+            rel = bpRelationInterfaceRepo.save(rel);
+            msg = createSuccessLineMessage(sapId, rel.getId().toString());
+            logger.debug("Creating line successfully completed");
+        }
+
+        catch (Exception e) {
+            logger.debug("Error during creating line: " + e.getMessage());
+            msg = createErrorLineMessage(sapId, e);
+        }
+        return msg;
+    }
+
     private MessageDto createBusinessPartner(BusinessPartnerDto bpDto, SoapSession session) {
         logger.debug("Creating line:: bpNum = " + bpDto.getBpNum());
 
         String sapId = bpDto.getBpNum()!=null ? bpDto.getBpNum() : "";
         MessageDto msg;
         try {
-            BpInterface bp = businessPartnerInterfaceRepo.findByBpNum(bpDto.getBpNum())
+            BpInterface bp = bpInterfaceRepo.findByBpNum(bpDto.getBpNum())
                 .stream()
                 .filter(t -> t.getStatus() == BatchStatusEnum.W)
                 .findFirst()
@@ -75,12 +127,6 @@ public class BusinessPartnerServiceImpl implements BusinessPartnerService {
                 bp.getBankAccounts().add(ba);
             }
 
-            bp.setRelations(Optional.ofNullable(bp.getRelations()).orElse(new HashSet<>()));
-            for (RelationDto relDto : bpDto.getRelations()) {
-                BpRelationInterface rel = getRelation(bp, relDto);
-                bp.getRelations().add(rel);
-            }
-
             bp.setAddresses(Optional.ofNullable(bp.getAddresses()).orElse(new HashSet<>()));
             for (AddressDto bpAddressDto : bpDto.getAddresses()) {
                 BpAddressInterface address = getAddress(bp, bpAddressDto);
@@ -93,7 +139,7 @@ public class BusinessPartnerServiceImpl implements BusinessPartnerService {
                 }
             }
 
-            bp = businessPartnerInterfaceRepo.save(bp);
+            bp = bpInterfaceRepo.save(bp);
             msg = createSuccessLineMessage(sapId, bp.getId().toString());
             logger.debug("Creating line successfully completed");
         }
@@ -130,19 +176,6 @@ public class BusinessPartnerServiceImpl implements BusinessPartnerService {
         return ba;
     }
 
-    private BpRelationInterface getRelation(BpInterface bp, RelationDto relDto) {
-        BpRelationInterface rel = bp.getRelations()
-            .stream()
-            .filter(t -> t.getBpNum().equals(relDto.getBpNum()))
-            .findFirst()
-            .orElse(new BpRelationInterface());
-
-        mapper.map(relDto, rel);
-        rel.setBusinessPartner(bp);
-        addMonitoring(rel);
-        return rel;
-    }
-
     private BpAddressInterface getAddress(BpInterface bp, AddressDto bpAddressDto) {
         BpAddressInterface address = bp.getAddresses()
             .stream()
@@ -172,6 +205,12 @@ public class BusinessPartnerServiceImpl implements BusinessPartnerService {
     private void debugRequest(List<BusinessPartnerDto> list) {
         logger.debug("-----------------------");
         for (BusinessPartnerDto line: list) logger.debug(line.toString());
+        logger.debug("-----------------------");
+    }
+
+    private void debugRelRequest(List<RelationDto> list) {
+        logger.debug("-----------------------");
+        for (RelationDto line: list) logger.debug(line.toString());
         logger.debug("-----------------------");
     }
 }

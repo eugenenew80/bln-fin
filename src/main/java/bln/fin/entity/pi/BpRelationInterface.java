@@ -1,5 +1,7 @@
 package bln.fin.entity.pi;
 
+import bln.fin.entity.SoapSession;
+import bln.fin.entity.enums.BatchStatusEnum;
 import bln.fin.entity.interfaces.Monitored;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -16,15 +18,22 @@ public class BpRelationInterface implements Monitored {
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "dict_bp_relation_interface_s")
     private Long id;
 
-    @ManyToOne
-    @JoinColumn(name = "bp_interface_id")
-    private BpInterface businessPartner;
-
     @Column(name = "relation_type")
     private String relationType;
 
     @Column(name = "bp_num")
     private String bpNum;
+
+    @Column(name = "bp_num_rel")
+    private String bpNumRel;
+
+    @Column(name="status")
+    @Enumerated(EnumType.STRING)
+    private BatchStatusEnum status;
+
+    @ManyToOne
+    @JoinColumn(name = "ws_session_id")
+    private SoapSession session;
 
     @Column(name = "create_date")
     private LocalDateTime createDate;

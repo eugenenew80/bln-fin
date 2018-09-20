@@ -13,4 +13,8 @@ public interface BusinessPartnerService {
     @WebMethod(action = "createBusinessPartners")
     @WebResult(name = "msg")
     List<MessageDto> createBusinessPartners(@WebParam(name = "bp") List<BusinessPartnerDto> list);
+
+    @WebMethod(action = "createBusinessPartners")
+    @WebResult(name = "msg")
+    List<MessageDto> createRelations(@WebParam(name = "rel") List<RelationDto> list);
 }

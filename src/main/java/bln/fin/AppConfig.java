@@ -151,7 +151,7 @@ public class AppConfig  {
 
     @Bean
     public Endpoint endpoint4() {
-        EndpointImpl endpoint = new EndpointImpl(springBus(), new BusinessPartnerServiceImpl(businessPartnerInterfaceRepo, sessionService, dozerBeanMapper()));
+        EndpointImpl endpoint = new EndpointImpl(springBus(), new BusinessPartnerServiceImpl(bpInterfaceRepo, bpRelationInterfaceRepo, sessionService, dozerBeanMapper()));
         endpoint.publish("/BusinessPartnerService");
         return endpoint;
     }
@@ -173,5 +173,8 @@ public class AppConfig  {
     private final InvoiceStatusInterfaceRepo invoiceStatusInterfaceRepo;
 
     @Autowired
-    private final BusinessPartnerInterfaceRepo businessPartnerInterfaceRepo;
+    private final BpInterfaceRepo bpInterfaceRepo;
+
+    @Autowired
+    private final BpRelationInterfaceRepo bpRelationInterfaceRepo;
 }

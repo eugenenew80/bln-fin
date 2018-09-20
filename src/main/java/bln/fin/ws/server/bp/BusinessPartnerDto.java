@@ -54,8 +54,4 @@ public class BusinessPartnerDto {
     @XmlElement(name = "bankAccount")
     @Documentation("Список банковских счетов")
     private List<BankAccountDto> bankAccounts;
-
-    @XmlElement(name = "relation")
-    @Documentation("Отношения")
-    private List<RelationDto> relations;
 }
