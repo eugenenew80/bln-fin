@@ -1242,4 +1242,26 @@
                 startValue="1"/>
     </changeSet>
 
+    <changeSet id="fin-eug-209" logicalFilePath="path-independent" author="eugene">
+        <comment>Drop not null constraint for table: fin_req_line_interface</comment>
+        <dropNotNullConstraint schemaName="apps" tableName="fin_req_line_interface" columnName="pos_name" />
+        <dropNotNullConstraint schemaName="apps" tableName="fin_req_line_interface" columnName="unit" />
+        <dropNotNullConstraint schemaName="apps" tableName="fin_req_line_interface" columnName="quantity" />
+        <dropNotNullConstraint schemaName="apps" tableName="fin_req_line_interface" columnName="unit_price" />
+        <dropNotNullConstraint schemaName="apps" tableName="fin_req_line_interface" columnName="currency_code" />
+        <dropNotNullConstraint schemaName="apps" tableName="fin_req_line_interface" columnName="company_code" />
+        <dropNotNullConstraint schemaName="apps" tableName="fin_req_line_interface" columnName="expected_date" />
+    </changeSet>
+
+    <changeSet id="fin-eug-210" logicalFilePath="path-independent" author="ruslan" context="dev">
+        <comment>Add comments to the columns fin_req_line_interface</comment>
+        <sql dbms="postgres, oracle" endDelimiter=";" splitStatements="true" stripComments="true">
+            comment on column apps.fin_req_line_interface.item_num       is 'Номер основной записи материала';
+            comment on column apps.fin_req_line_interface.unit_price     is 'Цена за единицу';
+            comment on column apps.fin_sale_plan_interface.version       is 'Версия';
+            comment on column apps.fin_sale_plan_interface.quantity      is 'Количество';
+            comment on column apps.fin_sale_plan_interface.amount        is 'Сумма';
+            comment on column apps.fin_sale_plan_interface.ws_session_id is 'Идентификатор сессии';
+        </sql>
+    </changeSet>
 </databaseChangeLog>
