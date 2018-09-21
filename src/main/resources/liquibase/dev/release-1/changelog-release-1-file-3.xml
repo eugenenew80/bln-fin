@@ -4182,4 +4182,92 @@
             where code = 'CLOSE';
         </sql>
     </changeSet>
+
+    <changeSet id="fin-rus-160" logicalFilePath="path-independent" author="ruslan">
+        <comment>add column to wf_object_workflows</comment>
+        <addColumn schemaName="apps" tableName="wf_object_workflows">
+            <column name="name" type="varchar2(100)" remarks="Описание рабочего потока">
+                <constraints nullable="true"/>
+            </column>
+        </addColumn>
+    </changeSet>
+
+    <changeSet id="fin-rus-161" logicalFilePath="path-independent" author="ruslan">
+        <comment>drop table: wf_object_workflows_tl</comment>
+        <dropTable cascadeConstraints="true"
+                   schemaName="apps"
+                   tableName="wf_object_workflows_tl"/>
+    </changeSet>
+
+    <changeSet id="fin-rus-162" logicalFilePath="path-independent" author="ruslan">
+        <comment>drop not null constraint wf_routes</comment>
+        <dropNotNullConstraint columnDataType="date"
+                               columnName="create_date"
+                               schemaName="apps"
+                               tableName="wf_routes"/>
+        <rollback/>
+    </changeSet>
+
+    <changeSet id="fin-rus-163" logicalFilePath="path-independent" author="ruslan">
+        <comment>drop not null constraint wf_routes</comment>
+        <dropNotNullConstraint columnDataType="date"
+                               columnName="last_update_date"
+                               schemaName="apps"
+                               tableName="wf_routes"/>
+        <rollback/>
+    </changeSet>
+
+    <changeSet id="fin-rus-164" logicalFilePath="path-independent" author="ruslan">
+        <comment>drop not null constraint wf_routes</comment>
+        <dropNotNullConstraint columnDataType="number"
+                               columnName="last_update_by"
+                               schemaName="apps"
+                               tableName="wf_routes"/>
+        <rollback/>
+    </changeSet>
+
+    <changeSet id="fin-rus-165" logicalFilePath="path-independent" author="ruslan">
+        <comment>drop not null constraint wf_routes</comment>
+        <dropNotNullConstraint columnDataType="number"
+                               columnName="create_by"
+                               schemaName="apps"
+                               tableName="wf_routes"/>
+        <rollback/>
+    </changeSet>
+
+    <changeSet id="fin-rus-166" logicalFilePath="path-independent" author="ruslan">
+        <comment>drop not null constraint wf_route_users</comment>
+        <dropNotNullConstraint columnDataType="date"
+                               columnName="create_date"
+                               schemaName="apps"
+                               tableName="wf_route_users"/>
+        <rollback/>
+    </changeSet>
+
+    <changeSet id="fin-rus-167" logicalFilePath="path-independent" author="ruslan">
+        <comment>drop not null constraint wf_route_users</comment>
+        <dropNotNullConstraint columnDataType="date"
+                               columnName="last_update_date"
+                               schemaName="apps"
+                               tableName="wf_route_users"/>
+        <rollback/>
+    </changeSet>
+
+    <changeSet id="fin-rus-168" logicalFilePath="path-independent" author="ruslan">
+        <comment>drop not null constraint wf_route_users</comment>
+        <dropNotNullConstraint columnDataType="number"
+                               columnName="last_update_by"
+                               schemaName="apps"
+                               tableName="wf_route_users"/>
+        <rollback/>
+    </changeSet>
+
+    <changeSet id="fin-rus-169" logicalFilePath="path-independent" author="ruslan">
+        <comment>drop not null constraint wf_route_users</comment>
+        <dropNotNullConstraint columnDataType="number"
+                               columnName="create_by"
+                               schemaName="apps"
+                               tableName="wf_route_users"/>
+        <rollback/>
+    </changeSet>
 </databaseChangeLog>
