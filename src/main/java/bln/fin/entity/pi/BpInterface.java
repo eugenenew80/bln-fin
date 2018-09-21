@@ -56,9 +56,6 @@ public class BpInterface implements Monitored {
     private Set<BpAddressInterface> addresses;
 
     @OneToMany(mappedBy = "businessPartner", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
-    private Set<BpRelationInterface> relations;
-
-    @OneToMany(mappedBy = "businessPartner", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     private Set<BpBankAccountInterface> bankAccounts;
 
     @OneToMany(mappedBy = "businessPartner", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)

@@ -1242,4 +1242,49 @@
                 startValue="1"/>
     </changeSet>
 
+    <changeSet id="fin-eug-209" logicalFilePath="path-independent" author="eugene">
+        <comment>Drop not null constraint for table: fin_req_line_interface</comment>
+        <dropNotNullConstraint schemaName="apps" tableName="fin_req_line_interface" columnName="pos_name" />
+        <dropNotNullConstraint schemaName="apps" tableName="fin_req_line_interface" columnName="unit" />
+        <dropNotNullConstraint schemaName="apps" tableName="fin_req_line_interface" columnName="quantity" />
+        <dropNotNullConstraint schemaName="apps" tableName="fin_req_line_interface" columnName="unit_price" />
+        <dropNotNullConstraint schemaName="apps" tableName="fin_req_line_interface" columnName="currency_code" />
+        <dropNotNullConstraint schemaName="apps" tableName="fin_req_line_interface" columnName="company_code" />
+        <dropNotNullConstraint schemaName="apps" tableName="fin_req_line_interface" columnName="expected_date" />
+    </changeSet>
+
+    <changeSet id="fin-eug-210" logicalFilePath="path-independent" author="ruslan" context="dev">
+        <comment>Add comments to the columns fin_req_line_interface</comment>
+        <sql dbms="postgres, oracle" endDelimiter=";" splitStatements="true" stripComments="true">
+            comment on column apps.fin_req_line_interface.item_num       is 'Номер основной записи материала';
+            comment on column apps.fin_req_line_interface.unit_price     is 'Цена за единицу';
+            comment on column apps.fin_sale_plan_interface.version       is 'Версия';
+            comment on column apps.fin_sale_plan_interface.quantity      is 'Количество';
+            comment on column apps.fin_sale_plan_interface.amount        is 'Сумма';
+            comment on column apps.fin_sale_plan_interface.ws_session_id is 'Идентификатор сессии';
+        </sql>
+    </changeSet>
+
+    <changeSet id="fin-eug-211" logicalFilePath="path-independent" author="eugene">
+        <comment>Drop column from table: dict_bp_relation_interface</comment>
+        <dropColumn schemaName="apps" tableName="dict_bp_relation_interface" columnName="bp_interface_id" />
+        <rollback />
+    </changeSet>
+
+    <changeSet id="fin-eug-212" logicalFilePath="path-independent" author="eugene">
+        <comment>Add column to table: dict_bp_relation_interface</comment>
+        <addColumn schemaName="apps" tableName="dict_bp_relation_interface">
+            <column name="status" type="varchar2(1)" remarks="Статус обработки записи">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="ws_session_id" type="number" remarks="Идентификатор сеанса" >
+                <constraints nullable="true"/>
+            </column>
+
+            <column name="bp_num_rel" type="varchar(30)" remarks="Номер делового партнера, с которым есть отношение">
+                <constraints nullable="false"/>
+            </column>
+        </addColumn>
+    </changeSet>
 </databaseChangeLog>

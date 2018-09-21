@@ -11,7 +11,7 @@ import java.util.List;
 public class AddressDto {
 
     @XmlElement(required = true)
-    @Documentation("Тип адреса")
+    @Documentation("Тип адреса: ACTUAL - фактический, LEGAL - юридический")
     private String addressType;
 
     @XmlElement(required = true)

@@ -6,6 +6,6 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface BusinessPartnerInterfaceRepo extends JpaRepository<BpInterface, Long> {
+public interface BpInterfaceRepo extends JpaRepository<BpInterface, Long> {
     List<BpInterface> findByBpNum(String bpNum);
 }
