@@ -92,5 +92,5 @@ public class ContractInterface implements Monitored {
     private LocalDateTime lastUpdateDate;
 
     @OneToMany(mappedBy = "contract", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
-    private Set<ContractInterface> lines;
+    private Set<ContractLineInterface> lines;
 }

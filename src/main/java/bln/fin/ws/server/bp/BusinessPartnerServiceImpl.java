@@ -75,7 +75,7 @@ public class BusinessPartnerServiceImpl implements BusinessPartnerService {
         MessageDto msg;
 
         try {
-            BpRelationInterface rel = bpRelationInterfaceRepo.findByRelationTypeAndBpNumAAndBpNumRel(relDto.getRelationType(), relDto.getBpNum(), relDto.getBpNumRel())
+            BpRelationInterface rel = bpRelationInterfaceRepo.findByRelationTypeAndBpNumAndBpNumRel(relDto.getRelationType(), relDto.getBpNum(), relDto.getBpNumRel())
                 .stream()
                 .filter(t -> t.getStatus() == BatchStatusEnum.W)
                 .findFirst()

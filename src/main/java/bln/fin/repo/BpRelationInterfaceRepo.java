@@ -7,5 +7,5 @@ import java.util.List;
 
 @Repository
 public interface BpRelationInterfaceRepo extends JpaRepository<BpRelationInterface, Long> {
-    List<BpRelationInterface> findByRelationTypeAndBpNumAAndBpNumRel(String relationType, String bpNum, String bpNumRel);
+    List<BpRelationInterface> findByRelationTypeAndBpNumAndBpNumRel(String relationType, String bpNum, String bpNumRel);
 }
