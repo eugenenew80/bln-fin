@@ -1,8 +1,8 @@
 package bln.fin.repo;
 
-import bln.fin.entity.pi.Session;
+import bln.fin.entity.pi.SessionMessage;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface SessionRepo extends JpaRepository<Session, Long> { }
+public interface SessionMessageRepo extends JpaRepository<SessionMessage, Long> { }

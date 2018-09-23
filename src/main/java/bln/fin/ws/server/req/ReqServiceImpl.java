@@ -1,7 +1,7 @@
 package bln.fin.ws.server.req;
 
 import bln.fin.entity.pi.ReqLineInterface;
-import bln.fin.entity.SoapSession;
+import bln.fin.entity.pi.Session;
 import bln.fin.entity.enums.BatchStatusEnum;
 import bln.fin.entity.enums.DirectionEnum;
 import bln.fin.repo.ReqLineInterfaceRepo;
@@ -36,7 +36,7 @@ public class ReqServiceImpl implements ReqService {
 
         logger.info("started");
         debugRequest(list);
-        SoapSession session = sessionService.createSession("REQ", DirectionEnum.IMPORT);
+        Session session = sessionService.createSession("REQ", DirectionEnum.IMPORT);
 
         List<MessageDto> messages = list.stream()
             .map(t -> createReq(t, session))
@@ -47,7 +47,7 @@ public class ReqServiceImpl implements ReqService {
         return messages;
     }
 
-    private MessageDto createReq(ReqLineDto lineDto, SoapSession session) {
+    private MessageDto createReq(ReqLineDto lineDto, Session session) {
         MessageDto msg;
         String sapId = lineDto.getReqNum()!=null ? lineDto.getReqNum().toString() : "";
         try {

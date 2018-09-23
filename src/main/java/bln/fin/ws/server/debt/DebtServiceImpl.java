@@ -1,9 +1,9 @@
 package bln.fin.ws.server.debt;
 
-import bln.fin.entity.*;
 import bln.fin.entity.enums.BatchStatusEnum;
 import bln.fin.entity.enums.DirectionEnum;
 import bln.fin.entity.pi.DebtInterface;
+import bln.fin.entity.pi.Session;
 import bln.fin.repo.*;
 import bln.fin.ws.SessionService;
 import bln.fin.ws.server.MessageDto;
@@ -36,7 +36,7 @@ public class DebtServiceImpl implements DebtService {
 
         logger.info("started");
         debugRequest(list);
-        SoapSession session = sessionService.createSession("DEBT", DirectionEnum.IMPORT);
+        Session session = sessionService.createSession("DEBT", DirectionEnum.IMPORT);
 
         List<MessageDto> messages = list.stream()
             .map(t -> createDebt(t, session))
@@ -47,7 +47,7 @@ public class DebtServiceImpl implements DebtService {
         return messages;
     }
 
-    private MessageDto createDebt(DebtDto debtDto, SoapSession session) {
+    private MessageDto createDebt(DebtDto debtDto, Session session) {
         logger.debug("Creating line:: docNum = " + debtDto.getDocNum() + ", docDate = " + debtDto.getDocDate());
 
         String sapId = debtDto.getDocNum()!=null ? debtDto.getDocNum() : "";

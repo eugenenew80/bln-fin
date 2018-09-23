@@ -1,11 +1,11 @@
 package bln.fin.ws.server.invoice;
 
-import bln.fin.entity.*;
 import bln.fin.entity.enums.BatchStatusEnum;
 import bln.fin.entity.enums.DirectionEnum;
 import bln.fin.entity.pi.InvoiceInterface;
 import bln.fin.entity.pi.InvoiceLineInterface;
 import bln.fin.entity.pi.InvoiceStatusInterface;
+import bln.fin.entity.pi.Session;
 import bln.fin.repo.*;
 import bln.fin.ws.SessionService;
 import bln.fin.ws.server.MessageDto;
@@ -39,7 +39,7 @@ public class InvoiceServiceImpl implements InvoiceService {
 
         logger.info("started");
         debugInvoiceStatusRequest(list);
-        SoapSession session = sessionService.createSession("INVOICE_STATUS", DirectionEnum.IMPORT);
+        Session session = sessionService.createSession("INVOICE_STATUS", DirectionEnum.IMPORT);
 
         List<MessageDto> messages = list.stream()
             .map(t -> createInvoiceStatus(t, session))
@@ -59,7 +59,7 @@ public class InvoiceServiceImpl implements InvoiceService {
 
         logger.info("started");
         debugInvoiceRequest(list);
-        SoapSession session = sessionService.createSession("INVOICE", DirectionEnum.IMPORT);
+        Session session = sessionService.createSession("INVOICE", DirectionEnum.IMPORT);
 
         List<MessageDto> messages = list.stream()
             .map(t -> createInvoice(t, session))
@@ -70,7 +70,7 @@ public class InvoiceServiceImpl implements InvoiceService {
         return messages;
     }
 
-    private MessageDto createInvoiceStatus(InvoiceStatusDto invoiceStatusDto, SoapSession session) {
+    private MessageDto createInvoiceStatus(InvoiceStatusDto invoiceStatusDto, Session session) {
         logger.debug("Creating line:: docNum = " + invoiceStatusDto.getDocNum() + ", docDate = " + invoiceStatusDto.getDocDate());
 
         String sapId = invoiceStatusDto.getDocNum()!=null ? invoiceStatusDto.getDocNum() : "";
@@ -98,7 +98,7 @@ public class InvoiceServiceImpl implements InvoiceService {
         return msg;
     }
 
-    private MessageDto createInvoice(InvoiceDto invoiceDto, SoapSession session) {
+    private MessageDto createInvoice(InvoiceDto invoiceDto, Session session) {
         logger.debug("Creating line:: docNum = " + invoiceDto.getDocNum() + ", docDate = " + invoiceDto.getDocDate());
 
         String sapId = invoiceDto.getDocNum()!=null ? invoiceDto.getDocNum().toString() : "";

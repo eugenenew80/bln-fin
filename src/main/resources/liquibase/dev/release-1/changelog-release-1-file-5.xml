@@ -1287,4 +1287,349 @@
             </column>
         </addColumn>
     </changeSet>
+
+    <changeSet id="fin-eug-213" logicalFilePath="path-independent" author="eugene">
+        <comment>Creating table: fin_contract_interface</comment>
+        <createTable tableName="fin_contract_interface" schemaName="apps" remarks="Контракты  - интерфейсная таблица">
+            <column name="id" type="number" remarks="Идентификатор">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="bp_type" type="varchar(1)" remarks="Тип делового партнера">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="bp_num" type="varchar(30)" remarks="Номер делового партнера-поставщика / заказчика">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="cons_bp_num" type="varchar(30)" remarks="Номер делового партнера-выставителя / получателя счета">
+                <constraints nullable="true"/>
+            </column>
+
+            <column name="contract_num" type="varchar(30)" remarks="Номер договора">
+                <constraints nullable="true"/>
+            </column>
+
+            <column name="ext_contract_num" type="varchar(30)" remarks="Номер договора с бумажного носителя">
+                <constraints nullable="true"/>
+            </column>
+
+            <column name="contract_date" type="date" remarks="Дата договора">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="start_date" type="date" remarks="Дата начала действия договора">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="end_date" type="date" remarks="Дата окончания действия договора">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="company_code" type="varchar(4)" remarks="Код балансовой единицы">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="company_account_num" type="varchar(30)" remarks="Номер расчетного счета компании">
+                <constraints nullable="true"/>
+            </column>
+
+            <column name="bp_account_num" type="varchar(30)" remarks="Номер расчетного счета делового партнера">
+                <constraints nullable="true"/>
+            </column>
+
+            <column name="amount" type="number" remarks="Сумма договора">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="currency_code" type="varchar(3)" remarks="Код валюты договора">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="payment_code" type="varchar(4)" remarks="Код условий платежа">
+                <constraints nullable="true"/>
+            </column>
+
+            <column name="channel" type="varchar(4)" remarks="Канал сбыта">
+                <constraints nullable="true"/>
+            </column>
+
+            <column name="sale_depart_code" type="varchar(4)" remarks="Отдел сбыта">
+                <constraints nullable="true"/>
+            </column>
+
+            <column name="purchase_group" type="varchar(4)" remarks="Группа закупок">
+                <constraints nullable="true"/>
+            </column>
+
+            <column name="status" type="varchar2(1)" remarks="Статус обработки записи">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="ws_session_id" type="number" >
+                <constraints nullable="true"/>
+            </column>
+
+            <column name="create_date" type="TIMESTAMP" remarks="Дата создания">
+                <constraints nullable="true"/>
+            </column>
+
+            <column name="last_update_date" type="TIMESTAMP" remarks="Дата изменения">
+                <constraints nullable="true"/>
+            </column>
+
+            <column name="create_by" type="number" remarks="Автор">
+                <constraints nullable="true"/>
+            </column>
+
+            <column name="last_update_by" type="number" remarks="Автор изменения">
+                <constraints nullable="true"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="fin-eug-214" logicalFilePath="path-independent" author="eugene">
+        <comment>Creating primary key for table: fin_contract_interface</comment>
+        <addPrimaryKey
+                columnNames="id"
+                constraintName="pk_fin_contract_interface"
+                schemaName="apps"
+                tableName="fin_contract_interface"/>
+    </changeSet>
+
+    <changeSet id="fin-eug-215" logicalFilePath="path-independent" author="eugene">
+        <comment>Creating sequence for table: fin_contract_interface</comment>
+        <createSequence
+                incrementBy="1"
+                schemaName="apps"
+                sequenceName="fin_contract_interface_s"
+                startValue="1"/>
+    </changeSet>
+
+    <changeSet id="fin-eug-216" logicalFilePath="path-independent" author="eugene" context="dev">
+        <comment>Add comments to the columns fin_contract_interface</comment>
+        <sql dbms="postgres, oracle" endDelimiter=";" splitStatements="true" stripComments="true">
+            comment on column apps.fin_contract_interface.ws_session_id is 'Идентификатор сеанса';
+        </sql>
+    </changeSet>
+
+    <changeSet id="fin-eug-217" logicalFilePath="path-independent" author="eugene">
+        <comment>Creating table: fin_contract_line_interface</comment>
+        <createTable tableName="fin_contract_line_interface" schemaName="apps" remarks="Строки контракта - интерфейсная таблица">
+            <column name="id" type="number" remarks="Идентификатор">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="contract_interface_id" type="number" remarks="Идентификатор заголовка">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="bp_num" type="varchar(30)" remarks="Номер делового партнера-поставщика / заказчика">
+                <constraints nullable="true"/>
+            </column>
+
+            <column name="item_num" type="varchar(30)" remarks="Номер основной записи материала">
+                <constraints nullable="true"/>
+            </column>
+
+            <column name="pos_num" type="number" remarks="Позиция счета-фактуры">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="pos_name" type="varchar(300)" remarks="Наименование позиции">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="unit" type="varchar(100)" remarks="Единица измерения">
+                <constraints nullable="true"/>
+            </column>
+
+            <column name="quantity" type="number" remarks="Количество">
+                <constraints nullable="true"/>
+            </column>
+
+            <column name="amount" type="number" remarks="Сумма счета-фактуры">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="req_num" type="number" remarks="Номер заявки">
+                <constraints nullable="true"/>
+            </column>
+
+            <column name="req_pos_num" type="number" remarks="Позиция заявки">
+                <constraints nullable="true"/>
+            </column>
+
+            <column name="mat_group" type="varchar(30)" remarks="Группа материалов">
+                <constraints nullable="true"/>
+            </column>
+
+            <column name="cost_center" type="varchar(30)" remarks="Место возникновения затрат">
+                <constraints nullable="true"/>
+            </column>
+
+            <column name="account" type="varchar(30)" remarks="Счёт">
+                <constraints nullable="true"/>
+            </column>
+
+            <column name="create_date" type="TIMESTAMP" remarks="Дата создания">
+                <constraints nullable="true"/>
+            </column>
+
+            <column name="last_update_date" type="TIMESTAMP" remarks="Дата изменения">
+                <constraints nullable="true"/>
+            </column>
+
+            <column name="create_by" type="number" remarks="Автор">
+                <constraints nullable="true"/>
+            </column>
+
+            <column name="last_update_by" type="number" remarks="Автор изменения">
+                <constraints nullable="true"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="fin-eug-218" logicalFilePath="path-independent" author="eugene">
+        <comment>Creating primary key for table: fin_contract_line_interface</comment>
+        <addPrimaryKey
+                columnNames="id"
+                constraintName="pk_fin_contract_line_interface"
+                schemaName="apps"
+                tableName="fin_contract_line_interface"/>
+    </changeSet>
+
+    <changeSet id="fin-eug-219" logicalFilePath="path-independent" author="eugene">
+        <comment>Creating sequence for table: fin_contract_line_interface</comment>
+        <createSequence
+                incrementBy="1"
+                schemaName="apps"
+                sequenceName="fin_contract_line_interface_s"
+                startValue="1"/>
+    </changeSet>
+
+    <changeSet id="fin-eug-220" logicalFilePath="path-independent" author="eugene" context="dev">
+        <comment>Creating foreign constraint: fin_contract_line_interface to fin_contract_interface</comment>
+        <addForeignKeyConstraint
+                baseTableSchemaName="apps"
+                baseTableName="fin_contract_line_interface"
+                baseColumnNames="contract_interface_id"
+                constraintName="fk_fin_contract_line_interface_1"
+                deferrable="true"
+                onDelete="RESTRICT"
+                onUpdate="RESTRICT"
+                referencedTableSchemaName="apps"
+                referencedTableName="fin_contract_interface"
+                referencedColumnNames="id"
+        />
+    </changeSet>
+
+    <changeSet id="fin-eug-221" logicalFilePath="path-independent" author="eugene" context="dev">
+        <comment>Creating foreign constraint: fin_invoice_line_interface to fin_invoice_interface</comment>
+        <addForeignKeyConstraint
+                baseTableSchemaName="apps"
+                baseTableName="fin_invoice_line_interface"
+                baseColumnNames="invoice_interface_id"
+                constraintName="fk_fin_invoice_line_interface_1"
+                deferrable="true"
+                onDelete="RESTRICT"
+                onUpdate="RESTRICT"
+                referencedTableSchemaName="apps"
+                referencedTableName="fin_invoice_interface"
+                referencedColumnNames="id"
+        />
+    </changeSet>
+
+    <changeSet id="fin-eug-222" logicalFilePath="path-independent" author="eugene">
+        <comment>Creating table: ws_session_messages</comment>
+        <createTable tableName="ws_session_messages" schemaName="apps" remarks="Сообщения от шины">
+            <column name="id" type="number" remarks="Идентификатор">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="ws_session_id" type="number" remarks="Идентификатор сессии">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="object_code" type="varchar2(30)" remarks="Тип объекта">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="object_id" type="varchar2(30)" remarks="Идентификатор объекта">
+                <constraints nullable="true"/>
+            </column>
+
+            <column name="sap_id" type="varchar2(30)" remarks="Идентификатор объекта в ERP">
+                <constraints nullable="true"/>
+            </column>
+
+            <column name="system_code" type="varchar2(30)" remarks="Код системы">
+                <constraints nullable="true"/>
+            </column>
+
+            <column name="msg_num" type="varchar2(30)" remarks="№ сообщения">
+                <constraints nullable="true"/>
+            </column>
+
+            <column name="msg_type" type="varchar2(1)" remarks="Тип сообщения">
+                <constraints nullable="true"/>
+            </column>
+
+            <column name="msg" type="varchar2(1000)" remarks="Текст сообщения">
+                <constraints nullable="true"/>
+            </column>
+
+            <column name="create_date" type="TIMESTAMP" remarks="Дата создания">
+                <constraints nullable="true"/>
+            </column>
+
+            <column name="last_update_date" type="TIMESTAMP" remarks="Дата изменения">
+                <constraints nullable="true"/>
+            </column>
+
+            <column name="create_by" type="number" remarks="Автор">
+                <constraints nullable="true"/>
+            </column>
+
+            <column name="last_update_by" type="number" remarks="Автор изменения">
+                <constraints nullable="true"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="fin-eug-223" logicalFilePath="path-independent" author="eugene">
+        <comment>Creating primary key for table: ws_session_messages</comment>
+        <addPrimaryKey
+                columnNames="id"
+                constraintName="pk_ws_session_messages"
+                schemaName="apps"
+                tableName="ws_session_messages"/>
+    </changeSet>
+
+    <changeSet id="fin-eug-224" logicalFilePath="path-independent" author="eugene">
+        <comment>Creating sequence for table: ws_session_messages</comment>
+        <createSequence
+                incrementBy="1"
+                schemaName="apps"
+                sequenceName="ws_session_messages_s"
+                startValue="1"/>
+    </changeSet>
+
+    <changeSet id="fin-eug-225" logicalFilePath="path-independent" author="eugene" context="dev">
+        <comment>Creating foreign constraint: ws_session_messages to ws_sessions</comment>
+        <addForeignKeyConstraint
+                baseTableSchemaName="apps"
+                baseTableName="ws_session_messages"
+                baseColumnNames="ws_session_id"
+                constraintName="fk_ws_session_messages_1"
+                deferrable="true"
+                onDelete="RESTRICT"
+                onUpdate="RESTRICT"
+                referencedTableSchemaName="apps"
+                referencedTableName="ws_sessions"
+                referencedColumnNames="id"
+        />
+    </changeSet>
+
 </databaseChangeLog>

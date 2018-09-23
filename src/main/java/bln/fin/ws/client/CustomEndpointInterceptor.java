@@ -1,29 +1,39 @@
 package bln.fin.ws.client;
 
+import org.apache.commons.codec.binary.Base64;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 import org.springframework.ws.client.WebServiceClientException;
+import org.springframework.ws.client.WebServiceIOException;
 import org.springframework.ws.client.support.interceptor.ClientInterceptor;
 import org.springframework.ws.context.MessageContext;
 import org.springframework.ws.transport.context.TransportContextHolder;
 import org.springframework.ws.transport.http.HttpUrlConnection;
+
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 
 @Component
 public class CustomEndpointInterceptor implements ClientInterceptor {
+    private static final Logger logger = LoggerFactory.getLogger(CustomEndpointInterceptor.class);
     private String username = "PIAPPLBIS_D";
     private String password = "Qwer!11111";
 
     @Override
     public boolean handleRequest(MessageContext messageContext) throws WebServiceClientException {
+        String authString = username + ":" + password;
+        String authHeader =  "Basic " + new String(Base64.encodeBase64(authString.getBytes()));
+
         HttpUrlConnection connection = (HttpUrlConnection) TransportContextHolder.getTransportContext().getConnection();
         try {
-            connection.addRequestHeader("Authorization", "Basic UElBUFBMQklTX0Q6UXdlciExMTExMQ==");
+            //connection.addRequestHeader("Authorization", "Basic UElBUFBMQklTX0Q6UXdlciExMTExMQ==");
+            connection.addRequestHeader("Authorization", authHeader);
         }
         catch (IOException e) {
             e.printStackTrace();
         }
 
-        /*
         ByteArrayOutputStream os = new ByteArrayOutputStream();
         try {
             messageContext.getRequest().writeTo(os);
@@ -32,13 +42,23 @@ public class CustomEndpointInterceptor implements ClientInterceptor {
             throw new WebServiceIOException(e.getMessage(), e);
         }
         String request = new String(os.toByteArray());
-        System.out.println(request);
-        */
+        logger.trace(request);
+
         return true;
     }
 
     @Override
     public boolean handleResponse(MessageContext messageContext) throws WebServiceClientException {
+        ByteArrayOutputStream os = new ByteArrayOutputStream();
+        try {
+            messageContext.getResponse().writeTo(os);
+        }
+        catch (IOException e) {
+            e.printStackTrace();
+        }
+        String response = new String(os.toByteArray());
+        logger.trace(response);
+
         return true;
     }
 
