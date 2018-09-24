@@ -111,7 +111,7 @@ public class InvoiceRevClientServiceImpl implements InvoiceRevClientService {
         for (InvoiceRevInterface line: list) {
             SessionMessage message = messages.stream()
                 .filter(t -> t.getObjectCode().equals(objectCode))
-                .filter(t -> t.getObjectId()!=null && t.getObjectId().equals(line.getId().toString()))
+                .filter(t -> t.getObjectId()!=null && t.getObjectId().trim().equals(line.getId().toString()))
                 .filter(t -> t.getMsgType().equals("S"))
                 .findFirst()
                 .orElse(null);

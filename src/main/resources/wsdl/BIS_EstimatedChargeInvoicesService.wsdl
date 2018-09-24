@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<wsdl:definitions name="BIS_EstimatedChargeInvoices" targetNamespace="urn:kegoc.kz:BIS:LO_0002_1_EstimatedChargeInvoice" xmlns:p4="http://sap.com/xi/XI/System/Patterns" xmlns:p3="urn:kegoc.kz:BIS:CommonObjects" xmlns:p2="urn:kegoc.kz:BIS:LO_0001_Contract" xmlns:p1="urn:kegoc.kz:BIS:LO_0002_1_EstimatedChargeInvoice" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+<wsdl:definitions name="BIS_EstimatedChargeInvoices" targetNamespace="urn:kegoc.kz:BIS:LO_0002_1_EstimatedChargeInvoice" xmlns:p3="http://sap.com/xi/XI/System/Patterns" xmlns:p2="urn:kegoc.kz:BIS:CommonObjects" xmlns:p1="urn:kegoc.kz:BIS:LO_0002_1_EstimatedChargeInvoice" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
     <wsdl:documentation/>
     <wsp:UsingPolicy wsdl:required="true"/>
     <wsp:Policy wsu:Id="OP_BIS_EstimatedChargeInvoices"/>
     <wsdl:types>
         <xsd:schema targetNamespace="urn:kegoc.kz:BIS:CommonObjects" xmlns="urn:kegoc.kz:BIS:CommonObjects" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+            <xsd:element name="Response" type="Response"/>
             <xsd:complexType name="ExchangeLogData">
                 <xsd:annotation>
                     <xsd:appinfo source="http://sap.com/xi/VersionID">8c65f97d85c911e8ba440000005576b6</xsd:appinfo>
@@ -82,10 +83,6 @@
                     <xsd:element name="faultDetail" type="ExchangeLogData" minOccurs="0" maxOccurs="unbounded"/>
                 </xsd:sequence>
             </xsd:complexType>
-        </xsd:schema>
-        <xsd:schema targetNamespace="urn:kegoc.kz:BIS:LO_0001_Contract" xmlns="urn:kegoc.kz:BIS:LO_0001_Contract" xmlns:p7="urn:kegoc.kz:BIS:CommonObjects" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-            <xsd:import namespace="urn:kegoc.kz:BIS:CommonObjects"/>
-            <xsd:element name="Response" type="p7:Response"/>
         </xsd:schema>
         <xsd:schema targetNamespace="urn:kegoc.kz:BIS:LO_0002_1_EstimatedChargeInvoice" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="urn:kegoc.kz:BIS:LO_0002_1_EstimatedChargeInvoice">
             <xsd:element name="EstimatedChargeInvoices" type="EstimatedChargeInvoices"/>
@@ -254,12 +251,12 @@
                 </xsd:sequence>
             </xsd:complexType>
         </xsd:schema>
-        <xsd:schema targetNamespace="http://sap.com/xi/XI/System/Patterns" xmlns:p7="urn:kegoc.kz:BIS:CommonObjects" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="http://sap.com/xi/XI/System/Patterns">
+        <xsd:schema targetNamespace="http://sap.com/xi/XI/System/Patterns" xmlns:p8="urn:kegoc.kz:BIS:CommonObjects" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="http://sap.com/xi/XI/System/Patterns">
             <xsd:import namespace="urn:kegoc.kz:BIS:CommonObjects"/>
             <xsd:element name="FaultMessage">
                 <xsd:complexType>
                     <xsd:sequence>
-                        <xsd:element name="standard" type="p7:ExchangeFaultData"/>
+                        <xsd:element name="standard" type="p8:ExchangeFaultData"/>
                     </xsd:sequence>
                 </xsd:complexType>
             </xsd:element>
@@ -269,13 +266,13 @@
         <wsdl:documentation/>
         <wsdl:part name="EstimatedChargeInvoices" element="p1:EstimatedChargeInvoices"/>
     </wsdl:message>
-    <wsdl:message name="p3.Response">
+    <wsdl:message name="p2.Response">
         <wsdl:documentation/>
         <wsdl:part name="Response" element="p2:Response"/>
     </wsdl:message>
-    <wsdl:message name="p3.FaultMessage">
+    <wsdl:message name="p2.FaultMessage">
         <wsdl:documentation/>
-        <wsdl:part name="FaultMessage" element="p4:FaultMessage"/>
+        <wsdl:part name="FaultMessage" element="p3:FaultMessage"/>
     </wsdl:message>
     <wsdl:portType name="BIS_EstimatedChargeInvoices">
         <wsdl:documentation/>
@@ -285,8 +282,8 @@
                 <wsp:PolicyReference URI="#OP_BIS_EstimatedChargeInvoices"/>
             </wsp:Policy>
             <wsdl:input message="p1:EstimatedChargeInvoices"/>
-            <wsdl:output message="p1:p3.Response"/>
-            <wsdl:fault name="p3.FaultMessage" message="p1:p3.FaultMessage"/>
+            <wsdl:output message="p1:p2.Response"/>
+            <wsdl:fault name="p2.FaultMessage" message="p1:p2.FaultMessage"/>
         </wsdl:operation>
     </wsdl:portType>
     <wsdl:binding name="BIS_EstimatedChargeInvoicesBinding" type="p1:BIS_EstimatedChargeInvoices">
@@ -299,8 +296,8 @@
             <wsdl:output>
                 <soap:body use="literal" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"/>
             </wsdl:output>
-            <wsdl:fault name="p3.FaultMessage">
-                <soap:fault use="literal" name="p3.FaultMessage" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"/>
+            <wsdl:fault name="p2.FaultMessage">
+                <soap:fault use="literal" name="p2.FaultMessage" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"/>
             </wsdl:fault>
         </wsdl:operation>
     </wsdl:binding>
