@@ -31,6 +31,11 @@ import java.util.Arrays;
 @Configuration
 @RequiredArgsConstructor
 public class AppConfig  {
+    private final String purchaseContractUrl = "https://kegoci10.corp.kegoc.kz:50001/XISOAPAdapter/MessageServlet?senderParty=&amp;senderService=BIS_D&amp;receiverParty=&amp;receiverService=&amp;interface=BIS_MM_Contract&amp;interfaceNamespace=urn%3Akegoc.kz%3ABIS%3AZMM_0042_Contract";
+    private final String saleContractUrl     = "http://kegoci10.corp.kegoc.kz:50000/XISOAPAdapter/MessageServlet?senderParty=&senderService=BIS_D&receiverParty=&receiverService=&interface=BIS_LO_Contract&interfaceNamespace=urn:kegoc.kz:BIS:LO_0001_Contract";
+    private final String saleInvoiceRevUrl   = "http://kegoci10.corp.kegoc.kz:50000/XISOAPAdapter/MessageServlet?senderParty=&senderService=BIS_D&receiverParty=&receiverService=&interface=BIS_ReversedInvoice&interfaceNamespace=urn:kegoc.kz:BIS:LO_0002_4_ReversedInvoice";
+    private final String saleInvoiceUrl      = "http://kegoci10.corp.kegoc.kz:50000/XISOAPAdapter/MessageServlet?senderParty=&senderService=BIS_D&receiverParty=&receiverService=&interface=BIS_EstimatedChargeInvoices&interfaceNamespace=urn:kegoc.kz:BIS:LO_0002_1_EstimatedChargeInvoice";
+    private final String salePlanUrl         = "http://kegoci10.corp.kegoc.kz:50000/XISOAPAdapter/MessageServlet?senderParty=&senderService=BIS_D&receiverParty=&receiverService=&interface=BIS_SalesPlan&interfaceNamespace=urn:kegoc.kz:BIS:LO_0002_3_SalesPlan";
 
     @Bean
     public ObjectMapper objectMapper() {
@@ -59,7 +64,6 @@ public class AppConfig  {
             "dozer/BusinessPartnerDto.xml",
             "dozer/BusinessPartnerTranslateDto.xml"
         ));
-
         return mapper;
     }
 
@@ -71,7 +75,7 @@ public class AppConfig  {
         WebServiceTemplate webServiceTemplate = new WebServiceTemplate();
         webServiceTemplate.setMarshaller(jaxb2Marshaller);
         webServiceTemplate.setUnmarshaller(jaxb2Marshaller);
-        webServiceTemplate.setDefaultUri("http://kegoci10.corp.kegoc.kz:50000/XISOAPAdapter/MessageServlet?senderParty=&senderService=BIS_D&receiverParty=&receiverService=&interface=BIS_SalesPlan&interfaceNamespace=urn:kegoc.kz:BIS:LO_0002_3_SalesPlan");
+        webServiceTemplate.setDefaultUri(salePlanUrl);
         webServiceTemplate.setInterceptors(new ClientInterceptor[] {new CustomEndpointInterceptor()});
 
         return webServiceTemplate;
@@ -80,12 +84,27 @@ public class AppConfig  {
     @Bean
     public WebServiceTemplate saleInvoiceServiceTemplate() {
         Jaxb2Marshaller jaxb2Marshaller = new Jaxb2Marshaller();
-        jaxb2Marshaller.setContextPath("sap.saleInvoice");
+        jaxb2Marshaller.setContextPath("sap.invoice");
 
         WebServiceTemplate webServiceTemplate = new WebServiceTemplate();
         webServiceTemplate.setMarshaller(jaxb2Marshaller);
         webServiceTemplate.setUnmarshaller(jaxb2Marshaller);
-        webServiceTemplate.setDefaultUri("http://kegoci10.corp.kegoc.kz:50000/XISOAPAdapter/MessageServlet?senderParty=&senderService=BIS_D&receiverParty=&receiverService=&interface=BIS_EstimatedChargeInvoices&interfaceNamespace=urn:kegoc.kz:BIS:LO_0002_1_EstimatedChargeInvoice");
+        webServiceTemplate.setDefaultUri(saleInvoiceUrl);
+        webServiceTemplate.setInterceptors(new ClientInterceptor[] {new CustomEndpointInterceptor()});
+
+        return webServiceTemplate;
+    }
+
+    @Bean
+    public WebServiceTemplate saleInvoiceRevServiceTemplate() {
+        Jaxb2Marshaller jaxb2Marshaller = new Jaxb2Marshaller();
+        jaxb2Marshaller.setContextPath("sap.invoiceRev");
+
+        WebServiceTemplate webServiceTemplate = new WebServiceTemplate();
+        webServiceTemplate.setMarshaller(jaxb2Marshaller);
+        webServiceTemplate.setUnmarshaller(jaxb2Marshaller);
+        webServiceTemplate.setDefaultUri(saleInvoiceRevUrl);
+        webServiceTemplate.setInterceptors(new ClientInterceptor[] {new CustomEndpointInterceptor()});
 
         return webServiceTemplate;
     }
@@ -98,7 +117,8 @@ public class AppConfig  {
         WebServiceTemplate webServiceTemplate = new WebServiceTemplate();
         webServiceTemplate.setMarshaller(jaxb2Marshaller);
         webServiceTemplate.setUnmarshaller(jaxb2Marshaller);
-        webServiceTemplate.setDefaultUri("http://kegoci10.corp.kegoc.kz:50000/XISOAPAdapter/MessageServlet?senderParty=&senderService=BIS_D&receiverParty=&receiverService=&interface=BIS_LO_Contract&interfaceNamespace=urn:kegoc.kz:BIS:LO_0001_Contract");
+        webServiceTemplate.setDefaultUri(saleContractUrl);
+        webServiceTemplate.setInterceptors(new ClientInterceptor[] {new CustomEndpointInterceptor()});
 
         return webServiceTemplate;
     }
@@ -111,7 +131,8 @@ public class AppConfig  {
         WebServiceTemplate webServiceTemplate = new WebServiceTemplate();
         webServiceTemplate.setMarshaller(jaxb2Marshaller);
         webServiceTemplate.setUnmarshaller(jaxb2Marshaller);
-        webServiceTemplate.setDefaultUri("http://kegoci10.corp.kegoc.kz:50000/XISOAPAdapter/MessageServlet?senderParty=&senderService=BIS_D&receiverParty=&receiverService=&interface=BIS_MM_Contract&interfaceNamespace=urn:kegoc.kz:BIS:ZMM_0042_Contract");
+        webServiceTemplate.setDefaultUri(purchaseContractUrl);
+        webServiceTemplate.setInterceptors(new ClientInterceptor[] {new CustomEndpointInterceptor()});
 
         return webServiceTemplate;
     }

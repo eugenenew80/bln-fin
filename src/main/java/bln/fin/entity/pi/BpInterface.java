@@ -1,6 +1,5 @@
 package bln.fin.entity.pi;
 
-import bln.fin.entity.SoapSession;
 import bln.fin.entity.enums.BatchStatusEnum;
 import bln.fin.entity.interfaces.Monitored;
 import lombok.Data;
@@ -50,7 +49,7 @@ public class BpInterface implements Monitored {
 
     @ManyToOne
     @JoinColumn(name = "ws_session_id")
-    private SoapSession session;
+    private Session session;
 
     @OneToMany(mappedBy = "businessPartner", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     private Set<BpAddressInterface> addresses;

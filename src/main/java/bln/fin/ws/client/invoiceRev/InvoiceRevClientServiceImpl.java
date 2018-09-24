@@ -1,12 +1,11 @@
-package bln.fin.ws.client.invoice;
+package bln.fin.ws.client.invoiceRev;
 
 import bln.fin.entity.enums.BatchStatusEnum;
 import bln.fin.entity.enums.DirectionEnum;
-import bln.fin.entity.pi.InvoiceInterface;
-import bln.fin.entity.pi.InvoiceLineInterface;
+import bln.fin.entity.pi.InvoiceRevInterface;
 import bln.fin.entity.pi.Session;
 import bln.fin.entity.pi.SessionMessage;
-import bln.fin.repo.InvoiceInterfaceRepo;
+import bln.fin.repo.InvoiceRevInterfaceRepo;
 import bln.fin.repo.SessionMessageRepo;
 import bln.fin.ws.SessionService;
 import lombok.RequiredArgsConstructor;
@@ -15,46 +14,42 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.ws.client.core.WebServiceTemplate;
 import org.springframework.ws.soap.client.SoapFaultClientException;
-import sap.invoice.EstimatedChargeInvoices;
-import sap.invoice.ObjectFactory;
-import sap.invoice.Response;
+import sap.invoiceRev.ObjectFactory;
+import sap.invoiceRev.Response;
+import sap.invoiceRev.ReversedInvoice;
 import javax.xml.bind.JAXBElement;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-
 import static bln.fin.common.Util.toXMLGregorianCalendar;
 import static java.util.stream.Collectors.toList;
 
 @Service
 @RequiredArgsConstructor
-public class InvoiceClientServiceImpl implements InvoiceClientService {
-    private static final Logger logger = LoggerFactory.getLogger(InvoiceClientService.class);
-    private static final String objectCode = "Invoice";
-    private final InvoiceInterfaceRepo invoiceInterfaceRepo;
-    private final WebServiceTemplate saleInvoiceServiceTemplate;
+public class InvoiceRevClientServiceImpl implements InvoiceRevClientService {
+    private static final Logger logger = LoggerFactory.getLogger(InvoiceRevClientService.class);
+    private static final String objectCode = "InvoiceRev";
+    private final InvoiceRevInterfaceRepo invoiceRevInterfaceRepo;
+    private final WebServiceTemplate saleInvoiceRevServiceTemplate;
     private final SessionService sessionService;
     private final SessionMessageRepo sessionMessageRepo;
 
     @Override
     public void send() {
-        List<InvoiceInterface> list = invoiceInterfaceRepo.findAllByStatus(BatchStatusEnum.W)
-            .stream()
-            .filter(t -> t.getBpType().equals("D"))
-            .collect(toList());
+        List<InvoiceRevInterface> list = invoiceRevInterfaceRepo.findAllByStatus(BatchStatusEnum.W);
         if (list.isEmpty()) return;
 
         logger.info("started");
 
         Session session = sessionService.createSession(objectCode, DirectionEnum.EXPORT);
-        List<EstimatedChargeInvoices.Item> items = createInvoiceRevItems(list);
+        List<ReversedInvoice.Item> items = createInvoiceRevItems(list);
 
-        EstimatedChargeInvoices invoiceRevReq = new ObjectFactory().createEstimatedChargeInvoices();
+        ReversedInvoice invoiceRevReq = new ObjectFactory().createReversedInvoice();
         invoiceRevReq.getItem().addAll(items);
         debugRequest(items);
 
         try {
-            JAXBElement<Response> response = (JAXBElement<Response>) saleInvoiceServiceTemplate.marshalSendAndReceive(invoiceRevReq);
+            JAXBElement<Response> response = (JAXBElement<Response>) saleInvoiceRevServiceTemplate.marshalSendAndReceive(invoiceRevReq);
             List<SessionMessage> messages = saveMessages(response.getValue(), session);
             updateStatuses(list, messages, session);
             sessionService.successSession(session, (long) items.size());
@@ -74,7 +69,7 @@ public class InvoiceClientServiceImpl implements InvoiceClientService {
     }
 
 
-    private List<EstimatedChargeInvoices.Item> createInvoiceRevItems(List<InvoiceInterface> list) {
+    private List<ReversedInvoice.Item> createInvoiceRevItems(List<InvoiceRevInterface> list) {
         return list
             .stream()
             .map(t -> createInvoiceRevItem(t))
@@ -82,35 +77,13 @@ public class InvoiceClientServiceImpl implements InvoiceClientService {
             .collect(toList());
     }
 
-    private EstimatedChargeInvoices.Item createInvoiceRevItem(InvoiceInterface line) {
+    private ReversedInvoice.Item createInvoiceRevItem(InvoiceRevInterface line) {
         logger.debug("Creating item:: id = " + line.getId());
-        EstimatedChargeInvoices.Item item = new EstimatedChargeInvoices.Item();
+        ReversedInvoice.Item item = new ReversedInvoice.Item();
         item.setId(line.getId());
-        item.setDocType(line.getDocType());
-        item.setSrcDocNum(line.getSrcDocNum());
-        item.setOrderNum(line.getOrderNum());
-        item.setTurnoverDate(toXMLGregorianCalendar(line.getTurnoverDate()));
-        item.setAccountingDate(toXMLGregorianCalendar(line.getAccountingDate()));
-        item.setCustomerNum(line.getBpNum());
-        item.setContractNum(line.getContractNum());
-        item.setExtContractNum(line.getExtContractNum());
-        item.setCompanyCode(line.getCompanyCode());
-        item.setAmount(line.getAmount());
-        item.setTax(line.getTax());
-        item.setCurrencyCode(line.getCurrencyCode());
-        for (InvoiceLineInterface invoiceLine : line.getLines()) {
-            EstimatedChargeInvoices.Item.Row row = new EstimatedChargeInvoices.Item.Row();
-            row.setPosNum(invoiceLine.getPosNum());
-            row.setConsigneeNum(invoiceLine.getBpNum());
-            row.setPosName(invoiceLine.getPosName());
-            row.setItemNum(invoiceLine.getItemNum());
-            row.setUnit(invoiceLine.getUnit());
-            row.setQuantity(invoiceLine.getQuantity());
-            row.setPrice(invoiceLine.getPrice());
-            row.setAmount(invoiceLine.getAmount());
-            row.setTaxRate(invoiceLine.getTaxRate());
-            item.getRow().add(row);
-        }
+        item.setDocDate(toXMLGregorianCalendar(line.getDocDate()));
+        item.setDocNum(line.getDocNum());
+        item.setRevDate(toXMLGregorianCalendar(line.getRevDate()));
         logger.debug("Creating item successfully completed");
         return item;
     }
@@ -134,8 +107,8 @@ public class InvoiceClientServiceImpl implements InvoiceClientService {
         return sessionMessageRepo.save(list);
     }
 
-    private List<InvoiceInterface> updateStatuses(List<InvoiceInterface> list, List<SessionMessage> messages, Session session) {
-        for (InvoiceInterface line: list) {
+    private List<InvoiceRevInterface> updateStatuses(List<InvoiceRevInterface> list, List<SessionMessage> messages, Session session) {
+        for (InvoiceRevInterface line: list) {
             SessionMessage message = messages.stream()
                 .filter(t -> t.getObjectCode().equals(objectCode))
                 .filter(t -> t.getObjectId()!=null && t.getObjectId().trim().equals(line.getId().toString()))
@@ -151,12 +124,12 @@ public class InvoiceClientServiceImpl implements InvoiceClientService {
             line.setLastUpdateDate(LocalDateTime.now());
             line.setSession(session);
         }
-        return invoiceInterfaceRepo.save(list);
+        return invoiceRevInterfaceRepo.save(list);
     }
 
-    private void debugRequest(List<EstimatedChargeInvoices.Item> list) {
+    private void debugRequest(List<ReversedInvoice.Item> list) {
         logger.debug("---------------------------------");
-        for (EstimatedChargeInvoices.Item line: list) logger.debug(line.toString());
+        for (ReversedInvoice.Item line: list) logger.debug(line.toString());
         logger.debug("---------------------------------");
     }
 }

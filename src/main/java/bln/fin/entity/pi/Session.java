@@ -1,4 +1,4 @@
-package bln.fin.entity;
+package bln.fin.entity.pi;
 
 import bln.fin.entity.enums.SessionStatusEnum;
 import bln.fin.entity.enums.DirectionEnum;
@@ -13,7 +13,7 @@ import java.time.LocalDateTime;
 @Entity
 @Table(name = "ws_sessions")
 @DynamicUpdate
-public class SoapSession {
+public class Session {
 
     @Id
     @SequenceGenerator(name="ws_sessions_s", sequenceName = "ws_sessions_s", allocationSize=1)

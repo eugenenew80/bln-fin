@@ -1,6 +1,5 @@
 package bln.fin.ws.server.bp;
 
-import bln.fin.entity.*;
 import bln.fin.entity.enums.BatchStatusEnum;
 import bln.fin.entity.enums.DirectionEnum;
 import bln.fin.entity.pi.*;
@@ -37,7 +36,7 @@ public class BusinessPartnerServiceImpl implements BusinessPartnerService {
 
         logger.info("started");
         debugRequest(list);
-        SoapSession session = sessionService.createSession("BP", DirectionEnum.IMPORT);
+        Session session = sessionService.createSession("BP", DirectionEnum.IMPORT);
 
         List<MessageDto> messages = list.stream()
             .map(t -> createBusinessPartner(t, session))
@@ -57,7 +56,7 @@ public class BusinessPartnerServiceImpl implements BusinessPartnerService {
 
         logger.info("started");
         debugRelRequest(list);
-        SoapSession session = sessionService.createSession("BP_REL", DirectionEnum.IMPORT);
+        Session session = sessionService.createSession("BP_REL", DirectionEnum.IMPORT);
 
         List<MessageDto> messages = list.stream()
             .map(t -> createRelation(t, session))
@@ -69,7 +68,7 @@ public class BusinessPartnerServiceImpl implements BusinessPartnerService {
     }
 
 
-    private MessageDto createRelation(RelationDto relDto, SoapSession session) {
+    private MessageDto createRelation(RelationDto relDto, Session session) {
         logger.debug("Creating line:: bpNum = " + relDto.getBpNum());
         String sapId = relDto.getBpNum()!=null ? relDto.getBpNum() : "";
         MessageDto msg;
@@ -98,7 +97,7 @@ public class BusinessPartnerServiceImpl implements BusinessPartnerService {
         return msg;
     }
 
-    private MessageDto createBusinessPartner(BusinessPartnerDto bpDto, SoapSession session) {
+    private MessageDto createBusinessPartner(BusinessPartnerDto bpDto, Session session) {
         logger.debug("Creating line:: bpNum = " + bpDto.getBpNum());
 
         String sapId = bpDto.getBpNum()!=null ? bpDto.getBpNum() : "";

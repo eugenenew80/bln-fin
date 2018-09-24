@@ -1,6 +1,5 @@
 package bln.fin.entity.pi;
 
-import bln.fin.entity.SoapSession;
 import bln.fin.entity.enums.BatchStatusEnum;
 import bln.fin.entity.interfaces.Monitored;
 import lombok.Data;
@@ -23,17 +22,11 @@ public class ContractInterface implements Monitored {
     @Column(name = "bp_type")
     private String bpType;
 
-    @Column(name = "vendor_num")
-    private String bpNum;
+    @Column(name = "bp_num")
+    private String vendorNum;
 
-    @Column(name = "consignor_num")
+    @Column(name = "cons_bp_num")
     private String consignorNum;
-
-    @Column(name = "customer_num")
-    private String customerNum;
-
-    @Column(name = "consignee_num")
-    private String consigneeNum;
 
     @Column(name = "contract_num")
     private String contractNum;
@@ -42,10 +35,10 @@ public class ContractInterface implements Monitored {
     private String extContractNum;
 
     @Column(name = "contract_date")
-    private LocalDate docDate;;
+    private LocalDate contractDate;
 
     @Column(name = "start_date")
-    private LocalDate startDate;;
+    private LocalDate startDate;
 
     @Column(name = "end_date")
     private LocalDate endDate;
@@ -83,7 +76,7 @@ public class ContractInterface implements Monitored {
 
     @ManyToOne
     @JoinColumn(name = "ws_session_id")
-    private SoapSession session;
+    private Session session;
 
     @Column(name = "create_date")
     private LocalDateTime createDate;

@@ -1,6 +1,5 @@
 package bln.fin.entity.pi;
 
-import bln.fin.entity.SoapSession;
 import bln.fin.entity.enums.BatchStatusEnum;
 import bln.fin.entity.interfaces.Monitored;
 import lombok.Data;
@@ -17,8 +16,8 @@ public class SalePlanInterface implements Monitored {
     @Id
     private Long id;
 
-    @Column(name = "customer_num")
-    private String customerNum;
+    @Column(name = "bp_num")
+    private String bpNum;
 
     @Column(name = "item_num")
     private String itemNum;
@@ -56,7 +55,7 @@ public class SalePlanInterface implements Monitored {
 
     @ManyToOne
     @JoinColumn(name = "ws_session_id")
-    private SoapSession session;
+    private Session session;
 
     @Column(name = "create_date")
     private LocalDateTime createDate;

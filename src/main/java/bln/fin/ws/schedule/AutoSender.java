@@ -1,5 +1,7 @@
 package bln.fin.ws.schedule;
 
+import bln.fin.ws.client.invoice.InvoiceClientService;
+import bln.fin.ws.client.invoiceRev.InvoiceRevClientService;
 import bln.fin.ws.client.plan.SalePlanService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -9,11 +11,13 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class AutoSender {
     private final SalePlanService salePlanService;
+    private final InvoiceRevClientService invoiceRevClientService;
+    private final InvoiceClientService invoiceClientService;
 
-    //@Scheduled(cron = "0 */1 * * * *")
+    @Scheduled(cron = "0 */1 * * * *")
     public void run() {
-        salePlanService.sendAll();
+        //invoiceRevClientService.send();
+        invoiceClientService.send();
     }
-
 
 }

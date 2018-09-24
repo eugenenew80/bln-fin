@@ -1,13 +1,13 @@
 package bln.fin.repo;
 
 import bln.fin.entity.enums.BatchStatusEnum;
-import bln.fin.entity.pi.SalePlanInterface;
+import bln.fin.entity.pi.ContractInterface;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
 @Repository
-public interface SalePlanInterfaceRepo extends JpaRepository<SalePlanInterface, Long> {
-    List<SalePlanInterface> findAllByStatus(BatchStatusEnum status);
+public interface ContractInterfaceRepo extends JpaRepository<ContractInterface, Long> {
+    List<ContractInterface> findAllByStatus(BatchStatusEnum status);
 }

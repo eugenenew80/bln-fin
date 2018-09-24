@@ -1,6 +1,6 @@
 package bln.fin.ws;
 
-import bln.fin.entity.SoapSession;
+import bln.fin.entity.pi.Session;
 import bln.fin.entity.enums.DirectionEnum;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
@@ -9,13 +9,13 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 public interface SessionService {
     @Transactional(propagation = Propagation.REQUIRES_NEW)
-    SoapSession createSession(SoapSession session);
+    Session createSession(Session session);
 
-    SoapSession createSession(String objectCode, DirectionEnum direction);
-
-    @Transactional(propagation = Propagation.REQUIRES_NEW)
-    SoapSession successSession(SoapSession session, Long recCount);
+    Session createSession(String objectCode, DirectionEnum direction);
 
     @Transactional(propagation = Propagation.REQUIRES_NEW)
-    SoapSession errorSession(SoapSession session, Exception e);
+    Session successSession(Session session, Long recCount);
+
+    @Transactional(propagation = Propagation.REQUIRES_NEW)
+    Session errorSession(Session session, Exception e);
 }

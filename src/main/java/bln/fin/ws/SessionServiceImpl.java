@@ -1,6 +1,6 @@
 package bln.fin.ws;
 
-import bln.fin.entity.SoapSession;
+import bln.fin.entity.pi.Session;
 import bln.fin.entity.enums.DirectionEnum;
 import bln.fin.entity.enums.SessionStatusEnum;
 import bln.fin.repo.SessionRepo;
@@ -18,14 +18,14 @@ public class SessionServiceImpl implements SessionService {
 
     @Override
     @Transactional(propagation = Propagation.REQUIRES_NEW)
-    public SoapSession createSession(SoapSession session) {
+    public Session createSession(Session session) {
         session = sessionRepo.save(session);
         return session;
     }
 
     @Override
-    public SoapSession createSession(String objectCode, DirectionEnum direction) {
-        SoapSession session = new SoapSession();
+    public Session createSession(String objectCode, DirectionEnum direction) {
+        Session session = new Session();
         session.setObjectCode(objectCode);
         session.setDirection(direction);
         session.setStartDate(LocalDateTime.now());
@@ -35,7 +35,7 @@ public class SessionServiceImpl implements SessionService {
 
     @Override
     @Transactional(propagation = Propagation.REQUIRES_NEW)
-    public SoapSession successSession(SoapSession session, Long recCount) {
+    public Session successSession(Session session, Long recCount) {
         session.setEndDate(LocalDateTime.now());
         session.setStatus(SessionStatusEnum.C);
         session.setRecCount(recCount);
@@ -45,10 +45,12 @@ public class SessionServiceImpl implements SessionService {
 
     @Override
     @Transactional(propagation = Propagation.REQUIRES_NEW)
-    public SoapSession errorSession(SoapSession session, Exception e) {
+    public Session errorSession(Session session, Exception e) {
         session.setEndDate(LocalDateTime.now());
         session.setStatus(SessionStatusEnum.E);
-        session.setErrMsg(e.getMessage()!=null ? e.getMessage().substring(0, 300) : e.getClass().getCanonicalName());
+        String message = e.getMessage();
+        if (message.length() > 300) message = message.substring(0, 300);
+        session.setErrMsg(message !=null ? message : e.getClass().getCanonicalName());
         session = sessionRepo.save(session);
         return session;
     }

@@ -24,6 +24,8 @@ public class Util {
     }
 
     public static XMLGregorianCalendar toXMLGregorianCalendar(LocalDate date) {
+        if (date == null) return null;
+
         GregorianCalendar cal = GregorianCalendar.from(date.atStartOfDay(ZoneId.systemDefault()));
         try {
 
