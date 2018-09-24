@@ -48,7 +48,9 @@ public class SessionServiceImpl implements SessionService {
     public Session errorSession(Session session, Exception e) {
         session.setEndDate(LocalDateTime.now());
         session.setStatus(SessionStatusEnum.E);
-        session.setErrMsg(e.getMessage()!=null ? e.getMessage().substring(0, 300) : e.getClass().getCanonicalName());
+        String message = e.getMessage();
+        if (message.length() > 300) message = message.substring(0, 300);
+        session.setErrMsg(message !=null ? message : e.getClass().getCanonicalName());
         session = sessionRepo.save(session);
         return session;
     }

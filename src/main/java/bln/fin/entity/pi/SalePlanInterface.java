@@ -16,8 +16,8 @@ public class SalePlanInterface implements Monitored {
     @Id
     private Long id;
 
-    @Column(name = "customer_num")
-    private String customerNum;
+    @Column(name = "bp_num")
+    private String bpNum;
 
     @Column(name = "item_num")
     private String itemNum;

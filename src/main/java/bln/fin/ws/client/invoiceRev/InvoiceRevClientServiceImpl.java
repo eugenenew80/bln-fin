@@ -1,11 +1,11 @@
-package bln.fin.ws.client.plan;
+package bln.fin.ws.client.invoiceRev;
 
-import bln.fin.entity.pi.Session;
 import bln.fin.entity.enums.BatchStatusEnum;
 import bln.fin.entity.enums.DirectionEnum;
-import bln.fin.entity.pi.SalePlanInterface;
+import bln.fin.entity.pi.InvoiceRevInterface;
+import bln.fin.entity.pi.Session;
 import bln.fin.entity.pi.SessionMessage;
-import bln.fin.repo.SalePlanInterfaceRepo;
+import bln.fin.repo.InvoiceRevInterfaceRepo;
 import bln.fin.repo.SessionMessageRepo;
 import bln.fin.ws.SessionService;
 import lombok.RequiredArgsConstructor;
@@ -14,11 +14,10 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.ws.client.core.WebServiceTemplate;
 import org.springframework.ws.soap.client.SoapFaultClientException;
-import sap.plan.ObjectFactory;
-import sap.plan.Response;
-import sap.plan.SalesPlan;
+import sap.invoiceRev.ObjectFactory;
+import sap.invoiceRev.Response;
+import sap.invoiceRev.ReversedInvoice;
 import javax.xml.bind.JAXBElement;
-import java.math.BigInteger;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -27,29 +26,30 @@ import static java.util.stream.Collectors.toList;
 
 @Service
 @RequiredArgsConstructor
-public class SalePlanServiceImpl implements SalePlanService {
-    private static final Logger logger = LoggerFactory.getLogger(SalePlanService.class);
-    private static final String objectCode = "SalePlan";
-    private final WebServiceTemplate salePlanServiceTemplate;
-    private final SalePlanInterfaceRepo salePlanInterfaceRepo;
+public class InvoiceRevClientServiceImpl implements InvoiceRevClientService {
+    private static final Logger logger = LoggerFactory.getLogger(InvoiceRevClientService.class);
+    private static final String objectCode = "InvoiceRev";
+    private final InvoiceRevInterfaceRepo invoiceRevInterfaceRepo;
+    private final WebServiceTemplate saleInvoiceRevServiceTemplate;
     private final SessionService sessionService;
     private final SessionMessageRepo sessionMessageRepo;
 
     @Override
     public void send() {
-        List<SalePlanInterface> list = salePlanInterfaceRepo.findAllByStatus(BatchStatusEnum.W);
+        List<InvoiceRevInterface> list = invoiceRevInterfaceRepo.findAllByStatus(BatchStatusEnum.W);
         if (list.isEmpty()) return;
 
         logger.info("started");
-        Session session = sessionService.createSession(objectCode, DirectionEnum.EXPORT);
-        List<SalesPlan.Item> items = createSalePlanItems(list);
 
-        SalesPlan salesPlanReq = new ObjectFactory().createSalesPlan();
-        salesPlanReq.getItem().addAll(items);
+        Session session = sessionService.createSession(objectCode, DirectionEnum.EXPORT);
+        List<ReversedInvoice.Item> items = createInvoiceRevItems(list);
+
+        ReversedInvoice invoiceRevReq = new ObjectFactory().createReversedInvoice();
+        invoiceRevReq.getItem().addAll(items);
         debugRequest(items);
 
         try {
-            JAXBElement<Response> response = (JAXBElement<Response>) salePlanServiceTemplate.marshalSendAndReceive(salesPlanReq);
+            JAXBElement<Response> response = (JAXBElement<Response>) saleInvoiceRevServiceTemplate.marshalSendAndReceive(invoiceRevReq);
             List<SessionMessage> messages = saveMessages(response.getValue(), session);
             updateStatuses(list, messages);
             sessionService.successSession(session, (long) items.size());
@@ -69,28 +69,21 @@ public class SalePlanServiceImpl implements SalePlanService {
     }
 
 
-    private List<SalesPlan.Item> createSalePlanItems(List<SalePlanInterface> list) {
+    private List<ReversedInvoice.Item> createInvoiceRevItems(List<InvoiceRevInterface> list) {
         return list
             .stream()
-            .map(t -> createSalePlanItem(t))
+            .map(t -> createInvoiceRevItem(t))
             .filter(t -> t != null)
             .collect(toList());
     }
 
-    private SalesPlan.Item createSalePlanItem(SalePlanInterface line) {
+    private ReversedInvoice.Item createInvoiceRevItem(InvoiceRevInterface line) {
         logger.debug("Creating item:: id = " + line.getId());
-        SalesPlan.Item item = new SalesPlan.Item();
+        ReversedInvoice.Item item = new ReversedInvoice.Item();
         item.setId(line.getId());
-        item.setItemNum(line.getItemNum());
-        item.setVersion(new BigInteger(line.getVersion().toString()));
-        item.setForecastType(line.getForecastType());
-        item.setStartDate(toXMLGregorianCalendar(line.getStartDate()));
-        item.setEndDate(toXMLGregorianCalendar(line.getEndDate()));
-        item.setQuantity(line.getQuantity());
-        item.setAmount(line.getAmount());
-        item.setCurrency(line.getCurrency());
-        item.setCompanyCode(line.getCompanyCode());
-        item.setChannel(line.getChannel());
+        item.setDocDate(toXMLGregorianCalendar(line.getDocDate()));
+        item.setDocNum(line.getDocNum());
+        item.setRevDate(toXMLGregorianCalendar(line.getRevDate()));
         logger.debug("Creating item successfully completed");
         return item;
     }
@@ -114,8 +107,8 @@ public class SalePlanServiceImpl implements SalePlanService {
         return sessionMessageRepo.save(list);
     }
 
-    private List<SalePlanInterface> updateStatuses(List<SalePlanInterface> list, List<SessionMessage> messages) {
-        for (SalePlanInterface line: list) {
+    private List<InvoiceRevInterface> updateStatuses(List<InvoiceRevInterface> list, List<SessionMessage> messages) {
+        for (InvoiceRevInterface line: list) {
             SessionMessage message = messages.stream()
                 .filter(t -> t.getObjectCode().equals(objectCode))
                 .filter(t -> t.getObjectId()!=null && t.getObjectId().equals(line.getId().toString()))
@@ -130,12 +123,12 @@ public class SalePlanServiceImpl implements SalePlanService {
 
             line.setLastUpdateDate(LocalDateTime.now());
         }
-        return salePlanInterfaceRepo.save(list);
+        return invoiceRevInterfaceRepo.save(list);
     }
 
-    private void debugRequest(List<SalesPlan.Item> list) {
+    private void debugRequest(List<ReversedInvoice.Item> list) {
         logger.debug("---------------------------------");
-        for (SalesPlan.Item line: list) logger.debug(line.toString());
+        for (ReversedInvoice.Item line: list) logger.debug(line.toString());
         logger.debug("---------------------------------");
     }
 }

@@ -22,7 +22,7 @@ public class SessionMessage {
     private Long id;
 
     @ManyToOne
-    @JoinColumn(name = "ws_session")
+    @JoinColumn(name = "ws_session_id")
     private Session session;
 
     @Column(name="object_code")

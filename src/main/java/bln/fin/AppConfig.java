@@ -33,6 +33,7 @@ import java.util.Arrays;
 public class AppConfig  {
     private final String purchaseContractUrl = "http://kegoci10.corp.kegoc.kz:50000/XISOAPAdapter/MessageServlet?senderParty=&senderService=BIS_D&receiverParty=&receiverService=&interface=BIS_MM_Contract&interfaceNamespace=urn:kegoc.kz:BIS:ZMM_0042_Contract";
     private final String saleContractUrl     = "http://kegoci10.corp.kegoc.kz:50000/XISOAPAdapter/MessageServlet?senderParty=&senderService=BIS_D&receiverParty=&receiverService=&interface=BIS_LO_Contract&interfaceNamespace=urn:kegoc.kz:BIS:LO_0001_Contract";
+    private final String saleInvoiceRevUrl   = "http://kegoci10.corp.kegoc.kz:50000/XISOAPAdapter/MessageServlet?senderParty=&senderService=BIS_D&receiverParty=&receiverService=&interface=BIS_ReversedInvoice&interfaceNamespace=urn:kegoc.kz:BIS:LO_0002_4_ReversedInvoice";
     private final String saleInvoiceUrl      = "http://kegoci10.corp.kegoc.kz:50000/XISOAPAdapter/MessageServlet?senderParty=&senderService=BIS_D&receiverParty=&receiverService=&interface=BIS_EstimatedChargeInvoices&interfaceNamespace=urn:kegoc.kz:BIS:LO_0002_1_EstimatedChargeInvoice";
     private final String salePlanUrl         = "http://kegoci10.corp.kegoc.kz:50000/XISOAPAdapter/MessageServlet?senderParty=&senderService=BIS_D&receiverParty=&receiverService=&interface=BIS_SalesPlan&interfaceNamespace=urn:kegoc.kz:BIS:LO_0002_3_SalesPlan";
 
@@ -89,6 +90,20 @@ public class AppConfig  {
         webServiceTemplate.setMarshaller(jaxb2Marshaller);
         webServiceTemplate.setUnmarshaller(jaxb2Marshaller);
         webServiceTemplate.setDefaultUri(saleInvoiceUrl);
+        webServiceTemplate.setInterceptors(new ClientInterceptor[] {new CustomEndpointInterceptor()});
+
+        return webServiceTemplate;
+    }
+
+    @Bean
+    public WebServiceTemplate saleInvoiceRevServiceTemplate() {
+        Jaxb2Marshaller jaxb2Marshaller = new Jaxb2Marshaller();
+        jaxb2Marshaller.setContextPath("sap.invoiceRev");
+
+        WebServiceTemplate webServiceTemplate = new WebServiceTemplate();
+        webServiceTemplate.setMarshaller(jaxb2Marshaller);
+        webServiceTemplate.setUnmarshaller(jaxb2Marshaller);
+        webServiceTemplate.setDefaultUri(saleInvoiceRevUrl);
         webServiceTemplate.setInterceptors(new ClientInterceptor[] {new CustomEndpointInterceptor()});
 
         return webServiceTemplate;

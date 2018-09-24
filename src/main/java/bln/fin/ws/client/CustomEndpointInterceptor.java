@@ -27,8 +27,8 @@ public class CustomEndpointInterceptor implements ClientInterceptor {
 
         HttpUrlConnection connection = (HttpUrlConnection) TransportContextHolder.getTransportContext().getConnection();
         try {
-            //connection.addRequestHeader("Authorization", "Basic UElBUFBMQklTX0Q6UXdlciExMTExMQ==");
-            connection.addRequestHeader("Authorization", authHeader);
+            connection.addRequestHeader("Authorization", "Basic UElBUFBMQklTX0Q6UXdlciExMTExMQ==");
+            //connection.addRequestHeader("Authorization", authHeader);
         }
         catch (IOException e) {
             e.printStackTrace();
@@ -64,6 +64,16 @@ public class CustomEndpointInterceptor implements ClientInterceptor {
 
     @Override
     public boolean handleFault(MessageContext messageContext) throws WebServiceClientException {
+        ByteArrayOutputStream os = new ByteArrayOutputStream();
+        try {
+            messageContext.getResponse().writeTo(os);
+        }
+        catch (IOException e) {
+            e.printStackTrace();
+        }
+        String response = new String(os.toByteArray());
+        logger.trace(response);
+
         return true;
     }
 
