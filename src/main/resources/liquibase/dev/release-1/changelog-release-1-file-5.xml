@@ -1637,4 +1637,9 @@
         <modifyDataType schemaName="apps" tableName="fin_req_line_interface" columnName="item_num" newDataType="varchar(30)" />
     </changeSet>
 
+    <changeSet id="fin-eug-227" logicalFilePath="path-independent" author="eugene" context="dev">
+        <comment>Drop not null constraint for table: fin_invoice_interface</comment>
+        <dropNotNullConstraint schemaName="apps" tableName="fin_invoice_interface" columnName="doc_num" />
+    </changeSet>
+
 </databaseChangeLog>
