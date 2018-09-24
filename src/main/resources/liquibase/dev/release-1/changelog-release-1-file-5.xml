@@ -1632,4 +1632,9 @@
         />
     </changeSet>
 
+    <changeSet id="fin-eug-226" logicalFilePath="path-independent" author="eugene" context="dev">
+        <comment>Modify column data type for table: fin_req_line_interface</comment>
+        <modifyDataType schemaName="apps" tableName="fin_req_line_interface" columnName="item_num" newDataType="varchar(30)" />
+    </changeSet>
+
 </databaseChangeLog>
