@@ -51,7 +51,7 @@ public class SalePlanServiceImpl implements SalePlanService {
         try {
             JAXBElement<Response> response = (JAXBElement<Response>) salePlanServiceTemplate.marshalSendAndReceive(salesPlanReq);
             List<SessionMessage> messages = saveMessages(response.getValue(), session);
-            updateStatuses(list, messages);
+            updateStatuses(list, messages, session);
             sessionService.successSession(session, (long) items.size());
         }
 
@@ -114,7 +114,7 @@ public class SalePlanServiceImpl implements SalePlanService {
         return sessionMessageRepo.save(list);
     }
 
-    private List<SalePlanInterface> updateStatuses(List<SalePlanInterface> list, List<SessionMessage> messages) {
+    private List<SalePlanInterface> updateStatuses(List<SalePlanInterface> list, List<SessionMessage> messages, Session session) {
         for (SalePlanInterface line: list) {
             SessionMessage message = messages.stream()
                 .filter(t -> t.getObjectCode().equals(objectCode))
@@ -129,6 +129,7 @@ public class SalePlanServiceImpl implements SalePlanService {
                 line.setStatus(BatchStatusEnum.E);
 
             line.setLastUpdateDate(LocalDateTime.now());
+            line.setSession(session);
         }
         return salePlanInterfaceRepo.save(list);
     }

@@ -51,7 +51,7 @@ public class InvoiceRevClientServiceImpl implements InvoiceRevClientService {
         try {
             JAXBElement<Response> response = (JAXBElement<Response>) saleInvoiceRevServiceTemplate.marshalSendAndReceive(invoiceRevReq);
             List<SessionMessage> messages = saveMessages(response.getValue(), session);
-            updateStatuses(list, messages);
+            updateStatuses(list, messages, session);
             sessionService.successSession(session, (long) items.size());
         }
 
@@ -107,7 +107,7 @@ public class InvoiceRevClientServiceImpl implements InvoiceRevClientService {
         return sessionMessageRepo.save(list);
     }
 
-    private List<InvoiceRevInterface> updateStatuses(List<InvoiceRevInterface> list, List<SessionMessage> messages) {
+    private List<InvoiceRevInterface> updateStatuses(List<InvoiceRevInterface> list, List<SessionMessage> messages, Session session) {
         for (InvoiceRevInterface line: list) {
             SessionMessage message = messages.stream()
                 .filter(t -> t.getObjectCode().equals(objectCode))
@@ -122,6 +122,7 @@ public class InvoiceRevClientServiceImpl implements InvoiceRevClientService {
                 line.setStatus(BatchStatusEnum.E);
 
             line.setLastUpdateDate(LocalDateTime.now());
+            line.setSession(session);
         }
         return invoiceRevInterfaceRepo.save(list);
     }
