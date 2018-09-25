@@ -31,7 +31,7 @@ import static java.util.stream.Collectors.toList;
 @RequiredArgsConstructor
 public class InvoiceClientServiceImpl implements InvoiceClientService {
     private static final Logger logger = LoggerFactory.getLogger(InvoiceClientService.class);
-    private static final String objectCode = "Invoice";
+    private static final String objectCode = "SALE_INVOICE";
     private final InvoiceInterfaceRepo invoiceInterfaceRepo;
     private final WebServiceTemplate saleInvoiceServiceTemplate;
     private final SessionService sessionService;
@@ -48,7 +48,7 @@ public class InvoiceClientServiceImpl implements InvoiceClientService {
         logger.info("started");
 
         Session session = sessionService.createSession(objectCode, DirectionEnum.EXPORT);
-        List<EstimatedChargeInvoices.Item> items = createInvoiceRevItems(list);
+        List<EstimatedChargeInvoices.Item> items = createInvoiceItems(list);
 
         EstimatedChargeInvoices invoiceReq = new ObjectFactory().createEstimatedChargeInvoices();
         invoiceReq.getItem().addAll(items);
@@ -78,15 +78,15 @@ public class InvoiceClientServiceImpl implements InvoiceClientService {
     }
 
 
-    private List<EstimatedChargeInvoices.Item> createInvoiceRevItems(List<InvoiceInterface> list) {
+    private List<EstimatedChargeInvoices.Item> createInvoiceItems(List<InvoiceInterface> list) {
         return list
             .stream()
-            .map(t -> createInvoiceRevItem(t))
+            .map(t -> createInvoiceItem(t))
             .filter(t -> t != null)
             .collect(toList());
     }
 
-    private EstimatedChargeInvoices.Item createInvoiceRevItem(InvoiceInterface line) {
+    private EstimatedChargeInvoices.Item createInvoiceItem(InvoiceInterface line) {
         logger.debug("Creating item:: id = " + line.getId());
         EstimatedChargeInvoices.Item item = new EstimatedChargeInvoices.Item();
         item.setId(line.getId());
@@ -119,6 +119,7 @@ public class InvoiceClientServiceImpl implements InvoiceClientService {
         return item;
     }
 
+    @SuppressWarnings("Duplicates")
     private List<SessionMessage> saveMessages(Response response, Session session) {
         List<SessionMessage> list = new ArrayList<>();
         for (Response.Item item : response.getItem()) {

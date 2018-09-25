@@ -30,7 +30,7 @@ import static java.util.stream.Collectors.toList;
 @RequiredArgsConstructor
 public class SalePlanServiceImpl implements SalePlanService {
     private static final Logger logger = LoggerFactory.getLogger(SalePlanService.class);
-    private static final String objectCode = "SalePlan";
+    private static final String objectCode = "SALE_PLAN";
     private final WebServiceTemplate salePlanServiceTemplate;
     private final SalePlanInterfaceRepo salePlanInterfaceRepo;
     private final SessionService sessionService;

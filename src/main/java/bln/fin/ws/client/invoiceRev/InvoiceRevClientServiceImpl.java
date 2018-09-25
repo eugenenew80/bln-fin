@@ -29,7 +29,7 @@ import static java.util.stream.Collectors.toList;
 @RequiredArgsConstructor
 public class InvoiceRevClientServiceImpl implements InvoiceRevClientService {
     private static final Logger logger = LoggerFactory.getLogger(InvoiceRevClientService.class);
-    private static final String objectCode = "InvoiceRev";
+    private static final String objectCode = "SALE_INVOICE_REV";
     private final InvoiceRevInterfaceRepo invoiceRevInterfaceRepo;
     private final WebServiceTemplate saleInvoiceRevServiceTemplate;
     private final SessionService sessionService;

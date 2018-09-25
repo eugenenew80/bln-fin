@@ -25,7 +25,7 @@ public class ContractLineInterface implements Monitored {
     private String bpNum;
 
     @Column(name = "item_num")
-    private Long itemNum;
+    private String itemNum;
 
     @Column(name = "pos_num")
     private Long posNum;
