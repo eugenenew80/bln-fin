@@ -18,6 +18,7 @@ import sap.invoiceRev.ObjectFactory;
 import sap.invoiceRev.Response;
 import sap.invoiceRev.ReversedInvoice;
 import javax.xml.bind.JAXBElement;
+import javax.xml.namespace.QName;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -49,7 +50,10 @@ public class InvoiceRevClientServiceImpl implements InvoiceRevClientService {
         debugRequest(items);
 
         try {
-            JAXBElement<Response> response = (JAXBElement<Response>) saleInvoiceRevServiceTemplate.marshalSendAndReceive(invoiceRevReq);
+            QName qName = new QName("urn:kegoc.kz:BIS:LO_0002_4_ReversedInvoice", "ReversedInvoice");
+            JAXBElement<ReversedInvoice> root = new JAXBElement<>(qName, ReversedInvoice.class, invoiceRevReq);
+
+            JAXBElement<Response> response = (JAXBElement<Response>) saleInvoiceRevServiceTemplate.marshalSendAndReceive(root);
             List<SessionMessage> messages = saveMessages(response.getValue(), session);
             updateStatuses(list, messages, session);
             sessionService.successSession(session, (long) items.size());

@@ -19,6 +19,7 @@ import sap.invoice.EstimatedChargeInvoices;
 import sap.invoice.ObjectFactory;
 import sap.invoice.Response;
 import javax.xml.bind.JAXBElement;
+import javax.xml.namespace.QName;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -49,12 +50,15 @@ public class InvoiceClientServiceImpl implements InvoiceClientService {
         Session session = sessionService.createSession(objectCode, DirectionEnum.EXPORT);
         List<EstimatedChargeInvoices.Item> items = createInvoiceRevItems(list);
 
-        EstimatedChargeInvoices invoiceRevReq = new ObjectFactory().createEstimatedChargeInvoices();
-        invoiceRevReq.getItem().addAll(items);
+        EstimatedChargeInvoices invoiceReq = new ObjectFactory().createEstimatedChargeInvoices();
+        invoiceReq.getItem().addAll(items);
         debugRequest(items);
 
         try {
-            JAXBElement<Response> response = (JAXBElement<Response>) saleInvoiceServiceTemplate.marshalSendAndReceive(invoiceRevReq);
+            QName qName = new QName("urn:kegoc.kz:BIS:LO_0002_1_EstimatedChargeInvoice", "EstimatedChargeInvoices");
+            JAXBElement<EstimatedChargeInvoices> root = new JAXBElement<>(qName, EstimatedChargeInvoices.class, invoiceReq);
+
+            JAXBElement<Response> response = (JAXBElement<Response>) saleInvoiceServiceTemplate.marshalSendAndReceive(root);
             List<SessionMessage> messages = saveMessages(response.getValue(), session);
             updateStatuses(list, messages, session);
             sessionService.successSession(session, (long) items.size());

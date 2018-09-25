@@ -16,8 +16,8 @@ public class AutoSender {
 
     @Scheduled(cron = "0 */1 * * * *")
     public void run() {
-        //invoiceRevClientService.send();
-        invoiceClientService.send();
+        invoiceRevClientService.send();
+        //invoiceClientService.send();
     }
 
 }

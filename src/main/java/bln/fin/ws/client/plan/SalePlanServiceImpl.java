@@ -18,6 +18,7 @@ import sap.plan.ObjectFactory;
 import sap.plan.Response;
 import sap.plan.SalesPlan;
 import javax.xml.bind.JAXBElement;
+import javax.xml.namespace.QName;
 import java.math.BigInteger;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -49,7 +50,10 @@ public class SalePlanServiceImpl implements SalePlanService {
         debugRequest(items);
 
         try {
-            JAXBElement<Response> response = (JAXBElement<Response>) salePlanServiceTemplate.marshalSendAndReceive(salesPlanReq);
+            QName qName = new QName("urn:kegoc.kz:BIS:LO_0002_3_SalesPlan", "SalesPlan");
+            JAXBElement<SalesPlan> root = new JAXBElement<>(qName, SalesPlan.class, salesPlanReq);
+
+            JAXBElement<Response> response = (JAXBElement<Response>) salePlanServiceTemplate.marshalSendAndReceive(root);
             List<SessionMessage> messages = saveMessages(response.getValue(), session);
             updateStatuses(list, messages, session);
             sessionService.successSession(session, (long) items.size());
@@ -118,7 +122,7 @@ public class SalePlanServiceImpl implements SalePlanService {
         for (SalePlanInterface line: list) {
             SessionMessage message = messages.stream()
                 .filter(t -> t.getObjectCode().equals(objectCode))
-                .filter(t -> t.getObjectId()!=null && t.getObjectId().equals(line.getId().toString()))
+                .filter(t -> t.getObjectId()!=null && t.getObjectId().trim().equals(line.getId().toString()))
                 .filter(t -> t.getMsgType().equals("S"))
                 .findFirst()
                 .orElse(null);
