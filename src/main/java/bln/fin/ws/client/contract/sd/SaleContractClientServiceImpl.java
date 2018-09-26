@@ -1,11 +1,9 @@
-package bln.fin.ws.client.plan;
+package bln.fin.ws.client.contract.sd;
 
-import bln.fin.entity.pi.Session;
 import bln.fin.entity.enums.BatchStatusEnum;
 import bln.fin.entity.enums.DirectionEnum;
-import bln.fin.entity.pi.SalePlanInterface;
-import bln.fin.entity.pi.SessionMessage;
-import bln.fin.repo.SalePlanInterfaceRepo;
+import bln.fin.entity.pi.*;
+import bln.fin.repo.ContractInterfaceRepo;
 import bln.fin.repo.SessionMessageRepo;
 import bln.fin.ws.SessionService;
 import lombok.RequiredArgsConstructor;
@@ -14,46 +12,48 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.ws.client.core.WebServiceTemplate;
 import org.springframework.ws.soap.client.SoapFaultClientException;
-import sap.plan.ObjectFactory;
-import sap.plan.Response;
-import sap.plan.SalesPlan;
+import sap.contract.sd.Contract;
+import sap.contract.sd.ObjectFactory;
+import sap.contract.sd.Response;
 import javax.xml.bind.JAXBElement;
 import javax.xml.namespace.QName;
-import java.math.BigInteger;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-import static bln.fin.common.Util.toXMLGregorianCalendar;
 import static java.util.stream.Collectors.toList;
 
 @Service
 @RequiredArgsConstructor
-public class SalePlanServiceImpl implements SalePlanService {
-    private static final Logger logger = LoggerFactory.getLogger(SalePlanService.class);
-    private static final String objectCode = "SALE_PLAN";
-    private final WebServiceTemplate salePlanServiceTemplate;
-    private final SalePlanInterfaceRepo salePlanInterfaceRepo;
+public class SaleContractClientServiceImpl implements SaleContractClientService {
+    private static final Logger logger = LoggerFactory.getLogger(SaleContractClientService.class);
+    private static final String objectCode = "SALE_CONTRACT";
+    private final ContractInterfaceRepo contractInterfaceRepo;
+    private final WebServiceTemplate saleContractServiceTemplate;
     private final SessionService sessionService;
     private final SessionMessageRepo sessionMessageRepo;
 
     @Override
     public void send() {
-        List<SalePlanInterface> list = salePlanInterfaceRepo.findAllByStatus(BatchStatusEnum.W);
+        List<ContractInterface> list = contractInterfaceRepo.findAllByStatus(BatchStatusEnum.W)
+            .stream()
+            .filter(t -> t.getBpType().equals("D"))
+            .collect(toList());
         if (list.isEmpty()) return;
 
         logger.info("started");
-        Session session = sessionService.createSession(objectCode, DirectionEnum.EXPORT);
-        List<SalesPlan.Item> items = createSalePlanItems(list);
 
-        SalesPlan salesPlanReq = new ObjectFactory().createSalesPlan();
-        salesPlanReq.getItem().addAll(items);
+        Session session = sessionService.createSession(objectCode, DirectionEnum.EXPORT);
+        List<Contract.Item> items = createContractItems(list);
+
+        Contract contractReq = new ObjectFactory().createContract();
+        contractReq.getItem().addAll(items);
         debugRequest(items);
 
         try {
-            QName qName = new QName("urn:kegoc.kz:BIS:LO_0002_3_SalesPlan", "SalesPlan");
-            JAXBElement<SalesPlan> root = new JAXBElement<>(qName, SalesPlan.class, salesPlanReq);
+            QName qName = new QName("urn:kegoc.kz:BIS:LO_0001_Contract", "Contract");
+            JAXBElement<Contract> root = new JAXBElement<>(qName, Contract.class, contractReq);
 
-            JAXBElement<Response> response = (JAXBElement<Response>) salePlanServiceTemplate.marshalSendAndReceive(root);
+            JAXBElement<Response> response = (JAXBElement<Response>) saleContractServiceTemplate.marshalSendAndReceive(root);
             List<SessionMessage> messages = saveMessages(response.getValue(), session);
             updateStatuses(list, messages, session);
             sessionService.successSession(session, (long) items.size());
@@ -73,32 +73,37 @@ public class SalePlanServiceImpl implements SalePlanService {
     }
 
 
-    private List<SalesPlan.Item> createSalePlanItems(List<SalePlanInterface> list) {
+    private List<Contract.Item> createContractItems(List<ContractInterface> list) {
         return list
             .stream()
-            .map(t -> createSalePlanItem(t))
+            .map(t -> createContractItem(t))
             .filter(t -> t != null)
             .collect(toList());
     }
 
-    private SalesPlan.Item createSalePlanItem(SalePlanInterface line) {
+    private Contract.Item createContractItem(ContractInterface line) {
         logger.debug("Creating item:: id = " + line.getId());
-        SalesPlan.Item item = new SalesPlan.Item();
+        Contract.Item item = new Contract.Item();
         item.setId(line.getId());
-        item.setItemNum(line.getItemNum());
-        item.setVersion(new BigInteger(line.getVersion().toString()));
-        item.setForecastType(line.getForecastType());
-        item.setStartDate(toXMLGregorianCalendar(line.getStartDate()));
-        item.setEndDate(toXMLGregorianCalendar(line.getEndDate()));
-        item.setQuantity(line.getQuantity());
-        item.setAmount(line.getAmount());
-        item.setCurrency(line.getCurrency());
+        item.setContractNum(line.getContractNum());
+        item.setExtContractNum(line.getExtContractNum());
         item.setCompanyCode(line.getCompanyCode());
-        item.setChannel(line.getChannel());
+        item.setAmount(line.getAmount());
+        item.setCurrencyCode(line.getCurrencyCode());
+        for (ContractLineInterface contractLine : line.getLines()) {
+            Contract.Item.Row row = new Contract.Item.Row();
+            row.setItemNum(contractLine.getItemNum());
+            row.setUnit(contractLine.getUnit());
+            row.setQuantity(contractLine.getQuantity());
+            row.setPrice(contractLine.getPrice());
+            row.setAmount(contractLine.getAmount());
+            item.getRow().add(row);
+        }
         logger.debug("Creating item successfully completed");
         return item;
     }
 
+    @SuppressWarnings("Duplicates")
     private List<SessionMessage> saveMessages(Response response, Session session) {
         List<SessionMessage> list = new ArrayList<>();
         for (Response.Item item : response.getItem()) {
@@ -118,8 +123,8 @@ public class SalePlanServiceImpl implements SalePlanService {
         return sessionMessageRepo.save(list);
     }
 
-    private List<SalePlanInterface> updateStatuses(List<SalePlanInterface> list, List<SessionMessage> messages, Session session) {
-        for (SalePlanInterface line: list) {
+    private List<ContractInterface> updateStatuses(List<ContractInterface> list, List<SessionMessage> messages, Session session) {
+        for (ContractInterface line: list) {
             SessionMessage message = messages.stream()
                 .filter(t -> t.getObjectCode().equals(objectCode))
                 .filter(t -> t.getObjectId()!=null && t.getObjectId().trim().equals(line.getId().toString()))
@@ -135,12 +140,12 @@ public class SalePlanServiceImpl implements SalePlanService {
             line.setLastUpdateDate(LocalDateTime.now());
             line.setSession(session);
         }
-        return salePlanInterfaceRepo.save(list);
+        return contractInterfaceRepo.save(list);
     }
 
-    private void debugRequest(List<SalesPlan.Item> list) {
+    private void debugRequest(List<Contract.Item> list) {
         logger.debug("---------------------------------");
-        for (SalesPlan.Item line: list) logger.debug(line.toString());
+        for (Contract.Item line: list) logger.debug(line.toString());
         logger.debug("---------------------------------");
     }
 }

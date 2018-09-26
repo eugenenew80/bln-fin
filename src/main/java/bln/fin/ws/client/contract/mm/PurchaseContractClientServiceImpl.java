@@ -1,4 +1,4 @@
-package bln.fin.ws.client.contract;
+package bln.fin.ws.client.contract.mm;
 
 import bln.fin.entity.enums.BatchStatusEnum;
 import bln.fin.entity.enums.DirectionEnum;
@@ -28,8 +28,8 @@ import static java.util.stream.Collectors.toList;
 @SuppressWarnings("ALL")
 @Service
 @RequiredArgsConstructor
-public class PurchaseContractServiceImpl implements PurchaseContractService {
-    private static final Logger logger = LoggerFactory.getLogger(PurchaseContractService.class);
+public class PurchaseContractClientServiceImpl implements PurchaseContractClientService {
+    private static final Logger logger = LoggerFactory.getLogger(PurchaseContractClientService.class);
     private static final String objectCode = "PURCHASE_CONTRACT";
     private final ContractInterfaceRepo contractInterfaceRepo;
     private final WebServiceTemplate purchaseContractServiceTemplate;

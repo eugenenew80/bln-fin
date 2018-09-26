@@ -1,8 +1,8 @@
-package bln.fin.ws.client.contract;
+package bln.fin.ws.client.plan;
 
 import org.springframework.stereotype.Service;
 
 @Service
-public interface SaleContractService {
+public interface SalePlanClientService {
     void send();
 }
