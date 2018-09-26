@@ -19,11 +19,11 @@ public class BusinessPartnerDto {
     @Documentation("Группа")
     private String group;
 
-    @XmlElement(required = true)
+    @XmlElement
     @Documentation("Критерий поиска")
     private String searchCriteria;
 
-    @XmlElement(required = true)
+    @XmlElement
     @Documentation("Дата основания")
     private Date foundDate;
 
@@ -47,7 +47,7 @@ public class BusinessPartnerDto {
     @Documentation("Перевод")
     private List<BusinessPartnerTranslateDto> translates;
 
-    @XmlElement(required = true, name = "address")
+    @XmlElement(name = "address")
     @Documentation("Адреса")
     private List<AddressDto> addresses;
 

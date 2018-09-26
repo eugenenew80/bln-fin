@@ -17,7 +17,7 @@ public class BusinessPartnerTranslateDto {
     @Documentation("Наименование делового партнера")
     private String name;
 
-    @XmlElement(required = true)
+    @XmlElement
     @Documentation("Полное наименование делового партнера")
     private String fullName;
 }

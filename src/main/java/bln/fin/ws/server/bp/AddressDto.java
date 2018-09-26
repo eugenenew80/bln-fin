@@ -14,11 +14,11 @@ public class AddressDto {
     @Documentation("Тип адреса: ACTUAL - фактический, LEGAL - юридический")
     private String addressType;
 
-    @XmlElement(required = true)
+    @XmlElement
     @Documentation("Код страны")
     private String country;
 
-    @XmlElement(required = true)
+    @XmlElement
     @Documentation("Код региона")
     private String region;
 
@@ -62,7 +62,7 @@ public class AddressDto {
     @Documentation("Адрес электронной почты")
     private String email;
 
-    @XmlElement(required = true, name = "translate")
+    @XmlElement(name = "translate")
     @Documentation("Перевод")
     private List<AddressTranslateDto> translates;
 }

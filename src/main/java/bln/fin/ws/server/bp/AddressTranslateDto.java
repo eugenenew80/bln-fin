@@ -14,11 +14,11 @@ public class AddressTranslateDto {
     @Documentation("Код языка")
     private String lang;
 
-    @XmlElement(required = true)
+    @XmlElement
     @Documentation("Город")
     private String city;
 
-    @XmlElement(required = true)
+    @XmlElement
     @Documentation("Улица")
     private String street;
 }

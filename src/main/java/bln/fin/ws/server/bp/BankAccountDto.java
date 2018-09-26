@@ -18,11 +18,11 @@ public class BankAccountDto {
     @Documentation("БИК банка")
     private String bik;
 
-    @XmlElement(required = true)
+    @XmlElement
     @Documentation("№ банковского счёта")
     private String account;
 
-    @XmlElement(required = true)
+    @XmlElement
     @Documentation("IBAN")
     private String iban;
 }
