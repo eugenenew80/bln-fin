@@ -14,9 +14,10 @@ import org.springframework.ws.transport.http.HttpUrlConnection;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 
+@SuppressWarnings("Duplicates")
 @Component
-public class CustomEndpointInterceptor implements ClientInterceptor {
-    private static final Logger logger = LoggerFactory.getLogger(CustomEndpointInterceptor.class);
+public class CustomClientInterceptor implements ClientInterceptor {
+    private static final Logger logger = LoggerFactory.getLogger(CustomClientInterceptor.class);
     private String username = "PIAPPLBIS_D";
     private String password = "Qwer!11111";
 

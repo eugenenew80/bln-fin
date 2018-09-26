@@ -2,7 +2,7 @@ package bln.fin;
 
 import bln.fin.repo.*;
 import bln.fin.ws.SessionService;
-import bln.fin.ws.client.CustomEndpointInterceptor;
+import bln.fin.ws.client.CustomClientInterceptor;
 import bln.fin.ws.server.bp.BusinessPartnerServiceImpl;
 import bln.fin.ws.server.debt.DebtServiceImpl;
 import bln.fin.ws.server.invoice.InvoiceServiceImpl;
@@ -15,10 +15,13 @@ import com.fasterxml.jackson.module.paramnames.ParameterNamesModule;
 import lombok.RequiredArgsConstructor;
 import org.apache.cxf.Bus;
 import org.apache.cxf.bus.spring.SpringBus;
+import org.apache.cxf.ext.logging.LoggingInInterceptor;
+import org.apache.cxf.ext.logging.LoggingOutInterceptor;
 import org.apache.cxf.jaxws.EndpointImpl;
 import org.apache.cxf.transport.servlet.CXFServlet;
 import org.dozer.DozerBeanMapper;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.boot.web.servlet.ServletRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -28,14 +31,25 @@ import org.springframework.ws.client.support.interceptor.ClientInterceptor;
 import javax.xml.ws.Endpoint;
 import java.util.Arrays;
 
+
 @Configuration
 @RequiredArgsConstructor
 public class AppConfig  {
-    private final String purchaseContractUrl = "https://kegoci10.corp.kegoc.kz:50001/XISOAPAdapter/MessageServlet?senderParty=&amp;senderService=BIS_D&amp;receiverParty=&amp;receiverService=&amp;interface=BIS_MM_Contract&amp;interfaceNamespace=urn%3Akegoc.kz%3ABIS%3AZMM_0042_Contract";
-    private final String saleContractUrl     = "http://kegoci10.corp.kegoc.kz:50000/XISOAPAdapter/MessageServlet?senderParty=&senderService=BIS_D&receiverParty=&receiverService=&interface=BIS_LO_Contract&interfaceNamespace=urn:kegoc.kz:BIS:LO_0001_Contract";
-    private final String saleInvoiceRevUrl   = "http://kegoci10.corp.kegoc.kz:50000/XISOAPAdapter/MessageServlet?senderParty=&senderService=BIS_D&receiverParty=&receiverService=&interface=BIS_ReversedInvoice&interfaceNamespace=urn:kegoc.kz:BIS:LO_0002_4_ReversedInvoice";
-    private final String saleInvoiceUrl      = "http://kegoci10.corp.kegoc.kz:50000/XISOAPAdapter/MessageServlet?senderParty=&senderService=BIS_D&receiverParty=&receiverService=&interface=BIS_EstimatedChargeInvoices&interfaceNamespace=urn:kegoc.kz:BIS:LO_0002_1_EstimatedChargeInvoice";
-    private final String salePlanUrl         = "http://kegoci10.corp.kegoc.kz:50000/XISOAPAdapter/MessageServlet?senderParty=&senderService=BIS_D&receiverParty=&receiverService=&interface=BIS_SalesPlan&interfaceNamespace=urn:kegoc.kz:BIS:LO_0002_3_SalesPlan";
+    private static final Logger logger = LoggerFactory.getLogger(AppConfig.class);
+
+    private final SessionService sessionService;
+    private final ReqLineInterfaceRepo reqLineInterfaceRepo;
+    private final DebtInterfaceRepo debtInterfaceRepo;
+    private final InvoiceInterfaceRepo invoiceInterfaceRepo;
+    private final InvoiceStatusInterfaceRepo invoiceStatusInterfaceRepo;
+    private final BpInterfaceRepo bpInterfaceRepo;
+    private final BpRelationInterfaceRepo bpRelationInterfaceRepo;
+
+    private final static String purchaseContractUrl = "https://kegoci10.corp.kegoc.kz:50001/XISOAPAdapter/MessageServlet?senderParty=&amp;senderService=BIS_D&amp;receiverParty=&amp;receiverService=&amp;interface=BIS_MM_Contract&amp;interfaceNamespace=urn%3Akegoc.kz%3ABIS%3AZMM_0042_Contract";
+    private final static String saleContractUrl     = "http://kegoci10.corp.kegoc.kz:50000/XISOAPAdapter/MessageServlet?senderParty=&senderService=BIS_D&receiverParty=&receiverService=&interface=BIS_LO_Contract&interfaceNamespace=urn:kegoc.kz:BIS:LO_0001_Contract";
+    private final static String saleInvoiceRevUrl   = "http://kegoci10.corp.kegoc.kz:50000/XISOAPAdapter/MessageServlet?senderParty=&senderService=BIS_D&receiverParty=&receiverService=&interface=BIS_ReversedInvoice&interfaceNamespace=urn:kegoc.kz:BIS:LO_0002_4_ReversedInvoice";
+    private final static String saleInvoiceUrl      = "http://kegoci10.corp.kegoc.kz:50000/XISOAPAdapter/MessageServlet?senderParty=&senderService=BIS_D&receiverParty=&receiverService=&interface=BIS_EstimatedChargeInvoices&interfaceNamespace=urn:kegoc.kz:BIS:LO_0002_1_EstimatedChargeInvoice";
+    private final static String salePlanUrl         = "http://kegoci10.corp.kegoc.kz:50000/XISOAPAdapter/MessageServlet?senderParty=&senderService=BIS_D&receiverParty=&receiverService=&interface=BIS_SalesPlan&interfaceNamespace=urn:kegoc.kz:BIS:LO_0002_3_SalesPlan";
 
     @Bean
     public ObjectMapper objectMapper() {
@@ -76,7 +90,7 @@ public class AppConfig  {
         webServiceTemplate.setMarshaller(jaxb2Marshaller);
         webServiceTemplate.setUnmarshaller(jaxb2Marshaller);
         webServiceTemplate.setDefaultUri(salePlanUrl);
-        webServiceTemplate.setInterceptors(new ClientInterceptor[] {new CustomEndpointInterceptor()});
+        webServiceTemplate.setInterceptors(new ClientInterceptor[] {new CustomClientInterceptor()});
 
         return webServiceTemplate;
     }
@@ -90,7 +104,7 @@ public class AppConfig  {
         webServiceTemplate.setMarshaller(jaxb2Marshaller);
         webServiceTemplate.setUnmarshaller(jaxb2Marshaller);
         webServiceTemplate.setDefaultUri(saleInvoiceUrl);
-        webServiceTemplate.setInterceptors(new ClientInterceptor[] {new CustomEndpointInterceptor()});
+        webServiceTemplate.setInterceptors(new ClientInterceptor[] {new CustomClientInterceptor()});
 
         return webServiceTemplate;
     }
@@ -104,7 +118,7 @@ public class AppConfig  {
         webServiceTemplate.setMarshaller(jaxb2Marshaller);
         webServiceTemplate.setUnmarshaller(jaxb2Marshaller);
         webServiceTemplate.setDefaultUri(saleInvoiceRevUrl);
-        webServiceTemplate.setInterceptors(new ClientInterceptor[] {new CustomEndpointInterceptor()});
+        webServiceTemplate.setInterceptors(new ClientInterceptor[] {new CustomClientInterceptor()});
 
         return webServiceTemplate;
     }
@@ -118,7 +132,7 @@ public class AppConfig  {
         webServiceTemplate.setMarshaller(jaxb2Marshaller);
         webServiceTemplate.setUnmarshaller(jaxb2Marshaller);
         webServiceTemplate.setDefaultUri(saleContractUrl);
-        webServiceTemplate.setInterceptors(new ClientInterceptor[] {new CustomEndpointInterceptor()});
+        webServiceTemplate.setInterceptors(new ClientInterceptor[] {new CustomClientInterceptor()});
 
         return webServiceTemplate;
     }
@@ -132,8 +146,7 @@ public class AppConfig  {
         webServiceTemplate.setMarshaller(jaxb2Marshaller);
         webServiceTemplate.setUnmarshaller(jaxb2Marshaller);
         webServiceTemplate.setDefaultUri(purchaseContractUrl);
-        webServiceTemplate.setInterceptors(new ClientInterceptor[] {new CustomEndpointInterceptor()});
-
+        webServiceTemplate.setInterceptors(new ClientInterceptor[] {new CustomClientInterceptor()});
         return webServiceTemplate;
     }
 
@@ -146,56 +159,36 @@ public class AppConfig  {
     @Bean(name=Bus.DEFAULT_BUS_ID)
     public SpringBus springBus() {
         SpringBus springBus = new SpringBus();
+        springBus.getInInterceptors().add(new LoggingInInterceptor());
+        springBus.getOutInterceptors().add(new LoggingOutInterceptor());
         return springBus;
     }
 
     @Bean
-    public Endpoint endpoint1() {
-        EndpointImpl endpoint = new EndpointImpl(springBus(), new DebtServiceImpl(debtInterfaceRepo, sessionService, dozerBeanMapper()));
+    public Endpoint endpoint1(DozerBeanMapper dozerBeanMapper) {
+        EndpointImpl endpoint = new EndpointImpl(springBus(), new DebtServiceImpl(debtInterfaceRepo, sessionService, dozerBeanMapper));
         endpoint.publish("/DebtService");
         return endpoint;
     }
 
     @Bean
-    public Endpoint endpoint2() {
-        EndpointImpl endpoint = new EndpointImpl(springBus(), new InvoiceServiceImpl(invoiceInterfaceRepo, invoiceStatusInterfaceRepo, sessionService, dozerBeanMapper()));
+    public Endpoint endpoint2(DozerBeanMapper dozerBeanMapper) {
+        EndpointImpl endpoint = new EndpointImpl(springBus(), new InvoiceServiceImpl(invoiceInterfaceRepo, invoiceStatusInterfaceRepo, sessionService, dozerBeanMapper));
         endpoint.publish("/InvoiceService");
         return endpoint;
     }
 
     @Bean
-    public Endpoint endpoint3() {
-        EndpointImpl endpoint = new EndpointImpl(springBus(), new ReqServiceImpl(reqLineInterfaceRepo, sessionService, dozerBeanMapper()));
+    public Endpoint endpoint3(DozerBeanMapper dozerBeanMapper) {
+        EndpointImpl endpoint = new EndpointImpl(springBus(), new ReqServiceImpl(reqLineInterfaceRepo, sessionService, dozerBeanMapper));
         endpoint.publish("/ReqService");
         return endpoint;
     }
 
     @Bean
-    public Endpoint endpoint4() {
-        EndpointImpl endpoint = new EndpointImpl(springBus(), new BusinessPartnerServiceImpl(bpInterfaceRepo, bpRelationInterfaceRepo, sessionService, dozerBeanMapper()));
+    public Endpoint endpoint4(DozerBeanMapper dozerBeanMapper) {
+        EndpointImpl endpoint = new EndpointImpl(springBus(), new BusinessPartnerServiceImpl(bpInterfaceRepo, bpRelationInterfaceRepo, sessionService, dozerBeanMapper));
         endpoint.publish("/BusinessPartnerService");
         return endpoint;
     }
-
-
-    @Autowired
-    private final SessionService sessionService;
-
-    @Autowired
-    private final ReqLineInterfaceRepo reqLineInterfaceRepo;
-
-    @Autowired
-    private final DebtInterfaceRepo debtInterfaceRepo;
-
-    @Autowired
-    private final InvoiceInterfaceRepo invoiceInterfaceRepo;
-
-    @Autowired
-    private final InvoiceStatusInterfaceRepo invoiceStatusInterfaceRepo;
-
-    @Autowired
-    private final BpInterfaceRepo bpInterfaceRepo;
-
-    @Autowired
-    private final BpRelationInterfaceRepo bpRelationInterfaceRepo;
 }
