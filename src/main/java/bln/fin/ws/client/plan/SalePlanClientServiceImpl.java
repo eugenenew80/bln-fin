@@ -26,6 +26,7 @@ import java.util.List;
 import static bln.fin.common.Util.toXMLGregorianCalendar;
 import static java.util.stream.Collectors.toList;
 
+@SuppressWarnings("Duplicates")
 @Service
 @RequiredArgsConstructor
 public class SalePlanClientServiceImpl implements SalePlanClientService {
@@ -71,7 +72,6 @@ public class SalePlanClientServiceImpl implements SalePlanClientService {
         }
         logger.info("completed");
     }
-
 
     private List<SalesPlan.Item> createSalePlanItems(List<SalePlanInterface> list) {
         return list
