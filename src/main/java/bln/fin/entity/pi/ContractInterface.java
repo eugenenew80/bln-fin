@@ -64,8 +64,8 @@ public class ContractInterface implements Monitored {
     @Column(name = "channel")
     private String channel;
 
-    @Column(name = "sales_depart_code")
-    private String salesDepartCode;
+    @Column(name = "sale_depart_code")
+    private String saleDepartCode;
 
     @Column(name = "purchase_group")
     private String purchaseGroup;
