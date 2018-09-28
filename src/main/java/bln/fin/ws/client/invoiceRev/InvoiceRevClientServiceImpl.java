@@ -50,7 +50,7 @@ public class InvoiceRevClientServiceImpl implements InvoiceRevClientService {
         debugRequest(items);
 
         try {
-            QName qName = new QName("urn:kegoc.kz:BIS:LO_0002_4_ReversedInvoice", "ReversedInvoice");
+            QName qName = new QName("urn:kegoc.kz:BIS:LO_0002_4_ReversedInvoice", "ReversedInvoice", "urn");
             JAXBElement<ReversedInvoice> root = new JAXBElement<>(qName, ReversedInvoice.class, invoiceRevReq);
 
             JAXBElement<Response> response = (JAXBElement<Response>) saleInvoiceRevServiceTemplate.marshalSendAndReceive(root);
