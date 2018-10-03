@@ -1,13 +1,9 @@
 package bln.fin.entity.pi;
 
-import bln.fin.entity.enums.DirectionEnum;
-import bln.fin.entity.enums.SessionStatusEnum;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import org.hibernate.annotations.DynamicUpdate;
-
 import javax.persistence.*;
-import java.time.LocalDateTime;
 
 @Data
 @EqualsAndHashCode(of= {"id"})

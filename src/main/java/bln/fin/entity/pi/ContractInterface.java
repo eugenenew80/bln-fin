@@ -22,6 +22,9 @@ public class ContractInterface implements Monitored {
     @Column(name = "bp_type")
     private String bpType;
 
+    @Column(name = "contract_type")
+    private String contractType;
+
     @Column(name = "bp_num")
     private String bpNum;
 

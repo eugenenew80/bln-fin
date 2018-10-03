@@ -1,6 +1,6 @@
 package bln.fin.entity.pi;
 
-import bln.fin.entity.enums.SessionStatusEnum;
+import bln.fin.entity.enums.BatchStatusEnum;
 import bln.fin.entity.enums.DirectionEnum;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -38,7 +38,7 @@ public class Session {
 
     @Column(name="status")
     @Enumerated(EnumType.STRING)
-    private SessionStatusEnum status;
+    private BatchStatusEnum status;
 
     @Column(name = "err_msg")
     private String errMsg;

@@ -1,8 +1,8 @@
 package bln.fin.ws;
 
+import bln.fin.entity.enums.BatchStatusEnum;
 import bln.fin.entity.pi.Session;
 import bln.fin.entity.enums.DirectionEnum;
-import bln.fin.entity.enums.SessionStatusEnum;
 import bln.fin.repo.SessionRepo;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -29,7 +29,7 @@ public class SessionServiceImpl implements SessionService {
         session.setObjectCode(objectCode);
         session.setDirection(direction);
         session.setStartDate(LocalDateTime.now());
-        session.setStatus(SessionStatusEnum.P);
+        session.setStatus(BatchStatusEnum.P);
         return createSession(session);
     }
 
@@ -37,7 +37,7 @@ public class SessionServiceImpl implements SessionService {
     @Transactional(propagation = Propagation.REQUIRES_NEW)
     public Session successSession(Session session, Long recCount) {
         session.setEndDate(LocalDateTime.now());
-        session.setStatus(SessionStatusEnum.C);
+        session.setStatus(BatchStatusEnum.C);
         session.setRecCount(recCount);
         session = sessionRepo.save(session);
         return session;
@@ -47,7 +47,7 @@ public class SessionServiceImpl implements SessionService {
     @Transactional(propagation = Propagation.REQUIRES_NEW)
     public Session errorSession(Session session, Exception e) {
         session.setEndDate(LocalDateTime.now());
-        session.setStatus(SessionStatusEnum.E);
+        session.setStatus(BatchStatusEnum.E);
         String message = e.getMessage();
         if (message.length() > 300) message = message.substring(0, 300);
         session.setErrMsg(message !=null ? message : e.getClass().getCanonicalName());

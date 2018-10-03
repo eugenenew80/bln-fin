@@ -6,10 +6,13 @@ import bln.fin.entity.pi.*;
 import bln.fin.repo.ContractInterfaceRepo;
 import bln.fin.repo.SessionMessageRepo;
 import bln.fin.ws.SessionService;
+import bln.fin.ws.client.ClientHelper;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ws.client.core.WebServiceTemplate;
 import org.springframework.ws.soap.client.SoapFaultClientException;
 import sap.contract.sd.Contract;
@@ -17,13 +20,12 @@ import sap.contract.sd.ObjectFactory;
 import sap.contract.sd.Response;
 import javax.xml.bind.JAXBElement;
 import javax.xml.namespace.QName;
-import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import static java.util.stream.Collectors.toList;
-import static bln.fin.common.Util.toXMLGregorianCalendar;
 
+@SuppressWarnings("Duplicates")
 @Service
 @RequiredArgsConstructor
 public class SaleContractClientServiceImpl implements SaleContractClientService {
@@ -40,88 +42,58 @@ public class SaleContractClientServiceImpl implements SaleContractClientService 
             .stream()
             .filter(t -> t.getBpType().equals("D"))
             .collect(toList());
+
+        send(list);
+    }
+
+    private void send(List<ContractInterface> list) {
         if (list.isEmpty()) return;
 
         logger.info("started");
-
         Session session = sessionService.createSession(objectCode, DirectionEnum.EXPORT);
-        List<Contract.Item> items = createContractItems(list);
+        list = updateStatuses(list, session);
+
+        List<Contract.Item> items = list.stream()
+            .map(ClientHelper::createContractItem)
+            .filter(t -> t != null)
+            .collect(toList());
 
         Contract contractReq = new ObjectFactory().createContract();
         contractReq.getItem().addAll(items);
         debugRequest(items);
 
         try {
-            QName qName = new QName("urn:kegoc.kz:BIS:LO_0001_Contract", "Contract", "urn");
-            JAXBElement<Contract> root = new JAXBElement<>(qName, Contract.class, contractReq);
-
-            JAXBElement<Response> response = (JAXBElement<Response>) saleContractServiceTemplate.marshalSendAndReceive(root);
+            QName qName = new QName("urn:kegoc.kz:BIS:LO_0001_Contract", "Contract");
+            JAXBElement<Contract> request = new JAXBElement<>(qName, Contract.class, contractReq);
+            JAXBElement<Response> response = (JAXBElement<Response>) saleContractServiceTemplate.marshalSendAndReceive(request);
             List<SessionMessage> messages = saveMessages(response.getValue(), session);
-            updateStatuses(list, messages, session);
             sessionService.successSession(session, (long) items.size());
+            updateStatuses(list, messages);
         }
 
         catch (SoapFaultClientException e) {
             logger.error("Fault Code: " + e.getFaultCode());
             logger.error("Fault Reason: " + e.getFaultStringOrReason());
             sessionService.errorSession(session, e);
+            updateStatuses(list, session);
         }
 
         catch (Exception e) {
             logger.debug("Error during request: " + e.getMessage());
             sessionService.errorSession(session, e);
+            updateStatuses(list, session);
         }
         logger.info("completed");
     }
 
-
-    private List<Contract.Item> createContractItems(List<ContractInterface> list) {
-        return list
-            .stream()
-            .map(t -> createContractItem(t))
-            .filter(t -> t != null)
-            .collect(toList());
+    private void debugRequest(List<Contract.Item> list) {
+        logger.debug("---------------------------------");
+        for (Contract.Item line: list) logger.debug(line.toString());
+        logger.debug("---------------------------------");
     }
 
-    private Contract.Item createContractItem(ContractInterface line) {
-        logger.debug("Creating item:: id = " + line.getId());
-        Contract.Item item = new Contract.Item();
-
-        item.setId(line.getId());
-        item.setContractType("ZCQO");
-        item.setContractNum(line.getContractNum());
-        item.setExtContractNum(line.getExtContractNum());
-        item.setContractDate( toXMLGregorianCalendar(line.getContractDate()));
-        item.setChannel(line.getChannel());
-        item.setSalesDepartCode(line.getSaleDepartCode());
-        item.setCompanyCode(line.getCompanyCode());
-        item.setCompanyAccountNum(line.getCompanyAccountNum());
-        item.setCustomerAccountNum(line.getBpAccountNum());
-        item.setCustomerNum(line.getBpNum());
-        item.setConsigneeNum(line.getConsBpNum());
-        item.setCurrencyCode(line.getCurrencyCode());
-        item.setPaymentCode(line.getPaymentCode());
-        item.setStartDate(toXMLGregorianCalendar(line.getStartDate()));
-        item.setEndDate(toXMLGregorianCalendar(line.getEndDate()));
-        item.setAmount(line.getAmount());
-        item.setAmount(line.getAmount());
-        item.setCurrencyCode(line.getCurrencyCode());
-
-        for (ContractLineInterface contractLine : line.getLines()) {
-            Contract.Item.Row row = new Contract.Item.Row();
-            row.setItemNum(contractLine.getItemNum());
-            row.setUnit(contractLine.getUnit());
-            row.setQuantity(BigDecimal.valueOf(contractLine.getQuantity()));
-            row.setPrice(contractLine.getPrice());
-            row.setAmount( BigDecimal.valueOf(contractLine.getAmount()));
-            item.getRow().add(row);
-        }
-        logger.debug("Creating item successfully completed");
-        return item;
-    }
-
-    @SuppressWarnings("Duplicates")
-    private List<SessionMessage> saveMessages(Response response, Session session) {
+    @Transactional(propagation = Propagation.REQUIRES_NEW)
+    List<SessionMessage> saveMessages(Response response, Session session) {
         List<SessionMessage> list = new ArrayList<>();
         for (Response.Item item : response.getItem()) {
             if (item.getMsgType() == null && item.getMsgNum() == null && item.getMsg() == null)
@@ -140,29 +112,30 @@ public class SaleContractClientServiceImpl implements SaleContractClientService 
         return sessionMessageRepo.save(list);
     }
 
-    private List<ContractInterface> updateStatuses(List<ContractInterface> list, List<SessionMessage> messages, Session session) {
+    @Transactional(propagation = Propagation.REQUIRES_NEW)
+    List<ContractInterface> updateStatuses(List<ContractInterface> list, List<SessionMessage> messages) {
         for (ContractInterface line: list) {
-            SessionMessage message = messages.stream()
+            BatchStatusEnum status = messages.stream()
                 .filter(t -> t.getObjectCode().equals(objectCode))
-                .filter(t -> t.getObjectId()!=null && t.getObjectId().trim().equals(line.getId().toString()))
+                .filter(t -> t.getObjectId() != null && t.getObjectId().trim().equals(line.getId().toString()))
                 .filter(t -> t.getMsgType().equals("S"))
+                .map(t -> BatchStatusEnum.C)
                 .findFirst()
-                .orElse(null);
+                .orElse(BatchStatusEnum.E);
 
-            if (message != null)
-                line.setStatus(BatchStatusEnum.C);
-            else
-                line.setStatus(BatchStatusEnum.E);
-
+            line.setStatus(status);
             line.setLastUpdateDate(LocalDateTime.now());
-            line.setSession(session);
         }
         return contractInterfaceRepo.save(list);
     }
 
-    private void debugRequest(List<Contract.Item> list) {
-        logger.debug("---------------------------------");
-        for (Contract.Item line: list) logger.debug(line.toString());
-        logger.debug("---------------------------------");
+    @Transactional(propagation = Propagation.REQUIRES_NEW)
+    List<ContractInterface> updateStatuses(List<ContractInterface> list, Session session) {
+        for (ContractInterface line: list) {
+            line.setStatus(session.getStatus());
+            line.setSession(session);
+            line.setLastUpdateDate(LocalDateTime.now());
+        }
+        return contractInterfaceRepo.save(list);
     }
 }

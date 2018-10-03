@@ -1642,4 +1642,27 @@
         <dropNotNullConstraint schemaName="apps" tableName="fin_invoice_interface" columnName="doc_num" />
     </changeSet>
 
+    <changeSet id="fin-eug-228" logicalFilePath="path-independent" author="eugene">
+        <addColumn schemaName="apps" tableName="fin_contract_line_interface">
+            <column name="price" type="number" remarks="Цена за единицу" >
+                <constraints nullable="true"/>
+            </column>
+        </addColumn>
+    </changeSet>
+
+    <changeSet id="fin-eug-229" logicalFilePath="path-independent" author="eugene">
+        <addColumn schemaName="apps" tableName="fin_contract_interface">
+            <column name="contract_type" type="varchar2(10)" remarks="Тип контракта">
+                <constraints nullable="true"/>
+            </column>
+        </addColumn>
+    </changeSet>
+
+    <changeSet id="fin-eug-230" logicalFilePath="path-independent" author="eugene">
+        <addColumn schemaName="apps" tableName="fin_invoice_line_interface">
+            <column name="discount" type="number" remarks="Сумма скидки" >
+                <constraints nullable="true"/>
+            </column>
+        </addColumn>
+    </changeSet>
 </databaseChangeLog>
