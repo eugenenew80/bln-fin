@@ -17,10 +17,12 @@ import sap.contract.sd.ObjectFactory;
 import sap.contract.sd.Response;
 import javax.xml.bind.JAXBElement;
 import javax.xml.namespace.QName;
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import static java.util.stream.Collectors.toList;
+import static bln.fin.common.Util.toXMLGregorianCalendar;
 
 @Service
 @RequiredArgsConstructor
@@ -50,7 +52,7 @@ public class SaleContractClientServiceImpl implements SaleContractClientService 
         debugRequest(items);
 
         try {
-            QName qName = new QName("urn:kegoc.kz:BIS:LO_0001_Contract", "Contract");
+            QName qName = new QName("urn:kegoc.kz:BIS:LO_0001_Contract", "Contract", "urn");
             JAXBElement<Contract> root = new JAXBElement<>(qName, Contract.class, contractReq);
 
             JAXBElement<Response> response = (JAXBElement<Response>) saleContractServiceTemplate.marshalSendAndReceive(root);
@@ -84,19 +86,34 @@ public class SaleContractClientServiceImpl implements SaleContractClientService 
     private Contract.Item createContractItem(ContractInterface line) {
         logger.debug("Creating item:: id = " + line.getId());
         Contract.Item item = new Contract.Item();
+
         item.setId(line.getId());
+        item.setContractType("ZCQO");
         item.setContractNum(line.getContractNum());
         item.setExtContractNum(line.getExtContractNum());
+        item.setContractDate( toXMLGregorianCalendar(line.getContractDate()));
+        item.setChannel(line.getChannel());
+        item.setSalesDepartCode(line.getSaleDepartCode());
         item.setCompanyCode(line.getCompanyCode());
+        item.setCompanyAccountNum(line.getCompanyAccountNum());
+        item.setCustomerAccountNum(line.getBpAccountNum());
+        item.setCustomerNum(line.getBpNum());
+        item.setConsigneeNum(line.getConsBpNum());
+        item.setCurrencyCode(line.getCurrencyCode());
+        item.setPaymentCode(line.getPaymentCode());
+        item.setStartDate(toXMLGregorianCalendar(line.getStartDate()));
+        item.setEndDate(toXMLGregorianCalendar(line.getEndDate()));
+        item.setAmount(line.getAmount());
         item.setAmount(line.getAmount());
         item.setCurrencyCode(line.getCurrencyCode());
+
         for (ContractLineInterface contractLine : line.getLines()) {
             Contract.Item.Row row = new Contract.Item.Row();
             row.setItemNum(contractLine.getItemNum());
             row.setUnit(contractLine.getUnit());
-            row.setQuantity(contractLine.getQuantity());
+            row.setQuantity(BigDecimal.valueOf(contractLine.getQuantity()));
             row.setPrice(contractLine.getPrice());
-            row.setAmount(contractLine.getAmount());
+            row.setAmount( BigDecimal.valueOf(contractLine.getAmount()));
             item.getRow().add(row);
         }
         logger.debug("Creating item successfully completed");

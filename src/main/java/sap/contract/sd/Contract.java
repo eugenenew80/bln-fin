@@ -8,6 +8,7 @@
 
 package sap.contract.sd;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import javax.xml.bind.annotation.XmlAccessType;
@@ -691,9 +692,9 @@ public class Contract {
             protected String itemNum;
             @XmlElement(required = true)
             protected String unit;
-            protected double quantity;
+            protected BigDecimal  quantity;
             protected double price;
-            protected double amount;
+            protected BigDecimal  amount;
 
             /**
              * Gets the value of the itemNum property.
@@ -747,7 +748,7 @@ public class Contract {
              * Gets the value of the quantity property.
              * 
              */
-            public double getQuantity() {
+            public BigDecimal getQuantity() {
                 return quantity;
             }
 
@@ -755,7 +756,7 @@ public class Contract {
              * Sets the value of the quantity property.
              * 
              */
-            public void setQuantity(double value) {
+            public void setQuantity(BigDecimal  value) {
                 this.quantity = value;
             }
 
@@ -779,7 +780,7 @@ public class Contract {
              * Gets the value of the amount property.
              * 
              */
-            public double getAmount() {
+            public BigDecimal  getAmount() {
                 return amount;
             }
 
@@ -787,7 +788,7 @@ public class Contract {
              * Sets the value of the amount property.
              * 
              */
-            public void setAmount(double value) {
+            public void setAmount(BigDecimal  value) {
                 this.amount = value;
             }
 

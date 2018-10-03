@@ -23,10 +23,10 @@ public class ContractInterface implements Monitored {
     private String bpType;
 
     @Column(name = "bp_num")
-    private String vendorNum;
+    private String bpNum;
 
     @Column(name = "cons_bp_num")
-    private String consignorNum;
+    private String consBpNum;
 
     @Column(name = "contract_num")
     private String contractNum;
