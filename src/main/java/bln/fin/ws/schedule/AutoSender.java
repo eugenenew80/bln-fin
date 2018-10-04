@@ -21,9 +21,9 @@ public class AutoSender {
     @Scheduled(cron = "0 */1 * * * *")
     public void run() {
         salePlanClientService.send();
-        invoiceClientService.send();
-        invoiceRevClientService.send();
         saleContractClientService.send();
         purchaseContractClientService.send();
+        invoiceClientService.send();
+        invoiceRevClientService.send();
     }
 }
