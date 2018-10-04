@@ -5,10 +5,7 @@ import sap.contract.sd.Contract;
 import sap.invoice.EstimatedChargeInvoices;
 import sap.invoiceRev.ReversedInvoice;
 import sap.plan.SalesPlan;
-
-import java.math.BigDecimal;
 import java.math.BigInteger;
-
 import static bln.fin.common.Util.toXMLGregorianCalendar;
 
 public class ClientHelper {
@@ -31,7 +28,7 @@ public class ClientHelper {
         item.setPaymentCode(line.getPaymentCode());
         item.setStartDate(toXMLGregorianCalendar(line.getStartDate()));
         item.setEndDate(toXMLGregorianCalendar(line.getEndDate()));
-        item.setAmount(BigDecimal.valueOf(line.getAmount()));
+        item.setAmount(line.getAmount());
         item.setCurrencyCode(line.getCurrencyCode());
 
         for (ContractLineInterface contractLine : line.getLines()) {
@@ -45,9 +42,9 @@ public class ClientHelper {
         Contract.Item.Row row = new Contract.Item.Row();
         row.setItemNum(contractLine.getItemNum());
         row.setUnit(contractLine.getUnit());
-        row.setQuantity(BigDecimal.valueOf(contractLine.getQuantity()));
+        row.setQuantity(contractLine.getQuantity());
         row.setPrice(contractLine.getPrice());
-        row.setAmount(BigDecimal.valueOf(contractLine.getAmount()));
+        row.setAmount(contractLine.getAmount());
         return row;
     }
 

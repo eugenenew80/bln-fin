@@ -1,5 +1,6 @@
 package bln.fin;
 
+import bln.fin.jaxb.DoubleAdapter;
 import bln.fin.repo.*;
 import bln.fin.ws.SessionService;
 import bln.fin.ws.client.CustomClientInterceptor;
@@ -127,6 +128,7 @@ public class AppConfig  {
     public WebServiceTemplate saleContractServiceTemplate() {
         Jaxb2Marshaller jaxb2Marshaller = new Jaxb2Marshaller();
         jaxb2Marshaller.setContextPath("sap.contract.sd");
+        jaxb2Marshaller.setAdapters(new DoubleAdapter());
 
         WebServiceTemplate webServiceTemplate = new WebServiceTemplate();
         webServiceTemplate.setMarshaller(jaxb2Marshaller);
