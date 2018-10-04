@@ -8,10 +8,13 @@ import bln.fin.entity.pi.SessionMessage;
 import bln.fin.repo.InvoiceRevInterfaceRepo;
 import bln.fin.repo.SessionMessageRepo;
 import bln.fin.ws.SessionService;
+import bln.fin.ws.client.ClientHelper;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ws.client.core.WebServiceTemplate;
 import org.springframework.ws.soap.client.SoapFaultClientException;
 import sap.invoiceRev.ObjectFactory;
@@ -22,9 +25,9 @@ import javax.xml.namespace.QName;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-import static bln.fin.common.Util.toXMLGregorianCalendar;
 import static java.util.stream.Collectors.toList;
 
+@SuppressWarnings("Duplicates")
 @Service
 @RequiredArgsConstructor
 public class InvoiceRevClientServiceImpl implements InvoiceRevClientService {
@@ -39,11 +42,23 @@ public class InvoiceRevClientServiceImpl implements InvoiceRevClientService {
     public void send() {
         List<InvoiceRevInterface> list = invoiceRevInterfaceRepo.findAllByStatus(BatchStatusEnum.W);
         if (list.isEmpty()) return;
+        send(list);
+    }
+
+    public void send(List<InvoiceRevInterface> list) {
+        if (list.isEmpty()) {
+            logger.warn("List is empty");
+            return;
+        }
 
         logger.info("started");
-
         Session session = sessionService.createSession(objectCode, DirectionEnum.EXPORT);
-        List<ReversedInvoice.Item> items = createInvoiceRevItems(list);
+        list = updateStatuses(list, session);
+
+        List<ReversedInvoice.Item> items = list.stream()
+            .map(ClientHelper::createInvoiceRevItem)
+            .filter(t -> t != null)
+            .collect(toList());
 
         ReversedInvoice invoiceRevReq = new ObjectFactory().createReversedInvoice();
         invoiceRevReq.getItem().addAll(items);
@@ -51,48 +66,36 @@ public class InvoiceRevClientServiceImpl implements InvoiceRevClientService {
 
         try {
             QName qName = new QName("urn:kegoc.kz:BIS:LO_0002_4_ReversedInvoice", "ReversedInvoice", "urn");
-            JAXBElement<ReversedInvoice> root = new JAXBElement<>(qName, ReversedInvoice.class, invoiceRevReq);
-
-            JAXBElement<Response> response = (JAXBElement<Response>) saleInvoiceRevServiceTemplate.marshalSendAndReceive(root);
+            JAXBElement<ReversedInvoice> request = new JAXBElement<>(qName, ReversedInvoice.class, invoiceRevReq);
+            JAXBElement<Response> response = (JAXBElement<Response>) saleInvoiceRevServiceTemplate.marshalSendAndReceive(request);
             List<SessionMessage> messages = saveMessages(response.getValue(), session);
-            updateStatuses(list, messages, session);
             sessionService.successSession(session, (long) items.size());
+            updateStatuses(list, messages);
         }
 
         catch (SoapFaultClientException e) {
             logger.error("Fault Code: " + e.getFaultCode());
             logger.error("Fault Reason: " + e.getFaultStringOrReason());
             sessionService.errorSession(session, e);
+            updateStatuses(list, session);
         }
 
         catch (Exception e) {
             logger.debug("Error during request: " + e.getMessage());
             sessionService.errorSession(session, e);
+            updateStatuses(list, session);
         }
         logger.info("completed");
     }
 
-
-    private List<ReversedInvoice.Item> createInvoiceRevItems(List<InvoiceRevInterface> list) {
-        return list
-            .stream()
-            .map(t -> createInvoiceRevItem(t))
-            .filter(t -> t != null)
-            .collect(toList());
+    private void debugRequest(List<ReversedInvoice.Item> list) {
+        logger.debug("---------------------------------");
+        for (ReversedInvoice.Item line: list) logger.debug(line.toString());
+        logger.debug("---------------------------------");
     }
 
-    private ReversedInvoice.Item createInvoiceRevItem(InvoiceRevInterface line) {
-        logger.debug("Creating item:: id = " + line.getId());
-        ReversedInvoice.Item item = new ReversedInvoice.Item();
-        item.setId(line.getId());
-        item.setDocDate(toXMLGregorianCalendar(line.getDocDate()));
-        item.setDocNum(line.getDocNum());
-        item.setRevDate(toXMLGregorianCalendar(line.getRevDate()));
-        logger.debug("Creating item successfully completed");
-        return item;
-    }
-
-    private List<SessionMessage> saveMessages(Response response, Session session) {
+    @Transactional(propagation = Propagation.REQUIRES_NEW)
+    List<SessionMessage> saveMessages(Response response, Session session) {
         List<SessionMessage> list = new ArrayList<>();
         for (Response.Item item : response.getItem()) {
             if (item.getMsgType() == null && item.getMsgNum() == null && item.getMsg() == null)
@@ -111,29 +114,30 @@ public class InvoiceRevClientServiceImpl implements InvoiceRevClientService {
         return sessionMessageRepo.save(list);
     }
 
-    private List<InvoiceRevInterface> updateStatuses(List<InvoiceRevInterface> list, List<SessionMessage> messages, Session session) {
+    @Transactional(propagation = Propagation.REQUIRES_NEW)
+    List<InvoiceRevInterface> updateStatuses(List<InvoiceRevInterface> list, List<SessionMessage> messages) {
         for (InvoiceRevInterface line: list) {
-            SessionMessage message = messages.stream()
+            BatchStatusEnum status = messages.stream()
                 .filter(t -> t.getObjectCode().equals(objectCode))
-                .filter(t -> t.getObjectId()!=null && t.getObjectId().trim().equals(line.getId().toString()))
+                .filter(t -> t.getObjectId() != null && t.getObjectId().trim().equals(line.getId().toString()))
                 .filter(t -> t.getMsgType().equals("S"))
+                .map(t -> BatchStatusEnum.C)
                 .findFirst()
-                .orElse(null);
+                .orElse(BatchStatusEnum.E);
 
-            if (message != null)
-                line.setStatus(BatchStatusEnum.C);
-            else
-                line.setStatus(BatchStatusEnum.E);
-
+            line.setStatus(status);
             line.setLastUpdateDate(LocalDateTime.now());
-            line.setSession(session);
         }
         return invoiceRevInterfaceRepo.save(list);
     }
 
-    private void debugRequest(List<ReversedInvoice.Item> list) {
-        logger.debug("---------------------------------");
-        for (ReversedInvoice.Item line: list) logger.debug(line.toString());
-        logger.debug("---------------------------------");
+    @Transactional(propagation = Propagation.REQUIRES_NEW)
+    List<InvoiceRevInterface> updateStatuses(List<InvoiceRevInterface> list, Session session) {
+        for (InvoiceRevInterface line: list) {
+            line.setStatus(session.getStatus());
+            line.setSession(session);
+            line.setLastUpdateDate(LocalDateTime.now());
+        }
+        return invoiceRevInterfaceRepo.save(list);
     }
 }

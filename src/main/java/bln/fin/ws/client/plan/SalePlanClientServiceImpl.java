@@ -8,10 +8,13 @@ import bln.fin.entity.pi.SessionMessage;
 import bln.fin.repo.SalePlanInterfaceRepo;
 import bln.fin.repo.SessionMessageRepo;
 import bln.fin.ws.SessionService;
+import bln.fin.ws.client.ClientHelper;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ws.client.core.WebServiceTemplate;
 import org.springframework.ws.soap.client.SoapFaultClientException;
 import sap.plan.ObjectFactory;
@@ -19,11 +22,9 @@ import sap.plan.Response;
 import sap.plan.SalesPlan;
 import javax.xml.bind.JAXBElement;
 import javax.xml.namespace.QName;
-import java.math.BigInteger;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-import static bln.fin.common.Util.toXMLGregorianCalendar;
 import static java.util.stream.Collectors.toList;
 
 @SuppressWarnings("Duplicates")
@@ -41,10 +42,23 @@ public class SalePlanClientServiceImpl implements SalePlanClientService {
     public void send() {
         List<SalePlanInterface> list = salePlanInterfaceRepo.findAllByStatus(BatchStatusEnum.W);
         if (list.isEmpty()) return;
+        send(list);
+    }
+
+    private void send(List<SalePlanInterface> list) {
+        if (list.isEmpty()) {
+            logger.warn("List is empty");
+            return;
+        }
 
         logger.info("started");
         Session session = sessionService.createSession(objectCode, DirectionEnum.EXPORT);
-        List<SalesPlan.Item> items = createSalePlanItems(list);
+        list = updateStatuses(list, session);
+
+        List<SalesPlan.Item> items = list.stream()
+            .map(ClientHelper::createSalePlanItem)
+            .filter(t -> t != null)
+            .collect(toList());
 
         SalesPlan salesPlanReq = new ObjectFactory().createSalesPlan();
         salesPlanReq.getItem().addAll(items);
@@ -52,54 +66,36 @@ public class SalePlanClientServiceImpl implements SalePlanClientService {
 
         try {
             QName qName = new QName("urn:kegoc.kz:BIS:LO_0002_3_SalesPlan", "SalesPlan");
-            JAXBElement<SalesPlan> root = new JAXBElement<>(qName, SalesPlan.class, salesPlanReq);
-
-            JAXBElement<Response> response = (JAXBElement<Response>) salePlanServiceTemplate.marshalSendAndReceive(root);
+            JAXBElement<SalesPlan> request = new JAXBElement<>(qName, SalesPlan.class, salesPlanReq);
+            JAXBElement<Response> response = (JAXBElement<Response>) salePlanServiceTemplate.marshalSendAndReceive(request);
             List<SessionMessage> messages = saveMessages(response.getValue(), session);
-            updateStatuses(list, messages, session);
             sessionService.successSession(session, (long) items.size());
+            updateStatuses(list, messages);
         }
 
         catch (SoapFaultClientException e) {
             logger.error("Fault Code: " + e.getFaultCode());
             logger.error("Fault Reason: " + e.getFaultStringOrReason());
             sessionService.errorSession(session, e);
+            updateStatuses(list, session);
         }
 
         catch (Exception e) {
             logger.debug("Error during request: " + e.getMessage());
             sessionService.errorSession(session, e);
+            updateStatuses(list, session);
         }
         logger.info("completed");
     }
 
-    private List<SalesPlan.Item> createSalePlanItems(List<SalePlanInterface> list) {
-        return list
-            .stream()
-            .map(t -> createSalePlanItem(t))
-            .filter(t -> t != null)
-            .collect(toList());
+    private void debugRequest(List<SalesPlan.Item> list) {
+        logger.debug("---------------------------------");
+        for (SalesPlan.Item line: list) logger.debug(line.toString());
+        logger.debug("---------------------------------");
     }
 
-    private SalesPlan.Item createSalePlanItem(SalePlanInterface line) {
-        logger.debug("Creating item:: id = " + line.getId());
-        SalesPlan.Item item = new SalesPlan.Item();
-        item.setId(line.getId());
-        item.setItemNum(line.getItemNum());
-        item.setVersion(new BigInteger(line.getVersion().toString()));
-        item.setForecastType(line.getForecastType());
-        item.setStartDate(toXMLGregorianCalendar(line.getStartDate()));
-        item.setEndDate(toXMLGregorianCalendar(line.getEndDate()));
-        item.setQuantity(line.getQuantity());
-        item.setAmount(line.getAmount());
-        item.setCurrency(line.getCurrency());
-        item.setCompanyCode(line.getCompanyCode());
-        item.setChannel(line.getChannel());
-        logger.debug("Creating item successfully completed");
-        return item;
-    }
-
-    private List<SessionMessage> saveMessages(Response response, Session session) {
+    @Transactional(propagation = Propagation.REQUIRES_NEW)
+    List<SessionMessage> saveMessages(Response response, Session session) {
         List<SessionMessage> list = new ArrayList<>();
         for (Response.Item item : response.getItem()) {
             if (item.getMsgType() == null && item.getMsgNum() == null && item.getMsg() == null)
@@ -118,29 +114,30 @@ public class SalePlanClientServiceImpl implements SalePlanClientService {
         return sessionMessageRepo.save(list);
     }
 
-    private List<SalePlanInterface> updateStatuses(List<SalePlanInterface> list, List<SessionMessage> messages, Session session) {
+    @Transactional(propagation = Propagation.REQUIRES_NEW)
+    List<SalePlanInterface> updateStatuses(List<SalePlanInterface> list, List<SessionMessage> messages) {
         for (SalePlanInterface line: list) {
-            SessionMessage message = messages.stream()
+            BatchStatusEnum status = messages.stream()
                 .filter(t -> t.getObjectCode().equals(objectCode))
-                .filter(t -> t.getObjectId()!=null && t.getObjectId().trim().equals(line.getId().toString()))
+                .filter(t -> t.getObjectId() != null && t.getObjectId().trim().equals(line.getId().toString()))
                 .filter(t -> t.getMsgType().equals("S"))
+                .map(t -> BatchStatusEnum.C)
                 .findFirst()
-                .orElse(null);
+                .orElse(BatchStatusEnum.E);
 
-            if (message != null)
-                line.setStatus(BatchStatusEnum.C);
-            else
-                line.setStatus(BatchStatusEnum.E);
-
+            line.setStatus(status);
             line.setLastUpdateDate(LocalDateTime.now());
-            line.setSession(session);
         }
         return salePlanInterfaceRepo.save(list);
     }
 
-    private void debugRequest(List<SalesPlan.Item> list) {
-        logger.debug("---------------------------------");
-        for (SalesPlan.Item line: list) logger.debug(line.toString());
-        logger.debug("---------------------------------");
+    @Transactional(propagation = Propagation.REQUIRES_NEW)
+    List<SalePlanInterface> updateStatuses(List<SalePlanInterface> list, Session session) {
+        for (SalePlanInterface line: list) {
+            line.setStatus(session.getStatus());
+            line.setSession(session);
+            line.setLastUpdateDate(LocalDateTime.now());
+        }
+        return salePlanInterfaceRepo.save(list);
     }
 }

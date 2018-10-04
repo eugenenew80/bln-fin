@@ -49,7 +49,10 @@ public class InvoiceClientServiceImpl implements InvoiceClientService {
     }
 
     private void send(List<InvoiceInterface> list) {
-        if (list.isEmpty()) return;
+        if (list.isEmpty()) {
+            logger.warn("List is empty");
+            return;
+        }
 
         logger.info("started");
         Session session = sessionService.createSession(objectCode, DirectionEnum.EXPORT);

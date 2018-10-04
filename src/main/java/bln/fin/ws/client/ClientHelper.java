@@ -1,12 +1,14 @@
 package bln.fin.ws.client;
 
-import bln.fin.entity.pi.ContractInterface;
-import bln.fin.entity.pi.ContractLineInterface;
-import bln.fin.entity.pi.InvoiceInterface;
-import bln.fin.entity.pi.InvoiceLineInterface;
+import bln.fin.entity.pi.*;
 import sap.contract.sd.Contract;
 import sap.invoice.EstimatedChargeInvoices;
+import sap.invoiceRev.ReversedInvoice;
+import sap.plan.SalesPlan;
+
 import java.math.BigDecimal;
+import java.math.BigInteger;
+
 import static bln.fin.common.Util.toXMLGregorianCalendar;
 
 public class ClientHelper {
@@ -85,5 +87,30 @@ public class ClientHelper {
         row.setAmount(invoiceLine.getAmount());
         row.setTaxRate(invoiceLine.getTaxRate());
         return row;
+    }
+
+    public static SalesPlan.Item createSalePlanItem(SalePlanInterface line) {
+        SalesPlan.Item item = new SalesPlan.Item();
+        item.setId(line.getId());
+        item.setItemNum(line.getItemNum());
+        item.setVersion(new BigInteger(line.getVersion().toString()));
+        item.setForecastType(line.getForecastType());
+        item.setStartDate(toXMLGregorianCalendar(line.getStartDate()));
+        item.setEndDate(toXMLGregorianCalendar(line.getEndDate()));
+        item.setQuantity(line.getQuantity());
+        item.setAmount(line.getAmount());
+        item.setCurrency(line.getCurrency());
+        item.setCompanyCode(line.getCompanyCode());
+        item.setChannel(line.getChannel());
+        return item;
+    }
+
+    public static ReversedInvoice.Item createInvoiceRevItem(InvoiceRevInterface line) {
+        ReversedInvoice.Item item = new ReversedInvoice.Item();
+        item.setId(line.getId());
+        item.setDocDate(toXMLGregorianCalendar(line.getDocDate()));
+        item.setDocNum(line.getDocNum());
+        item.setRevDate(toXMLGregorianCalendar(line.getRevDate()));
+        return item;
     }
 }
