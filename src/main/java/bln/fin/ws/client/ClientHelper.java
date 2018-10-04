@@ -31,8 +31,7 @@ public class ClientHelper {
         item.setPaymentCode(line.getPaymentCode());
         item.setStartDate(toXMLGregorianCalendar(line.getStartDate()));
         item.setEndDate(toXMLGregorianCalendar(line.getEndDate()));
-        item.setAmount(line.getAmount());
-        item.setAmount(line.getAmount());
+        item.setAmount(BigDecimal.valueOf(line.getAmount()));
         item.setCurrencyCode(line.getCurrencyCode());
 
         for (ContractLineInterface contractLine : line.getLines()) {

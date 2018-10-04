@@ -214,7 +214,7 @@ public class Contract {
         @XmlElement(required = true)
         protected String customerAccountNum;
         protected String currencyCode;
-        protected Double amount;
+        protected BigDecimal amount;
         @XmlElement(required = true)
         protected String paymentCode;
         @XmlElement(required = true)
@@ -537,7 +537,7 @@ public class Contract {
          *     {@link Double }
          *     
          */
-        public Double getAmount() {
+        public BigDecimal getAmount() {
             return amount;
         }
 
@@ -549,7 +549,7 @@ public class Contract {
          *     {@link Double }
          *     
          */
-        public void setAmount(Double value) {
+        public void setAmount(BigDecimal value) {
             this.amount = value;
         }
 
