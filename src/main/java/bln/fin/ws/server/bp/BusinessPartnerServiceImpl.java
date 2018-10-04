@@ -120,21 +120,27 @@ public class BusinessPartnerServiceImpl implements BusinessPartnerService {
                 bp.getTranslates().add(bpTranslate);
             }
 
-            bp.setBankAccounts(Optional.ofNullable(bp.getBankAccounts()).orElse(new HashSet<>()));
-            for (BankAccountDto baDto : bpDto.getBankAccounts()) {
-                BpBankAccountInterface ba = getBankAccount(bp, baDto);
-                bp.getBankAccounts().add(ba);
+            if (!bpDto.getBankAccounts().isEmpty()) {
+                bp.setBankAccounts(Optional.ofNullable(bp.getBankAccounts()).orElse(new HashSet<>()));
+                for (BankAccountDto baDto : bpDto.getBankAccounts()) {
+                    BpBankAccountInterface ba = getBankAccount(bp, baDto);
+                    bp.getBankAccounts().add(ba);
+                }
             }
 
-            bp.setAddresses(Optional.ofNullable(bp.getAddresses()).orElse(new HashSet<>()));
-            for (AddressDto bpAddressDto : bpDto.getAddresses()) {
-                BpAddressInterface address = getAddress(bp, bpAddressDto);
-                bp.getAddresses().add(address);
+            if (!bpDto.getAddresses().isEmpty()) {
+                bp.setAddresses(Optional.ofNullable(bp.getAddresses()).orElse(new HashSet<>()));
+                for (AddressDto bpAddressDto : bpDto.getAddresses()) {
+                    BpAddressInterface address = getAddress(bp, bpAddressDto);
+                    bp.getAddresses().add(address);
 
-                address.setTranslates(Optional.ofNullable(address.getTranslates()).orElse(new HashSet<>()));
-                for (AddressTranslateDto bpAddressTranslateDto : bpAddressDto.getTranslates()) {
-                    BpAddressTranslateInterface addressTranslate = getAddressTranslate(address, bpAddressTranslateDto);
-                    address.getTranslates().add(addressTranslate);
+                    if (!bpAddressDto.getTranslates().isEmpty()) {
+                        address.setTranslates(Optional.ofNullable(address.getTranslates()).orElse(new HashSet<>()));
+                        for (AddressTranslateDto bpAddressTranslateDto : bpAddressDto.getTranslates()) {
+                            BpAddressTranslateInterface addressTranslate = getAddressTranslate(address, bpAddressTranslateDto);
+                            address.getTranslates().add(addressTranslate);
+                        }
+                    }
                 }
             }
 

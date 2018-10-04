@@ -18,8 +18,11 @@ import java.io.IOException;
 @Component
 public class CustomClientInterceptor implements ClientInterceptor {
     private static final Logger logger = LoggerFactory.getLogger(CustomClientInterceptor.class);
-    private String username = "PIAPPLBIS_D";
-    private String password = "Qwer!11111";
+    //private String username = "PIAPPLBIS_D";
+    //private String password = "Qwer!11111";
+
+    private String username = "PIAPPLBIS_Q";
+    private String password = "qwerty12";
 
     @Override
     public boolean handleRequest(MessageContext messageContext) throws WebServiceClientException {
