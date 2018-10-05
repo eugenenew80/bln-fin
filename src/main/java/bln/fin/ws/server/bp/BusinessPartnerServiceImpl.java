@@ -151,6 +151,7 @@ public class BusinessPartnerServiceImpl implements BusinessPartnerService {
         catch (Exception e) {
             logger.debug("Error during creating line: " + e.getMessage());
             msg = createErrorLineMessage(sapId, e);
+            e.printStackTrace();
         }
         return msg;
     }

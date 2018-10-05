@@ -1665,4 +1665,38 @@
             </column>
         </addColumn>
     </changeSet>
+
+    <changeSet id="fin-eug-231" logicalFilePath="path-independent" author="eugene">
+        <addColumn schemaName="apps" tableName="fin_contract_interface">
+            <column name="contract_id" type="number" remarks="Идентификатор договора" >
+                <constraints nullable="true"/>
+            </column>
+        </addColumn>
+    </changeSet>
+
+    <changeSet id="fin-eug-232" logicalFilePath="path-independent" author="eugene">
+        <addColumn schemaName="apps" tableName="fin_invoice_interface">
+            <column name="invoice_id" type="number" remarks="Идентификатор счёта-фактуры" >
+                <constraints nullable="true"/>
+            </column>
+        </addColumn>
+    </changeSet>
+
+    <changeSet id="fin-eug-233" logicalFilePath="path-independent" author="eugene">
+        <addColumn schemaName="apps" tableName="fin_invoice_line_interface">
+            <column name="invoice_line_id" type="number" remarks="Идентификатор строки счёта-фактуры" >
+                <constraints nullable="true"/>
+            </column>
+        </addColumn>
+    </changeSet>
+
+    <changeSet id="fin-eug-234" logicalFilePath="path-independent" author="eugene">
+        <addColumn schemaName="apps" tableName="fin_contract_interface">
+            <column name="is_header_only" type="number" remarks="Передавать только заголовок" >
+                <constraints nullable="true"/>
+            </column>
+        </addColumn>
+    </changeSet>
+
+
 </databaseChangeLog>

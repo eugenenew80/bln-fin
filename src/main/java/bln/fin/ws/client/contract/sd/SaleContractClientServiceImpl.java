@@ -47,10 +47,7 @@ public class SaleContractClientServiceImpl implements SaleContractClientService 
     }
 
     private void send(List<ContractInterface> list) {
-        if (list.isEmpty()) {
-            logger.warn("List is empty");
-            return;
-        }
+        if (list.isEmpty()) return;
 
         logger.info("started");
         Session session = sessionService.createSession(objectCode, DirectionEnum.EXPORT);

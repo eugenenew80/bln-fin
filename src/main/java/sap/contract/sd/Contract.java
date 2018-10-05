@@ -691,9 +691,9 @@ public class Contract {
             protected String itemNum;
             @XmlElement(required = true)
             protected String unit;
-            protected double quantity;
-            protected double price;
-            protected double amount;
+            protected Double quantity;
+            protected Double price;
+            protected Double amount;
 
             /**
              * Gets the value of the itemNum property.
@@ -747,7 +747,7 @@ public class Contract {
              * Gets the value of the quantity property.
              * 
              */
-            public double getQuantity() {
+            public Double getQuantity() {
                 return quantity;
             }
 
@@ -755,7 +755,7 @@ public class Contract {
              * Sets the value of the quantity property.
              * 
              */
-            public void setQuantity(double value) {
+            public void setQuantity(Double value) {
                 this.quantity = value;
             }
 
@@ -763,7 +763,7 @@ public class Contract {
              * Gets the value of the price property.
              * 
              */
-            public double getPrice() {
+            public Double getPrice() {
                 return price;
             }
 
@@ -771,7 +771,7 @@ public class Contract {
              * Sets the value of the price property.
              * 
              */
-            public void setPrice(double value) {
+            public void setPrice(Double value) {
                 this.price = value;
             }
 
@@ -779,7 +779,7 @@ public class Contract {
              * Gets the value of the amount property.
              * 
              */
-            public double getAmount() {
+            public Double getAmount() {
                 return amount;
             }
 
@@ -787,7 +787,7 @@ public class Contract {
              * Sets the value of the amount property.
              * 
              */
-            public void setAmount(double value) {
+            public void setAmount(Double value) {
                 this.amount = value;
             }
 

@@ -46,10 +46,7 @@ public class SalePlanClientServiceImpl implements SalePlanClientService {
     }
 
     private void send(List<SalePlanInterface> list) {
-        if (list.isEmpty()) {
-            logger.warn("List is empty");
-            return;
-        }
+        if (list.isEmpty()) return;
 
         logger.info("started");
         Session session = sessionService.createSession(objectCode, DirectionEnum.EXPORT);

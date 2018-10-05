@@ -30,10 +30,11 @@ public class ClientHelper {
         item.setEndDate(toXMLGregorianCalendar(line.getEndDate()));
         item.setAmount(line.getAmount());
         item.setCurrencyCode(line.getCurrencyCode());
-
-        for (ContractLineInterface contractLine : line.getLines()) {
-            Contract.Item.Row row = createContractLine(contractLine);
-            item.getRow().add(row);
+        if (!line.getIsHeaderOnly()) {
+            for (ContractLineInterface contractLine : line.getLines()) {
+                Contract.Item.Row row = createContractLine(contractLine);
+                item.getRow().add(row);
+            }
         }
         return item;
     }

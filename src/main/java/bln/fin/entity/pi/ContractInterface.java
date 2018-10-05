@@ -2,6 +2,7 @@ package bln.fin.entity.pi;
 
 import bln.fin.entity.enums.BatchStatusEnum;
 import bln.fin.entity.interfaces.Monitored;
+import bln.fin.jpa.BooleanToIntConverter;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import javax.persistence.*;
@@ -72,6 +73,10 @@ public class ContractInterface implements Monitored {
 
     @Column(name = "purchase_group")
     private String purchaseGroup;
+
+    @Column(name = "is_header_only")
+    @Convert(converter = BooleanToIntConverter.class)
+    private Boolean isHeaderOnly;
 
     @Column(name="status")
     @Enumerated(EnumType.STRING)

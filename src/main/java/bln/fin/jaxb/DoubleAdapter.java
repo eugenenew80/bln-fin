@@ -2,6 +2,7 @@ package bln.fin.jaxb;
 
 import javax.xml.bind.annotation.adapters.XmlAdapter;
 import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
 
 public class DoubleAdapter extends XmlAdapter<String, Double> {
     @Override
@@ -13,6 +14,11 @@ public class DoubleAdapter extends XmlAdapter<String, Double> {
     @Override
     public String marshal(Double v) throws Exception {
         if (v == null) return  null;
-        return new DecimalFormat("#").format(v);
+        DecimalFormat decimalFormat = new DecimalFormat("#");
+        decimalFormat.setMaximumFractionDigits(8);
+        DecimalFormatSymbols symbol = new DecimalFormatSymbols();
+        symbol.setDecimalSeparator('.');
+        decimalFormat.setDecimalFormatSymbols(symbol);
+        return decimalFormat.format(v);
     }
 }
