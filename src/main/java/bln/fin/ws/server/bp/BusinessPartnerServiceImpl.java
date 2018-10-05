@@ -120,7 +120,7 @@ public class BusinessPartnerServiceImpl implements BusinessPartnerService {
                 bp.getTranslates().add(bpTranslate);
             }
 
-            if (!bpDto.getBankAccounts().isEmpty()) {
+            if (bpDto.getBankAccounts()!=null && !bpDto.getBankAccounts().isEmpty()) {
                 bp.setBankAccounts(Optional.ofNullable(bp.getBankAccounts()).orElse(new HashSet<>()));
                 for (BankAccountDto baDto : bpDto.getBankAccounts()) {
                     BpBankAccountInterface ba = getBankAccount(bp, baDto);
@@ -128,7 +128,7 @@ public class BusinessPartnerServiceImpl implements BusinessPartnerService {
                 }
             }
 
-            if (!bpDto.getAddresses().isEmpty()) {
+            if (bpDto.getAddresses()!=null && !bpDto.getAddresses().isEmpty()) {
                 bp.setAddresses(Optional.ofNullable(bp.getAddresses()).orElse(new HashSet<>()));
                 for (AddressDto bpAddressDto : bpDto.getAddresses()) {
                     BpAddressInterface address = getAddress(bp, bpAddressDto);
