@@ -16,7 +16,7 @@ public class ClientHelper {
         item.setContractType(line.getContractType());
         item.setContractNum(line.getContractNum());
         item.setExtContractNum(line.getExtContractNum());
-        item.setContractDate( toXMLGregorianCalendar(line.getContractDate()));
+        item.setContractDate(toXMLGregorianCalendar(line.getContractDate()));
         item.setChannel(line.getChannel());
         item.setSalesDepartCode(line.getSaleDepartCode());
         item.setCompanyCode(line.getCompanyCode());
