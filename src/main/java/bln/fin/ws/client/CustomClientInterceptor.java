@@ -31,7 +31,6 @@ public class CustomClientInterceptor implements ClientInterceptor {
 
         HttpUrlConnection connection = (HttpUrlConnection) TransportContextHolder.getTransportContext().getConnection();
         try {
-            //connection.addRequestHeader("Authorization", "Basic UElBUFBMQklTX0Q6UXdlciExMTExMQ==");
             connection.addRequestHeader("Authorization", authHeader);
         }
         catch (IOException e) {

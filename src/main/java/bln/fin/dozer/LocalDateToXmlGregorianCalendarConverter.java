@@ -10,7 +10,6 @@ import java.time.ZoneId;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 
-@SuppressWarnings("ALL")
 public class LocalDateToXmlGregorianCalendarConverter extends DozerConverter<LocalDate, XMLGregorianCalendar> {
     public LocalDateToXmlGregorianCalendarConverter() {
         super(LocalDate.class, XMLGregorianCalendar.class);

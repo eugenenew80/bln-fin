@@ -5,7 +5,6 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
 public class StringToLocalDateConverter extends DozerConverter<String, LocalDate> {
-
     public StringToLocalDateConverter() {
         super(String.class, LocalDate.class);
     }

@@ -1,15 +1,11 @@
 package bln.fin.dozer;
 
 import org.dozer.DozerConverter;
-
 import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.Date;
 
-import static bln.fin.common.Util.toDate;
-import static bln.fin.common.Util.toLocalDate;
-
 public class DateToLocalDateConverter extends DozerConverter<Date, LocalDate> {
-
     public DateToLocalDateConverter() {
         super(Date.class, LocalDate.class);
     }
@@ -17,12 +13,12 @@ public class DateToLocalDateConverter extends DozerConverter<Date, LocalDate> {
     @Override
     public LocalDate convertTo(Date source, LocalDate destination) {
         if (source==null) return null;
-        return toLocalDate(source);
+        return source.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
     }
 
     @Override
     public Date convertFrom(LocalDate source, Date destination) {
         if (source==null) return null;
-        return toDate(source);
+        return java.sql.Date.valueOf(source);
     }
 }

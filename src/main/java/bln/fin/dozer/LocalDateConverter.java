@@ -4,7 +4,6 @@ import org.dozer.DozerConverter;
 import java.time.LocalDate;
 
 public class LocalDateConverter extends DozerConverter<LocalDate, LocalDate> {
-
     public LocalDateConverter() {
         super(LocalDate.class, LocalDate.class);
     }

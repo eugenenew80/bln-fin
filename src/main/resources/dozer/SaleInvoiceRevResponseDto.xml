@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mappings xmlns="http://dozer.sourceforge.net"
+          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+          xsi:schemaLocation="http://dozer.sourceforge.net
+          http://dozer.sourceforge.net/schema/beanmapping.xsd">
+
+    <mapping map-null="false" map-empty-string="false" trim-strings="true">
+        <class-a>sap.invoiceRev.Response.Item</class-a>
+        <class-b>bln.fin.entity.pi.SessionMessage</class-b>
+
+        <field>
+            <a>ID</a>
+            <b>objectId</b>
+        </field>
+
+        <field>
+            <a>IDSAP</a>
+            <b>sapId</b>
+        </field>
+    </mapping>
+</mappings>

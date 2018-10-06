@@ -1,13 +1,12 @@
 package bln.fin.ws.client.contract.sd;
 
-import bln.fin.entity.enums.BatchStatusEnum;
-import bln.fin.entity.enums.DirectionEnum;
+import bln.fin.entity.enums.*;
 import bln.fin.entity.pi.*;
-import bln.fin.repo.ContractInterfaceRepo;
-import bln.fin.repo.SessionMessageRepo;
+import bln.fin.repo.*;
+import sap.contract.sd.*;
 import bln.fin.ws.SessionService;
-import bln.fin.ws.client.ClientHelper;
 import lombok.RequiredArgsConstructor;
+import org.dozer.DozerBeanMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -15,17 +14,12 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ws.client.core.WebServiceTemplate;
 import org.springframework.ws.soap.client.SoapFaultClientException;
-import sap.contract.sd.Contract;
-import sap.contract.sd.ObjectFactory;
-import sap.contract.sd.Response;
 import javax.xml.bind.JAXBElement;
-import javax.xml.namespace.QName;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
+import static bln.fin.common.Util.getSuccessMessage;
 import static java.util.stream.Collectors.toList;
 
-@SuppressWarnings("Duplicates")
 @Service
 @RequiredArgsConstructor
 public class SaleContractClientServiceImpl implements SaleContractClientService {
@@ -35,55 +29,63 @@ public class SaleContractClientServiceImpl implements SaleContractClientService 
     private final WebServiceTemplate saleContractServiceTemplate;
     private final SessionService sessionService;
     private final SessionMessageRepo sessionMessageRepo;
+    private final DozerBeanMapper mapper;
 
     @Override
     public void send() {
-        List<ContractInterface> list = contractInterfaceRepo.findAllByStatus(BatchStatusEnum.W)
-            .stream()
-            .filter(t -> t.getBpType().equals("D"))
-            .collect(toList());
-
+        List<ContractInterface> list = contractInterfaceRepo.findAllByStatusAndBpType(BatchStatusEnum.W, "D");
         send(list);
     }
 
     private void send(List<ContractInterface> list) {
         if (list.isEmpty()) return;
-
         logger.info("started");
+
         Session session = sessionService.createSession(objectCode, DirectionEnum.EXPORT);
-        list = updateStatuses(list, session);
-
-        List<Contract.Item> items = list.stream()
-            .map(ClientHelper::createContractItem)
-            .filter(t -> t != null)
-            .collect(toList());
-
-        Contract contractReq = new ObjectFactory().createContract();
-        contractReq.getItem().addAll(items);
-        debugRequest(items);
-
         try {
-            QName qName = new QName("urn:kegoc.kz:BIS:LO_0001_Contract", "Contract");
-            JAXBElement<Contract> request = new JAXBElement<>(qName, Contract.class, contractReq);
+            list = updateStatuses(list, session);
+            JAXBElement<Contract> request = createRequest(list);
             JAXBElement<Response> response = (JAXBElement<Response>) saleContractServiceTemplate.marshalSendAndReceive(request);
-            List<SessionMessage> messages = saveMessages(response.getValue(), session);
-            sessionService.successSession(session, (long) items.size());
-            updateStatuses(list, messages);
-        }
 
+            List<SessionMessage> messages = saveResponse(response, session);
+            sessionService.successSession(session, (long) list.size());
+            updateStatuses(list, messages, session);
+        }
         catch (SoapFaultClientException e) {
-            logger.error("Fault Code: " + e.getFaultCode());
-            logger.error("Fault Reason: " + e.getFaultStringOrReason());
+            logger.error("Error during request, Fault Code: " + e.getFaultCode() + ", " + "Fault Reason: " + e.getFaultStringOrReason());
             sessionService.errorSession(session, e);
             updateStatuses(list, session);
         }
-
         catch (Exception e) {
-            logger.debug("Error during request: " + e.getMessage());
+            logger.error("Error during request: " + e.getMessage());
             sessionService.errorSession(session, e);
             updateStatuses(list, session);
         }
         logger.info("completed");
+    }
+
+    private JAXBElement<Contract> createRequest(List<ContractInterface> list) {
+        List<Contract.Item> items = list.stream()
+            .map(this::mapItem)
+            .filter(t -> t != null)
+            .collect(toList());
+        debugRequest(items);
+
+        Contract contractDto = new Contract();
+        contractDto.getItem().addAll(items);
+        return new ObjectFactory().createContract(contractDto);
+    }
+
+    private Contract.Item mapItem(ContractInterface contract) {
+        Contract.Item item = mapper.map(contract, Contract.Item.class);
+        if (contract.getIsHeaderOnly() || contract.getLines() == null)
+            return item;
+
+        for (ContractLineInterface line : contract.getLines()) {
+            Contract.Item.Row row = mapper.map(line, Contract.Item.Row.class);
+            item.getRow().add(row);
+        }
+        return item;
     }
 
     private void debugRequest(List<Contract.Item> list) {
@@ -93,44 +95,35 @@ public class SaleContractClientServiceImpl implements SaleContractClientService 
     }
 
     @Transactional(propagation = Propagation.REQUIRES_NEW)
-    List<SessionMessage> saveMessages(Response response, Session session) {
-        List<SessionMessage> list = new ArrayList<>();
-        for (Response.Item item : response.getItem()) {
-            if (item.getMsgType() == null && item.getMsgNum() == null && item.getMsg() == null)
-                continue;
+    protected List<SessionMessage> saveResponse(JAXBElement<Response> response, Session session) {
+        List<SessionMessage> list = response.getValue()
+            .getItem()
+            .stream()
+            .filter(t -> t.getMsgType() == null && t.getMsgNum() == null && t.getMsg() == null)
+            .map(t -> {
+                SessionMessage msg = new SessionMessage(objectCode, session);
+                mapper.map(t, msg);
+                return msg;
+            })
+            .collect(toList());
 
-            SessionMessage sessionMessage = new SessionMessage();
-            sessionMessage.setSession(session);
-            sessionMessage.setObjectCode(objectCode);
-            sessionMessage.setObjectId(item.getID());
-            sessionMessage.setSapId(item.getIDSAP());
-            sessionMessage.setMsgNum(item.getMsgNum());
-            sessionMessage.setMsgType(item.getMsgType());
-            sessionMessage.setMsg(item.getMsg());
-            list.add(sessionMessage);
-        }
         return sessionMessageRepo.save(list);
     }
 
     @Transactional(propagation = Propagation.REQUIRES_NEW)
-    List<ContractInterface> updateStatuses(List<ContractInterface> list, List<SessionMessage> messages) {
+    protected List<ContractInterface> updateStatuses(List<ContractInterface> list, List<SessionMessage> messages, Session session) {
         for (ContractInterface line: list) {
-            BatchStatusEnum status = messages.stream()
-                .filter(t -> t.getObjectCode().equals(objectCode))
-                .filter(t -> t.getObjectId() != null && t.getObjectId().trim().equals(line.getId().toString()))
-                .filter(t -> t.getMsgType().equals("S"))
-                .map(t -> BatchStatusEnum.C)
-                .findFirst()
-                .orElse(BatchStatusEnum.E);
-
-            line.setStatus(status);
+            SessionMessage msg = getSuccessMessage(messages, line.getId().toString());
+            line.setStatus(msg != null ? BatchStatusEnum.C : BatchStatusEnum.E);
+            line.setContractNum(msg != null ? msg.getSapId() : line.getContractNum());
+            line.setSession(session);
             line.setLastUpdateDate(LocalDateTime.now());
         }
         return contractInterfaceRepo.save(list);
     }
 
     @Transactional(propagation = Propagation.REQUIRES_NEW)
-    List<ContractInterface> updateStatuses(List<ContractInterface> list, Session session) {
+    protected List<ContractInterface> updateStatuses(List<ContractInterface> list, Session session) {
         for (ContractInterface line: list) {
             line.setStatus(session.getStatus());
             line.setSession(session);

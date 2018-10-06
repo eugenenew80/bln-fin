@@ -76,7 +76,17 @@ public class AppConfig  {
             "dozer/BankAccountDto.xml",
             "dozer/RelationDto.xml",
             "dozer/BusinessPartnerDto.xml",
-            "dozer/BusinessPartnerTranslateDto.xml"
+            "dozer/BusinessPartnerTranslateDto.xml",
+            "dozer/SaleContractDto.xml",
+            "dozer/SaleContractLineDto.xml",
+            "dozer/SaleContractResponseDto.xml",
+            "dozer/SaleInvoiceDto.xml",
+            "dozer/SaleInvoiceLineDto.xml",
+            "dozer/SaleInvoiceResponseDto.xml",
+            "dozer/SalePlanDto.xml",
+            "dozer/SalePlanResponseDto.xml",
+            "dozer/SaleInvoiceRevDto.xml",
+            "dozer/SaleInvoiceRevResponseDto.xml"
         ));
         return mapper;
     }

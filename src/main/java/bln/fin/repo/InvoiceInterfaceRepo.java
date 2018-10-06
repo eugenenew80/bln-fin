@@ -10,5 +10,5 @@ import java.util.List;
 @Repository
 public interface InvoiceInterfaceRepo extends JpaRepository<InvoiceInterface, Long> {
     List<InvoiceInterface> findByDocNumAndDocDate(String docNum, LocalDate docDate);
-    List<InvoiceInterface> findAllByStatus(BatchStatusEnum status);
+    List<InvoiceInterface> findAllByStatusAndBpType(BatchStatusEnum status, String bpType);
 }

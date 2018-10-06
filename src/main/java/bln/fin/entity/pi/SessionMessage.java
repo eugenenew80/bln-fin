@@ -2,6 +2,7 @@ package bln.fin.entity.pi;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
 import org.hibernate.annotations.DynamicUpdate;
 import javax.persistence.*;
 
@@ -10,7 +11,12 @@ import javax.persistence.*;
 @Entity
 @Table(name = "ws_session_messages")
 @DynamicUpdate
+@NoArgsConstructor
 public class SessionMessage {
+    public SessionMessage(String objectCode, Session session) {
+        setObjectCode(objectCode);
+        setSession(session);
+    }
 
     @Id
     @SequenceGenerator(name="ws_session_messages_s", sequenceName = "ws_session_messages_s", allocationSize=1)

@@ -1,15 +1,12 @@
 package bln.fin.ws.client.invoice;
 
-import bln.fin.entity.enums.BatchStatusEnum;
-import bln.fin.entity.enums.DirectionEnum;
-import bln.fin.entity.pi.InvoiceInterface;
-import bln.fin.entity.pi.Session;
-import bln.fin.entity.pi.SessionMessage;
-import bln.fin.repo.InvoiceInterfaceRepo;
-import bln.fin.repo.SessionMessageRepo;
+import bln.fin.entity.enums.*;
+import bln.fin.entity.pi.*;
+import bln.fin.repo.*;
+import sap.invoice.*;
 import bln.fin.ws.SessionService;
-import bln.fin.ws.client.ClientHelper;
 import lombok.RequiredArgsConstructor;
+import org.dozer.DozerBeanMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -17,17 +14,12 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ws.client.core.WebServiceTemplate;
 import org.springframework.ws.soap.client.SoapFaultClientException;
-import sap.invoice.EstimatedChargeInvoices;
-import sap.invoice.ObjectFactory;
-import sap.invoice.Response;
 import javax.xml.bind.JAXBElement;
-import javax.xml.namespace.QName;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
+import static bln.fin.common.Util.getSuccessMessage;
 import static java.util.stream.Collectors.toList;
 
-@SuppressWarnings("Duplicates")
 @Service
 @RequiredArgsConstructor
 public class InvoiceClientServiceImpl implements InvoiceClientService {
@@ -37,55 +29,63 @@ public class InvoiceClientServiceImpl implements InvoiceClientService {
     private final WebServiceTemplate saleInvoiceServiceTemplate;
     private final SessionService sessionService;
     private final SessionMessageRepo sessionMessageRepo;
+    private final DozerBeanMapper mapper;
 
     @Override
     public void send() {
-        List<InvoiceInterface> list = invoiceInterfaceRepo.findAllByStatus(BatchStatusEnum.W)
-            .stream()
-            .filter(t -> t.getBpType().equals("D"))
-            .collect(toList());
-
+        List<InvoiceInterface> list = invoiceInterfaceRepo.findAllByStatusAndBpType(BatchStatusEnum.W, "D");
         send(list);
     }
 
     private void send(List<InvoiceInterface> list) {
         if (list.isEmpty()) return;
-
         logger.info("started");
+
         Session session = sessionService.createSession(objectCode, DirectionEnum.EXPORT);
-        list = updateStatuses(list, session);
-
-        List<EstimatedChargeInvoices.Item> items = list.stream()
-            .map(ClientHelper::createInvoiceItem)
-            .filter(t -> t != null)
-            .collect(toList());
-
-        EstimatedChargeInvoices invoiceReq = new ObjectFactory().createEstimatedChargeInvoices();
-        invoiceReq.getItem().addAll(items);
-        debugRequest(items);
-
         try {
-            QName qName = new QName("urn:kegoc.kz:BIS:LO_0002_1_EstimatedChargeInvoice", "EstimatedChargeInvoices");
-            JAXBElement<EstimatedChargeInvoices> request = new JAXBElement<>(qName, EstimatedChargeInvoices.class, invoiceReq);
+            list = updateStatuses(list, session);
+            JAXBElement<EstimatedChargeInvoices> request = createRequest(list);
             JAXBElement<Response> response = (JAXBElement<Response>) saleInvoiceServiceTemplate.marshalSendAndReceive(request);
-            List<SessionMessage> messages = saveMessages(response.getValue(), session);
-            sessionService.successSession(session, (long) items.size());
-            updateStatuses(list, messages);
-        }
 
+            List<SessionMessage> messages = saveResponse(response, session);
+            sessionService.successSession(session, (long) list.size());
+            updateStatuses(list, messages, session);
+        }
         catch (SoapFaultClientException e) {
-            logger.error("Fault Code: " + e.getFaultCode());
-            logger.error("Fault Reason: " + e.getFaultStringOrReason());
+            logger.error("Error during request, Fault Code: " + e.getFaultCode() + ", " + "Fault Reason: " + e.getFaultStringOrReason());
             sessionService.errorSession(session, e);
             updateStatuses(list, session);
         }
-
         catch (Exception e) {
             logger.debug("Error during request: " + e.getMessage());
             sessionService.errorSession(session, e);
             updateStatuses(list, session);
         }
         logger.info("completed");
+    }
+
+    private JAXBElement<EstimatedChargeInvoices> createRequest(List<InvoiceInterface> list) {
+        List<EstimatedChargeInvoices.Item> items = list.stream()
+            .map(this::mapItem)
+            .filter(t -> t != null)
+            .collect(toList());
+        debugRequest(items);
+
+        EstimatedChargeInvoices invoiceDto = new EstimatedChargeInvoices();
+        invoiceDto.getItem().addAll(items);
+        return new ObjectFactory().createEstimatedChargeInvoices(invoiceDto);
+    }
+
+    private EstimatedChargeInvoices.Item mapItem(InvoiceInterface contract) {
+        EstimatedChargeInvoices.Item item = mapper.map(contract, EstimatedChargeInvoices.Item.class);
+        if (contract.getLines() == null)
+            return item;
+
+        for (InvoiceLineInterface line : contract.getLines()) {
+            EstimatedChargeInvoices.Item.Row row = mapper.map(line, EstimatedChargeInvoices.Item.Row.class);
+            item.getRow().add(row);
+        }
+        return item;
     }
 
     private void debugRequest(List<EstimatedChargeInvoices.Item> list) {
@@ -95,44 +95,35 @@ public class InvoiceClientServiceImpl implements InvoiceClientService {
     }
 
     @Transactional(propagation = Propagation.REQUIRES_NEW)
-    List<SessionMessage> saveMessages(Response response, Session session) {
-        List<SessionMessage> list = new ArrayList<>();
-        for (Response.Item item : response.getItem()) {
-            if (item.getMsgType() == null && item.getMsgNum() == null && item.getMsg() == null)
-                continue;
+    protected List<SessionMessage> saveResponse(JAXBElement<Response> response, Session session) {
+        List<SessionMessage> list = response.getValue()
+            .getItem()
+            .stream()
+            .filter(t -> t.getMsgType() == null && t.getMsgNum() == null && t.getMsg() == null)
+            .map(t -> {
+                SessionMessage msg = new SessionMessage(objectCode, session);
+                mapper.map(t, msg);
+                return msg;
+            })
+            .collect(toList());
 
-            SessionMessage sessionMessage = new SessionMessage();
-            sessionMessage.setSession(session);
-            sessionMessage.setObjectCode(objectCode);
-            sessionMessage.setObjectId(item.getID());
-            sessionMessage.setSapId(item.getIDSAP());
-            sessionMessage.setMsgNum(item.getMsgNum());
-            sessionMessage.setMsgType(item.getMsgType());
-            sessionMessage.setMsg(item.getMsg());
-            list.add(sessionMessage);
-        }
         return sessionMessageRepo.save(list);
     }
 
     @Transactional(propagation = Propagation.REQUIRES_NEW)
-    List<InvoiceInterface> updateStatuses(List<InvoiceInterface> list, List<SessionMessage> messages) {
+    protected List<InvoiceInterface> updateStatuses(List<InvoiceInterface> list, List<SessionMessage> messages, Session session) {
         for (InvoiceInterface line: list) {
-            BatchStatusEnum status = messages.stream()
-                .filter(t -> t.getObjectCode().equals(objectCode))
-                .filter(t -> t.getObjectId() != null && t.getObjectId().trim().equals(line.getId().toString()))
-                .filter(t -> t.getMsgType().equals("S"))
-                .map(t -> BatchStatusEnum.C)
-                .findFirst()
-                .orElse(BatchStatusEnum.E);
-
-            line.setStatus(status);
+            SessionMessage msg = getSuccessMessage(messages, line.getId().toString());
+            line.setStatus(msg != null ? BatchStatusEnum.C : BatchStatusEnum.E);
+            line.setDocNum(msg != null ? msg.getSapId() : line.getDocNum());
+            line.setSession(session);
             line.setLastUpdateDate(LocalDateTime.now());
         }
         return invoiceInterfaceRepo.save(list);
     }
 
     @Transactional(propagation = Propagation.REQUIRES_NEW)
-    List<InvoiceInterface> updateStatuses(List<InvoiceInterface> list, Session session) {
+    protected List<InvoiceInterface> updateStatuses(List<InvoiceInterface> list, Session session) {
         for (InvoiceInterface line: list) {
             line.setStatus(session.getStatus());
             line.setSession(session);

@@ -1,11 +1,9 @@
 package bln.fin.dozer;
 
 import org.dozer.DozerConverter;
-
 import java.time.LocalDateTime;
 
 public class LocalDateTimeConverter extends DozerConverter<LocalDateTime, LocalDateTime> {
-
     public LocalDateTimeConverter() {
         super(LocalDateTime.class, LocalDateTime.class);
     }

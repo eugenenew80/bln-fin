@@ -38,10 +38,7 @@ public class PurchaseContractClientServiceImpl implements PurchaseContractClient
 
     @Override
     public void send() {
-        List<ContractInterface> list = contractInterfaceRepo.findAllByStatus(BatchStatusEnum.W)
-            .stream()
-            .filter(t -> t.getBpType().equals("K"))
-            .collect(toList());
+        List<ContractInterface> list = contractInterfaceRepo.findAllByStatusAndBpType(BatchStatusEnum.W, "K");
         if (list.isEmpty()) return;
 
         logger.info("started");

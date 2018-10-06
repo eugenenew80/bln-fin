@@ -1,15 +1,13 @@
 package bln.fin.ws.client.plan;
 
-import bln.fin.entity.pi.Session;
+import bln.fin.entity.pi.*;
 import bln.fin.entity.enums.BatchStatusEnum;
 import bln.fin.entity.enums.DirectionEnum;
-import bln.fin.entity.pi.SalePlanInterface;
-import bln.fin.entity.pi.SessionMessage;
 import bln.fin.repo.SalePlanInterfaceRepo;
 import bln.fin.repo.SessionMessageRepo;
 import bln.fin.ws.SessionService;
-import bln.fin.ws.client.ClientHelper;
 import lombok.RequiredArgsConstructor;
+import org.dozer.DozerBeanMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -21,13 +19,11 @@ import sap.plan.ObjectFactory;
 import sap.plan.Response;
 import sap.plan.SalesPlan;
 import javax.xml.bind.JAXBElement;
-import javax.xml.namespace.QName;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
+import static bln.fin.common.Util.getSuccessMessage;
 import static java.util.stream.Collectors.toList;
 
-@SuppressWarnings("Duplicates")
 @Service
 @RequiredArgsConstructor
 public class SalePlanClientServiceImpl implements SalePlanClientService {
@@ -37,52 +33,55 @@ public class SalePlanClientServiceImpl implements SalePlanClientService {
     private final SalePlanInterfaceRepo salePlanInterfaceRepo;
     private final SessionService sessionService;
     private final SessionMessageRepo sessionMessageRepo;
+    private final DozerBeanMapper mapper;
 
     @Override
     public void send() {
         List<SalePlanInterface> list = salePlanInterfaceRepo.findAllByStatus(BatchStatusEnum.W);
-        if (list.isEmpty()) return;
         send(list);
     }
 
     private void send(List<SalePlanInterface> list) {
         if (list.isEmpty()) return;
-
         logger.info("started");
+
         Session session = sessionService.createSession(objectCode, DirectionEnum.EXPORT);
-        list = updateStatuses(list, session);
-
-        List<SalesPlan.Item> items = list.stream()
-            .map(ClientHelper::createSalePlanItem)
-            .filter(t -> t != null)
-            .collect(toList());
-
-        SalesPlan salesPlanReq = new ObjectFactory().createSalesPlan();
-        salesPlanReq.getItem().addAll(items);
-        debugRequest(items);
-
         try {
-            QName qName = new QName("urn:kegoc.kz:BIS:LO_0002_3_SalesPlan", "SalesPlan");
-            JAXBElement<SalesPlan> request = new JAXBElement<>(qName, SalesPlan.class, salesPlanReq);
+            list = updateStatuses(list, session);
+            JAXBElement<SalesPlan> request = createRequest(list);
             JAXBElement<Response> response = (JAXBElement<Response>) salePlanServiceTemplate.marshalSendAndReceive(request);
-            List<SessionMessage> messages = saveMessages(response.getValue(), session);
-            sessionService.successSession(session, (long) items.size());
-            updateStatuses(list, messages);
-        }
 
+            List<SessionMessage> messages = saveResponse(response, session);
+            sessionService.successSession(session, (long) list.size());
+            updateStatuses(list, messages, session);
+        }
         catch (SoapFaultClientException e) {
-            logger.error("Fault Code: " + e.getFaultCode());
-            logger.error("Fault Reason: " + e.getFaultStringOrReason());
+            logger.error("Error during request, Fault Code: " + e.getFaultCode() + ", " + "Fault Reason: " + e.getFaultStringOrReason());
             sessionService.errorSession(session, e);
             updateStatuses(list, session);
         }
-
         catch (Exception e) {
             logger.debug("Error during request: " + e.getMessage());
             sessionService.errorSession(session, e);
             updateStatuses(list, session);
         }
         logger.info("completed");
+    }
+
+    private JAXBElement<SalesPlan> createRequest(List<SalePlanInterface> list) {
+        List<SalesPlan.Item> items = list.stream()
+            .map(this::mapItem)
+            .filter(t -> t != null)
+            .collect(toList());
+        debugRequest(items);
+
+        SalesPlan salesPlanDto = new SalesPlan();
+        salesPlanDto.getItem().addAll(items);
+        return new ObjectFactory().createSalesPlan(salesPlanDto);
+    }
+
+    private SalesPlan.Item mapItem(SalePlanInterface plan) {
+        return mapper.map(plan, SalesPlan.Item.class);
     }
 
     private void debugRequest(List<SalesPlan.Item> list) {
@@ -92,44 +91,34 @@ public class SalePlanClientServiceImpl implements SalePlanClientService {
     }
 
     @Transactional(propagation = Propagation.REQUIRES_NEW)
-    List<SessionMessage> saveMessages(Response response, Session session) {
-        List<SessionMessage> list = new ArrayList<>();
-        for (Response.Item item : response.getItem()) {
-            if (item.getMsgType() == null && item.getMsgNum() == null && item.getMsg() == null)
-                continue;
+    protected List<SessionMessage> saveResponse(JAXBElement<Response> response, Session session) {
+        List<SessionMessage> list = response.getValue()
+            .getItem()
+            .stream()
+            .filter(t -> t.getMsgType() == null && t.getMsgNum() == null && t.getMsg() == null)
+            .map(t -> {
+                SessionMessage msg = new SessionMessage(objectCode, session);
+                mapper.map(t, msg);
+                return msg;
+            })
+            .collect(toList());
 
-            SessionMessage sessionMessage = new SessionMessage();
-            sessionMessage.setSession(session);
-            sessionMessage.setObjectCode(objectCode);
-            sessionMessage.setObjectId(item.getID());
-            sessionMessage.setSapId(item.getIDSAP());
-            sessionMessage.setMsgNum(item.getMsgNum());
-            sessionMessage.setMsgType(item.getMsgType());
-            sessionMessage.setMsg(item.getMsg());
-            list.add(sessionMessage);
-        }
         return sessionMessageRepo.save(list);
     }
 
     @Transactional(propagation = Propagation.REQUIRES_NEW)
-    List<SalePlanInterface> updateStatuses(List<SalePlanInterface> list, List<SessionMessage> messages) {
+    protected List<SalePlanInterface> updateStatuses(List<SalePlanInterface> list, List<SessionMessage> messages, Session session) {
         for (SalePlanInterface line: list) {
-            BatchStatusEnum status = messages.stream()
-                .filter(t -> t.getObjectCode().equals(objectCode))
-                .filter(t -> t.getObjectId() != null && t.getObjectId().trim().equals(line.getId().toString()))
-                .filter(t -> t.getMsgType().equals("S"))
-                .map(t -> BatchStatusEnum.C)
-                .findFirst()
-                .orElse(BatchStatusEnum.E);
-
-            line.setStatus(status);
+            SessionMessage msg = getSuccessMessage(messages, line.getId().toString());
+            line.setStatus(msg != null ? BatchStatusEnum.C : BatchStatusEnum.E);
+            line.setSession(session);
             line.setLastUpdateDate(LocalDateTime.now());
         }
         return salePlanInterfaceRepo.save(list);
     }
 
     @Transactional(propagation = Propagation.REQUIRES_NEW)
-    List<SalePlanInterface> updateStatuses(List<SalePlanInterface> list, Session session) {
+    protected List<SalePlanInterface> updateStatuses(List<SalePlanInterface> list, Session session) {
         for (SalePlanInterface line: list) {
             line.setStatus(session.getStatus());
             line.setSession(session);

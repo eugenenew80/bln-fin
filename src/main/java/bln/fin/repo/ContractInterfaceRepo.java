@@ -9,5 +9,5 @@ import java.util.List;
 
 @Repository
 public interface ContractInterfaceRepo extends JpaRepository<ContractInterface, Long> {
-    List<ContractInterface> findAllByStatus(BatchStatusEnum status);
+    List<ContractInterface> findAllByStatusAndBpType(BatchStatusEnum status, String bpType);
 }
