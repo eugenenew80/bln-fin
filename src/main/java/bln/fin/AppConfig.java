@@ -20,8 +20,6 @@ import org.apache.cxf.ext.logging.LoggingOutInterceptor;
 import org.apache.cxf.jaxws.EndpointImpl;
 import org.apache.cxf.transport.servlet.CXFServlet;
 import org.dozer.DozerBeanMapper;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.boot.web.servlet.ServletRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -31,12 +29,9 @@ import org.springframework.ws.client.support.interceptor.ClientInterceptor;
 import javax.xml.ws.Endpoint;
 import java.util.Arrays;
 
-
 @Configuration
 @RequiredArgsConstructor
 public class AppConfig  {
-    private static final Logger logger = LoggerFactory.getLogger(AppConfig.class);
-
     private final SessionService sessionService;
     private final ReqLineInterfaceRepo reqLineInterfaceRepo;
     private final DebtInterfaceRepo debtInterfaceRepo;
@@ -101,7 +96,6 @@ public class AppConfig  {
         webServiceTemplate.setUnmarshaller(jaxb2Marshaller);
         webServiceTemplate.setDefaultUri(salePlanUrl);
         webServiceTemplate.setInterceptors(new ClientInterceptor[] {new CustomClientInterceptor()});
-
         return webServiceTemplate;
     }
 
@@ -115,7 +109,6 @@ public class AppConfig  {
         webServiceTemplate.setUnmarshaller(jaxb2Marshaller);
         webServiceTemplate.setDefaultUri(saleInvoiceUrl);
         webServiceTemplate.setInterceptors(new ClientInterceptor[] {new CustomClientInterceptor()});
-
         return webServiceTemplate;
     }
 
@@ -129,7 +122,6 @@ public class AppConfig  {
         webServiceTemplate.setUnmarshaller(jaxb2Marshaller);
         webServiceTemplate.setDefaultUri(saleInvoiceRevUrl);
         webServiceTemplate.setInterceptors(new ClientInterceptor[] {new CustomClientInterceptor()});
-
         return webServiceTemplate;
     }
 
@@ -143,7 +135,6 @@ public class AppConfig  {
         webServiceTemplate.setUnmarshaller(jaxb2Marshaller);
         webServiceTemplate.setDefaultUri(saleContractUrl);
         webServiceTemplate.setInterceptors(new ClientInterceptor[] {new CustomClientInterceptor()});
-
         return webServiceTemplate;
     }
 
@@ -159,7 +150,6 @@ public class AppConfig  {
         webServiceTemplate.setInterceptors(new ClientInterceptor[] {new CustomClientInterceptor()});
         return webServiceTemplate;
     }
-
 
     @Bean
     public ServletRegistrationBean dispatcherServlet() {
