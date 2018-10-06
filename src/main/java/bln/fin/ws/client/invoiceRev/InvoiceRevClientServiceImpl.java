@@ -1,25 +1,18 @@
 package bln.fin.ws.client.invoiceRev;
 
-import bln.fin.entity.enums.BatchStatusEnum;
-import bln.fin.entity.enums.DirectionEnum;
-import bln.fin.entity.pi.InvoiceRevInterface;
-import bln.fin.entity.pi.Session;
-import bln.fin.entity.pi.SessionMessage;
-import bln.fin.repo.InvoiceRevInterfaceRepo;
-import bln.fin.repo.SessionMessageRepo;
+import bln.fin.entity.enums.*;
+import bln.fin.entity.pi.*;
+import bln.fin.repo.*;
+import sap.invoiceRev.*;
 import bln.fin.ws.SessionService;
 import lombok.RequiredArgsConstructor;
 import org.dozer.DozerBeanMapper;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.slf4j.*;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ws.client.core.WebServiceTemplate;
 import org.springframework.ws.soap.client.SoapFaultClientException;
-import sap.invoiceRev.ObjectFactory;
-import sap.invoiceRev.Response;
-import sap.invoiceRev.ReversedInvoice;
 import javax.xml.bind.JAXBElement;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -73,7 +66,7 @@ public class InvoiceRevClientServiceImpl implements InvoiceRevClientService {
 
     private JAXBElement<ReversedInvoice> createRequest(List<InvoiceRevInterface> list) {
         List<ReversedInvoice.Item> items = list.stream()
-            .map(this::mapItem)
+            .map(rev -> mapper.map(rev, ReversedInvoice.Item.class))
             .filter(t -> t != null)
             .collect(toList());
         debugRequest(items);
@@ -81,10 +74,6 @@ public class InvoiceRevClientServiceImpl implements InvoiceRevClientService {
         ReversedInvoice invoiceRevDto = new ReversedInvoice();
         invoiceRevDto.getItem().addAll(items);
         return new ObjectFactory().createReversedInvoice(invoiceRevDto);
-    }
-
-    private ReversedInvoice.Item mapItem(InvoiceRevInterface rev) {
-        return mapper.map(rev, ReversedInvoice.Item.class);
     }
 
     private void debugRequest(List<ReversedInvoice.Item> list) {

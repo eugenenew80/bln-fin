@@ -1,23 +1,18 @@
 package bln.fin.ws.client.plan;
 
 import bln.fin.entity.pi.*;
-import bln.fin.entity.enums.BatchStatusEnum;
-import bln.fin.entity.enums.DirectionEnum;
-import bln.fin.repo.SalePlanInterfaceRepo;
-import bln.fin.repo.SessionMessageRepo;
+import bln.fin.entity.enums.*;
+import bln.fin.repo.*;
+import sap.plan.*;
 import bln.fin.ws.SessionService;
 import lombok.RequiredArgsConstructor;
 import org.dozer.DozerBeanMapper;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.slf4j.*;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ws.client.core.WebServiceTemplate;
 import org.springframework.ws.soap.client.SoapFaultClientException;
-import sap.plan.ObjectFactory;
-import sap.plan.Response;
-import sap.plan.SalesPlan;
 import javax.xml.bind.JAXBElement;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -70,7 +65,7 @@ public class SalePlanClientServiceImpl implements SalePlanClientService {
 
     private JAXBElement<SalesPlan> createRequest(List<SalePlanInterface> list) {
         List<SalesPlan.Item> items = list.stream()
-            .map(this::mapItem)
+            .map(plan -> mapper.map(plan, SalesPlan.Item.class))
             .filter(t -> t != null)
             .collect(toList());
         debugRequest(items);
@@ -78,10 +73,6 @@ public class SalePlanClientServiceImpl implements SalePlanClientService {
         SalesPlan salesPlanDto = new SalesPlan();
         salesPlanDto.getItem().addAll(items);
         return new ObjectFactory().createSalesPlan(salesPlanDto);
-    }
-
-    private SalesPlan.Item mapItem(SalePlanInterface plan) {
-        return mapper.map(plan, SalesPlan.Item.class);
     }
 
     private void debugRequest(List<SalesPlan.Item> list) {
