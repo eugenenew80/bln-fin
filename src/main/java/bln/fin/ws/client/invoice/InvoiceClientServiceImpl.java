@@ -76,13 +76,14 @@ public class InvoiceClientServiceImpl implements InvoiceClientService {
         return new ObjectFactory().createEstimatedChargeInvoices(invoiceDto);
     }
 
-    private EstimatedChargeInvoices.Item mapItem(InvoiceInterface contract) {
-        EstimatedChargeInvoices.Item item = mapper.map(contract, EstimatedChargeInvoices.Item.class);
-        if (contract.getLines() == null)
+    private EstimatedChargeInvoices.Item mapItem(InvoiceInterface invoice) {
+        EstimatedChargeInvoices.Item item = mapper.map(invoice, EstimatedChargeInvoices.Item.class);
+        if (invoice.getLines() == null)
             return item;
 
-        for (InvoiceLineInterface line : contract.getLines()) {
+        for (InvoiceLineInterface line : invoice.getLines()) {
             EstimatedChargeInvoices.Item.Row row = mapper.map(line, EstimatedChargeInvoices.Item.Row.class);
+            row.setConsigneeNum(invoice.getBpNum());
             item.getRow().add(row);
         }
         return item;
@@ -99,7 +100,7 @@ public class InvoiceClientServiceImpl implements InvoiceClientService {
         List<SessionMessage> list = response.getValue()
             .getItem()
             .stream()
-            .filter(t -> t.getMsgType() == null && t.getMsgNum() == null && t.getMsg() == null)
+            .filter(t -> t.getMsgType() != null || t.getMsgNum() != null || t.getMsg() != null)
             .map(t -> {
                 SessionMessage msg = new SessionMessage(objectCode, session);
                 mapper.map(t, msg);
@@ -115,7 +116,17 @@ public class InvoiceClientServiceImpl implements InvoiceClientService {
         for (InvoiceInterface line: list) {
             SessionMessage msg = getSuccessMessage(messages, line.getId().toString());
             line.setStatus(msg != null ? BatchStatusEnum.C : BatchStatusEnum.E);
-            line.setDocNum(msg != null ? msg.getSapId() : line.getDocNum());
+
+            if (msg != null && msg.getSapId() != null) {
+                int index = msg.getSapId().indexOf("#");
+                if (index >=0) {
+                    String orderNum = msg.getSapId().substring(0, index);
+                    String docNum = msg.getSapId().substring(index + 1);
+                    line.setDocNum(docNum);
+                    line.setOrderNum(orderNum);
+                }
+            }
+
             line.setSession(session);
             line.setLastUpdateDate(LocalDateTime.now());
         }

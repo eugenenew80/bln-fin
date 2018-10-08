@@ -22,8 +22,8 @@ public class AutoSender {
     public void run() {
         salePlanClientService.send();
         saleContractClientService.send();
-        purchaseContractClientService.send();
-        invoiceClientService.send();
         invoiceRevClientService.send();
+        invoiceClientService.send();
+        purchaseContractClientService.send();
     }
 }

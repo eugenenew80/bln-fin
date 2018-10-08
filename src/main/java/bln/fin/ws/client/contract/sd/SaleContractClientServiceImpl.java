@@ -99,7 +99,7 @@ public class SaleContractClientServiceImpl implements SaleContractClientService 
         List<SessionMessage> list = response.getValue()
             .getItem()
             .stream()
-            .filter(t -> t.getMsgType() == null && t.getMsgNum() == null && t.getMsg() == null)
+            .filter(t -> t.getMsgType() != null || t.getMsgNum() != null || t.getMsg() != null)
             .map(t -> {
                 SessionMessage msg = new SessionMessage(objectCode, session);
                 mapper.map(t, msg);

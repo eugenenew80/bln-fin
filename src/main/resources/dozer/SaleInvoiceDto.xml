@@ -8,6 +8,11 @@
         <class-a>sap.invoice.EstimatedChargeInvoices.Item</class-a>
         <class-b>bln.fin.entity.pi.InvoiceInterface</class-b>
 
+        <field>
+            <a>customerNum</a>
+            <b>bpNum</b>
+        </field>
+
         <field-exclude>
             <a>row</a>
             <b>lines</b>
