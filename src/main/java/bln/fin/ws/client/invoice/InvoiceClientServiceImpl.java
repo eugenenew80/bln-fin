@@ -119,7 +119,7 @@ public class InvoiceClientServiceImpl implements InvoiceClientService {
 
             if (msg != null && msg.getSapId() != null) {
                 int index = msg.getSapId().indexOf("#");
-                if (index >=0) {
+                if (index >= 0) {
                     String orderNum = msg.getSapId().substring(0, index);
                     String docNum = msg.getSapId().substring(index + 1);
                     line.setDocNum(docNum);
