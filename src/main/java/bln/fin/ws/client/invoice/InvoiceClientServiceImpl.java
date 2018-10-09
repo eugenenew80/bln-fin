@@ -125,6 +125,7 @@ public class InvoiceClientServiceImpl implements InvoiceClientService {
                     line.setDocNum(docNum);
                     line.setOrderNum(orderNum);
                 }
+                else line.setDocNum(msg.getSapId());
             }
 
             line.setSession(session);
