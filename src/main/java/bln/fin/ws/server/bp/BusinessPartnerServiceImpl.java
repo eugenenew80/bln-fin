@@ -13,6 +13,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import javax.jws.WebService;
+import javax.validation.ConstraintViolation;
+import javax.validation.ValidationException;
+import javax.validation.Validator;
 import java.util.*;
 import static bln.fin.common.Util.*;
 import static java.util.stream.Collectors.toList;
@@ -26,6 +29,8 @@ public class BusinessPartnerServiceImpl implements BusinessPartnerService {
     private final BpRelationInterfaceRepo bpRelationInterfaceRepo;
     private final SessionService sessionService;
     private final DozerBeanMapper mapper;
+    private final Validator validator;
+
 
     @Override
     public List<MessageDto> createBusinessPartners(List<BusinessPartnerDto> list) {
@@ -105,6 +110,10 @@ public class BusinessPartnerServiceImpl implements BusinessPartnerService {
         String sapId = bpDto.getBpNum()!=null ? bpDto.getBpNum() : "";
         MessageDto msg;
         try {
+            Set<ConstraintViolation<BusinessPartnerDto>> violations = validator.validate(bpDto);
+            if (violations != null && violations.size() > 0)
+                throw new ValidationException(violations.iterator().next().getMessage());
+
             BpInterface bp = bpInterfaceRepo.findByBpNum(bpDto.getBpNum())
                 .stream()
                 .filter(t -> t.getStatus() == BatchStatusEnum.W)

@@ -1,6 +1,8 @@
 package bln.fin.ws.server.bp;
 
 import lombok.Data;
+
+import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.*;
 import java.util.Date;
 import java.util.List;
@@ -17,14 +19,17 @@ public class BusinessPartnerDto {
 
     @XmlElement(required = true)
     @Documentation("№ делового партнера")
+    @NotNull(message = "Поля является обязательным")
     private String bpNum;
 
     @XmlElement(required = true)
     @Documentation("Группа")
+    @NotNull(message = "Поля является обязательным")
     private String group;
 
-    @XmlElement
+    @XmlElement(required = true)
     @Documentation("Критерий поиска")
+    @NotNull(message = "Поля является обязательным")
     private String searchCriteria;
 
     @XmlElement
@@ -41,10 +46,12 @@ public class BusinessPartnerDto {
 
     @XmlElement(required = true)
     @Documentation("Типа налогового номера")
+    @NotNull(message = "Поля является обязательным")
     private String taxNumberType;
 
     @XmlElement(required = true)
     @Documentation("Налоговый номер")
+    @NotNull(message = "Поля является обязательным")
     private String taxNumber;
 
     @XmlElement(required = true, name = "translate")
