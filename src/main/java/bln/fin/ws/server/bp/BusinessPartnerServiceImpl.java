@@ -31,7 +31,6 @@ public class BusinessPartnerServiceImpl implements BusinessPartnerService {
     private final DozerBeanMapper mapper;
     private final Validator validator;
 
-
     @Override
     public List<MessageDto> createBusinessPartners(List<BusinessPartnerDto> list) {
         if (list == null) {

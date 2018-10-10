@@ -198,8 +198,8 @@ public class AppConfig  {
     }
 
     @Bean
-    public Endpoint endpoint4(DozerBeanMapper dozerBeanMapper) {
-        EndpointImpl endpoint = new EndpointImpl(springBus(), new BusinessPartnerServiceImpl(bpInterfaceRepo, bpRelationInterfaceRepo, sessionService, dozerBeanMapper));
+    public Endpoint endpoint4(DozerBeanMapper dozerBeanMapper, Validator validator) {
+        EndpointImpl endpoint = new EndpointImpl(springBus(), new BusinessPartnerServiceImpl(bpInterfaceRepo, bpRelationInterfaceRepo, sessionService, dozerBeanMapper, validator));
         endpoint.publish("/BusinessPartnerService");
         return endpoint;
     }
