@@ -78,6 +78,9 @@ public class InvoiceClientServiceImpl implements InvoiceClientService {
 
     private EstimatedChargeInvoices.Item mapItem(InvoiceInterface invoice) {
         EstimatedChargeInvoices.Item item = mapper.map(invoice, EstimatedChargeInvoices.Item.class);
+        if (item.getDocType().equals("ZF2") && (item.getOrderNum() == null || item.getOrderNum().equals("") ))
+            item.setOrderNum(" ");
+
         if (invoice.getLines() == null)
             return item;
 

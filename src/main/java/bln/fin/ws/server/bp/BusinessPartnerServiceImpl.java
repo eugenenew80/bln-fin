@@ -94,6 +94,8 @@ public class BusinessPartnerServiceImpl implements BusinessPartnerService {
             logger.debug("Error during creating line: " + e.getMessage());
             msg = createErrorLineMessage(sapId, e);
         }
+
+        msg.setIDoc(relDto.getIDoc());
         return msg;
     }
 
@@ -153,6 +155,8 @@ public class BusinessPartnerServiceImpl implements BusinessPartnerService {
             msg = createErrorLineMessage(sapId, e);
             e.printStackTrace();
         }
+
+        msg.setIDoc(bpDto.getIDoc());
         return msg;
     }
 

@@ -9,6 +9,10 @@ import javax.xml.bind.annotation.*;
 @Documentation("Отношение")
 public class RelationDto {
 
+    @XmlElement
+    @Documentation("IDOC")
+    private String iDoc;
+
     @XmlElement(required = true)
     @Documentation("Тип отношения")
     private String relationType;

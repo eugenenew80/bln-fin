@@ -14,6 +14,10 @@ public class MessageDto {
     private String id;
 
     @XmlElement
+    @Documentation("IDOC")
+    private String iDoc;
+
+    @XmlElement
     @Documentation("Идентификатор объекта в SAP")
     private String sapId;
 
