@@ -110,8 +110,10 @@ public class BusinessPartnerServiceImpl implements BusinessPartnerService {
         MessageDto msg;
         try {
             Set<ConstraintViolation<BusinessPartnerDto>> violations = validator.validate(bpDto);
-            if (violations != null && violations.size() > 0)
-                throw new ValidationException(violations.iterator().next().getMessage());
+            if (violations != null && violations.size() > 0) {
+                ConstraintViolation<BusinessPartnerDto> violation = violations.iterator().next();
+                throw new ValidationException(violation.getPropertyPath().toString() + ": " +  violation.getMessage());
+            }
 
             BpInterface bp = bpInterfaceRepo.findByBpNum(bpDto.getBpNum())
                 .stream()
