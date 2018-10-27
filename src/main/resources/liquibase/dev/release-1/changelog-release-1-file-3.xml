@@ -4305,4 +4305,154 @@
             <column name="state" type="varchar2(20)"/>
         </createIndex>
     </changeSet>
+
+    <changeSet id="fin-rus-175" logicalFilePath="path-independent" author="ruslan">
+        <comment>change data type wf_objects.code</comment>
+        <modifyDataType columnName="code"
+                        newDataType="varchar2(200)"
+                        schemaName="apps"
+                        tableName="wf_objects"/>
+        <rollback/>
+    </changeSet>
+
+    <changeSet id="fin-rus-176" logicalFilePath="path-independent" author="ruslan" context="dev">
+        <comment>insert into wf_task_types</comment>
+        <insert schemaName="apps" tableName="wf_task_types">
+            <column name="code" type="varchar2" value="EXPERT_OPINION"/>
+        </insert>
+
+        <insert schemaName="apps" tableName="wf_task_types_tl">
+            <column name="code" type="varchar2" value="EXPERT_OPINION"/>
+            <column name="lang" type="varchar2" value="RU"/>
+            <column name="name" type="varchar2" value="Вынести экспертное заключение"/>
+        </insert>
+
+        <insert schemaName="apps" tableName="wf_task_types_tl">
+            <column name="code" type="varchar2" value="EXPERT_OPINION"/>
+            <column name="lang" type="varchar2" value="KZ"/>
+            <column name="name" type="varchar2" value="Вынести экспертное заключение"/>
+        </insert>
+
+        <insert schemaName="apps" tableName="wf_task_types">
+            <column name="code" type="varchar2" value="ACCEPT_CONSIDERATION"/>
+        </insert>
+
+        <insert schemaName="apps" tableName="wf_task_types_tl">
+            <column name="code" type="varchar2" value="ACCEPT_CONSIDERATION"/>
+            <column name="lang" type="varchar2" value="RU"/>
+            <column name="name" type="varchar2" value="Принять к рассмотрению"/>
+        </insert>
+
+        <insert schemaName="apps" tableName="wf_task_types_tl">
+            <column name="code" type="varchar2" value="ACCEPT_CONSIDERATION"/>
+            <column name="lang" type="varchar2" value="KZ"/>
+            <column name="name" type="varchar2" value="Принять к рассмотрению"/>
+        </insert>
+
+        <insert schemaName="apps" tableName="wf_task_types">
+            <column name="code" type="varchar2" value="CONSIDER"/>
+        </insert>
+
+        <insert schemaName="apps" tableName="wf_task_types_tl">
+            <column name="code" type="varchar2" value="CONSIDER"/>
+            <column name="lang" type="varchar2" value="RU"/>
+            <column name="name" type="varchar2" value="Рассмотреть"/>
+        </insert>
+
+        <insert schemaName="apps" tableName="wf_task_types_tl">
+            <column name="code" type="varchar2" value="CONSIDER"/>
+            <column name="lang" type="varchar2" value="KZ"/>
+            <column name="name" type="varchar2" value="Рассмотреть"/>
+        </insert>
+
+        <insert schemaName="apps" tableName="wf_task_types">
+            <column name="code" type="varchar2" value="CONTRACT_PROJECT"/>
+        </insert>
+
+        <insert schemaName="apps" tableName="wf_task_types_tl">
+            <column name="code" type="varchar2" value="CONTRACT_PROJECT"/>
+            <column name="lang" type="varchar2" value="RU"/>
+            <column name="name" type="varchar2" value="Сформировать проект договора"/>
+        </insert>
+
+        <insert schemaName="apps" tableName="wf_task_types_tl">
+            <column name="code" type="varchar2" value="CONTRACT_PROJECT"/>
+            <column name="lang" type="varchar2" value="KZ"/>
+            <column name="name" type="varchar2" value="Сформировать проект договора"/>
+        </insert>
+    </changeSet>
+
+    <changeSet id="fin-rus-177" logicalFilePath="path-independent" author="ruslan">
+        <comment>drop table: wf_route_user_type</comment>
+        <dropTable cascadeConstraints="true"
+                   schemaName="apps"
+                   tableName="wf_route_user_type"/>
+    </changeSet>
+
+    <changeSet id="fin-rus-178" logicalFilePath="path-independent" author="ruslan">
+        <comment>drop table: wf_route_user_type_tl</comment>
+        <dropTable cascadeConstraints="true"
+                   schemaName="apps"
+                   tableName="wf_route_user_type_tl"/>
+    </changeSet>
+
+    <changeSet id="fin-rus-179" logicalFilePath="path-independent" author="ruslan" context="dev">
+        <comment>drop column in wf_route_users</comment>
+        <dropColumn columnName="user_type_code"
+                    schemaName="apps"
+                    tableName="wf_route_users"/>
+    </changeSet>
+
+    <changeSet id="fin-rus-180" logicalFilePath="path-independent" author="ruslan">
+        <comment>add column to wf_route_users</comment>
+        <addColumn schemaName="apps" tableName="wf_route_users">
+            <column name="task_type" type="varchar2(20)" remarks="Тип задачи">
+                <constraints nullable="true"/>
+            </column>
+        </addColumn>
+    </changeSet>
+
+    <changeSet id="fin-rus-181" logicalFilePath="path-independent" author="ruslan">
+        <comment>Creating foreign constraint: wf_route_users to wf_task_types</comment>
+        <addForeignKeyConstraint
+                baseTableSchemaName="apps"
+                baseTableName="wf_route_users"
+                baseColumnNames="task_type"
+                constraintName="fk_wf_route_users_2"
+                deferrable="true"
+                initiallyDeferred="true"
+                onDelete="RESTRICT"
+                onUpdate="RESTRICT"
+                referencedTableSchemaName="apps"
+                referencedTableName="wf_task_types"
+                referencedColumnNames="code"
+        />
+    </changeSet>
+
+    <changeSet id="fin-rus-182" logicalFilePath="path-independent" author="ruslan">
+        <comment>add column to wf_object_workflow_tasks</comment>
+        <addColumn schemaName="apps" tableName="wf_object_workflow_tasks">
+            <column name="bp_id" type="number" remarks="идентификатор бизнес партнера">
+                <constraints nullable="true"/>
+            </column>
+        </addColumn>
+    </changeSet>
+
+    <changeSet id="fin-rus-183" logicalFilePath="path-independent" author="ruslan">
+        <comment>Creating foreign constraint: wf_object_workflow_tasks to dict_business_partners</comment>
+        <addForeignKeyConstraint
+                baseTableSchemaName="apps"
+                baseTableName="wf_object_workflow_tasks"
+                baseColumnNames="bp_id"
+                constraintName="fk_wf_object_workflow_tasks_2"
+                deferrable="true"
+                initiallyDeferred="true"
+                onDelete="RESTRICT"
+                onUpdate="RESTRICT"
+                referencedTableSchemaName="apps"
+                referencedTableName="dict_business_partners"
+                referencedColumnNames="id"
+        />
+    </changeSet>
+
 </databaseChangeLog>
