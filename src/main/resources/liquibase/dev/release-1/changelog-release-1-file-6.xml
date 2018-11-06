@@ -49,4 +49,38 @@
             </column>
         </addColumn>
     </changeSet>
+
+    <changeSet id="fin-eug-239" logicalFilePath="path-independent" author="eugene">
+        <comment>Creating table: cm_doc_keg_cte</comment>
+        <addColumn schemaName="apps" tableName="cm_doc_keg_cte">
+            <column name="transferred_to_erp_status" type="varchar2(30)" remarks="Статус передачи записи в в ERP-систему" >
+                <constraints nullable="true"/>
+            </column>
+        </addColumn>
+    </changeSet>
+
+    <changeSet id="fin-eug-240" logicalFilePath="path-independent" author="eugene">
+        <comment>Creating index for table: cm_doc_keg_cte</comment>
+        <createIndex schemaName="apps" tableName="cm_doc_keg_cte" indexName="idx_cm_doc_keg_cte_4">
+            <column name="transferred_to_erp_status" type="varchar2(30)" />
+        </createIndex>
+    </changeSet>
+
+    <changeSet id="fin-eug-241" logicalFilePath="path-independent" author="eugene" context="dev">
+        <comment>Creating foreign constraint: cm_doc_keg_cte to media_batch_statuses</comment>
+        <addForeignKeyConstraint
+                baseTableSchemaName="apps"
+                baseTableName="cm_doc_keg_cte"
+                baseColumnNames="transferred_to_erp_status"
+                constraintName="fk_cm_doc_keg_cte_39"
+                deferrable="true"
+                onDelete="RESTRICT"
+                onUpdate="RESTRICT"
+                referencedTableSchemaName="apps"
+                referencedTableName="media_batch_statuses"
+                referencedColumnNames="code"
+        />
+    </changeSet>
+
+
 </databaseChangeLog>
