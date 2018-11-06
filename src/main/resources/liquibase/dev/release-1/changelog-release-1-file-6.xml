@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.3.xsd">
+
+    <changeSet id="fin-eug-235" logicalFilePath="path-independent" author="eugene">
+        <comment>Creating table: cm_doc_keg_cte</comment>
+        <addColumn schemaName="apps" tableName="cm_doc_keg_cte">
+            <column name="erp_payment_code" type="varchar2(30)" defaultValue="0002" remarks="Код условий платежа в ERP-системе" >
+                <constraints nullable="true"/>
+            </column>
+
+            <column name="erp_channel_code" type="varchar2(30)" defaultValue="10" remarks="Код канала сбыта в ERP-системе" >
+                <constraints nullable="true"/>
+            </column>
+
+            <column name="erp_sale_depart_code" type="varchar2(30)" defaultValue="K001" remarks="Код отдела продаж во внешней системе" >
+                <constraints nullable="true"/>
+            </column>
+        </addColumn>
+    </changeSet>
+
+    <changeSet id="fin-eug-236" logicalFilePath="path-independent" author="eugene">
+        <comment>Creating table: dict_gjs</comment>
+        <addColumn schemaName="apps" tableName="dict_gjs">
+            <column name="erp_unit_code" type="varchar2(30)" defaultValue="KWH" remarks="Код единицы измерения ОЗМ в ERP-системе" >
+                <constraints nullable="true"/>
+            </column>
+        </addColumn>
+    </changeSet>
+
+    <changeSet id="fin-eug-237" logicalFilePath="path-independent" author="eugene">
+        <comment>Creating table: cm_doc_keg_cte</comment>
+        <addColumn schemaName="apps" tableName="cm_doc_keg_cte">
+            <column name="erp_contract_type" type="varchar2(30)" defaultValue="ZCQO" remarks="Код типа контракта в ERP-системе" >
+                <constraints nullable="true"/>
+            </column>
+        </addColumn>
+    </changeSet>
+
+    <changeSet id="fin-eug-238" logicalFilePath="path-independent" author="eugene">
+        <comment>Creating table: cm_doc_keg_cte</comment>
+        <addColumn schemaName="apps" tableName="cm_doc_keg_cte">
+            <column name="erp_contract_num" type="varchar2(30)" remarks="Номер контракта в ERP-системе" >
+                <constraints nullable="true"/>
+            </column>
+        </addColumn>
+    </changeSet>
+</databaseChangeLog>
