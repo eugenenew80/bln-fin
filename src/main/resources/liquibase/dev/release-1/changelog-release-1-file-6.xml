@@ -81,6 +81,4 @@
                 referencedColumnNames="code"
         />
     </changeSet>
-
-
 </databaseChangeLog>
