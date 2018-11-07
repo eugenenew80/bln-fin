@@ -182,5 +182,4 @@
                 referencedColumnNames="id"
         />
     </changeSet>
-
 </databaseChangeLog>
