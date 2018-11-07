@@ -89,4 +89,98 @@
             </column>
         </addColumn>
     </changeSet>
+
+    <changeSet id="fin-eug-243" logicalFilePath="path-independent" author="eugene">
+        <comment>Drop columns from table: fin_req_lines</comment>
+        <dropColumn schemaName="apps" tableName="fin_req_lines" columnName="unit" />
+        <dropColumn schemaName="apps" tableName="fin_req_lines" columnName="company_code" />
+        <dropColumn schemaName="apps" tableName="fin_req_lines" columnName="item_num" />
+    </changeSet>
+
+    <changeSet id="fin-eug-244" logicalFilePath="path-independent" author="eugene">
+        <comment>Adding columns to table: fin_req_lines</comment>
+        <addColumn schemaName="apps" tableName="fin_req_lines">
+            <column name="unit_id" type="number" remarks="Идентификатор единицы измерения" >
+                <constraints nullable="true"/>
+            </column>
+
+            <column name="gjs_id" type="number" remarks="Идентификатор услуги" >
+                <constraints nullable="true"/>
+            </column>
+
+            <column name="org_id" type="number" remarks="Идентификатор филиала" >
+                <constraints nullable="true"/>
+            </column>
+        </addColumn>
+    </changeSet>
+
+    <changeSet id="fin-eug-245" logicalFilePath="path-independent" author="eugene">
+        <comment>Creating index for table: fin_req_lines</comment>
+        <createIndex schemaName="apps" tableName="fin_req_lines" indexName="idx_fin_req_lines_1">
+            <column name="unit_id" type="number" />
+        </createIndex>
+    </changeSet>
+
+    <changeSet id="fin-eug-246" logicalFilePath="path-independent" author="eugene">
+        <comment>Creating index for table: fin_req_lines</comment>
+        <createIndex schemaName="apps" tableName="fin_req_lines" indexName="idx_fin_req_lines_2">
+            <column name="gjs_id" type="number" />
+        </createIndex>
+    </changeSet>
+
+    <changeSet id="fin-eug-247" logicalFilePath="path-independent" author="eugene">
+        <comment>Creating index for table: fin_req_lines</comment>
+        <createIndex schemaName="apps" tableName="fin_req_lines" indexName="idx_fin_req_lines_3">
+            <column name="org_id" type="number" />
+        </createIndex>
+    </changeSet>
+
+    <changeSet id="fin-eug-248" logicalFilePath="path-independent" author="eugene" context="dev">
+        <comment>Creating foreign constraint: fin_req_lines to dict_units</comment>
+        <addForeignKeyConstraint
+                baseTableSchemaName="apps"
+                baseTableName="fin_req_lines"
+                baseColumnNames="unit_id"
+                constraintName="fk_fin_req_lines_1"
+                deferrable="true"
+                onDelete="RESTRICT"
+                onUpdate="RESTRICT"
+                referencedTableSchemaName="apps"
+                referencedTableName="dict_units"
+                referencedColumnNames="id"
+        />
+    </changeSet>
+
+    <changeSet id="fin-eug-249" logicalFilePath="path-independent" author="eugene" context="dev">
+        <comment>Creating foreign constraint: fin_req_lines to dict_gjs</comment>
+        <addForeignKeyConstraint
+                baseTableSchemaName="apps"
+                baseTableName="fin_req_lines"
+                baseColumnNames="gjs_id"
+                constraintName="fk_fin_req_lines_2"
+                deferrable="true"
+                onDelete="RESTRICT"
+                onUpdate="RESTRICT"
+                referencedTableSchemaName="apps"
+                referencedTableName="dict_gjs"
+                referencedColumnNames="id"
+        />
+    </changeSet>
+
+    <changeSet id="fin-eug-250" logicalFilePath="path-independent" author="eugene" context="dev">
+        <comment>Creating foreign constraint: fin_req_lines to dict_organizations</comment>
+        <addForeignKeyConstraint
+                baseTableSchemaName="apps"
+                baseTableName="fin_req_lines"
+                baseColumnNames="org_id"
+                constraintName="fk_fin_req_lines_3"
+                deferrable="true"
+                onDelete="RESTRICT"
+                onUpdate="RESTRICT"
+                referencedTableSchemaName="apps"
+                referencedTableName="dict_organizations"
+                referencedColumnNames="id"
+        />
+    </changeSet>
+
 </databaseChangeLog>
