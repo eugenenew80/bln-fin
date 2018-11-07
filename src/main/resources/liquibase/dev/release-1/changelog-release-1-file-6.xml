@@ -81,4 +81,12 @@
                 referencedColumnNames="code"
         />
     </changeSet>
+
+    <changeSet id="fin-eug-242" logicalFilePath="path-independent" author="eugene">
+        <addColumn schemaName="apps" tableName="fin_invoice_rev_interface">
+            <column name="invoice_id" type="number" remarks="Идентификатор счёта-фактуры" >
+                <constraints nullable="true"/>
+            </column>
+        </addColumn>
+    </changeSet>
 </databaseChangeLog>
