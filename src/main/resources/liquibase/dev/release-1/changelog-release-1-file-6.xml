@@ -186,7 +186,7 @@
 
     <changeSet id="fin-eug-251" logicalFilePath="path-independent" author="eugene">
         <comment>Creating table: fin_sale_invoices</comment>
-        <addColumn schemaName="apps" tableName="cm_doc_keg_cte">
+        <addColumn schemaName="apps" tableName="fin_sale_invoices">
             <column name="transferred_to_erp_status" type="varchar2(30)" remarks="Статус передачи записи в в ERP-систему" >
                 <constraints nullable="true"/>
             </column>
@@ -196,7 +196,7 @@
     <changeSet id="fin-eug-252" logicalFilePath="path-independent" author="eugene">
         <comment>Creating index for table: fin_sale_invoices</comment>
         <createIndex schemaName="apps" tableName="fin_sale_invoices" indexName="idx_fin_sale_invoices_10">
-            <column name="transferred_to_erp_status" type="varchar2(10)" />
+            <column name="transferred_to_erp_status" type="varchar2(30)" />
         </createIndex>
     </changeSet>
 
@@ -206,7 +206,7 @@
                 baseTableSchemaName="apps"
                 baseTableName="fin_sale_invoices"
                 baseColumnNames="transferred_to_erp_status"
-                constraintName="fk_fin_sale_invoices_10"
+                constraintName="fk_fin_sale_invoices_12"
                 deferrable="true"
                 onDelete="RESTRICT"
                 onUpdate="RESTRICT"
