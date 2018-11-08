@@ -195,7 +195,7 @@
 
     <changeSet id="fin-eug-252" logicalFilePath="path-independent" author="eugene">
         <comment>Creating index for table: fin_sale_invoices</comment>
-        <createIndex schemaName="apps" tableName="fin_sale_invoices" indexName="idx_fin_sale_invoices_4">
+        <createIndex schemaName="apps" tableName="fin_sale_invoices" indexName="idx_fin_sale_invoices_10">
             <column name="transferred_to_erp_status" type="varchar2(10)" />
         </createIndex>
     </changeSet>
