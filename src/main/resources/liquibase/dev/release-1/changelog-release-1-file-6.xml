@@ -214,4 +214,31 @@
                 referencedColumnNames="code"
         />
     </changeSet>
+
+    <changeSet id="fin-eug-254" logicalFilePath="path-independent" author="eugene">
+        <comment>Creating table: fin_contract_interface</comment>
+        <addColumn schemaName="apps" tableName="fin_contract_interface">
+            <column name="is_updated" type="number" remarks="Флаг - статус контракта обновлен" >
+                <constraints nullable="true"/>
+            </column>
+        </addColumn>
+    </changeSet>
+
+    <changeSet id="fin-eug-255" logicalFilePath="path-independent" author="eugene">
+        <comment>Creating table: fin_invoice_interface</comment>
+        <addColumn schemaName="apps" tableName="fin_invoice_interface">
+            <column name="is_updated" type="number" remarks="Флаг - статус СФ обновлен" >
+                <constraints nullable="true"/>
+            </column>
+        </addColumn>
+    </changeSet>
+
+    <changeSet id="fin-eug-256" logicalFilePath="path-independent" author="eugene">
+        <comment>Creating table: fin_invoice_rev_interface</comment>
+        <addColumn schemaName="apps" tableName="fin_invoice_rev_interface">
+            <column name="is_updated" type="number" remarks="Флаг - статус СФ обновлен" >
+                <constraints nullable="true"/>
+            </column>
+        </addColumn>
+    </changeSet>
 </databaseChangeLog>
