@@ -183,7 +183,6 @@
         />
     </changeSet>
 
-
     <changeSet id="fin-eug-251" logicalFilePath="path-independent" author="eugene">
         <comment>Creating table: fin_sale_invoices</comment>
         <addColumn schemaName="apps" tableName="fin_sale_invoices">
