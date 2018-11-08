@@ -311,4 +311,72 @@
         />
     </changeSet>
 
+    <changeSet id="fin-eug-263" logicalFilePath="path-independent" author="eugene">
+        <comment>Creating index for table: fin_invoice_interface</comment>
+        <createIndex schemaName="apps" tableName="fin_invoice_interface" indexName="idx_fin_invoice_interface_1">
+            <column name="ws_session_id" type="number" />
+        </createIndex>
+    </changeSet>
+
+    <changeSet id="fin-eug-264" logicalFilePath="path-independent" author="eugene">
+        <comment>Creating index for table: fin_invoice_interface</comment>
+        <createIndex schemaName="apps" tableName="fin_invoice_interface" indexName="idx_fin_invoice_interface_2">
+            <column name="invoice_id" type="number" />
+        </createIndex>
+    </changeSet>
+
+    <changeSet id="fin-eug-265" logicalFilePath="path-independent" author="eugene">
+        <comment>Creating index for table: fin_invoice_interface</comment>
+        <createIndex schemaName="apps" tableName="fin_invoice_interface" indexName="idx_fin_invoice_interface_3">
+            <column name="status" type="varchar2(1)" />
+        </createIndex>
+    </changeSet>
+
+    <changeSet id="fin-eug-266" logicalFilePath="path-independent" author="eugene" context="dev">
+        <comment>Creating foreign constraint: fin_invoice_interface to ws_sessions</comment>
+        <addForeignKeyConstraint
+                baseTableSchemaName="apps"
+                baseTableName="fin_invoice_interface"
+                baseColumnNames="ws_session_id"
+                constraintName="fk_fin_invoice_interface_1"
+                deferrable="true"
+                onDelete="RESTRICT"
+                onUpdate="RESTRICT"
+                referencedTableSchemaName="apps"
+                referencedTableName="ws_sessions"
+                referencedColumnNames="id"
+        />
+    </changeSet>
+
+    <changeSet id="fin-eug-267" logicalFilePath="path-independent" author="eugene" context="dev">
+        <comment>Creating foreign constraint: fin_invoice_interface to fin_sale_invoices</comment>
+        <addForeignKeyConstraint
+                baseTableSchemaName="apps"
+                baseTableName="fin_invoice_interface"
+                baseColumnNames="invoice_id"
+                constraintName="fk_fin_invoice_interface_2"
+                deferrable="true"
+                onDelete="RESTRICT"
+                onUpdate="RESTRICT"
+                referencedTableSchemaName="apps"
+                referencedTableName="fin_sale_invoices"
+                referencedColumnNames="id"
+        />
+    </changeSet>
+
+    <changeSet id="fin-eug-268" logicalFilePath="path-independent" author="eugene" context="dev">
+        <comment>Creating foreign constraint: fin_invoice_interface to media_batch_statuses</comment>
+        <addForeignKeyConstraint
+                baseTableSchemaName="apps"
+                baseTableName="fin_invoice_interface"
+                baseColumnNames="status"
+                constraintName="fk_fin_invoice_interface_3"
+                deferrable="true"
+                onDelete="RESTRICT"
+                onUpdate="RESTRICT"
+                referencedTableSchemaName="apps"
+                referencedTableName="media_batch_statuses"
+                referencedColumnNames="code"
+        />
+    </changeSet>
 </databaseChangeLog>
