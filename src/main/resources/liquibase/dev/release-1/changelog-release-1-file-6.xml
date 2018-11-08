@@ -241,4 +241,74 @@
             </column>
         </addColumn>
     </changeSet>
+
+    <changeSet id="fin-eug-257" logicalFilePath="path-independent" author="eugene">
+        <comment>Creating index for table: fin_contract_interface</comment>
+        <createIndex schemaName="apps" tableName="fin_contract_interface" indexName="idx_fin_contract_interface_1">
+            <column name="ws_session_id" type="number" />
+        </createIndex>
+    </changeSet>
+
+    <changeSet id="fin-eug-258" logicalFilePath="path-independent" author="eugene">
+        <comment>Creating index for table: fin_contract_interface</comment>
+        <createIndex schemaName="apps" tableName="fin_contract_interface" indexName="idx_fin_contract_interface_2">
+            <column name="contract_id" type="number" />
+        </createIndex>
+    </changeSet>
+
+    <changeSet id="fin-eug-259" logicalFilePath="path-independent" author="eugene">
+        <comment>Creating index for table: fin_contract_interface</comment>
+        <createIndex schemaName="apps" tableName="fin_contract_interface" indexName="idx_fin_contract_interface_3">
+            <column name="status" type="varchar2(1)" />
+        </createIndex>
+    </changeSet>
+
+    <changeSet id="fin-eug-260" logicalFilePath="path-independent" author="eugene" context="dev">
+        <comment>Creating foreign constraint: fin_contract_interface to ws_sessions</comment>
+        <addForeignKeyConstraint
+                baseTableSchemaName="apps"
+                baseTableName="fin_contract_interface"
+                baseColumnNames="ws_session_id"
+                constraintName="fk_fin_contract_interface_1"
+                deferrable="true"
+                onDelete="RESTRICT"
+                onUpdate="RESTRICT"
+                referencedTableSchemaName="apps"
+                referencedTableName="ws_sessions"
+                referencedColumnNames="id"
+        />
+    </changeSet>
+
+    <changeSet id="fin-eug-261" logicalFilePath="path-independent" author="eugene" context="dev">
+        <comment>Creating foreign constraint: fin_contract_interface to cm_doc_keg_cte</comment>
+        <addForeignKeyConstraint
+                baseTableSchemaName="apps"
+                baseTableName="fin_contract_interface"
+                baseColumnNames="contract_id"
+                constraintName="fk_fin_contract_interface_2"
+                deferrable="true"
+                onDelete="RESTRICT"
+                onUpdate="RESTRICT"
+                referencedTableSchemaName="apps"
+                referencedTableName="cm_doc_keg_cte"
+                referencedColumnNames="id"
+        />
+    </changeSet>
+
+    <changeSet id="fin-eug-262" logicalFilePath="path-independent" author="eugene" context="dev">
+        <comment>Creating foreign constraint: fin_contract_interface to media_batch_statuses</comment>
+        <addForeignKeyConstraint
+                baseTableSchemaName="apps"
+                baseTableName="fin_contract_interface"
+                baseColumnNames="status"
+                constraintName="fk_fin_contract_interface_3"
+                deferrable="true"
+                onDelete="RESTRICT"
+                onUpdate="RESTRICT"
+                referencedTableSchemaName="apps"
+                referencedTableName="media_batch_statuses"
+                referencedColumnNames="code"
+        />
+    </changeSet>
+
 </databaseChangeLog>
