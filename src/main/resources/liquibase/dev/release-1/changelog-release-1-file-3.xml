@@ -4455,4 +4455,17 @@
         />
     </changeSet>
 
+    <changeSet id="fin-rus-184" logicalFilePath="path-independent" author="ruslan">
+        <comment>drop table: fin_req_lines_tl</comment>
+        <dropTable cascadeConstraints="true"
+                   schemaName="apps"
+                   tableName="fin_req_lines_tl"/>
+    </changeSet>
+
+    <changeSet id="fin-rus-185" logicalFilePath="path-independent" author="ruslan">
+        <comment>drop sequence: fin_req_lines_tl_s</comment>
+        <dropSequence schemaName="apps"
+                      sequenceName="fin_req_lines_tl_s"/>
+    </changeSet>
+
 </databaseChangeLog>
