@@ -379,4 +379,27 @@
                 referencedColumnNames="code"
         />
     </changeSet>
+
+    <changeSet id="fin-eug-269" logicalFilePath="path-independent" author="eugene">
+        <comment>Creating index for table: fin_req_line_interface</comment>
+        <createIndex schemaName="apps" tableName="fin_req_line_interface" indexName="idx_fin_req_line_interface_1">
+            <column name="status" type="varchar2(1)" />
+        </createIndex>
+    </changeSet>
+
+    <changeSet id="fin-eug-270" logicalFilePath="path-independent" author="eugene" context="dev">
+        <comment>Creating foreign constraint: fin_req_line_interface to media_batch_statuses</comment>
+        <addForeignKeyConstraint
+                baseTableSchemaName="apps"
+                baseTableName="fin_req_line_interface"
+                baseColumnNames="status"
+                constraintName="fk_fin_req_line_interface_1"
+                deferrable="true"
+                onDelete="RESTRICT"
+                onUpdate="RESTRICT"
+                referencedTableSchemaName="apps"
+                referencedTableName="media_batch_statuses"
+                referencedColumnNames="code"
+        />
+    </changeSet>
 </databaseChangeLog>
