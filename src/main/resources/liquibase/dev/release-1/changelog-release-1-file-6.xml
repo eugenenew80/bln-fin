@@ -402,4 +402,18 @@
                 referencedColumnNames="code"
         />
     </changeSet>
+
+    <changeSet id="fin-eug-271" logicalFilePath="path-independent" author="eugene" context="dev">
+        <comment>Dropping table: fin_req_items</comment>
+        <dropTable schemaName="apps" tableName="fin_req_items" cascadeConstraints="true" />
+    </changeSet>
+
+    <changeSet id="fin-eug-272" logicalFilePath="path-independent" author="eugene">
+        <comment>Creating table: fin_sale_invoices</comment>
+        <addColumn schemaName="apps" tableName="fin_sale_invoices">
+            <column name="erp_order_num" type="varchar2(30)" remarks="Номер сбытового заказа в ERP-системе" >
+                <constraints nullable="true"/>
+            </column>
+        </addColumn>
+    </changeSet>
 </databaseChangeLog>
