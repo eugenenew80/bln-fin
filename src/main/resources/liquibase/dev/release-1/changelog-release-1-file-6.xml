@@ -416,4 +416,315 @@
             </column>
         </addColumn>
     </changeSet>
+
+    <changeSet id="fin-eug-273" logicalFilePath="path-independent" author="eugene">
+        <comment>Creating table: sap_sale_channels</comment>
+        <createTable tableName="sap_sale_channels" schemaName="apps" remarks="Каналы сбыта в SAP">
+            <column name="code" type="varchar2(2)" remarks="Код канала сбыта">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="name" type="varchar(100)" remarks="Наименование канала сбыта">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="create_date" type="TIMESTAMP" remarks="Дата создания">
+                <constraints nullable="true"/>
+            </column>
+
+            <column name="last_update_date" type="TIMESTAMP" remarks="Дата изменения">
+                <constraints nullable="true"/>
+            </column>
+
+            <column name="create_by" type="number" remarks="Автор">
+                <constraints nullable="true"/>
+            </column>
+
+            <column name="last_update_by" type="number" remarks="Автор изменения">
+                <constraints nullable="true"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="fin-eug-274" logicalFilePath="path-independent" author="eugene">
+        <comment>Creating primary key for table: sap_sale_channels</comment>
+        <addPrimaryKey
+                columnNames="code"
+                constraintName="pk_sap_sale_channels"
+                schemaName="apps"
+                tableName="sap_sale_channels"/>
+    </changeSet>
+
+    <changeSet id="fin-eug-275" logicalFilePath="path-independent" author="eugene" context="dev">
+        <comment>Adding data to table: sap_sale_channels</comment>
+        <insert tableName="sap_sale_channels" schemaName="apps">
+            <column name="code" value="10" />
+            <column name="name" value="Системные рег.услуги" />
+        </insert>
+
+        <insert tableName="sap_sale_channels" schemaName="apps">
+            <column name="code" value="20" />
+            <column name="name" value="Системные нерег.услу" />
+        </insert>
+
+        <rollback/>
+    </changeSet>
+
+    <changeSet id="fin-eug-276" logicalFilePath="path-independent" author="eugene">
+        <comment>Creating table: sap_contract_types</comment>
+        <createTable tableName="sap_contract_types" schemaName="apps" remarks="Типы контрактов в SAP">
+            <column name="code" type="varchar2(4)" remarks="Код типа контракта">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="name" type="varchar(100)" remarks="Наименование типа контракта">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="create_date" type="TIMESTAMP" remarks="Дата создания">
+                <constraints nullable="true"/>
+            </column>
+
+            <column name="last_update_date" type="TIMESTAMP" remarks="Дата изменения">
+                <constraints nullable="true"/>
+            </column>
+
+            <column name="create_by" type="number" remarks="Автор">
+                <constraints nullable="true"/>
+            </column>
+
+            <column name="last_update_by" type="number" remarks="Автор изменения">
+                <constraints nullable="true"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="fin-eug-277" logicalFilePath="path-independent" author="eugene">
+        <comment>Creating primary key for table: sap_contract_types</comment>
+        <addPrimaryKey
+                columnNames="code"
+                constraintName="pk_sap_contract_types"
+                schemaName="apps"
+                tableName="sap_contract_types"/>
+    </changeSet>
+
+    <changeSet id="fin-eug-278" logicalFilePath="path-independent" author="eugene" context="dev">
+        <comment>Adding data to table: sap_contract_types</comment>
+        <insert tableName="sap_contract_types" schemaName="apps">
+            <column name="code" value="ZCQO" />
+            <column name="name" value="Стандартный договор" />
+        </insert>
+
+        <insert tableName="sap_contract_types" schemaName="apps">
+            <column name="code" value="ZWK" />
+            <column name="name" value="Рамочный договор" />
+        </insert>
+
+        <rollback/>
+    </changeSet>
+
+    <changeSet id="fin-eug-279" logicalFilePath="path-independent" author="eugene">
+        <comment>Creating table: sap_sale_departs</comment>
+        <createTable tableName="sap_sale_departs" schemaName="apps" remarks="Отделы сбыта в SAP">
+            <column name="code" type="varchar2(4)" remarks="Код отдела сбыта">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="name" type="varchar(100)" remarks="Наименование отдела сбыта">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="create_date" type="TIMESTAMP" remarks="Дата создания">
+                <constraints nullable="true"/>
+            </column>
+
+            <column name="last_update_date" type="TIMESTAMP" remarks="Дата изменения">
+                <constraints nullable="true"/>
+            </column>
+
+            <column name="create_by" type="number" remarks="Автор">
+                <constraints nullable="true"/>
+            </column>
+
+            <column name="last_update_by" type="number" remarks="Автор изменения">
+                <constraints nullable="true"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="fin-eug-280" logicalFilePath="path-independent" author="eugene">
+        <comment>Creating primary key for table: sap_sale_departs</comment>
+        <addPrimaryKey
+                columnNames="code"
+                constraintName="pk_sap_sale_departs"
+                schemaName="apps"
+                tableName="sap_sale_departs"/>
+    </changeSet>
+
+    <changeSet id="fin-eug-281" logicalFilePath="path-independent" author="eugene" context="dev">
+        <comment>Adding data to table: sap_sale_departs</comment>
+        <insert tableName="sap_sale_departs" schemaName="apps">
+            <column name="code" value="K001" />
+            <column name="name" value="ДСУ" />
+        </insert>
+
+        <insert tableName="sap_sale_departs" schemaName="apps">
+            <column name="code" value="K002" />
+            <column name="name" value="ДТ" />
+        </insert>
+
+        <insert tableName="sap_sale_departs" schemaName="apps">
+            <column name="code" value="K003" />
+            <column name="name" value="ДОиЗ" />
+        </insert>
+
+        <insert tableName="sap_sale_departs" schemaName="apps">
+            <column name="code" value="K004" />
+            <column name="name" value="ДЭ" />
+        </insert>
+
+        <insert tableName="sap_sale_departs" schemaName="apps">
+            <column name="code" value="K005" />
+            <column name="name" value="АХД" />
+        </insert>
+
+        <insert tableName="sap_sale_departs" schemaName="apps">
+            <column name="code" value="K006" />
+            <column name="name" value="ДИТ" />
+        </insert>
+
+        <insert tableName="sap_sale_departs" schemaName="apps">
+            <column name="code" value="R001" />
+            <column name="name" value="Отдел ВИЭ ТОО «РФЦ»" />
+        </insert>
+
+        <insert tableName="sap_sale_departs" schemaName="apps">
+            <column name="code" value="R002" />
+            <column name="name" value="Отдел РМ ТОО «РФЦ»" />
+        </insert>
+
+        <rollback/>
+    </changeSet>
+
+    <changeSet id="fin-eug-282" logicalFilePath="path-independent" author="eugene">
+        <comment>Creating table: sap_payment_terms</comment>
+        <createTable tableName="sap_payment_terms" schemaName="apps" remarks="Условия оплаты в SAP">
+            <column name="code" type="varchar2(4)" remarks="Код условия оплаты">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="name" type="varchar(100)" remarks="Наименование условий оплаты">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="create_date" type="TIMESTAMP" remarks="Дата создания">
+                <constraints nullable="true"/>
+            </column>
+
+            <column name="last_update_date" type="TIMESTAMP" remarks="Дата изменения">
+                <constraints nullable="true"/>
+            </column>
+
+            <column name="create_by" type="number" remarks="Автор">
+                <constraints nullable="true"/>
+            </column>
+
+            <column name="last_update_by" type="number" remarks="Автор изменения">
+                <constraints nullable="true"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="fin-eug-283" logicalFilePath="path-independent" author="eugene">
+        <comment>Creating primary key for table: sap_payment_terms</comment>
+        <addPrimaryKey
+                columnNames="code"
+                constraintName="pk_sap_payment_terms"
+                schemaName="apps"
+                tableName="sap_payment_terms"/>
+    </changeSet>
+
+    <changeSet id="fin-eug-284" logicalFilePath="path-independent" author="eugene" context="dev">
+        <comment>Adding data to table: sap_payment_terms</comment>
+        <insert tableName="sap_payment_terms" schemaName="apps">
+            <column name="code" value="0001" />
+            <column name="name" value="немедленная оплата без скидок" />
+        </insert>
+
+        <insert tableName="sap_payment_terms" schemaName="apps">
+            <column name="code" value="0002" />
+            <column name="name" value="14 дней 2%, 30 нетто" />
+        </insert>
+
+        <insert tableName="sap_payment_terms" schemaName="apps">
+            <column name="code" value="0003" />
+            <column name="name" value="14 дней 3%, 20/2%, 30 нетто" />
+        </insert>
+
+        <rollback/>
+    </changeSet>
+
+    <changeSet id="fin-eug-285" logicalFilePath="path-independent" author="eugene" context="dev">
+        <comment>Creating foreign constraint: cm_doc_keg_cte to media_batch_statuses</comment>
+        <addForeignKeyConstraint
+                baseTableSchemaName="apps"
+                baseTableName="cm_doc_keg_cte"
+                baseColumnNames="erp_payment_code"
+                constraintName="fk_cm_doc_keg_cte_40"
+                deferrable="true"
+                onDelete="RESTRICT"
+                onUpdate="RESTRICT"
+                referencedTableSchemaName="apps"
+                referencedTableName="sap_payment_terms"
+                referencedColumnNames="code"
+        />
+    </changeSet>
+
+    <changeSet id="fin-eug-286" logicalFilePath="path-independent" author="eugene" context="dev">
+        <comment>Creating foreign constraint: cm_doc_keg_cte to sap_sale_channels</comment>
+        <addForeignKeyConstraint
+                baseTableSchemaName="apps"
+                baseTableName="cm_doc_keg_cte"
+                baseColumnNames="erp_channel_code"
+                constraintName="fk_cm_doc_keg_cte_41"
+                deferrable="true"
+                onDelete="RESTRICT"
+                onUpdate="RESTRICT"
+                referencedTableSchemaName="apps"
+                referencedTableName="sap_sale_channels"
+                referencedColumnNames="code"
+        />
+    </changeSet>
+
+    <changeSet id="fin-eug-287" logicalFilePath="path-independent" author="eugene" context="dev">
+        <comment>Creating foreign constraint: cm_doc_keg_cte to sap_sale_departs</comment>
+        <addForeignKeyConstraint
+                baseTableSchemaName="apps"
+                baseTableName="cm_doc_keg_cte"
+                baseColumnNames="erp_sale_depart_code"
+                constraintName="fk_cm_doc_keg_cte_42"
+                deferrable="true"
+                onDelete="RESTRICT"
+                onUpdate="RESTRICT"
+                referencedTableSchemaName="apps"
+                referencedTableName="sap_sale_departs"
+                referencedColumnNames="code"
+        />
+    </changeSet>
+
+    <changeSet id="fin-eug-288" logicalFilePath="path-independent" author="eugene" context="dev">
+        <comment>Creating foreign constraint: cm_doc_keg_cte to sap_contract_types</comment>
+        <addForeignKeyConstraint
+                baseTableSchemaName="apps"
+                baseTableName="cm_doc_keg_cte"
+                baseColumnNames="erp_contract_type"
+                constraintName="fk_cm_doc_keg_cte_43"
+                deferrable="true"
+                onDelete="RESTRICT"
+                onUpdate="RESTRICT"
+                referencedTableSchemaName="apps"
+                referencedTableName="sap_contract_types"
+                referencedColumnNames="code"
+        />
+    </changeSet>
 </databaseChangeLog>
