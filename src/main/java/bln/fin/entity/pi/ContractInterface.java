@@ -14,6 +14,13 @@ import java.util.Set;
 @EqualsAndHashCode(of= {"id"})
 @Entity
 @Table(name = "fin_contract_interface")
+
+@NamedStoredProcedureQueries({
+    @NamedStoredProcedureQuery(
+            name = "ContractInterface.updateStatuses",
+            procedureName = "sap_interface.contract_sd_update"
+    )
+})
 public class ContractInterface implements Monitored {
     @Id
     @SequenceGenerator(name="fin_contract_interface_s", sequenceName = "fin_contract_interface_s", allocationSize=1)

@@ -62,7 +62,7 @@ public class SaleContractClientServiceImpl implements SaleContractClientService 
             updateStatuses(list, session);
         }
 
-        contractInterfaceRepo.update();
+        contractInterfaceRepo.updateStatuses();
         logger.info("completed");
     }
 

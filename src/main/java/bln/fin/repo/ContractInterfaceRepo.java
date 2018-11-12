@@ -11,6 +11,6 @@ import java.util.List;
 public interface ContractInterfaceRepo extends JpaRepository<ContractInterface, Long> {
     List<ContractInterface> findAllByStatusAndBpType(BatchStatusEnum status, String bpType);
 
-    @Procedure(name = "sap_interface.contract_sd_update")
-    void update();
+    @Procedure(name = "ContractInterface.updateStatuses")
+    void updateStatuses();
 }
