@@ -61,6 +61,8 @@ public class SaleContractClientServiceImpl implements SaleContractClientService 
             sessionService.errorSession(session, e);
             updateStatuses(list, session);
         }
+
+        contractInterfaceRepo.update();
         logger.info("completed");
     }
 
