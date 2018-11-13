@@ -727,4 +727,128 @@
                 referencedColumnNames="code"
         />
     </changeSet>
+
+    <changeSet id="fin-eug-289" logicalFilePath="path-independent" author="eugene">
+        <comment>Creating table: sap_companies</comment>
+        <createTable tableName="sap_companies" schemaName="apps" remarks="Балансовые единицы в SAP">
+            <column name="code" type="varchar2(4)" remarks="Код балансовой единицы">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="name" type="varchar(100)" remarks="Наименование балансовой единицы">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="create_date" type="TIMESTAMP" remarks="Дата создания">
+                <constraints nullable="true"/>
+            </column>
+
+            <column name="last_update_date" type="TIMESTAMP" remarks="Дата изменения">
+                <constraints nullable="true"/>
+            </column>
+
+            <column name="create_by" type="number" remarks="Автор">
+                <constraints nullable="true"/>
+            </column>
+
+            <column name="last_update_by" type="number" remarks="Автор изменения">
+                <constraints nullable="true"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="fin-eug-290" logicalFilePath="path-independent" author="eugene">
+        <comment>Creating primary key for table: sap_companies</comment>
+        <addPrimaryKey
+                columnNames="code"
+                constraintName="pk_sap_companies"
+                schemaName="apps"
+                tableName="sap_companies"/>
+    </changeSet>
+
+    <changeSet id="fin-eug-291" logicalFilePath="path-independent" author="eugene" context="dev">
+        <comment>Adding data to table: sap_companies</comment>
+        <insert tableName="sap_companies" schemaName="apps">
+            <column name="code" value="1010" />
+            <column name="name" value="Исполнительная дирекция" />
+        </insert>
+
+        <insert tableName="sap_companies" schemaName="apps">
+            <column name="code" value="1020" />
+            <column name="name" value="НДЦ" />
+        </insert>
+
+        <insert tableName="sap_companies" schemaName="apps">
+            <column name="code" value="1030" />
+            <column name="name" value="Акмолинский филиал" />
+        </insert>
+
+        <insert tableName="sap_companies" schemaName="apps">
+            <column name="code" value="1040" />
+            <column name="name" value="Актюбинский филиал" />
+        </insert>
+
+        <insert tableName="sap_companies" schemaName="apps">
+            <column name="code" value="1050" />
+            <column name="name" value="Алматинский филиал" />
+        </insert>
+
+        <insert tableName="sap_companies" schemaName="apps">
+            <column name="code" value="1060" />
+            <column name="name" value="Восточный филиал" />
+        </insert>
+
+        <insert tableName="sap_companies" schemaName="apps">
+            <column name="code" value="1070" />
+            <column name="name" value="Западный филиал" />
+        </insert>
+
+        <insert tableName="sap_companies" schemaName="apps">
+            <column name="code" value="1080" />
+            <column name="name" value="Сарбайский филиал" />
+        </insert>
+
+        <insert tableName="sap_companies" schemaName="apps">
+            <column name="code" value="1090" />
+            <column name="name" value="Северный филиал" />
+        </insert>
+
+        <insert tableName="sap_companies" schemaName="apps">
+            <column name="code" value="1100" />
+            <column name="name" value="Центральный филиал" />
+        </insert>
+
+        <insert tableName="sap_companies" schemaName="apps">
+            <column name="code" value="1110" />
+            <column name="name" value="Южный филиала" />
+        </insert>
+
+        <insert tableName="sap_companies" schemaName="apps">
+            <column name="code" value="2310" />
+            <column name="name" value="Энергоинформ" />
+        </insert>
+
+        <insert tableName="sap_companies" schemaName="apps">
+            <column name="code" value="2340" />
+            <column name="name" value="РФЦ" />
+        </insert>
+
+        <rollback/>
+    </changeSet>
+
+    <changeSet id="fin-eug-292" logicalFilePath="path-independent" author="eugene" context="dev">
+        <comment>Creating foreign constraint: dict_business_partners to sap_companies</comment>
+        <addForeignKeyConstraint
+                baseTableSchemaName="apps"
+                baseTableName="dict_business_partners"
+                baseColumnNames="erp_company_code"
+                constraintName="fk_dict_business_partners_6"
+                deferrable="true"
+                onDelete="RESTRICT"
+                onUpdate="RESTRICT"
+                referencedTableSchemaName="apps"
+                referencedTableName="sap_companies"
+                referencedColumnNames="code"
+        />
+    </changeSet>
 </databaseChangeLog>
