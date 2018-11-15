@@ -4468,4 +4468,31 @@
                       sequenceName="fin_req_lines_tl_s"/>
     </changeSet>
 
+
+    <changeSet id="fin-rus-186" logicalFilePath="path-independent" author="ruslan">
+        <comment>add column to fin_payment_requests</comment>
+        <addColumn schemaName="apps" tableName="fin_payment_requests">
+            <column name="state" type="varchar2(20)" remarks="Статус">
+                <constraints nullable="true"/>
+            </column>
+        </addColumn>
+    </changeSet>
+
+    <changeSet id="fin-rus-187" logicalFilePath="path-independent" author="ruslan">
+        <comment>Creating foreign constraint:fin_payment_requests to wf_states</comment>
+        <addForeignKeyConstraint
+                baseTableSchemaName="apps"
+                baseTableName="fin_payment_requests"
+                baseColumnNames="state"
+                constraintName="fk_fin_payment_requests_5"
+                deferrable="true"
+                initiallyDeferred="true"
+                onDelete="RESTRICT"
+                onUpdate="RESTRICT"
+                referencedTableSchemaName="apps"
+                referencedTableName="wf_states"
+                referencedColumnNames="code"
+        />
+    </changeSet>
+
 </databaseChangeLog>
