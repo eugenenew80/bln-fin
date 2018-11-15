@@ -22,8 +22,14 @@ public class InvoiceStatusInterface implements Monitored {
     @Column(name = "bp_type")
     private String bpType;
 
+    @Column(name = "company_code")
+    private String companyCode;
+
     @Column(name = "doc_num")
     private String docNum;
+
+    @Column(name = "ref_doc_num")
+    private String refDocNum;
 
     @Column(name = "doc_date")
     private LocalDate docDate;

@@ -17,6 +17,14 @@ public class InvoiceStatusDto {
     private String bpType;
 
     @XmlElement(required = true)
+    @Documentation("Код балансовой единицы")
+    private String companyCode;
+
+    @XmlElement
+    @Documentation("№ ссылочного документа в SAP")
+    private String refDocNum;
+
+    @XmlElement(required = true)
     @Documentation("№ документа в SAP")
     private String docNum;
 
