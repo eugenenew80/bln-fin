@@ -4495,4 +4495,82 @@
         />
     </changeSet>
 
+    <changeSet id="fin-rus-188" logicalFilePath="path-independent" author="ruslan">
+        <comment>add column to fin_payment_requests</comment>
+        <addColumn schemaName="apps" tableName="fin_payment_requests">
+            <column name="org_id" type="number" remarks="ид филиала">
+                <constraints nullable="true"/>
+            </column>
+        </addColumn>
+    </changeSet>
+
+    <changeSet id="fin-rus-189" logicalFilePath="path-independent" author="ruslan">
+        <comment>Creating foreign constraint: fin_payment_requests to dict_organizations</comment>
+        <addForeignKeyConstraint
+                baseTableSchemaName="apps"
+                baseTableName="fin_payment_requests"
+                baseColumnNames="org_id"
+                constraintName="fk_fin_payment_requests_6"
+                deferrable="true"
+                initiallyDeferred="true"
+                onDelete="RESTRICT"
+                onUpdate="RESTRICT"
+                referencedTableSchemaName="apps"
+                referencedTableName="dict_organizations"
+                referencedColumnNames="id"
+        />
+    </changeSet>
+
+    <changeSet id="fin-rus-190" logicalFilePath="path-independent" author="ruslan">
+        <comment>add column to fin_purchase_invoices</comment>
+        <addColumn schemaName="apps" tableName="fin_purchase_invoices">
+            <column name="org_id" type="number" remarks="ид филиала">
+                <constraints nullable="true"/>
+            </column>
+        </addColumn>
+    </changeSet>
+
+    <changeSet id="fin-rus-191" logicalFilePath="path-independent" author="ruslan">
+        <comment>Creating foreign constraint: fin_purchase_invoices to dict_organizations</comment>
+        <addForeignKeyConstraint
+                baseTableSchemaName="apps"
+                baseTableName="fin_purchase_invoices"
+                baseColumnNames="org_id"
+                constraintName="fk_fin_purchase_invoices_10"
+                deferrable="true"
+                initiallyDeferred="true"
+                onDelete="RESTRICT"
+                onUpdate="RESTRICT"
+                referencedTableSchemaName="apps"
+                referencedTableName="dict_organizations"
+                referencedColumnNames="id"
+        />
+    </changeSet>
+
+    <changeSet id="fin-rus-192" logicalFilePath="path-independent" author="ruslan">
+        <comment>add column to fin_sale_invoices</comment>
+        <addColumn schemaName="apps" tableName="fin_sale_invoices">
+            <column name="org_id" type="number" remarks="ид филиала">
+                <constraints nullable="true"/>
+            </column>
+        </addColumn>
+    </changeSet>
+
+    <changeSet id="fin-rus-193" logicalFilePath="path-independent" author="ruslan">
+        <comment>Creating foreign constraint: fin_sale_invoices to dict_organizations</comment>
+        <addForeignKeyConstraint
+                baseTableSchemaName="apps"
+                baseTableName="fin_sale_invoices"
+                baseColumnNames="org_id"
+                constraintName="fk_fin_sale_invoices_13"
+                deferrable="true"
+                initiallyDeferred="true"
+                onDelete="RESTRICT"
+                onUpdate="RESTRICT"
+                referencedTableSchemaName="apps"
+                referencedTableName="dict_organizations"
+                referencedColumnNames="id"
+        />
+    </changeSet>
+
 </databaseChangeLog>
