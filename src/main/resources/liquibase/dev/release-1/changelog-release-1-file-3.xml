@@ -4573,4 +4573,13 @@
         />
     </changeSet>
 
+    <changeSet id="fin-rus-194" logicalFilePath="path-independent" author="ruslan">
+        <comment>add column to wf_activities</comment>
+        <addColumn schemaName="apps" tableName="wf_activities">
+            <column name="decision" type="varchar2(200)" remarks="Решение">
+                <constraints nullable="true"/>
+            </column>
+        </addColumn>
+    </changeSet>
+
 </databaseChangeLog>
