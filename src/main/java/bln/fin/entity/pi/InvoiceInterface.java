@@ -13,6 +13,13 @@ import java.util.Set;
 @EqualsAndHashCode(of= {"id"})
 @Entity
 @Table(name = "fin_invoice_interface")
+
+@NamedStoredProcedureQueries({
+    @NamedStoredProcedureQuery(
+            name = "InvoiceInterface.updateStatuses",
+            procedureName = "sap_interface.invoice_sd_update"
+    )
+})
 public class InvoiceInterface implements Monitored {
     @Id
     @SequenceGenerator(name="fin_invoice_interface_s", sequenceName = "fin_invoice_interface_s", allocationSize=1)

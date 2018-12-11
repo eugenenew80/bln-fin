@@ -61,6 +61,8 @@ public class InvoiceClientServiceImpl implements InvoiceClientService {
             sessionService.errorSession(session, e);
             updateStatuses(list, session);
         }
+
+        invoiceInterfaceRepo.updateStatuses();
         logger.info("completed");
     }
 
