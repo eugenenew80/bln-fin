@@ -5,5 +5,12 @@
 // Generated on: 2018.10.04 at 10:14:48 PM ALMT 
 //
 
+@XmlJavaTypeAdapters({
+    @XmlJavaTypeAdapter(type= Double.class, value= DoubleAdapter.class)
+})
 @javax.xml.bind.annotation.XmlSchema(namespace = "urn:kegoc.kz:BIS:CommonObjects")
 package sap.invoiceRev;
+
+import bln.fin.jaxb.DoubleAdapter;
+import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
+import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapters;

@@ -6,7 +6,7 @@
 //
 
 @XmlJavaTypeAdapters({
-        @XmlJavaTypeAdapter(type= Double.class, value= DoubleAdapter.class)
+    @XmlJavaTypeAdapter(type= Double.class, value= DoubleAdapter.class)
 })
 @javax.xml.bind.annotation.XmlSchema(namespace = "urn:kegoc.kz:BIS:CommonObjects")
 package sap.contract.sd;
