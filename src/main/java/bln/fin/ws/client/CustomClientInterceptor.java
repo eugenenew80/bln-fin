@@ -3,6 +3,7 @@ package bln.fin.ws.client;
 import org.apache.commons.codec.binary.Base64;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.ws.client.WebServiceClientException;
 import org.springframework.ws.client.WebServiceIOException;
@@ -13,13 +14,11 @@ import org.springframework.ws.transport.http.HttpUrlConnection;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 
-@SuppressWarnings("Duplicates")
 @Component
 public class CustomClientInterceptor implements ClientInterceptor {
     private static final Logger logger = LoggerFactory.getLogger(CustomClientInterceptor.class);
-    private String username = "PIAPPLBIS_D";
-    private String password = "qwerty12";
-
+    private final String username = "PIAPPLBIS_D";
+    private final String password = "qwerty12";
     //private String username = "PIAPPLBIS_Q";
     //private String password = "qwerty12";
 
@@ -51,21 +50,20 @@ public class CustomClientInterceptor implements ClientInterceptor {
 
     @Override
     public boolean handleResponse(MessageContext messageContext) throws WebServiceClientException {
-        ByteArrayOutputStream os = new ByteArrayOutputStream();
-        try {
-            messageContext.getResponse().writeTo(os);
-        }
-        catch (IOException e) {
-            e.printStackTrace();
-        }
-        String response = new String(os.toByteArray());
-        logger.trace(response);
-
+        handle(messageContext);
         return true;
     }
 
     @Override
     public boolean handleFault(MessageContext messageContext) throws WebServiceClientException {
+        handle(messageContext);
+        return true;
+    }
+
+    @Override
+    public void afterCompletion(MessageContext messageContext, Exception e) throws WebServiceClientException { }
+
+    private void handle(MessageContext messageContext) {
         ByteArrayOutputStream os = new ByteArrayOutputStream();
         try {
             messageContext.getResponse().writeTo(os);
@@ -75,10 +73,5 @@ public class CustomClientInterceptor implements ClientInterceptor {
         }
         String response = new String(os.toByteArray());
         logger.trace(response);
-
-        return true;
     }
-
-    @Override
-    public void afterCompletion(MessageContext messageContext, Exception e) throws WebServiceClientException { }
 }
