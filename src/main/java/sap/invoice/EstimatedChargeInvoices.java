@@ -592,10 +592,10 @@ public class EstimatedChargeInvoices {
             protected String itemNum;
             @XmlElement(required = true)
             protected String unit;
-            protected double quantity;
-            protected double price;
-            protected double amount;
-            protected double taxRate;
+            protected Double quantity;
+            protected Double price;
+            protected Double amount;
+            protected Double taxRate;
 
             /**
              * Gets the value of the posNum property.
@@ -713,7 +713,7 @@ public class EstimatedChargeInvoices {
              * Gets the value of the quantity property.
              * 
              */
-            public double getQuantity() {
+            public Double getQuantity() {
                 return quantity;
             }
 
@@ -721,7 +721,7 @@ public class EstimatedChargeInvoices {
              * Sets the value of the quantity property.
              * 
              */
-            public void setQuantity(double value) {
+            public void setQuantity(Double value) {
                 this.quantity = value;
             }
 
@@ -729,7 +729,7 @@ public class EstimatedChargeInvoices {
              * Gets the value of the price property.
              * 
              */
-            public double getPrice() {
+            public Double getPrice() {
                 return price;
             }
 
@@ -737,7 +737,7 @@ public class EstimatedChargeInvoices {
              * Sets the value of the price property.
              * 
              */
-            public void setPrice(double value) {
+            public void setPrice(Double value) {
                 this.price = value;
             }
 
@@ -745,7 +745,7 @@ public class EstimatedChargeInvoices {
              * Gets the value of the amount property.
              * 
              */
-            public double getAmount() {
+            public Double getAmount() {
                 return amount;
             }
 
@@ -753,7 +753,7 @@ public class EstimatedChargeInvoices {
              * Sets the value of the amount property.
              * 
              */
-            public void setAmount(double value) {
+            public void setAmount(Double value) {
                 this.amount = value;
             }
 
@@ -761,7 +761,7 @@ public class EstimatedChargeInvoices {
              * Gets the value of the taxRate property.
              * 
              */
-            public double getTaxRate() {
+            public Double getTaxRate() {
                 return taxRate;
             }
 
@@ -769,7 +769,7 @@ public class EstimatedChargeInvoices {
              * Sets the value of the taxRate property.
              * 
              */
-            public void setTaxRate(double value) {
+            public void setTaxRate(Double value) {
                 this.taxRate = value;
             }
 
