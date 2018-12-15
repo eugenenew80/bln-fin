@@ -43,6 +43,8 @@ public class DebtServiceImpl implements DebtService {
             .collect(Collectors.toList());
 
         sessionService.successSession(session, (long) list.size());
+        debtInterfaceRepo.updateStatuses();
+
         logger.info("completed");
         return messages;
     }

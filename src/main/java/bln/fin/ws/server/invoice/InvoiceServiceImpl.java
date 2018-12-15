@@ -46,6 +46,8 @@ public class InvoiceServiceImpl implements InvoiceService {
             .collect(toList());
 
         sessionService.successSession(session, (long) list.size());
+        invoiceInterfaceRepo.updateStatuses();
+
         logger.info("completed");
         return messages;
     }

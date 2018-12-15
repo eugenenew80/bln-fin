@@ -60,6 +60,8 @@ public class SalePlanClientServiceImpl implements SalePlanClientService {
             sessionService.errorSession(session, e);
             updateStatuses(list, session);
         }
+
+        salePlanInterfaceRepo.updateStatuses();
         logger.info("completed");
     }
 

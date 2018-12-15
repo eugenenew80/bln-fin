@@ -61,6 +61,8 @@ public class InvoiceRevClientServiceImpl implements InvoiceRevClientService {
             sessionService.errorSession(session, e);
             updateStatuses(list, session);
         }
+
+        invoiceRevInterfaceRepo.updateStatuses();
         logger.info("completed");
     }
 

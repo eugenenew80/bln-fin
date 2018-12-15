@@ -11,6 +11,13 @@ import java.time.LocalDateTime;
 @EqualsAndHashCode(of= {"id"})
 @Entity
 @Table(name = "dict_bp_relation_interface")
+
+@NamedStoredProcedureQueries({
+    @NamedStoredProcedureQuery(
+        name = "BpRelationInterface.updateStatuses",
+        procedureName = "sap_interface.bp_relation_transfer"
+    )
+})
 public class BpRelationInterface implements Monitored {
     @Id
     @SequenceGenerator(name="dict_bp_relation_interface_s", sequenceName = "dict_bp_relation_interface_s", allocationSize=1)

@@ -70,6 +70,8 @@ public class PurchaseContractClientServiceImpl implements PurchaseContractClient
             logger.debug("Error during request: " + e.getMessage());
             sessionService.errorSession(session, e);
         }
+
+        contractInterfaceRepo.updateStatuses();
         logger.info("completed");
     }
 
