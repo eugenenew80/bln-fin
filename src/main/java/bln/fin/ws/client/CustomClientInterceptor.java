@@ -17,10 +17,19 @@ import java.io.IOException;
 @Component
 public class CustomClientInterceptor implements ClientInterceptor {
     private static final Logger logger = LoggerFactory.getLogger(CustomClientInterceptor.class);
-    private final String username = "PIAPPLBIS_D";
-    private final String password = "qwerty12";
+
+    //E10
+    //private final String username = "PIAPPLBIS_D";
+    //private final String password = "qwerty12";
+
+    //E20
     //private String username = "PIAPPLBIS_Q";
     //private String password = "qwerty12";
+
+    //E30
+    private final String username = "PIAPPLBIS_P";
+    private final String password = "gwk@#hdj128*";
+
 
     @Override
     public boolean handleRequest(MessageContext messageContext) throws WebServiceClientException {
