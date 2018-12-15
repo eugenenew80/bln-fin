@@ -49,19 +49,19 @@ public class AppConfig  {
     private final BpRelationInterfaceRepo bpRelationInterfaceRepo;
 
     @Value("${pi.sale_contract.url}")
-    private final String saleContractUrl;
+    private String saleContractUrl;
 
     @Value("${pi.sale_invoice.url}")
-    private final String saleInvoiceUrl;
+    private String saleInvoiceUrl;
 
     @Value("${pi.sale_invoice_rev.url}")
-    private final String saleInvoiceRevUrl;
+    private String saleInvoiceRevUrl;
 
     @Value("${pi.purchase_contract.url}")
-    private final String purchaseContractUrl;
+    private String purchaseContractUrl;
 
     @Value("${pi.sale_plan.url}")
-    private final String salePlanUrl;
+    private String salePlanUrl;
 
 
     @Bean
@@ -126,6 +126,7 @@ public class AppConfig  {
 
     @Bean
     public WebServiceTemplate saleInvoiceServiceTemplate() {
+        logger.info("QQQQQQQQQQQQQQQQQQQQ");
         logger.info(saleInvoiceUrl);
 
         Jaxb2Marshaller jaxb2Marshaller = new Jaxb2Marshaller();
