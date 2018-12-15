@@ -20,6 +20,9 @@ import org.apache.cxf.ext.logging.LoggingOutInterceptor;
 import org.apache.cxf.jaxws.EndpointImpl;
 import org.apache.cxf.transport.servlet.CXFServlet;
 import org.dozer.DozerBeanMapper;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.web.servlet.ServletRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -36,6 +39,7 @@ import java.util.Arrays;
 @Configuration
 @RequiredArgsConstructor
 public class AppConfig  {
+    private static final Logger logger = LoggerFactory.getLogger(AppConfig.class);
     private final SessionService sessionService;
     private final ReqLineInterfaceRepo reqLineInterfaceRepo;
     private final DebtInterfaceRepo debtInterfaceRepo;
@@ -44,26 +48,21 @@ public class AppConfig  {
     private final BpInterfaceRepo bpInterfaceRepo;
     private final BpRelationInterfaceRepo bpRelationInterfaceRepo;
 
-    //E10
-    //private final static String saleContractUrl     = "http://kegoci10.corp.kegoc.kz:50000/XISOAPAdapter/MessageServlet?senderParty=&senderService=BIS_D&receiverParty=&receiverService=&interface=BIS_LO_Contract&interfaceNamespace=urn:kegoc.kz:BIS:LO_0001_Contract";
-    //private final static String saleInvoiceUrl      = "http://kegoci10.corp.kegoc.kz:50000/XISOAPAdapter/MessageServlet?senderParty=&senderService=BIS_D&receiverParty=&receiverService=&interface=BIS_EstimatedChargeInvoices&interfaceNamespace=urn:kegoc.kz:BIS:LO_0002_1_EstimatedChargeInvoice";
-    //private final static String saleInvoiceRevUrl   = "http://kegoci10.corp.kegoc.kz:50000/XISOAPAdapter/MessageServlet?senderParty=&senderService=BIS_D&receiverParty=&receiverService=&interface=BIS_ReversedInvoice&interfaceNamespace=urn:kegoc.kz:BIS:LO_0002_4_ReversedInvoice";
-    //private final static String purchaseContractUrl = "http://kegoci10.corp.kegoc.kz:50000/XISOAPAdapter/MessageServlet?senderParty=&senderService=BIS_D&receiverParty=&receiverService=&interface=BIS_MM_Contract&interfaceNamespace=urn:kegoc.kz:BIS:ZMM_0042_Contract";
-    //private final static String salePlanUrl         = "http://kegoci10.corp.kegoc.kz:50000/XISOAPAdapter/MessageServlet?senderParty=&senderService=BIS_D&receiverParty=&receiverService=&interface=BIS_SalesPlan&interfaceNamespace=urn:kegoc.kz:BIS:LO_0002_3_SalesPlan";
+    @Value("${pi.sale_contract.url}")
+    private final String saleContractUrl;
 
-    //E20
-    //private final static String saleContractUrl     = "http://kegoci20.corp.kegoc.kz:50000/XISOAPAdapter/MessageServlet?senderParty=&senderService=BIS_Q&receiverParty=&receiverService=&interface=BIS_LO_Contract&interfaceNamespace=urn:kegoc.kz:BIS:LO_0001_Contract";
-    //private final static String saleInvoiceUrl      = "http://kegoci20.corp.kegoc.kz:50000/XISOAPAdapter/MessageServlet?senderParty=&senderService=BIS_Q&receiverParty=&receiverService=&interface=BIS_EstimatedChargeInvoices&interfaceNamespace=urn:kegoc.kz:BIS:LO_0002_1_EstimatedChargeInvoice";
-    //private final static String saleInvoiceRevUrl   = "http://kegoci20.corp.kegoc.kz:50000/XISOAPAdapter/MessageServlet?senderParty=&senderService=BIS_Q&receiverParty=&receiverService=&interface=BIS_ReversedInvoice&interfaceNamespace=urn:kegoc.kz:BIS:LO_0002_4_ReversedInvoice";
-    //private final static String purchaseContractUrl = "http://kegoci20.corp.kegoc.kz:50001/XISOAPAdapter/MessageServlet?senderParty=&amp;senderService=BIS_D&amp;receiverParty=&amp;receiverService=&amp;interface=BIS_MM_Contract&amp;interfaceNamespace=urn%3Akegoc.kz%3ABIS%3AZMM_0042_Contract";
-    //private final static String salePlanUrl         = "http://kegoci20.corp.kegoc.kz:50000/XISOAPAdapter/MessageServlet?senderParty=&senderService=BIS_D&receiverParty=&receiverService=&interface=BIS_SalesPlan&interfaceNamespace=urn:kegoc.kz:BIS:LO_0002_3_SalesPlan";
+    @Value("${pi.sale_invoice.url}")
+    private final String saleInvoiceUrl;
 
-    //E30
-    private final static String saleContractUrl     = "http://kegoci30.corp.kegoc.kz:50000/XISOAPAdapter/MessageServlet?senderParty=&senderService=BIS_P&receiverParty=&receiverService=&interface=BIS_LO_Contract&interfaceNamespace=urn:kegoc.kz:BIS:LO_0001_Contract";
-    private final static String saleInvoiceUrl      = "http://kegoci30.corp.kegoc.kz:50000/XISOAPAdapter/MessageServlet?senderParty=&senderService=BIS_P&receiverParty=&receiverService=&interface=BIS_EstimatedChargeInvoices&interfaceNamespace=urn:kegoc.kz:BIS:LO_0002_1_EstimatedChargeInvoice";
-    private final static String saleInvoiceRevUrl   = "http://kegoci20.corp.kegoc.kz:50000/XISOAPAdapter/MessageServlet?senderParty=&senderService=BIS_Q&receiverParty=&receiverService=&interface=BIS_ReversedInvoice&interfaceNamespace=urn:kegoc.kz:BIS:LO_0002_4_ReversedInvoice";
-    private final static String purchaseContractUrl = "http://kegoci20.corp.kegoc.kz:50001/XISOAPAdapter/MessageServlet?senderParty=&amp;senderService=BIS_D&amp;receiverParty=&amp;receiverService=&amp;interface=BIS_MM_Contract&amp;interfaceNamespace=urn%3Akegoc.kz%3ABIS%3AZMM_0042_Contract";
-    private final static String salePlanUrl         = "http://kegoci20.corp.kegoc.kz:50000/XISOAPAdapter/MessageServlet?senderParty=&senderService=BIS_D&receiverParty=&receiverService=&interface=BIS_SalesPlan&interfaceNamespace=urn:kegoc.kz:BIS:LO_0002_3_SalesPlan";
+    @Value("${pi.sale_invoice_rev.url}")
+    private final String saleInvoiceRevUrl;
+
+    @Value("${pi.purchase_contract.url}")
+    private final String purchaseContractUrl;
+
+    @Value("${pi.sale_plan.url}")
+    private final String salePlanUrl;
+
 
     @Bean
     public ObjectMapper objectMapper() {
@@ -127,6 +126,8 @@ public class AppConfig  {
 
     @Bean
     public WebServiceTemplate saleInvoiceServiceTemplate() {
+        logger.info(saleInvoiceUrl);
+
         Jaxb2Marshaller jaxb2Marshaller = new Jaxb2Marshaller();
         jaxb2Marshaller.setContextPath("sap.invoice");
 
