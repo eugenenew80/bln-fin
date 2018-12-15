@@ -1,9 +1,7 @@
 package bln.fin.ws.client;
 
-import org.apache.commons.codec.binary.Base64;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.ws.client.WebServiceClientException;
 import org.springframework.ws.client.WebServiceIOException;
@@ -13,6 +11,7 @@ import org.springframework.ws.transport.context.TransportContextHolder;
 import org.springframework.ws.transport.http.HttpUrlConnection;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import static org.apache.commons.codec.binary.Base64.*;
 
 @Component
 public class CustomClientInterceptor implements ClientInterceptor {
@@ -29,16 +28,15 @@ public class CustomClientInterceptor implements ClientInterceptor {
 
     @Override
     public boolean handleRequest(MessageContext messageContext) throws WebServiceClientException {
-        String authString = username + ":" + password;
-        String authHeader =  "Basic " + new String(Base64.encodeBase64(authString.getBytes()));
+        HttpUrlConnection connection = (HttpUrlConnection) TransportContextHolder
+            .getTransportContext()
+            .getConnection();
 
-        HttpUrlConnection connection = (HttpUrlConnection) TransportContextHolder.getTransportContext().getConnection();
         try {
+            String authHeader =  "Basic " + new String(encodeBase64((username + ":" + password).getBytes()));
             connection.addRequestHeader("Authorization", authHeader);
         }
-        catch (IOException e) {
-            e.printStackTrace();
-        }
+        catch (IOException e) { e.printStackTrace(); }
 
         ByteArrayOutputStream os = new ByteArrayOutputStream();
         try {
