@@ -48,6 +48,12 @@ public class AppConfig  {
     private final BpInterfaceRepo bpInterfaceRepo;
     private final BpRelationInterfaceRepo bpRelationInterfaceRepo;
 
+    @Value("${pi.security.user.name}")
+    private String userName;
+
+    @Value("${pi.security.user.password}")
+    private String password;
+
     @Value("${pi.sale_contract.url}")
     private String saleContractUrl;
 
@@ -120,7 +126,7 @@ public class AppConfig  {
         webServiceTemplate.setMarshaller(jaxb2Marshaller);
         webServiceTemplate.setUnmarshaller(jaxb2Marshaller);
         webServiceTemplate.setDefaultUri(salePlanUrl);
-        webServiceTemplate.setInterceptors(new ClientInterceptor[] {new CustomClientInterceptor()});
+        webServiceTemplate.setInterceptors(new ClientInterceptor[] {new CustomClientInterceptor(userName, password)});
         return webServiceTemplate;
     }
 
@@ -133,7 +139,7 @@ public class AppConfig  {
         webServiceTemplate.setMarshaller(jaxb2Marshaller);
         webServiceTemplate.setUnmarshaller(jaxb2Marshaller);
         webServiceTemplate.setDefaultUri(saleInvoiceUrl);
-        webServiceTemplate.setInterceptors(new ClientInterceptor[] {new CustomClientInterceptor()});
+        webServiceTemplate.setInterceptors(new ClientInterceptor[] {new CustomClientInterceptor(userName, password)});
         return webServiceTemplate;
     }
 
@@ -146,7 +152,7 @@ public class AppConfig  {
         webServiceTemplate.setMarshaller(jaxb2Marshaller);
         webServiceTemplate.setUnmarshaller(jaxb2Marshaller);
         webServiceTemplate.setDefaultUri(saleInvoiceRevUrl);
-        webServiceTemplate.setInterceptors(new ClientInterceptor[] {new CustomClientInterceptor()});
+        webServiceTemplate.setInterceptors(new ClientInterceptor[] {new CustomClientInterceptor(userName, password)});
         return webServiceTemplate;
     }
 
@@ -159,7 +165,7 @@ public class AppConfig  {
         webServiceTemplate.setMarshaller(jaxb2Marshaller);
         webServiceTemplate.setUnmarshaller(jaxb2Marshaller);
         webServiceTemplate.setDefaultUri(saleContractUrl);
-        webServiceTemplate.setInterceptors(new ClientInterceptor[] {new CustomClientInterceptor()});
+        webServiceTemplate.setInterceptors(new ClientInterceptor[] {new CustomClientInterceptor(userName, password)});
         return webServiceTemplate;
     }
 
@@ -172,7 +178,7 @@ public class AppConfig  {
         webServiceTemplate.setMarshaller(jaxb2Marshaller);
         webServiceTemplate.setUnmarshaller(jaxb2Marshaller);
         webServiceTemplate.setDefaultUri(purchaseContractUrl);
-        webServiceTemplate.setInterceptors(new ClientInterceptor[] {new CustomClientInterceptor()});
+        webServiceTemplate.setInterceptors(new ClientInterceptor[] {new CustomClientInterceptor(userName, password)});
         return webServiceTemplate;
     }
 
