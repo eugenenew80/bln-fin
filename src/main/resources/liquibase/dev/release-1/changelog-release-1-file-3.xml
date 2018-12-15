@@ -4582,4 +4582,21 @@
         </addColumn>
     </changeSet>
 
+    <changeSet id="fin-rus-195" logicalFilePath="path-independent" author="ruslan">
+        <comment>drop table:  FIN_REQ_ITEMS_TL</comment>
+        <dropTable cascadeConstraints="true"
+                   schemaName="apps"
+                   tableName="fin_req_items_tl"/>
+    </changeSet>
+
+    <changeSet id="fin-rus-196" logicalFilePath="path-independent" author="ruslan">
+        <comment>drop sequence: fin_req_items_tl_s</comment>
+        <dropSequence schemaName="apps"
+                      sequenceName="fin_req_items_tl_s"/>
+    </changeSet>
+    <changeSet id="fin-rus-197" logicalFilePath="path-independent" author="ruslan">
+        <comment>drop sequence: fin_req_items_s</comment>
+        <dropSequence schemaName="apps"
+                      sequenceName="fin_req_items_s"/>
+    </changeSet>
 </databaseChangeLog>
