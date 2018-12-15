@@ -12,6 +12,13 @@ import java.time.LocalDateTime;
 @EqualsAndHashCode(of= {"id"})
 @Entity
 @Table(name = "fin_debt_interface")
+
+@NamedStoredProcedureQueries({
+    @NamedStoredProcedureQuery(
+        name = "DebtInterface.updateDebt",
+        procedureName = "sap_interface.debt_transfer"
+    )
+})
 public class DebtInterface implements Monitored {
     @Id
     @SequenceGenerator(name="fin_debt_interface_s", sequenceName = "fin_debt_interface_s", allocationSize=1)

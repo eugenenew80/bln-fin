@@ -13,6 +13,13 @@ import java.time.LocalDateTime;
 @EqualsAndHashCode(of= {"id"})
 @Entity
 @Table(name = "fin_invoice_status_interface")
+
+@NamedStoredProcedureQueries({
+    @NamedStoredProcedureQuery(
+        name = "InvoiceStatusInterface.updateInvoiceStatus",
+        procedureName = "sap_interface.invoice_status_transfer"
+    )
+})
 public class InvoiceStatusInterface implements Monitored {
     @Id
     @SequenceGenerator(name="fin_invoice_status_interface_s", sequenceName = "fin_invoice_status_interface_s", allocationSize=1)

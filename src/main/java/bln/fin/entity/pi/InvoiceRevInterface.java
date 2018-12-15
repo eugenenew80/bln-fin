@@ -12,6 +12,13 @@ import java.time.LocalDateTime;
 @EqualsAndHashCode(of= {"id"})
 @Entity
 @Table(name = "fin_invoice_rev_interface")
+
+@NamedStoredProcedureQueries({
+    @NamedStoredProcedureQuery(
+        name = "InvoiceRevInterface.updateSalePlans",
+        procedureName = "sap_interface.invoice_sd_rev_update"
+    )
+})
 public class InvoiceRevInterface implements Monitored {
     @Id
     private Long id;

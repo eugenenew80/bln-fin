@@ -13,6 +13,13 @@ import java.util.Set;
 @EqualsAndHashCode(of= {"id"})
 @Entity
 @Table(name = "dict_bp_interface")
+
+@NamedStoredProcedureQueries({
+    @NamedStoredProcedureQuery(
+        name = "BpInterface.updateBp",
+        procedureName = "sap_interface.bp_transfer"
+    )
+})
 public class BpInterface implements Monitored {
     @Id
     @SequenceGenerator(name="dict_bp_interface_s", sequenceName = "dict_bp_interface_s", allocationSize=1)

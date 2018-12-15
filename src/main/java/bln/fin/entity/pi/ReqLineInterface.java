@@ -12,6 +12,13 @@ import java.time.LocalDateTime;
 @EqualsAndHashCode(of= {"id"})
 @Entity
 @Table(name = "fin_req_line_interface")
+
+@NamedStoredProcedureQueries({
+    @NamedStoredProcedureQuery(
+        name = "ReqLineInterface.updateReqLine",
+        procedureName = "sap_interface.req_line_transfer"
+    )
+})
 public class ReqLineInterface implements Monitored {
     @Id
     @SequenceGenerator(name="fin_req_line_interface_s", sequenceName = "fin_req_line_interface_s", allocationSize=1)
