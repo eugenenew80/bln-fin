@@ -126,9 +126,6 @@ public class AppConfig  {
 
     @Bean
     public WebServiceTemplate saleInvoiceServiceTemplate() {
-        logger.info("QQQQQQQQQQQQQQQQQQQQ");
-        logger.info(saleInvoiceUrl);
-
         Jaxb2Marshaller jaxb2Marshaller = new Jaxb2Marshaller();
         jaxb2Marshaller.setContextPath("sap.invoice");
 
