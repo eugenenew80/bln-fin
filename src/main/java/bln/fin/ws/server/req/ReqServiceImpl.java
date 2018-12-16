@@ -43,7 +43,7 @@ public class ReqServiceImpl implements ReqService {
             .collect(toList());
 
         sessionService.successSession(session, (long) list.size());
-        reqLineInterfaceRepo.updateStatuses();
+        reqLineInterfaceRepo.transfer();
 
         logger.info("completed, received records: " + list.size());
         return messages;

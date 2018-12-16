@@ -10,6 +10,6 @@ import java.util.List;
 public interface ReqLineInterfaceRepo extends JpaRepository<ReqLineInterface, Long> {
     List<ReqLineInterface> findByReqNumAndPosNum(Long reqNum, Long posNum);
 
-    @Procedure(name = "ReqLineInterface.updateStatuses")
-    void updateStatuses();
+    @Procedure(name = "ReqLineInterface.transfer")
+    void transfer();
 }

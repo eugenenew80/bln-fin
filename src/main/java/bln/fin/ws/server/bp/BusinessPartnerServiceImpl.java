@@ -47,7 +47,7 @@ public class BusinessPartnerServiceImpl implements BusinessPartnerService {
             .collect(toList());
 
         sessionService.successSession(session, (long) list.size());
-        bpInterfaceRepo.updateStatuses();
+        bpInterfaceRepo.transfer();
 
         logger.info("completed");
         return messages;
@@ -69,7 +69,7 @@ public class BusinessPartnerServiceImpl implements BusinessPartnerService {
             .collect(toList());
 
         sessionService.successSession(session, (long) list.size());
-        bpRelationInterfaceRepo.updateStatuses();
+        bpRelationInterfaceRepo.transfer();
 
         logger.info("completed");
         return messages;

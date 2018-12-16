@@ -12,6 +12,6 @@ import java.util.List;
 public interface DebtInterfaceRepo extends JpaRepository<DebtInterface, Long> {
     List<DebtInterface> findByDocNumAndDocDate(String docNum, LocalDate docDate);
 
-    @Procedure(name = "DebtInterface.updateStatuses")
-    void updateStatuses();
+    @Procedure(name = "DebtInterface.transfer")
+    void transfer();
 }

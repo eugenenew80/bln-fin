@@ -16,7 +16,7 @@ import java.util.Set;
 
 @NamedStoredProcedureQueries({
     @NamedStoredProcedureQuery(
-        name = "BpInterface.updateStatuses",
+        name = "BpInterface.transfer",
         procedureName = "sap_interface.bp_transfer"
     )
 })

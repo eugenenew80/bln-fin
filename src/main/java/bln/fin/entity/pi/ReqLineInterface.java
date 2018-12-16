@@ -15,7 +15,7 @@ import java.time.LocalDateTime;
 
 @NamedStoredProcedureQueries({
     @NamedStoredProcedureQuery(
-        name = "ReqLineInterface.updateStatuses",
+        name = "ReqLineInterface.transfer",
         procedureName = "sap_interface.req_line_transfer"
     )
 })

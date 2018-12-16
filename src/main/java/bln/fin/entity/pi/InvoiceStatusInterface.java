@@ -16,7 +16,7 @@ import java.time.LocalDateTime;
 
 @NamedStoredProcedureQueries({
     @NamedStoredProcedureQuery(
-        name = "InvoiceStatusInterface.updateStatuses",
+        name = "InvoiceStatusInterface.transfer",
         procedureName = "sap_interface.invoice_status_transfer"
     )
 })

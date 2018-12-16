@@ -11,6 +11,6 @@ import java.util.List;
 public interface InvoiceStatusInterfaceRepo extends JpaRepository<InvoiceStatusInterface, Long> {
     List<InvoiceStatusInterface> findByDocNumAndDocDate(String docNum, LocalDate docDate);
 
-    @Procedure(name = "InvoiceStatusInterface.updateStatuses")
-    void updateStatuses();
+    @Procedure(name = "InvoiceStatusInterface.transfer")
+    void transfer();
 }

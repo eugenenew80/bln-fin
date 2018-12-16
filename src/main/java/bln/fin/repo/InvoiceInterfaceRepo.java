@@ -15,4 +15,7 @@ public interface InvoiceInterfaceRepo extends JpaRepository<InvoiceInterface, Lo
 
     @Procedure(name = "InvoiceInterface.updateStatuses")
     void updateStatuses();
+
+    @Procedure(name = "InvoiceInterface.transfer")
+    void transfer();
 }

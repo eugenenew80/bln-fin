@@ -18,6 +18,11 @@ import java.util.Set;
     @NamedStoredProcedureQuery(
             name = "InvoiceInterface.updateStatuses",
             procedureName = "sap_interface.invoice_sd_update"
+    ),
+
+    @NamedStoredProcedureQuery(
+        name = "InvoiceInterface.transfer",
+        procedureName = "sap_interface.invoice_transfer"
     )
 })
 public class InvoiceInterface implements Monitored {

@@ -10,6 +10,6 @@ import java.util.List;
 public interface BpInterfaceRepo extends JpaRepository<BpInterface, Long> {
     List<BpInterface> findByBpNum(String bpNum);
 
-    @Procedure(name = "BpInterface.updateStatuses")
-    void updateStatuses();
+    @Procedure(name = "BpInterface.transfer")
+    void transfer();
 }
