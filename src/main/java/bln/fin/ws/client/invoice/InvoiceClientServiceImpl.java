@@ -18,6 +18,7 @@ import javax.xml.bind.JAXBElement;
 import java.time.LocalDateTime;
 import java.util.List;
 import static bln.fin.common.Util.getSuccessMessage;
+import static java.util.Arrays.asList;
 import static java.util.stream.Collectors.toList;
 
 @Service
@@ -34,7 +35,8 @@ public class InvoiceClientServiceImpl implements InvoiceClientService {
     @Override
     public void send() {
         List<InvoiceInterface> list = invoiceInterfaceRepo.findAllByStatusAndBpType(BatchStatusEnum.W, "D");
-        send(list);
+        for (InvoiceInterface i : list)
+            send(asList(i));
     }
 
     private void send(List<InvoiceInterface> list) {
@@ -80,15 +82,6 @@ public class InvoiceClientServiceImpl implements InvoiceClientService {
 
     private EstimatedChargeInvoices.Item mapItem(InvoiceInterface invoice) {
         EstimatedChargeInvoices.Item item = mapper.map(invoice, EstimatedChargeInvoices.Item.class);
-
-        /*
-        if (item.getDocType().equals("ZF2") && (item.getOrderNum() == null))
-            item.setOrderNum("");
-
-        if (item.getDocType().equals("ZF2") && (item.getSrcDocNum() == null))
-            item.setSrcDocNum("");
-        */
-
         if (invoice.getLines() == null)
             return item;
 
