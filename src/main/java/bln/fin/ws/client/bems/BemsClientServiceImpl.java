@@ -7,7 +7,6 @@ import bems.SIDEXResponseType;
 import bln.fin.entity.bems.BemsInterface;
 import bln.fin.entity.enums.BatchStatusEnum;
 import bln.fin.entity.enums.DirectionEnum;
-import bln.fin.entity.pi.SalePlanInterface;
 import bln.fin.entity.pi.Session;
 import bln.fin.repo.BemsInterfaceRepo;
 import bln.fin.ws.SessionService;
