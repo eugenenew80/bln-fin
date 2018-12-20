@@ -54,6 +54,12 @@ public class AppConfig  {
     @Value("${pi.security.user.password}")
     private String password;
 
+    @Value("${bems.security.user.name}")
+    private String bemsUserName;
+
+    @Value("${bems.security.user.password}")
+    private String bemsPassword;
+
     @Value("${pi.sale_contract.url}")
     private String saleContractUrl;
 
@@ -68,6 +74,9 @@ public class AppConfig  {
 
     @Value("${pi.sale_plan.url}")
     private String salePlanUrl;
+
+    @Value("${bems.url}")
+    private String bemsUrl;
 
 
     @Bean
@@ -115,6 +124,19 @@ public class AppConfig  {
             "dozer/SaleInvoiceRevResponseDto.xml"
         ));
         return mapper;
+    }
+
+    @Bean
+    public WebServiceTemplate bemsServiceTemplate() {
+        Jaxb2Marshaller jaxb2Marshaller = new Jaxb2Marshaller();
+        jaxb2Marshaller.setContextPath("bems");
+
+        WebServiceTemplate webServiceTemplate = new WebServiceTemplate();
+        webServiceTemplate.setMarshaller(jaxb2Marshaller);
+        webServiceTemplate.setUnmarshaller(jaxb2Marshaller);
+        webServiceTemplate.setDefaultUri(bemsUrl);
+        webServiceTemplate.setInterceptors(new ClientInterceptor[] {new CustomClientInterceptor(bemsUserName, bemsPassword)});
+        return webServiceTemplate;
     }
 
     @Bean

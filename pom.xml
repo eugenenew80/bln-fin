@@ -131,6 +131,19 @@
                             <schemaIncludes><include>BIS_ReversedInvoiceService.wsdl</include></schemaIncludes>
                         </configuration>
                     </execution>
+
+                    <execution>
+                        <id>6</id>
+                        <goals>
+                            <goal>generate</goal>
+                        </goals>
+                        <configuration>
+                            <generatePackage>bems</generatePackage>
+                            <generateDirectory>${project.basedir}/src/main/java</generateDirectory>
+                            <schemaDirectory>${project.basedir}/src/main/resources/wsdl</schemaDirectory>
+                            <schemaIncludes><include>sidex-service.wsdl</include></schemaIncludes>
+                        </configuration>
+                    </execution>
                 </executions>
             </plugin>
             <!-- end::wsdl[] -->

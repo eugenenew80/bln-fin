@@ -1,0 +1,80 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<wsdl:definitions xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:tns="http://www.smarttech.at/SIDEX-Service/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" name="SIDEX-Service" targetNamespace="http://www.smarttech.at/SIDEX-Service/">
+    <wsdl:types>
+        <xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:tns="http://www.smarttech.at/SIDEX-Service/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" targetNamespace="http://www.smarttech.at/SIDEX-Service/">
+            <xsd:element name="uploadDocumentResponse">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="out" type="xsd:string"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+
+            <xsd:complexType name="SIDEXRequestType">
+                <xsd:sequence>
+                    <xsd:element minOccurs="1" name="Usage" type="xsd:string"/>
+                    <xsd:element minOccurs="1" name="Document" type="tns:FileType"/>
+                </xsd:sequence>
+            </xsd:complexType>
+
+            <xsd:complexType name="SIDEXResponseType">
+                <xsd:sequence>
+                    <xsd:element maxOccurs="1" minOccurs="1" name="TransmissionTime" type="xsd:dateTime"/>
+                    <xsd:element minOccurs="1" name="TransmissionState">
+                        <xsd:simpleType>
+                            <xsd:restriction base="xsd:string">
+                                <xsd:enumeration value="OK"/>
+                                <xsd:enumeration value="ERROR"/>
+                                <xsd:length value="1"/>
+                            </xsd:restriction>
+                        </xsd:simpleType>
+                    </xsd:element>
+                    <xsd:element maxOccurs="1" minOccurs="0" name="TransmissionStateInfo" type="xsd:string"/>
+                    <xsd:element maxOccurs="1" minOccurs="0" name="responseFile" type="tns:FileType"/>
+                </xsd:sequence>
+            </xsd:complexType>
+
+            <xsd:complexType name="FileType">
+                <xsd:sequence>
+                    <xsd:element maxOccurs="1" minOccurs="1" name="Name" type="xsd:string"/>
+                    <xsd:element name="Content" type="xsd:base64Binary"/>
+                </xsd:sequence>
+            </xsd:complexType>
+
+        </xsd:schema>
+    </wsdl:types>
+    <wsdl:message name="processRequest">
+        <wsdl:part name="Request" type="tns:SIDEXRequestType">
+        </wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="processResponse">
+        <wsdl:part name="Response" type="tns:SIDEXResponseType">
+        </wsdl:part>
+    </wsdl:message>
+    <wsdl:portType name="SIDEX-Service">
+        <wsdl:operation name="process">
+            <wsdl:input message="tns:processRequest">
+            </wsdl:input>
+            <wsdl:output message="tns:processResponse">
+            </wsdl:output>
+        </wsdl:operation>
+    </wsdl:portType>
+    <wsdl:binding name="SIDEX-ServiceSOAP" type="tns:SIDEX-Service">
+        <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+        <wsdl:operation name="process">
+            <soap:operation soapAction="http://www.smarttech.at/SIDEX-Service/process"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+    </wsdl:binding>
+    <wsdl:service name="SIDEX-Service">
+        <wsdl:documentation>SIDEX ... Simple Document Exchange</wsdl:documentation>
+        <wsdl:port binding="tns:SIDEX-ServiceSOAP" name="SIDEX-ServiceSOAP">
+            <soap:address location="http://10.9.44.241:8080/sidexwskegoctest/services/sidex-service"/>
+        </wsdl:port>
+    </wsdl:service>
+</wsdl:definitions>
