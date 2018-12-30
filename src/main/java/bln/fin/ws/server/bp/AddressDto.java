@@ -1,6 +1,8 @@
 package bln.fin.ws.server.bp;
 
 import lombok.Data;
+
+import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.*;
 import java.util.List;
 
@@ -12,14 +14,17 @@ public class AddressDto {
 
     @XmlElement(required = true)
     @Documentation("Тип адреса: ACTUAL - фактический, LEGAL - юридический")
+    @NotNull(message = "Поля является обязательным")
     private String addressType;
 
     @XmlElement
     @Documentation("Код страны")
+    @NotNull(message = "Поля является обязательным")
     private String country;
 
     @XmlElement
     @Documentation("Код региона")
+    @NotNull(message = "Поля является обязательным")
     private String region;
 
     @XmlElement

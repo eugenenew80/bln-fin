@@ -2,6 +2,7 @@ package bln.fin.ws.server.bp;
 
 import lombok.Data;
 
+import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.*;
 
 @Data
@@ -12,10 +13,12 @@ public class BankAccountDto {
 
     @XmlElement(required = true)
     @Documentation("Код страны банка")
+    @NotNull(message = "Поля является обязательным")
     private String country;
 
     @XmlElement(required = true)
     @Documentation("БИК банка")
+    @NotNull(message = "Поля является обязательным")
     private String bik;
 
     @XmlElement
