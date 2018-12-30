@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.3.xsd">
+
+    <changeSet id="fin-rus-198" logicalFilePath="path-independent" author="ruslan">
+        <comment>change data type fin_invoice_interface.ext_contract_num</comment>
+        <modifyDataType columnName="ext_contract_num"
+                        newDataType="varchar2(50)"
+                        schemaName="apps"
+                        tableName="fin_invoice_interface"/>
+        <rollback/>
+    </changeSet>
+
+    <changeSet id="fin-rus-199" logicalFilePath="path-independent" author="ruslan">
+        <comment>change data type fin_invoice_interface.ext_doc_num</comment>
+        <modifyDataType columnName="ext_doc_num"
+                        newDataType="varchar2(50)"
+                        schemaName="apps"
+                        tableName="fin_invoice_interface"/>
+        <rollback/>
+    </changeSet>
+
+</databaseChangeLog>
