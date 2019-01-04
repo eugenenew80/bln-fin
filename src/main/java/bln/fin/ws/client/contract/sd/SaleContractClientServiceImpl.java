@@ -34,7 +34,7 @@ public class SaleContractClientServiceImpl implements SaleContractClientService 
 
     @Override
     public void send() {
-        List<ContractInterface> list = contractInterfaceRepo.findAllByStatusAndBpType(BatchStatusEnum.W, "D");
+        List<ContractInterface> list = contractInterfaceRepo.findAllByStatus(BatchStatusEnum.W, "D");
         if (list.isEmpty()) return;
 
         for (ContractInterface i : list)

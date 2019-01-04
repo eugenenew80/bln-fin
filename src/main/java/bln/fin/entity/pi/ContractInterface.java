@@ -99,6 +99,9 @@ public class ContractInterface implements Monitored {
     @Column(name = "last_update_date")
     private LocalDateTime lastUpdateDate;
 
+    @Column(name = "contract_id")
+    private Long contractId;
+
     @OneToMany(mappedBy = "contract", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
     private Set<ContractLineInterface> lines;
 }
