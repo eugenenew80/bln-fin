@@ -113,12 +113,7 @@ public class BusinessPartnerServiceImpl implements BusinessPartnerService {
         String sapId = bpDto.getBpNum()!=null ? bpDto.getBpNum() : "";
         MessageDto msg;
         try {
-            Set<ConstraintViolation<BusinessPartnerDto>> violations = validator.validate(bpDto);
-            if (violations != null && violations.size() > 0) {
-                ConstraintViolation<BusinessPartnerDto> violation = violations.iterator().next();
-                throw new ValidationException(violation.getPropertyPath().toString() + ": " +  violation.getMessage());
-            }
-
+            validate(bpDto);
             BpInterface bp = bpInterfaceRepo.findByBpNum(bpDto.getBpNum())
                 .stream()
                 .filter(t -> t.getStatus() == BatchStatusEnum.W)
@@ -147,6 +142,7 @@ public class BusinessPartnerServiceImpl implements BusinessPartnerService {
             if (bpDto.getAddresses()!=null && !bpDto.getAddresses().isEmpty()) {
                 bp.setAddresses(Optional.ofNullable(bp.getAddresses()).orElse(new HashSet<>()));
                 for (AddressDto bpAddressDto : bpDto.getAddresses()) {
+                    validate(bpAddressDto);
                     BpAddressInterface address = getAddress(bp, bpAddressDto);
                     bp.getAddresses().add(address);
 
@@ -237,4 +233,14 @@ public class BusinessPartnerServiceImpl implements BusinessPartnerService {
         for (RelationDto line: list) logger.debug(line.toString());
         logger.debug("-----------------------");
     }
+
+
+    private void validate(Object dto) {
+        Set<ConstraintViolation<Object>> violations = validator.validate(dto);
+        if (violations != null && violations.size() > 0) {
+            ConstraintViolation<Object> violation = violations.iterator().next();
+            throw new ValidationException(violation.getPropertyPath().toString() + ": " +  violation.getMessage());
+        }
+    }
+
 }

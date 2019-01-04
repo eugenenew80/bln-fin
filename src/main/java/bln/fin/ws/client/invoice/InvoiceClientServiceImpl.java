@@ -35,6 +35,8 @@ public class InvoiceClientServiceImpl implements InvoiceClientService {
     @Override
     public void send() {
         List<InvoiceInterface> list = invoiceInterfaceRepo.findAllByStatusAndBpType(BatchStatusEnum.W, "D");
+        if (list.isEmpty()) return;
+
         for (InvoiceInterface i : list)
             send(asList(i));
     }

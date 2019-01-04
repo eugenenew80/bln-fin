@@ -18,6 +18,7 @@ import javax.xml.bind.JAXBElement;
 import java.time.LocalDateTime;
 import java.util.List;
 import static bln.fin.common.Util.getSuccessMessage;
+import static java.util.Arrays.asList;
 import static java.util.stream.Collectors.toList;
 
 @Service
@@ -34,11 +35,13 @@ public class SaleContractClientServiceImpl implements SaleContractClientService 
     @Override
     public void send() {
         List<ContractInterface> list = contractInterfaceRepo.findAllByStatusAndBpType(BatchStatusEnum.W, "D");
-        send(list);
+        if (list.isEmpty()) return;
+
+        for (ContractInterface i : list)
+            send(asList(i));
     }
 
     private void send(List<ContractInterface> list) {
-        if (list.isEmpty()) return;
         logger.info("started");
 
         Session session = sessionService.createSession(objectCode, DirectionEnum.EXPORT);

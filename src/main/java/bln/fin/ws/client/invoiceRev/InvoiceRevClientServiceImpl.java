@@ -17,6 +17,7 @@ import javax.xml.bind.JAXBElement;
 import java.time.LocalDateTime;
 import java.util.List;
 import static bln.fin.common.Util.getSuccessMessage;
+import static java.util.Arrays.asList;
 import static java.util.stream.Collectors.toList;
 
 @Service
@@ -34,7 +35,9 @@ public class InvoiceRevClientServiceImpl implements InvoiceRevClientService {
     public void send() {
         List<InvoiceRevInterface> list = invoiceRevInterfaceRepo.findAllByStatus(BatchStatusEnum.W);
         if (list.isEmpty()) return;
-        send(list);
+
+        for (InvoiceRevInterface i : list)
+            send(asList(i));
     }
 
     public void send(List<InvoiceRevInterface> list) {

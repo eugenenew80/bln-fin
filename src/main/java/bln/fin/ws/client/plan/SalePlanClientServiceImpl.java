@@ -17,6 +17,7 @@ import javax.xml.bind.JAXBElement;
 import java.time.LocalDateTime;
 import java.util.List;
 import static bln.fin.common.Util.getSuccessMessage;
+import static java.util.Arrays.asList;
 import static java.util.stream.Collectors.toList;
 
 @Service
@@ -33,11 +34,13 @@ public class SalePlanClientServiceImpl implements SalePlanClientService {
     @Override
     public void send() {
         List<SalePlanInterface> list = salePlanInterfaceRepo.findAllByStatus(BatchStatusEnum.W);
-        send(list);
+        if (list.isEmpty()) return;
+
+        for (SalePlanInterface i : list)
+            send(asList(i));
     }
 
     private void send(List<SalePlanInterface> list) {
-        if (list.isEmpty()) return;
         logger.info("started");
 
         Session session = sessionService.createSession(objectCode, DirectionEnum.EXPORT);
