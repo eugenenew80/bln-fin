@@ -47,6 +47,9 @@ public class InvoiceLineInterface implements Monitored {
     @Column(name = "tax_rate")
     private Double taxRate;
 
+    @Column(name = "discount")
+    private Double discount;
+
     @Column(name = "create_date")
     private LocalDateTime createDate;
 

@@ -561,6 +561,7 @@ public class EstimatedChargeInvoices {
          *         &lt;element name="price" type="{http://www.w3.org/2001/XMLSchema}double"/&gt;
          *         &lt;element name="amount" type="{http://www.w3.org/2001/XMLSchema}double"/&gt;
          *         &lt;element name="taxRate" type="{http://www.w3.org/2001/XMLSchema}double"/&gt;
+         *         &lt;element name="Discount" type="{http://www.w3.org/2001/XMLSchema}double"/&gt;
          *       &lt;/sequence&gt;
          *     &lt;/restriction&gt;
          *   &lt;/complexContent&gt;
@@ -579,7 +580,8 @@ public class EstimatedChargeInvoices {
             "quantity",
             "price",
             "amount",
-            "taxRate"
+            "taxRate",
+            "Discount"
         })
         public static class Row {
 
@@ -596,6 +598,7 @@ public class EstimatedChargeInvoices {
             protected Double price;
             protected Double amount;
             protected Double taxRate;
+            protected Double Discount;
 
             /**
              * Gets the value of the posNum property.
@@ -773,6 +776,22 @@ public class EstimatedChargeInvoices {
                 this.taxRate = value;
             }
 
+
+            /**
+             * Gets the value of the taxRate property.
+             *
+             */
+            public Double getDiscount() {
+                return Discount;
+            }
+
+            /**
+             * Sets the value of the taxRate property.
+             *
+             */
+            public void setDiscount(Double value) {
+                this.Discount = value;
+            }
         }
 
     }
