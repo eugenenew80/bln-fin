@@ -23,6 +23,12 @@
             <b>bpAccountNum</b>
         </field>
 
+
+        <field>
+            <a>salesDepartCode</a>
+            <b>saleDepartCode</b>
+        </field>
+
         <field-exclude>
             <a>row</a>
             <b>lines</b>
