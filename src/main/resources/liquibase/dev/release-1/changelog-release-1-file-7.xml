@@ -24,4 +24,31 @@
         <rollback/>
     </changeSet>
 
+    <changeSet id="fin-rus-2000" logicalFilePath="path-independent" author="ruslan">
+        <comment>add column to wf_object_workflows</comment>
+        <addColumn schemaName="apps" tableName="wf_object_workflows">
+            <column name="is_canceled" type="number" remarks="wf отменен">
+                <constraints nullable="true"/>
+            </column>
+        </addColumn>
+    </changeSet>
+
+    <changeSet id="fin-rus-201" logicalFilePath="path-independent" author="ruslan">
+        <comment>change data type fin_contract_interface</comment>
+        <modifyDataType columnName="contract_num"
+                        newDataType="varchar2(100)"
+                        schemaName="apps"
+                        tableName="fin_contract_interface"/>
+        <rollback/>
+    </changeSet>
+
+    <changeSet id="fin-rus-202" logicalFilePath="path-independent" author="ruslan">
+        <comment>change data type fin_contract_interface</comment>
+        <modifyDataType columnName="ext_contract_num"
+                        newDataType="varchar2(100)"
+                        schemaName="apps"
+                        tableName="fin_contract_interface"/>
+        <rollback/>
+    </changeSet>
+
 </databaseChangeLog>
