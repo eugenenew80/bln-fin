@@ -1,0 +1,673 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.3.xsd">
+
+    <changeSet id="fin-eug-294" logicalFilePath="path-independent" author="eugene">
+        <comment>Creating table: sap_bp_groups</comment>
+        <createTable tableName="sap_bp_groups" schemaName="apps" remarks="Группы деловых партнеров">
+            <column name="code" type="varchar2(4)" remarks="Код группы">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="name" type="varchar(100)" remarks="Наименование группы">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="create_date" type="TIMESTAMP" remarks="Дата создания">
+                <constraints nullable="true"/>
+            </column>
+
+            <column name="last_update_date" type="TIMESTAMP" remarks="Дата изменения">
+                <constraints nullable="true"/>
+            </column>
+
+            <column name="create_by" type="number" remarks="Автор">
+                <constraints nullable="true"/>
+            </column>
+
+            <column name="last_update_by" type="number" remarks="Автор изменения">
+                <constraints nullable="true"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="fin-eug-295" logicalFilePath="path-independent" author="eugene">
+        <comment>Creating primary key for table: sap_bp_groups</comment>
+        <addPrimaryKey
+                columnNames="code"
+                constraintName="pk_sap_bp_groups"
+                schemaName="apps"
+                tableName="sap_bp_groups"/>
+    </changeSet>
+
+    <changeSet id="fin-eug-296" logicalFilePath="path-independent" author="eugene" context="dev">
+        <comment>Adding data to table: sap_bp_groups</comment>
+        <insert tableName="sap_bp_groups" schemaName="apps">
+            <column name="code" value="1000" />
+            <column name="name" value="Юридические Лица резиденты" />
+        </insert>
+
+        <insert tableName="sap_bp_groups" schemaName="apps">
+            <column name="code" value="2000" />
+            <column name="name" value="Юридические Лица не резиденты" />
+        </insert>
+
+        <insert tableName="sap_bp_groups" schemaName="apps">
+            <column name="code" value="3000" />
+            <column name="name" value="Государственные органы" />
+        </insert>
+
+        <insert tableName="sap_bp_groups" schemaName="apps">
+            <column name="code" value="4000" />
+            <column name="name" value="Внутренний поставщик" />
+        </insert>
+
+        <insert tableName="sap_bp_groups" schemaName="apps">
+            <column name="code" value="5000" />
+            <column name="name" value="Сотрудники" />
+        </insert>
+
+        <insert tableName="sap_bp_groups" schemaName="apps">
+            <column name="code" value="6000" />
+            <column name="name" value="Налоговые органы" />
+        </insert>
+
+        <insert tableName="sap_bp_groups" schemaName="apps">
+            <column name="code" value="7000" />
+            <column name="name" value="Физические лица" />
+        </insert>
+
+        <insert tableName="sap_bp_groups" schemaName="apps">
+            <column name="code" value="BPTD" />
+            <column name="name" value="Технические ДП" />
+        </insert>
+
+        <insert tableName="sap_bp_groups" schemaName="apps">
+            <column name="code" value="PSRL" />
+            <column name="name" value="Счета разных лиц" />
+        </insert>
+
+        <rollback/>
+    </changeSet>
+
+
+
+    <changeSet id="fin-eug-297" logicalFilePath="path-independent" author="eugene">
+        <comment>Creating table: sap_bp_industries</comment>
+        <createTable tableName="sap_bp_industries" schemaName="apps" remarks="Отрасли для деловых партнеров в SAP">
+            <column name="code" type="varchar2(2)" remarks="Код отрасли">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="name" type="varchar(100)" remarks="Наименование отрасли">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="create_date" type="TIMESTAMP" remarks="Дата создания">
+                <constraints nullable="true"/>
+            </column>
+
+            <column name="last_update_date" type="TIMESTAMP" remarks="Дата изменения">
+                <constraints nullable="true"/>
+            </column>
+
+            <column name="create_by" type="number" remarks="Автор">
+                <constraints nullable="true"/>
+            </column>
+
+            <column name="last_update_by" type="number" remarks="Автор изменения">
+                <constraints nullable="true"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="fin-eug-298" logicalFilePath="path-independent" author="eugene">
+        <comment>Creating primary key for table: sap_bp_industries</comment>
+        <addPrimaryKey
+                columnNames="code"
+                constraintName="pk_sap_bp_industries"
+                schemaName="apps"
+                tableName="sap_bp_industries"/>
+    </changeSet>
+
+    <changeSet id="fin-eug-299" logicalFilePath="path-independent" author="eugene" context="dev">
+        <comment>Adding data to table: sap_bp_industries</comment>
+        <insert tableName="sap_bp_industries" schemaName="apps">
+            <column name="code" value="11" />
+            <column name="name" value="Центральное Правительство  (Резидент РК )" />
+        </insert>
+
+        <insert tableName="sap_bp_industries" schemaName="apps">
+            <column name="code" value="12" />
+            <column name="name" value="Региональные и местные органы управления  (Резидент РК )" />
+        </insert>
+
+        <insert tableName="sap_bp_industries" schemaName="apps">
+            <column name="code" value="13" />
+            <column name="name" value="Центральные (национальные) банки  (Резидент РК )" />
+        </insert>
+
+        <insert tableName="sap_bp_industries" schemaName="apps">
+            <column name="code" value="14" />
+            <column name="name" value="Другие депозитные организации  (Резидент РК )" />
+        </insert>
+
+        <insert tableName="sap_bp_industries" schemaName="apps">
+            <column name="code" value="15" />
+            <column name="name" value="Другие финансовые организации  (Резидент РК )" />
+        </insert>
+
+        <insert tableName="sap_bp_industries" schemaName="apps">
+            <column name="code" value="16" />
+            <column name="name" value="Государственные нефинансовые организации  (Резидент РК )" />
+        </insert>
+
+        <insert tableName="sap_bp_industries" schemaName="apps">
+            <column name="code" value="17" />
+            <column name="name" value="Негосударственные нефинансовые организации  (Резидент РК )" />
+        </insert>
+
+        <insert tableName="sap_bp_industries" schemaName="apps">
+            <column name="code" value="18" />
+            <column name="name" value="Некоммерческие организации, обслуживающие домашние хозяйства  (Резидент РК )" />
+        </insert>
+
+        <insert tableName="sap_bp_industries" schemaName="apps">
+            <column name="code" value="19" />
+            <column name="name" value="Домашние хозяйства (Резидент РК )" />
+        </insert>
+
+        <insert tableName="sap_bp_industries" schemaName="apps">
+            <column name="code" value="21" />
+            <column name="name" value="Центральное Правительство (Нерезидент РК)" />
+        </insert>
+
+        <insert tableName="sap_bp_industries" schemaName="apps">
+            <column name="code" value="23" />
+            <column name="name" value="Другие депозитные организации (Нерезидент РК)" />
+        </insert>
+
+        <insert tableName="sap_bp_industries" schemaName="apps">
+            <column name="code" value="24" />
+            <column name="name" value="Другие депозитные организации (Нерезидент РК)" />
+        </insert>
+
+        <insert tableName="sap_bp_industries" schemaName="apps">
+            <column name="code" value="27" />
+            <column name="name" value="Негосударственные нефинансовые организации (Нерезидент РК)" />
+        </insert>
+
+        <insert tableName="sap_bp_industries" schemaName="apps">
+            <column name="code" value="29" />
+            <column name="name" value="Домашние хозяйства (Нерезидент РК)" />
+        </insert>
+
+        <insert tableName="sap_bp_industries" schemaName="apps">
+            <column name="code" value="2А" />
+            <column name="name" value="Международные организации (Нерезидент РК)" />
+        </insert>
+
+        <rollback/>
+    </changeSet>
+
+
+    <changeSet id="fin-eug-300" logicalFilePath="path-independent" author="eugene">
+        <comment>Creating table: sap_bp_tax_number_types</comment>
+        <createTable tableName="sap_bp_tax_number_types" schemaName="apps" remarks="Типы налоговых номеров для деловых партнеров в SAP">
+            <column name="code" type="varchar2(4)" remarks="Код типа">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="name" type="varchar(100)" remarks="Наименование типа">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="create_date" type="TIMESTAMP" remarks="Дата создания">
+                <constraints nullable="true"/>
+            </column>
+
+            <column name="last_update_date" type="TIMESTAMP" remarks="Дата изменения">
+                <constraints nullable="true"/>
+            </column>
+
+            <column name="create_by" type="number" remarks="Автор">
+                <constraints nullable="true"/>
+            </column>
+
+            <column name="last_update_by" type="number" remarks="Автор изменения">
+                <constraints nullable="true"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="fin-eug-301" logicalFilePath="path-independent" author="eugene">
+        <comment>Creating primary key for table: sap_bp_tax_number_types</comment>
+        <addPrimaryKey
+                columnNames="code"
+                constraintName="pk_sap_bp_tax_number_types"
+                schemaName="apps"
+                tableName="sap_bp_tax_number_types"/>
+    </changeSet>
+
+
+    <changeSet id="fin-eug-302" logicalFilePath="path-independent" author="eugene">
+        <comment>Creating table: sap_bp_languages</comment>
+        <createTable tableName="sap_bp_languages" schemaName="apps" remarks="Языки в SAP">
+            <column name="code" type="varchar2(2)" remarks="Код языка">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="name" type="varchar(100)" remarks="Наименование языка">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="create_date" type="TIMESTAMP" remarks="Дата создания">
+                <constraints nullable="true"/>
+            </column>
+
+            <column name="last_update_date" type="TIMESTAMP" remarks="Дата изменения">
+                <constraints nullable="true"/>
+            </column>
+
+            <column name="create_by" type="number" remarks="Автор">
+                <constraints nullable="true"/>
+            </column>
+
+            <column name="last_update_by" type="number" remarks="Автор изменения">
+                <constraints nullable="true"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="fin-eug-303" logicalFilePath="path-independent" author="eugene">
+        <comment>Creating primary key for table: sap_bp_languages</comment>
+        <addPrimaryKey
+                columnNames="code"
+                constraintName="pk_sap_bp_languages"
+                schemaName="apps"
+                tableName="sap_bp_languages"/>
+    </changeSet>
+
+
+    <changeSet id="fin-eug-304" logicalFilePath="path-independent" author="eugene">
+        <comment>Creating table: sap_bp_countries</comment>
+        <createTable tableName="sap_bp_countries" schemaName="apps" remarks="Страны в SAP">
+            <column name="code" type="varchar2(2)" remarks="Код страны">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="name" type="varchar(100)" remarks="Наименование страны">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="create_date" type="TIMESTAMP" remarks="Дата создания">
+                <constraints nullable="true"/>
+            </column>
+
+            <column name="last_update_date" type="TIMESTAMP" remarks="Дата изменения">
+                <constraints nullable="true"/>
+            </column>
+
+            <column name="create_by" type="number" remarks="Автор">
+                <constraints nullable="true"/>
+            </column>
+
+            <column name="last_update_by" type="number" remarks="Автор изменения">
+                <constraints nullable="true"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="fin-eug-305" logicalFilePath="path-independent" author="eugene">
+        <comment>Creating primary key for table: sap_bp_countries</comment>
+        <addPrimaryKey
+                columnNames="code"
+                constraintName="pk_sap_bp_countries"
+                schemaName="apps"
+                tableName="sap_bp_countries"/>
+    </changeSet>
+
+
+
+    <changeSet id="fin-eug-306" logicalFilePath="path-independent" author="eugene">
+        <comment>Creating table: sap_bp_regions</comment>
+        <createTable tableName="sap_bp_regions" schemaName="apps" remarks="Регионы в SAP">
+            <column name="code" type="varchar2(4)" remarks="Код региона">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="country_code" type="varchar2(2)" remarks="Код страны">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="name" type="varchar(100)" remarks="Наименование региона">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="create_date" type="TIMESTAMP" remarks="Дата создания">
+                <constraints nullable="true"/>
+            </column>
+
+            <column name="last_update_date" type="TIMESTAMP" remarks="Дата изменения">
+                <constraints nullable="true"/>
+            </column>
+
+            <column name="create_by" type="number" remarks="Автор">
+                <constraints nullable="true"/>
+            </column>
+
+            <column name="last_update_by" type="number" remarks="Автор изменения">
+                <constraints nullable="true"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="fin-eug-307" logicalFilePath="path-independent" author="eugene">
+        <comment>Creating primary key for table: sap_bp_regions</comment>
+        <addPrimaryKey
+                columnNames="code"
+                constraintName="pk_sap_bp_regions"
+                schemaName="apps"
+                tableName="sap_bp_regions"/>
+    </changeSet>
+
+
+
+    <changeSet id="fin-eug-308" logicalFilePath="path-independent" author="eugene">
+        <comment>Creating table: sap_bp_address_types</comment>
+        <createTable tableName="sap_bp_address_types" schemaName="apps" remarks="Типы адресов в SAP">
+            <column name="code" type="varchar2(20)" remarks="Код типа">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="name" type="varchar(100)" remarks="Наименование типа">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="create_date" type="TIMESTAMP" remarks="Дата создания">
+                <constraints nullable="true"/>
+            </column>
+
+            <column name="last_update_date" type="TIMESTAMP" remarks="Дата изменения">
+                <constraints nullable="true"/>
+            </column>
+
+            <column name="create_by" type="number" remarks="Автор">
+                <constraints nullable="true"/>
+            </column>
+
+            <column name="last_update_by" type="number" remarks="Автор изменения">
+                <constraints nullable="true"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="fin-eug-309" logicalFilePath="path-independent" author="eugene">
+        <comment>Creating primary key for table: sap_bp_address_types</comment>
+        <addPrimaryKey
+                columnNames="code"
+                constraintName="pk_sap_bp_address_types"
+                schemaName="apps"
+                tableName="sap_bp_address_types"/>
+    </changeSet>
+
+    <changeSet id="fin-eug-310" logicalFilePath="path-independent" author="eugene" context="dev">
+        <comment>Adding data to table: sap_bp_address_types</comment>
+        <insert tableName="sap_bp_address_types" schemaName="apps">
+            <column name="code" value="0001" />
+            <column name="name" value="Адрес для корреспонденции" />
+        </insert>
+
+        <insert tableName="sap_bp_address_types" schemaName="apps">
+            <column name="code" value="0002" />
+            <column name="name" value="Домашний адрес" />
+        </insert>
+
+        <insert tableName="sap_bp_address_types" schemaName="apps">
+            <column name="code" value="0003" />
+            <column name="name" value="Рабочий адрес" />
+        </insert>
+
+        <insert tableName="sap_bp_address_types" schemaName="apps">
+            <column name="code" value="0004" />
+            <column name="name" value="Юридический адрес" />
+        </insert>
+
+        <insert tableName="sap_bp_address_types" schemaName="apps">
+            <column name="code" value="BANKSTMT" />
+            <column name="name" value="Выписка по счету" />
+        </insert>
+
+        <insert tableName="sap_bp_address_types" schemaName="apps">
+            <column name="code" value="BANKSTMT2" />
+            <column name="name" value="Вторая выписка по счету" />
+        </insert>
+
+        <insert tableName="sap_bp_address_types" schemaName="apps">
+            <column name="code" value="FIRMA" />
+            <column name="name" value="Адрес фирмы" />
+        </insert>
+
+        <insert tableName="sap_bp_address_types" schemaName="apps">
+            <column name="code" value="PRIVAT" />
+            <column name="name" value="Домашний адрес" />
+        </insert>
+
+        <insert tableName="sap_bp_address_types" schemaName="apps">
+            <column name="code" value="XXDEFAULT" />
+            <column name="name" value="Стандартный адрес" />
+        </insert>
+
+        <rollback/>
+    </changeSet>
+
+
+    <changeSet id="fin-eug-311" logicalFilePath="path-independent" author="eugene">
+        <comment>Creating table: sap_bp_rel_types</comment>
+        <createTable tableName="sap_bp_rel_types" schemaName="apps" remarks="Типы отношений в SAP">
+            <column name="code" type="varchar2(20)" remarks="Код типа">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="name" type="varchar(100)" remarks="Наименование типа">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="create_date" type="TIMESTAMP" remarks="Дата создания">
+                <constraints nullable="true"/>
+            </column>
+
+            <column name="last_update_date" type="TIMESTAMP" remarks="Дата изменения">
+                <constraints nullable="true"/>
+            </column>
+
+            <column name="create_by" type="number" remarks="Автор">
+                <constraints nullable="true"/>
+            </column>
+
+            <column name="last_update_by" type="number" remarks="Автор изменения">
+                <constraints nullable="true"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="fin-eug-312" logicalFilePath="path-independent" author="eugene">
+        <comment>Creating primary key for table: sap_bp_rel_types</comment>
+        <addPrimaryKey
+                columnNames="code"
+                constraintName="pk_sap_bp_rel_types"
+                schemaName="apps"
+                tableName="sap_bp_rel_types"/>
+    </changeSet>
+
+    <changeSet id="fin-eug-313" logicalFilePath="path-independent" author="eugene" context="dev">
+        <comment>Adding data to table: sap_bp_rel_types</comment>
+        <insert tableName="sap_bp_rel_types" schemaName="apps">
+            <column name="code" value="BUR001" />
+            <column name="name" value="Имеет контактное лицо" />
+        </insert>
+
+        <insert tableName="sap_bp_rel_types" schemaName="apps">
+            <column name="code" value="BUR002" />
+            <column name="name" value="Имеет контактного партнера" />
+        </insert>
+
+        <insert tableName="sap_bp_rel_types" schemaName="apps">
+            <column name="code" value="BUR003" />
+            <column name="name" value="Имеет члена жилищного объединения" />
+        </insert>
+
+        <insert tableName="sap_bp_rel_types" schemaName="apps">
+            <column name="code" value="BUR004" />
+            <column name="name" value="Женат на/Замужем за" />
+        </insert>
+
+        <insert tableName="sap_bp_rel_types" schemaName="apps">
+            <column name="code" value="BUR006" />
+            <column name="name" value="Идентично с" />
+        </insert>
+
+        <insert tableName="sap_bp_rel_types" schemaName="apps">
+            <column name="code" value="BUR010" />
+            <column name="name" value="Имеет сотрудника" />
+        </insert>
+
+        <insert tableName="sap_bp_rel_types" schemaName="apps">
+            <column name="code" value="BUR011" />
+            <column name="name" value="Имеет ответственного сотрудника" />
+        </insert>
+
+        <insert tableName="sap_bp_rel_types" schemaName="apps">
+            <column name="code" value="BUR013" />
+            <column name="name" value="заменяется на" />
+        </insert>
+
+        <insert tableName="sap_bp_rel_types" schemaName="apps">
+            <column name="code" value="BUR020" />
+            <column name="name" value="Имеет в качестве отдела" />
+        </insert>
+
+        <insert tableName="sap_bp_rel_types" schemaName="apps">
+            <column name="code" value="BUR021" />
+            <column name="name" value="Имеет ребенка" />
+        </insert>
+
+        <insert tableName="sap_bp_rel_types" schemaName="apps">
+            <column name="code" value="BUR022" />
+            <column name="name" value="Явл. опекуном" />
+        </insert>
+
+        <insert tableName="sap_bp_rel_types" schemaName="apps">
+            <column name="code" value="BUR023" />
+            <column name="name" value="Состоит в родстве с" />
+        </insert>
+
+        <insert tableName="sap_bp_rel_types" schemaName="apps">
+            <column name="code" value="BUR024" />
+            <column name="name" value="Состоит в браке" />
+        </insert>
+
+        <insert tableName="sap_bp_rel_types" schemaName="apps">
+            <column name="code" value="BUR998" />
+            <column name="name" value="Тест: партнер - партнер" />
+        </insert>
+
+        <insert tableName="sap_bp_rel_types" schemaName="apps">
+            <column name="code" value="BURC01" />
+            <column name="name" value="Является держателем акций" />
+        </insert>
+
+        <insert tableName="sap_bp_rel_types" schemaName="apps">
+            <column name="code" value="FI0200" />
+            <column name="name" value="Имеет альтернативного плательщика" />
+        </insert>
+
+        <insert tableName="sap_bp_rel_types" schemaName="apps">
+            <column name="code" value="FI0210" />
+            <column name="name" value="Имеет допустимого плательщика" />
+        </insert>
+
+        <insert tableName="sap_bp_rel_types" schemaName="apps">
+            <column name="code" value="FI0300" />
+            <column name="name" value="Имеет альтернативного получателя напоминания" />
+        </insert>
+
+        <insert tableName="sap_bp_rel_types" schemaName="apps">
+            <column name="code" value="FS0030" />
+            <column name="name" value="член единицы заемщика" />
+        </insert>
+
+        <insert tableName="sap_bp_rel_types" schemaName="apps">
+            <column name="code" value="FSB001" />
+            <column name="name" value="является компаньоном" />
+        </insert>
+
+        <insert tableName="sap_bp_rel_types" schemaName="apps">
+            <column name="code" value="FSB002" />
+            <column name="name" value="Является дочерней компанией для" />
+        </insert>
+
+        <insert tableName="sap_bp_rel_types" schemaName="apps">
+            <column name="code" value="HEA010" />
+            <column name="name" value="имеет больничного служащего" />
+        </insert>
+
+        <insert tableName="sap_bp_rel_types" schemaName="apps">
+            <column name="code" value="HEA020" />
+            <column name="name" value="имеет больничного служащего" />
+        </insert>
+
+        <insert tableName="sap_bp_rel_types" schemaName="apps">
+            <column name="code" value="IHS001" />
+            <column name="name" value="имеет медицинский адрес" />
+        </insert>
+
+        <insert tableName="sap_bp_rel_types" schemaName="apps">
+            <column name="code" value="UDM001" />
+            <column name="name" value="имеет контактное лицо по инкассо" />
+        </insert>
+
+        <insert tableName="sap_bp_rel_types" schemaName="apps">
+            <column name="code" value="UKM001" />
+            <column name="name" value="Вышестоящий кредитный счет для" />
+        </insert>
+
+        <insert tableName="sap_bp_rel_types" schemaName="apps">
+            <column name="code" value="UKMSB0" />
+            <column name="name" value="ведет в кредитном менеджменте" />
+        </insert>
+
+        <insert tableName="sap_bp_rel_types" schemaName="apps">
+            <column name="code" value="UKMSBG" />
+            <column name="name" value="включает членов" />
+        </insert>
+
+        <insert tableName="sap_bp_rel_types" schemaName="apps">
+            <column name="code" value="ZBUR01" />
+            <column name="name" value="Является ассоциированной компанией" />
+        </insert>
+
+        <insert tableName="sap_bp_rel_types" schemaName="apps">
+            <column name="code" value="ZBUR02" />
+            <column name="name" value="Является дочерней компанией для" />
+        </insert>
+
+        <insert tableName="sap_bp_rel_types" schemaName="apps">
+            <column name="code" value="ZBUR03" />
+            <column name="name" value="Является финансовой инвестицией для компаний" />
+        </insert>
+
+        <insert tableName="sap_bp_rel_types" schemaName="apps">
+            <column name="code" value="ZBUR04" />
+            <column name="name" value="Является совместным предприятием" />
+        </insert>
+
+        <rollback/>
+    </changeSet>
+
+
+</databaseChangeLog>
