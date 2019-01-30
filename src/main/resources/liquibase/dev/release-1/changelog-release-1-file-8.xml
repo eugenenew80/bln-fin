@@ -94,8 +94,6 @@
         <rollback/>
     </changeSet>
 
-
-
     <changeSet id="fin-eug-297" logicalFilePath="path-independent" author="eugene">
         <comment>Creating table: sap_bp_industries</comment>
         <createTable tableName="sap_bp_industries" schemaName="apps" remarks="Отрасли для деловых партнеров в SAP">
@@ -214,7 +212,6 @@
         <rollback/>
     </changeSet>
 
-
     <changeSet id="fin-eug-300" logicalFilePath="path-independent" author="eugene">
         <comment>Creating table: sap_bp_tax_number_types</comment>
         <createTable tableName="sap_bp_tax_number_types" schemaName="apps" remarks="Типы налоговых номеров для деловых партнеров в SAP">
@@ -252,7 +249,6 @@
                 schemaName="apps"
                 tableName="sap_bp_tax_number_types"/>
     </changeSet>
-
 
     <changeSet id="fin-eug-302" logicalFilePath="path-independent" author="eugene">
         <comment>Creating table: sap_bp_languages</comment>
@@ -292,7 +288,6 @@
                 tableName="sap_bp_languages"/>
     </changeSet>
 
-
     <changeSet id="fin-eug-304" logicalFilePath="path-independent" author="eugene">
         <comment>Creating table: sap_bp_countries</comment>
         <createTable tableName="sap_bp_countries" schemaName="apps" remarks="Страны в SAP">
@@ -330,8 +325,6 @@
                 schemaName="apps"
                 tableName="sap_bp_countries"/>
     </changeSet>
-
-
 
     <changeSet id="fin-eug-306" logicalFilePath="path-independent" author="eugene">
         <comment>Creating table: sap_bp_regions</comment>
@@ -374,8 +367,6 @@
                 schemaName="apps"
                 tableName="sap_bp_regions"/>
     </changeSet>
-
-
 
     <changeSet id="fin-eug-308" logicalFilePath="path-independent" author="eugene">
         <comment>Creating table: sap_bp_address_types</comment>
@@ -464,7 +455,6 @@
 
         <rollback/>
     </changeSet>
-
 
     <changeSet id="fin-eug-311" logicalFilePath="path-independent" author="eugene">
         <comment>Creating table: sap_bp_rel_types</comment>
@@ -669,5 +659,131 @@
         <rollback/>
     </changeSet>
 
+    <changeSet id="fin-eug-314" logicalFilePath="path-independent" author="eugene" context="dev">
+        <comment>Creating foreign constraint: sap_bp_regions to sap_bp_countries</comment>
+        <addForeignKeyConstraint
+                baseTableSchemaName="apps"
+                baseTableName="sap_bp_regions"
+                baseColumnNames="country_code"
+                constraintName="fk_sap_bp_regions_1"
+                deferrable="true"
+                onDelete="RESTRICT"
+                onUpdate="RESTRICT"
+                referencedTableSchemaName="apps"
+                referencedTableName="sap_bp_countries"
+                referencedColumnNames="code"
+        />
+    </changeSet>
 
+    <changeSet id="fin-eug-315" logicalFilePath="path-independent" author="eugene" context="dev">
+        <comment>Creating foreign constraint: dict_bp_interface to sap_bp_groups</comment>
+        <addForeignKeyConstraint
+                baseTableSchemaName="apps"
+                baseTableName="dict_bp_interface"
+                baseColumnNames="search_group"
+                constraintName="fk_dict_bp_interface_1"
+                deferrable="true"
+                onDelete="RESTRICT"
+                onUpdate="RESTRICT"
+                referencedTableSchemaName="apps"
+                referencedTableName="sap_bp_groups"
+                referencedColumnNames="code"
+        />
+    </changeSet>
+
+    <changeSet id="fin-eug-316" logicalFilePath="path-independent" author="eugene" context="dev">
+        <comment>Creating foreign constraint: dict_bp_interface to sap_bp_industries</comment>
+        <addForeignKeyConstraint
+                baseTableSchemaName="apps"
+                baseTableName="dict_bp_interface"
+                baseColumnNames="industry"
+                constraintName="fk_dict_bp_interface_2"
+                deferrable="true"
+                onDelete="RESTRICT"
+                onUpdate="RESTRICT"
+                referencedTableSchemaName="apps"
+                referencedTableName="sap_bp_industries"
+                referencedColumnNames="code"
+        />
+    </changeSet>
+
+    <changeSet id="fin-eug-317" logicalFilePath="path-independent" author="eugene" context="dev">
+        <comment>Creating foreign constraint: dict_bp_interface to sap_bp_tax_number_types</comment>
+        <addForeignKeyConstraint
+                baseTableSchemaName="apps"
+                baseTableName="dict_bp_interface"
+                baseColumnNames="tax_number_type"
+                constraintName="fk_dict_bp_interface_3"
+                deferrable="true"
+                onDelete="RESTRICT"
+                onUpdate="RESTRICT"
+                referencedTableSchemaName="apps"
+                referencedTableName="sap_bp_tax_number_types"
+                referencedColumnNames="code"
+        />
+    </changeSet>
+
+    <changeSet id="fin-eug-318" logicalFilePath="path-independent" author="eugene" context="dev">
+        <comment>Creating foreign constraint: dict_bp_address_interface to sap_bp_address_types</comment>
+        <addForeignKeyConstraint
+                baseTableSchemaName="apps"
+                baseTableName="dict_bp_address_interface"
+                baseColumnNames="address_type"
+                constraintName="fk_dict_bp_address_interface_2"
+                deferrable="true"
+                onDelete="RESTRICT"
+                onUpdate="RESTRICT"
+                referencedTableSchemaName="apps"
+                referencedTableName="sap_bp_address_types"
+                referencedColumnNames="code"
+        />
+    </changeSet>
+
+    <changeSet id="fin-eug-319" logicalFilePath="path-independent" author="eugene" context="dev">
+        <comment>Creating foreign constraint: dict_bp_address_interface to sap_bp_countries</comment>
+        <addForeignKeyConstraint
+                baseTableSchemaName="apps"
+                baseTableName="dict_bp_address_interface"
+                baseColumnNames="country"
+                constraintName="fk_dict_bp_address_interface_3"
+                deferrable="true"
+                onDelete="RESTRICT"
+                onUpdate="RESTRICT"
+                referencedTableSchemaName="apps"
+                referencedTableName="sap_bp_countries"
+                referencedColumnNames="code"
+        />
+    </changeSet>
+
+    <changeSet id="fin-eug-320" logicalFilePath="path-independent" author="eugene" context="dev">
+        <comment>Creating foreign constraint: dict_bp_address_interface to sap_bp_regions</comment>
+        <addForeignKeyConstraint
+                baseTableSchemaName="apps"
+                baseTableName="dict_bp_address_interface"
+                baseColumnNames="region"
+                constraintName="fk_dict_bp_address_interface_4"
+                deferrable="true"
+                onDelete="RESTRICT"
+                onUpdate="RESTRICT"
+                referencedTableSchemaName="apps"
+                referencedTableName="sap_bp_regions"
+                referencedColumnNames="code"
+        />
+    </changeSet>
+
+    <changeSet id="fin-eug-321" logicalFilePath="path-independent" author="eugene" context="dev">
+        <comment>Creating foreign constraint: dict_bp_address_interface_tl to sap_bp_languages</comment>
+        <addForeignKeyConstraint
+                baseTableSchemaName="apps"
+                baseTableName="dict_bp_address_interface_tl"
+                baseColumnNames="lang"
+                constraintName="fk_dict_bp_address_interface_tl_2"
+                deferrable="true"
+                onDelete="RESTRICT"
+                onUpdate="RESTRICT"
+                referencedTableSchemaName="apps"
+                referencedTableName="sap_bp_languages"
+                referencedColumnNames="code"
+        />
+    </changeSet>
 </databaseChangeLog>
