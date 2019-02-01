@@ -54,7 +54,7 @@
     <changeSet id="fin-rus-203" logicalFilePath="path-independent" author="ruslan">
         <comment>add column to dict_gjs</comment>
         <addColumn schemaName="apps" tableName="dict_gjs">
-            <column name="ERP_UNIT_CODE_2" type="number" remarks="Код единицы измерения ОЗМ в ERP-системе для контрактов">
+            <column name="ERP_UNIT_CODE2" type="varchar2(30)" remarks="Код единицы измерения ОЗМ в ERP-системе для контрактов">
                 <constraints nullable="true"/>
             </column>
         </addColumn>
