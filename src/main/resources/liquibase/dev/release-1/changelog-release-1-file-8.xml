@@ -786,4 +786,17 @@
                 referencedColumnNames="code"
         />
     </changeSet>
+
+    <changeSet id="fin-eug-322" logicalFilePath="path-independent" author="eugene">
+        <comment>Creating table: fin_sale_invoice_lines</comment>
+        <addColumn schemaName="apps" tableName="fin_sale_invoice_lines">
+            <column name="discount_rate" type="number" remarks="Временный понижающий коэффициент" >
+                <constraints nullable="true"/>
+            </column>
+
+            <column name="origin_unit_price" type="number" remarks="Цена за единицу без учёта скидки согласно тарифного плана" >
+                <constraints nullable="true"/>
+            </column>
+        </addColumn>
+    </changeSet>
 </databaseChangeLog>

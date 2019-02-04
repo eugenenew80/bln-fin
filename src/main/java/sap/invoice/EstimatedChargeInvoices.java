@@ -581,7 +581,7 @@ public class EstimatedChargeInvoices {
             "price",
             "amount",
             "taxRate",
-            "Discount"
+            "discount"
         })
         public static class Row {
 
