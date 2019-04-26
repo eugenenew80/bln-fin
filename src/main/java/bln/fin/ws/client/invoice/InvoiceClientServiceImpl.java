@@ -89,7 +89,7 @@ public class InvoiceClientServiceImpl implements InvoiceClientService {
 
         for (InvoiceLineInterface line : invoice.getLines()) {
             EstimatedChargeInvoices.Item.Row row = mapper.map(line, EstimatedChargeInvoices.Item.Row.class);
-            row.setConsigneeNum(invoice.getBpNum());
+            //row.setConsigneeNum(invoice.getBpNum());
             item.getRow().add(row);
         }
         return item;

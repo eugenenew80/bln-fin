@@ -21,12 +21,12 @@ public class RelationDto {
     private String relationType;
 
     @XmlElement(required = true)
-    @Documentation("№ делового партнера")
+    @Documentation("Guid делового партнера")
     @NotNull(message = "Поля является обязательным")
     private String bpNum;
 
     @XmlElement(required = true)
-    @Documentation("№ делового партнера с которым есть отношения")
+    @Documentation("Guid делового партнера с которым есть отношения")
     @NotNull(message = "Поля является обязательным")
     private String bpNumRel;
 }

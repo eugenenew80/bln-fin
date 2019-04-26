@@ -7,5 +7,10 @@
     <mapping map-null="false" map-empty-string="false" trim-strings="true">
         <class-a>sap.invoice.EstimatedChargeInvoices.Item.Row</class-a>
         <class-b>bln.fin.entity.pi.InvoiceLineInterface</class-b>
+
+        <field>
+            <a>consigneeNum</a>
+            <b>bpNum</b>
+        </field>
     </mapping>
 </mappings>

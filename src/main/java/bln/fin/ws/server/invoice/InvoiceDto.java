@@ -64,6 +64,11 @@ public class InvoiceDto {
     @Documentation("Курс валюты")
     private Double exchangeRate;
 
+    @XmlElement(defaultValue = "N", required = true)
+    @Documentation("Флаг удаления заявки")
+    @Facets(minLength = 1, maxLength = 1)
+    private String deleted;
+
     @XmlElement(required = true, name = "line")
     @Documentation("Список позиций СФ")
     private List<InvoiceLineDto> lines;

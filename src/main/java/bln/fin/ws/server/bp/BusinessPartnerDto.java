@@ -24,6 +24,12 @@ public class BusinessPartnerDto {
     @Size(min = 1, max = 100)
     private String bpNum;
 
+    @XmlElement
+    @Documentation("Глобальный идентификатор делового партнера")
+    @NotNull
+    @Size(min = 1, max = 100)
+    private String guid;
+
     @XmlElement(required = true)
     @Documentation("Группа")
     @NotNull
