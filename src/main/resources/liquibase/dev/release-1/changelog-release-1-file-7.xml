@@ -60,5 +60,53 @@
         </addColumn>
     </changeSet>
 
+    <changeSet id="fin-rus-204" logicalFilePath="path-independent" author="ruslan">
+        <comment>add column to wf_object_workflows</comment>
+        <addColumn schemaName="apps" tableName="wf_object_workflows">
+            <column name="route_id" type="number" remarks="Идентификатор маршрута">
+                <constraints nullable="true"/>
+            </column>
+        </addColumn>
+    </changeSet>
 
+    <changeSet id="fin-rus-205" logicalFilePath="path-independent" author="eugene" context="dev">
+        <comment>Creating foreign constraint: wf_object_workflows to wf_routes</comment>
+        <addForeignKeyConstraint
+                baseTableSchemaName="apps"
+                baseTableName="wf_object_workflows"
+                baseColumnNames="route_id"
+                constraintName="fk_wf_object_workflows_1"
+                deferrable="true"
+                onDelete="RESTRICT"
+                onUpdate="RESTRICT"
+                referencedTableSchemaName="apps"
+                referencedTableName="wf_routes"
+                referencedColumnNames="id"
+        />
+    </changeSet>
+
+    <changeSet id="fin-rus-206" logicalFilePath="path-independent" author="ruslan">
+        <comment>add column to fin_total_delivery_lines</comment>
+        <addColumn schemaName="apps" tableName="fin_total_delivery_lines">
+            <column name="svr_id" type="number" remarks="Идентификатор актов сверки объемов показаний ПКУ">
+                <constraints nullable="true"/>
+            </column>
+        </addColumn>
+    </changeSet>
+
+    <changeSet id="fin-rus-207" logicalFilePath="path-independent" author="eugene" context="dev">
+        <comment>Creating foreign constraint: fin_total_delivery_lines to calc_service_values_reconciliations</comment>
+        <addForeignKeyConstraint
+                baseTableSchemaName="apps"
+                baseTableName="fin_total_delivery_lines"
+                baseColumnNames="svr_id"
+                constraintName="fk_fin_total_delivery_lines_7"
+                deferrable="true"
+                onDelete="RESTRICT"
+                onUpdate="RESTRICT"
+                referencedTableSchemaName="apps"
+                referencedTableName="calc_service_values_reconciliations"
+                referencedColumnNames="id"
+        />
+    </changeSet>
 </databaseChangeLog>
