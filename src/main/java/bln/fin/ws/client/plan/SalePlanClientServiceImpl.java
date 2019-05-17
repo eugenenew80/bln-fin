@@ -36,8 +36,9 @@ public class SalePlanClientServiceImpl implements SalePlanClientService {
         List<SalePlanInterface> list = salePlanInterfaceRepo.findAllByStatus(BatchStatusEnum.W);
         if (list.isEmpty()) return;
 
-        for (SalePlanInterface i : list)
-            send(asList(i));
+        //for (SalePlanInterface i : list)
+        //    send(asList(i));
+        send(list);
     }
 
     private void send(List<SalePlanInterface> list) {
@@ -64,7 +65,7 @@ public class SalePlanClientServiceImpl implements SalePlanClientService {
             updateStatuses(list, session);
         }
 
-        salePlanInterfaceRepo.updateStatuses();
+        //salePlanInterfaceRepo.updateStatuses();
         logger.info("completed");
     }
 

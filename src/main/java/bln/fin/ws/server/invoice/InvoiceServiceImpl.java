@@ -46,7 +46,7 @@ public class InvoiceServiceImpl implements InvoiceService {
             .collect(toList());
 
         sessionService.successSession(session, (long) list.size());
-        invoiceInterfaceRepo.updateStatuses();
+        invoiceStatusInterfaceRepo.transfer();
 
         logger.info("completed");
         return messages;
@@ -68,6 +68,8 @@ public class InvoiceServiceImpl implements InvoiceService {
             .collect(toList());
 
         sessionService.successSession(session, (long) list.size());
+        invoiceInterfaceRepo.transfer();
+
         logger.info("completed");
         return messages;
     }

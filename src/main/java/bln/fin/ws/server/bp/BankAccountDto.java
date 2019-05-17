@@ -3,6 +3,7 @@ package bln.fin.ws.server.bp;
 import lombok.Data;
 
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.*;
 
 @Data
@@ -28,4 +29,10 @@ public class BankAccountDto {
     @XmlElement
     @Documentation("IBAN")
     private String iban;
+
+    @XmlElement
+    @Documentation("Глобальный идентификатор банковского счёта")
+    @NotNull
+    @Size(min = 1, max = 4)
+    private String bankkey;
 }

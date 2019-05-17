@@ -3,6 +3,7 @@ package bln.fin.ws.server.bp;
 import lombok.Data;
 
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.*;
 import java.util.List;
 
@@ -70,4 +71,9 @@ public class AddressDto {
     @XmlElement(name = "translate")
     @Documentation("Перевод")
     private List<AddressTranslateDto> translates;
+
+    @XmlElement
+    @Documentation("Глобальный идентификатор адреса")
+    @Size(min = 1, max = 100)
+    private String guid;
 }
