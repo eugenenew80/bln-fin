@@ -17,6 +17,9 @@ public class BpBankAccountInterface implements Monitored {
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "dict_bp_bank_account_interface_s")
     private Long id;
 
+    @Column(name="bankkey")
+    private String bankkey;
+
     @ManyToOne
     @JoinColumn(name = "bp_interface_id")
     private BpInterface businessPartner;

@@ -114,7 +114,7 @@ public class BusinessPartnerServiceImpl implements BusinessPartnerService {
         MessageDto msg;
         try {
             validate(bpDto);
-            BpInterface bp = bpInterfaceRepo.findByBpNum(bpDto.getBpNum())
+            BpInterface bp = bpInterfaceRepo.findByGuid(bpDto.getGuid())
                 .stream()
                 .filter(t -> t.getStatus() == BatchStatusEnum.W)
                 .findFirst()
@@ -137,6 +137,16 @@ public class BusinessPartnerServiceImpl implements BusinessPartnerService {
                     BpBankAccountInterface ba = getBankAccount(bp, baDto);
                     bp.getBankAccounts().add(ba);
                 }
+
+                List<BpBankAccountInterface> found = new ArrayList<>();
+                for (BpBankAccountInterface ba : bp.getBankAccounts()) {
+                    BankAccountDto baDto = bpDto.getBankAccounts().stream()
+                        .filter(t -> t.getBankkey().equals(ba.getBankkey()))
+                        .findFirst()
+                        .orElse(null);
+                    if (baDto == null) found.add(ba);
+                }
+                bp.getBankAccounts().removeAll(found);
             }
 
             if (bpDto.getAddresses()!=null && !bpDto.getAddresses().isEmpty()) {
@@ -154,6 +164,16 @@ public class BusinessPartnerServiceImpl implements BusinessPartnerService {
                         }
                     }
                 }
+
+                List<BpAddressInterface> found = new ArrayList<>();
+                for (BpAddressInterface addr : bp.getAddresses()) {
+                    AddressDto addrDto = bpDto.getAddresses().stream()
+                        .filter(t -> t.getGuid().equals(addr.getGuid()))
+                        .findFirst()
+                        .orElse(null);
+                    if (addrDto == null) found.add(addr);
+                }
+                bp.getAddresses().removeAll(found);
             }
 
             bp = bpInterfaceRepo.save(bp);
@@ -186,7 +206,7 @@ public class BusinessPartnerServiceImpl implements BusinessPartnerService {
     private BpBankAccountInterface getBankAccount(BpInterface bp, BankAccountDto baDto) {
         BpBankAccountInterface ba = bp.getBankAccounts()
             .stream()
-            .filter(t -> t.getAccount().equals(baDto.getAccount()))
+            .filter(t -> t.getBankkey().equals(baDto.getBankkey()))
             .findFirst()
             .orElse(new BpBankAccountInterface());
 
@@ -199,7 +219,7 @@ public class BusinessPartnerServiceImpl implements BusinessPartnerService {
     private BpAddressInterface getAddress(BpInterface bp, AddressDto bpAddressDto) {
         BpAddressInterface address = bp.getAddresses()
             .stream()
-            .filter(t -> t.getAddressType().equals(bpAddressDto.getAddressType()))
+            .filter(t -> t.getGuid().equals(bpAddressDto.getGuid()))
             .findFirst()
             .orElse(new BpAddressInterface());
 
@@ -234,7 +254,6 @@ public class BusinessPartnerServiceImpl implements BusinessPartnerService {
         logger.debug("-----------------------");
     }
 
-
     private void validate(Object dto) {
         Set<ConstraintViolation<Object>> violations = validator.validate(dto);
         if (violations != null && violations.size() > 0) {
@@ -242,5 +261,4 @@ public class BusinessPartnerServiceImpl implements BusinessPartnerService {
             throw new ValidationException(violation.getPropertyPath().toString() + ": " +  violation.getMessage());
         }
     }
-
 }

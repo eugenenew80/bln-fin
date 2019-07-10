@@ -17,6 +17,9 @@ public class BpAddressInterface implements Monitored {
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "dict_bp_address_interface_s")
     private Long id;
 
+    @Column(name="guid")
+    private String guid;
+
     @ManyToOne
     @JoinColumn(name = "bp_interface_id")
     private BpInterface businessPartner;

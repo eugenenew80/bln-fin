@@ -26,6 +26,9 @@ public class BpInterface implements Monitored {
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "dict_bp_interface_s")
     private Long id;
 
+    @Column(name="guid")
+    private String guid;
+
     @Column(name="bp_num")
     private String bpNum;
 
