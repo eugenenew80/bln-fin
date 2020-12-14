@@ -335,10 +335,10 @@
         </dependency>
     </dependencies>
 
-    <repositories>
+    <!--<repositories>
         <repository>
             <id>github-repo-releases</id>
             <url>https://raw.github.com/whummer/jaxb-facets/master/releases</url>
         </repository>
-    </repositories>
+    </repositories>-->
 </project>
