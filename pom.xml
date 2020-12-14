@@ -61,7 +61,7 @@
                 </dependencies>
             </plugin>
 
-            <!-- tag::wsdl[] -->
+            <!-- tag::wsdl[]
             <plugin>
                 <groupId>org.jvnet.jaxb2.maven2</groupId>
                 <artifactId>maven-jaxb2-plugin</artifactId>
@@ -146,7 +146,7 @@
                     </execution>
                 </executions>
             </plugin>
-            <!-- end::wsdl[] -->
+             end::wsdl[] -->
         </plugins>
 
         <extensions>
